@@ -1,6 +1,9 @@
 
 package org.usfirst.frc.team1683.robot;
 
+import org.usfirst.frc.team1683.robot.main.Autonomous;
+import org.usfirst.frc.team1683.robot.main.TeleOp;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 /**
