@@ -23,14 +23,14 @@ public class TechnoTitan extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-
+    	Autonomous.run();
     }
 
     /**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        
+        TeleOp.run();
     }
     
     /**
