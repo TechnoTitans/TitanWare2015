@@ -30,4 +30,17 @@ public class HWP {
 	public static final int JOY_0 = 0;
 	public static final int JOY_1 = 1;
 	public static final int JOY_2 = 2;
+	
+	//Digital I/O
+	public static final int DIO_0 = 0;
+	public static final int DIO_1 = 1;
+	public static final int DIO_2 = 2;
+	public static final int DIO_3 = 3;
+	public static final int DIO_4 = 4;
+	public static final int DIO_5 = 5;
+	public static final int DIO_6 = 6;
+	public static final int DIO_7 = 7;
+	public static final int DIO_8 = 8;
+	public static final int DIO_9 = 9;
+	
 }
