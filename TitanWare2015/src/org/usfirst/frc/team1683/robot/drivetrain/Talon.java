@@ -57,6 +57,7 @@ public class Talon extends edu.wpi.first.wpilibj.Talon implements Motor{
 			while (encoder.getDistanceMeters() < distanceInMeters){
 				talon.set(mediumSpeed);
 			}
+			talon.stopMotor();
 			encoder.reset();
 		}
 
