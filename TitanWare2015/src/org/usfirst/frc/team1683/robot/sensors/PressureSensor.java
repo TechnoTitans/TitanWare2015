@@ -1,13 +1,16 @@
 package org.usfirst.frc.team1683.robot.sensors;
 
+/**Class to handle any pressure sensors used.
+ * @author Sreyas Mirthipati
+ *
+ */
 public class PressureSensor implements Sensor {
 	//Instance data
 	private double pressure;
 	private int portNumber;
 	
-	/**Creates a PressureSensor by taking in a portNumber.
-	 * @param portNumber-an int value that defines the analog port
-	 * number the sensor is connected to.
+	/**Constructor
+	 * @param portNumber
 	 */
 	public PressureSensor(int portNumber)
 	{
@@ -15,9 +18,10 @@ public class PressureSensor implements Sensor {
 	}
 
 	
-	/** 
-	 * Returns raw sensor data as a double.
-	 */
+	/**
+     * Gets raw data from pressure sensor
+     * @return raw data as double
+     */
 	public double getRaw() {
 		return 0;
 	}

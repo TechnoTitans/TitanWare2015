@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Solenoid;
 
+/**Class to represent any particular system of solenoids acting in unison.
+ * The compressor is shared amongst these systems.
+ * @author Sreyas Mirthipati
+ *
+ */
 public class AirSystem {
 	final static boolean EXTENDED = true;
 	final static boolean RETRACTED = false;
