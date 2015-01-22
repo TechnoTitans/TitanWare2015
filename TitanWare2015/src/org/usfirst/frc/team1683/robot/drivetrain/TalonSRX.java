@@ -35,12 +35,6 @@ public class TalonSRX extends edu.wpi.first.wpilibj.TalonSRX implements Motor{
 			super.set(speed);
 		}
 	}
-
-	public void setSpeeds(double low, double medium, double high){
-		this.lowSpeed = low;
-		this.mediumSpeed = medium;
-		this.highSpeed = high;
-	}
 	
 	public void moveDegrees(double degrees){
 		double radians = degrees * (Math.PI/180);		//converts degrees to radians
@@ -67,6 +61,12 @@ public class TalonSRX extends edu.wpi.first.wpilibj.TalonSRX implements Motor{
 			encoder.reset();
 		}
 
+	}
+	
+	@Override
+	public void stop() {
+		this.stop();
+		
 	}
 
 

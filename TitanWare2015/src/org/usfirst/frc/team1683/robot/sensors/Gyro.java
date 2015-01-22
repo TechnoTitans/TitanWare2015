@@ -7,6 +7,7 @@ public class Gyro extends edu.wpi.first.wpilibj.Gyro implements Sensor {
 	public Gyro(int channel) {
 		super(channel);
 	    setSensitivity(SENSITIVITY);
+	    this.initGyro();
 	    reset();
 	}
 	

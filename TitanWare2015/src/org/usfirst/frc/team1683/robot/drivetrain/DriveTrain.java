@@ -3,25 +3,15 @@ package org.usfirst.frc.team1683.robot.drivetrain;
 import java.util.ArrayList;
 
 public abstract class DriveTrain{
-
-	ArrayList<Motor> motors = new ArrayList<>();
+	public final static double lowSpeed = .2;
+	public final static double mediumSpeed = .5;
+	public final static double highSpeed = 1.0;
 	
-//	final int frontLeftMotor; 
-//	final int rearLeftMotor;
-//	final int frontRightMotor; 
-//	final int rearRightMotor;
-//
-//	public DriveTrain(final int frontLeftMotor, final int rearLeftMotor, final int frontRightMotor, final int rearRightMotor) {
-//		super(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
-//		this.frontLeftMotor = frontLeftMotor;
-//		this.rearLeftMotor = rearLeftMotor;
-//		this.frontRightMotor = frontRightMotor;
-//		this.rearRightMotor = rearRightMotor;
-//	}
+	ArrayList<Motor> motors = new ArrayList<>();
 	
 	public abstract void goStraight(double distance);
 	public abstract void turnAngle(double bearing);
 	public abstract void setBackToOriginalPos();
 
-
+	
 }
