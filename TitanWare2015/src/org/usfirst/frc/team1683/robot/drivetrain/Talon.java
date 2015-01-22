@@ -30,9 +30,9 @@ public class Talon extends edu.wpi.first.wpilibj.Talon implements Motor{
 	@Override
 	public void set(double speed){
 		if (reverseDirection){
-			super.set(speed);
-		}else{
 			super.set(-speed);
+		}else{
+			super.set(speed);
 		}
 	}
 
