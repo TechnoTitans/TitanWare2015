@@ -9,8 +9,11 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
  */
 public class Vision {
 	
-	private NetworkTable table;
+	public static NetworkTable table;
 	
+	/**
+	 * Constructor
+	 */
 	public Vision() {
 		table = NetworkTable.getTable("Vision"); // Table to get data from RoboRealm
 	}
@@ -21,4 +24,9 @@ public class Vision {
 //	public ScreenPos[] getBlobCenter() {		
 //		return null;
 //	}
+	
+	public void test() {
+		Blob testBlob = new Blob(0);
+		testBlob.getCenter();
+	}
 }

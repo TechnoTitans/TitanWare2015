@@ -30,14 +30,14 @@ public class ScreenPos {
 		}
 	}
 
-	/**
-	 * Alternate Constructor.
-	 * Defaults xPos and yPos to 0.
-	 */
-	public ScreenPos() {
-		this.xPos = 0;
-		this.yPos = 0;
-	}
+//	/**
+//	 * Alternate Constructor.
+//	 * Defaults xPos and yPos to 0.
+//	 */
+//	public ScreenPos() {
+//		this.xPos = 0;
+//		this.yPos = 0;
+//	}
 
 	/**
 	 * @param xPos The X position of the coordinate.
