@@ -5,7 +5,8 @@ package org.usfirst.frc.team1683.robot.drivetrain;
  */
 public class Encoder extends edu.wpi.first.wpilibj.Encoder{
     //private final double TURNING_WHEEL_DISTANCE_PER_PULSE = 0.01840659135;
-    private final double WHEEL_DISTANCE_PER_PULSE=47.0/700.0;//inches/pusle
+    private static final double WHEEL_DISTANCE_PER_PULSE=47.0/700.0;//inches/pulse
+    public static final double WHEEL_RADIUS = 0.0; //must be determined through measurement
     //Above value has been confirmed from past revisions as the constant for the robot not the mule
     //may require retuning on 2nd day of Competition.
     /**
@@ -40,5 +41,5 @@ public class Encoder extends edu.wpi.first.wpilibj.Encoder{
     // converts distance from feet to meters. 
     public double getDistanceMeters(){
         return getDistanceFt()*0.3048;
-}
+    }
 }

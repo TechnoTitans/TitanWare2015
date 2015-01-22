@@ -41,6 +41,12 @@ public class Talon extends edu.wpi.first.wpilibj.Talon implements Motor{
 		this.mediumSpeed = medium;
 		this.highSpeed = high;
 	}
+	
+	public void moveDegrees(double degrees){
+		double radians = degrees * (Math.PI/180);		//converts degrees to radians
+		double distance = radians*Encoder.WHEEL_RADIUS;	//converts radians to distance
+		moveDistance(distance);							//travels distance
+	}
 
 	public class MotorMover implements Runnable{
 
