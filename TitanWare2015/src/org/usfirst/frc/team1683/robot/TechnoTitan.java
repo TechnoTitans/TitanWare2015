@@ -3,7 +3,6 @@ package org.usfirst.frc.team1683.robot;
 
 import org.usfirst.frc.team1683.robot.main.Autonomous;
 import org.usfirst.frc.team1683.robot.main.TeleOp;
-import org.usfirst.frc.team1683.robot.vision.Vision;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 
@@ -16,14 +15,12 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  */
 public class TechnoTitan extends IterativeRobot {
     
-	Vision vision;
-    
 	/**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-    	vision = new Vision();
+    
     }
 
     /**
@@ -44,7 +41,6 @@ public class TechnoTitan extends IterativeRobot {
      * This function is called periodically during test mode
      */
     public void testPeriodic() {
-    	vision.test();
     }
     
 }
