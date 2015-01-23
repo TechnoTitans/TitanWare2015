@@ -22,4 +22,8 @@ public class Gyro extends edu.wpi.first.wpilibj.Gyro implements Sensor {
 		return getAngle();
 	}
     
+    //adds current angle to the original position
+    public double add(double startAngle) {
+    	return startAngle+getAngle();
+    }
 }

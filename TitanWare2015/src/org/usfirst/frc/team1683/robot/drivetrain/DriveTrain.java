@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1683.robot.drivetrain;
 
 import java.util.ArrayList;
+import edu.wpi.first.wpilibj.Joystick;
 
 public abstract class DriveTrain{
 	public final static double lowSpeed = .2;
@@ -12,6 +13,6 @@ public abstract class DriveTrain{
 	public abstract void goStraight(double distance);
 	public abstract void turnAngle(double bearing);
 	public abstract void setBackToOriginalPos();
-
+	public abstract void driveMode(Joystick leftStick, Joystick rightStick);
 	
 }

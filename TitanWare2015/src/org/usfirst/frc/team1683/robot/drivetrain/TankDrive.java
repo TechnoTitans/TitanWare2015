@@ -1,6 +1,9 @@
 package org.usfirst.frc.team1683.robot.drivetrain;
 
+import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
+
+import edu.wpi.first.wpilibj.Joystick;
 
 public class TankDrive extends DriveTrain{
 
@@ -18,6 +21,13 @@ public class TankDrive extends DriveTrain{
 		startAngle = gyro.getAngle();
 	}
 	
+	public void driveMode(Joystick rightStick, Joystick leftStick) {
+		double leftSpeed = leftStick.getRawAxis(DriverStation.YAxis);
+		double rightSpeed = rightStick.getRawAxis(DriverStation.YAxis);
+		left.set(leftSpeed);
+		right.set(rightSpeed);
+	}
+	
 	@Override
 	public void goStraight(double distanceInMeters) {
 		left.moveDistance(distanceInMeters);
@@ -26,6 +36,7 @@ public class TankDrive extends DriveTrain{
 
 	@Override
 	public void turnAngle(double bearing) {
+		gyro.add(startAngle);
 		gyro.reset();
 		if (bearing >= 0 && bearing <= 180){
 			while(gyro.getAngle()<bearing){
@@ -46,6 +57,10 @@ public class TankDrive extends DriveTrain{
 
 	@Override
 	public void setBackToOriginalPos() {
+		startAngle = gyro.add(startAngle)%360;
+		gyro.reset();
+		turnAngle(startAngle);
+		startAngle = 0;
 	}
 
 }
