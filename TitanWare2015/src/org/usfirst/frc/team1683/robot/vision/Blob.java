@@ -1,6 +1,5 @@
 package org.usfirst.frc.team1683.robot.vision;
 
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.networktables2.type.NumberArray;
 import edu.wpi.first.wpilibj.tables.TableKeyNotDefinedException;
 
