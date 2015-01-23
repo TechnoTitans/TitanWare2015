@@ -35,15 +35,19 @@ public class Blob {
 	 */
 	public void getCenter(){
 		int xPos;
-		int yPos;		
+		int yPos;
 		try {
 			final NumberArray data = new NumberArray();
-			Vision.table.retrieveValue("blobs", data);
+			Vision.table.retrieveValue("Vision", data);
 			if (data.size()>0){
 				System.out.println(data.get(0) + ' ' + data.get(1));
 				}
+			else {
+				System.out.println("Nope");
+			}
 		}
 		catch(TableKeyNotDefinedException exp) {
+			System.out.println("Error");
 		}
 		
 //		return new ScreenPos(xPos, yPos);

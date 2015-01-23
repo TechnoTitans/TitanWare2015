@@ -25,8 +25,4 @@ public class Vision {
 //		return null;
 //	}
 	
-	public void test() {
-		Blob testBlob = new Blob(0);
-		testBlob.getCenter();
-	}
 }
