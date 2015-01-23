@@ -1,0 +1,61 @@
+package org.usfirst.frc.team1683.robot.test;
+
+import org.usfirst.frc.team1683.robot.HWP;
+import org.usfirst.frc.team1683.robot.pneumatics.AirSystem;
+
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.Joystick;
+
+/**
+ * This class contains functions to test the AirSystems of a robot.
+ * @author Sreyas Mirthipati
+ */
+public class AirSystemTester implements Tester{
+
+	AirSystem air;
+	Joystick stick;
+	int buttonAssignment;
+	int stickAssignment;
+
+	/**
+	 * @param solenoids - an int array of all solenoids to be tested
+	 * @param button - the button assignment for test firing (default on aux joystick)
+	 */
+	public AirSystemTester(int[] solenoids, int button) {
+		air = new AirSystem(new Compressor(),solenoids);
+		stick = new Joystick(HWP.JOY_0);
+		buttonAssignment = button;
+		air.retract();
+	}
+
+	/**
+	 * @param solenoids - an int array of all solenoids to be tested
+	 * @param stickNum - the joystick that the button to fire with is located
+	 * @param button - the button assignment for test firing
+	 */
+	public AirSystemTester(int[] solenoids, int stickNum, int button) {
+		air = new AirSystem(new Compressor(),solenoids);
+		stick = new Joystick(stickNum);
+		buttonAssignment = button;
+		air.retract();
+	}
+
+
+	/**
+	 * This function is called to listen for button press event to trigger
+	 *  the solenoid
+	 */
+	public void test() {
+		if(stick.getRawButton(buttonAssignment) == true) {
+			air.extend();
+			System.out.println("Extend");
+		}
+
+		else {
+			air.retract();
+			System.out.println("Retract");
+		}
+
+	}
+
+}
