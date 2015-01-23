@@ -6,10 +6,10 @@ import org.usfirst.frc.team1683.robot.vision.Vision;
 public class VisionTest implements Tester{
 	
 //	Blob testBlob = new Blob(0);
-//	Vision vision;
+	Vision vision;
 	
 	public VisionTest() {
-//		vision = new Vision();
+		vision = new Vision();
 	}
 	
 	public void test() {

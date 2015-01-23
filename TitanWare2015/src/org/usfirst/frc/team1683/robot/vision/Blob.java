@@ -37,10 +37,13 @@ public class Blob {
 		int xPos;
 		int yPos;
 		try {
-			final NumberArray data = new NumberArray();
-			Vision.table.retrieveValue("Vision", data);
-			if (data.size()>0){
-				System.out.println(data.get(0) + ' ' + data.get(1));
+//			System.out.println("try works");
+			final NumberArray COG_X = new NumberArray();
+//			final NumberArray COG_Y = new NumberArray();
+			Vision.table.retrieveValue("COG_X", COG_X);
+//			Vision.table.retrieveValue("COG_Y", COG_Y);
+			if (COG_X.size()>0){
+				System.out.println(COG_X.get(0));// + ' ' + COG_X.get(1));
 				}
 			else {
 				System.out.println("Nope");
