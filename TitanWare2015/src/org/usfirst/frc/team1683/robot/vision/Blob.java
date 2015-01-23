@@ -21,7 +21,6 @@ public class Blob {
 	 * @param table Network Table
 	 * @param index Index of blob
 	 */
-	@SuppressWarnings("deprecation")
 	public Blob(int index) {
 		this.INDEX = index;
 //		this.data = new NumberArray();
