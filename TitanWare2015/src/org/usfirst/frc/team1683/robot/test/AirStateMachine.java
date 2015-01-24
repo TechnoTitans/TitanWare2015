@@ -46,12 +46,13 @@ public class AirStateMachine {
 		this.stickNum = stickNum;
 	}
 	
-	public void run(){
+	public void test(){
 		switch(presentState){
 		case INIT_CASE:
 		{
 			timer.start();
 			nextState = WAIT_FOR_BUTTON;
+			break;
     	}
 		case WAIT_FOR_BUTTON:
 		{
@@ -59,12 +60,14 @@ public class AirStateMachine {
 				nextState = OPEN_VALVE;
 			else
 				nextState = WAIT_FOR_BUTTON;
-			
+			break;
 		}
 		case OPEN_VALVE:
 		{
 			air.extend();
+			timer.reset();
 			nextState = DELAY;
+			break;
 		}
 		case DELAY:
 		{
@@ -72,18 +75,21 @@ public class AirStateMachine {
 				nextState = CLOSE_VALVE;
 			else
 				nextState = DELAY;
+			break;
 		}
 		case CLOSE_VALVE:
 		{
 			timer.reset();
 			air.retract();
 			nextState = WAIT_FOR_BUTTON;
+			break;
 		}
 		default:
 		{
 			nextState = INIT_CASE;
+			break;
 		}
-    	presentState = nextState;
 		}
+		presentState = nextState;
 	}
 }
