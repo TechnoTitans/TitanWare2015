@@ -2,6 +2,7 @@
 package org.usfirst.frc.team1683.robot;
 
 import org.usfirst.frc.team1683.robot.main.Autonomous;
+import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.main.TeleOp;
 //import org.usfirst.frc.team1683.robot.test.AirSystemTester;
 //import org.usfirst.frc.team1683.robot.test.VisionTest;
@@ -31,6 +32,8 @@ public class TechnoTitan extends IterativeRobot {
     	//soloTester = new AirSystemTester(new int[]{PCM.SOLENOID_0} ,1);
     	stateMachine = new AirStateMachine(new int[]{PCM.SOLENOID_0}, HWR.AUX_JOYSTICK,1);
     	//visionTest = new VisionTest();
+    	
+    	DriverStation.prefDouble("delay", 0.075);
     }
 
     /**

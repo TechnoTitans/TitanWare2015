@@ -36,7 +36,7 @@ public class AirStateMachine {
 		valveDelay = 0.075;
 		this.stickNum = 0;
 		
-		DriverStation.prefDouble("delay", .020);
+		//DriverStation.prefDouble("delay", 0.075);
 	}
 	
 	public AirStateMachine(int[] solenoids, int stickNum, int button) {
@@ -49,7 +49,7 @@ public class AirStateMachine {
 		valveDelay = 0.075;
 		this.stickNum = stickNum;
 		
-		//DriverStation.prefDouble("delay", .020);
+		//DriverStation.prefDouble("delay", 0.075);
 	}
 	
 	public void test(){
