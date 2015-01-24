@@ -32,7 +32,8 @@ public class AirStateMachine {
 		buttonAssignment = button;
 		air.retract();
 		timer = new Timer();
-		valveDelay = DriverStation.getDouble("delay");
+		//valveDelay = DriverStation.getDouble("delay");
+		valveDelay = 0.05;
 		this.stickNum = 0;
 		
 		DriverStation.prefDouble("delay", .020);
@@ -44,22 +45,23 @@ public class AirStateMachine {
 		buttonAssignment = button;
 		air.retract();
 		timer = new Timer();
-		valveDelay = DriverStation.getDouble("delay");
+		//valveDelay = DriverStation.getDouble("delay");
+		valveDelay = 0.05;
 		this.stickNum = stickNum;
 		
-		DriverStation.prefDouble("delay", .020);
+		//DriverStation.prefDouble("delay", .020);
 	}
 	
 	public void test(){
 		switch(presentState){
 		case INIT_CASE:
 		{
+			timer.start();
 			nextState = WAIT_FOR_BUTTON;
 			break;
     	}
 		case WAIT_FOR_BUTTON:
 		{
-			timer.reset();
 			if (DriverStation.antiBounce(stickNum, buttonAssignment))
 			//if (stick.getRawButton(buttonAssignment) == true)
 				nextState = OPEN_VALVE;
@@ -70,7 +72,6 @@ public class AirStateMachine {
 		case OPEN_VALVE:
 		{
 			System.out.println(valveDelay);
-			timer.start();
 			air.extend();
 			timer.reset();
 			nextState = DELAY;
@@ -87,7 +88,6 @@ public class AirStateMachine {
 		case CLOSE_VALVE:
 		{
 			air.retract();
-			timer.stop();
 			nextState = WAIT_FOR_BUTTON;
 			break;
 		}
