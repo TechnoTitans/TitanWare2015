@@ -1,6 +1,6 @@
 package org.usfirst.frc.team1683.robot.test;
 
-import org.usfirst.frc.team1683.robot.HWP;
+import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.pneumatics.AirSystem;
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -23,7 +23,19 @@ public class AirSystemTester implements Tester{
 	 */
 	public AirSystemTester(int[] solenoids, int button) {
 		air = new AirSystem(new Compressor(),solenoids);
-		stick = new Joystick(HWP.JOY_0);
+		stick = new Joystick(HWR.AUX_JOYSTICK);
+		buttonAssignment = button;
+		air.retract();
+	}
+	
+	/**
+	 * @param PcmNum - the PCM ID the solenoids are connected to
+	 * @param solenoids - an int array of all solenoids to be tested
+	 * @param button - the button assignment for test firing (default on aux joystick)
+	 */
+	public AirSystemTester(int PcmNum, int[] solenoids, int button) {
+		air = new AirSystem(new Compressor(), PcmNum, solenoids);
+		stick = new Joystick(HWR.AUX_JOYSTICK);
 		buttonAssignment = button;
 		air.retract();
 	}
@@ -43,7 +55,7 @@ public class AirSystemTester implements Tester{
 
 	/**
 	 * This function is called to listen for button press event to trigger
-	 *  the solenoid
+	 * the solenoid
 	 */
 	public void test() {
 		if(stick.getRawButton(buttonAssignment) == true) {
@@ -55,7 +67,8 @@ public class AirSystemTester implements Tester{
 			air.retract();
 			System.out.println("Retract");
 		}
-
+		air.printDiags();
 	}
+	
 
 }

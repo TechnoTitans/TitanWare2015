@@ -1,6 +1,6 @@
 package org.usfirst.frc.team1683.robot.test;
 
-import org.usfirst.frc.team1683.robot.HWP;
+import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.pneumatics.AirSystem;
 
@@ -28,11 +28,12 @@ public class AirStateMachine {
 	
 	public AirStateMachine(int[] solenoids, int button) {
 		air = new AirSystem(new Compressor(),solenoids);
-		stick = new Joystick(HWP.JOY_0);
+		stick = new Joystick(HWR.AUX_JOYSTICK);
 		buttonAssignment = button;
 		air.retract();
 		timer = new Timer();
 		valveDelay = DriverStation.getDouble("delay");
+		this.stickNum = 0;
 		
 		DriverStation.prefDouble("delay", .020);
 	}
@@ -42,20 +43,24 @@ public class AirStateMachine {
 		stick = new Joystick(stickNum);
 		buttonAssignment = button;
 		air.retract();
+		timer = new Timer();
 		valveDelay = DriverStation.getDouble("delay");
 		this.stickNum = stickNum;
+		
+		DriverStation.prefDouble("delay", .020);
 	}
 	
 	public void run(){
 		switch(presentState){
 		case INIT_CASE:
 		{
-			timer.start();
 			nextState = WAIT_FOR_BUTTON;
     	}
 		case WAIT_FOR_BUTTON:
 		{
+			timer.reset();
 			if (DriverStation.antiBounce(stickNum, buttonAssignment))
+			//if (stick.getRawButton(buttonAssignment) == true)
 				nextState = OPEN_VALVE;
 			else
 				nextState = WAIT_FOR_BUTTON;
@@ -63,6 +68,8 @@ public class AirStateMachine {
 		}
 		case OPEN_VALVE:
 		{
+			System.out.println(valveDelay);
+			timer.start();
 			air.extend();
 			nextState = DELAY;
 		}
@@ -75,8 +82,8 @@ public class AirStateMachine {
 		}
 		case CLOSE_VALVE:
 		{
-			timer.reset();
 			air.retract();
+			timer.stop();
 			nextState = WAIT_FOR_BUTTON;
 		}
 		default:

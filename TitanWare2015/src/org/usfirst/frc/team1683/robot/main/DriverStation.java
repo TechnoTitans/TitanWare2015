@@ -168,19 +168,19 @@ public class DriverStation {
            pressed = DriverStation.leftStick.getRawButton(button);
        else if (joystick == 2)
            pressed = DriverStation.rightStick.getRawButton(button);
-       else if (joystick == 3)
+       else if (joystick == 0)
            pressed = DriverStation.auxStick.getRawButton(button);
        
-       if(pressed && !lasts[joystick-1][button-1]){
-           lasts[joystick-1][button-1] = true;
+       if(pressed && !lasts[joystick][button-1]){
+           lasts[joystick][button-1] = true;
            return true;
        }
-       else if (pressed && lasts[joystick-1][button-1]){
+       else if (pressed && lasts[joystick][button-1]){
            return false;
        }
        else
        {
-           lasts[joystick-1][button-1] = false;
+           lasts[joystick][button-1] = false;
            return false;
        }
     }

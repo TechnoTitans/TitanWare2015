@@ -16,7 +16,7 @@ public class AirSystem {
 	final static boolean RETRACTED = false;
 	
 	Compressor compressor;
-	
+	int PcmNum;
 	ArrayList<Solenoid> solenoids = new ArrayList<Solenoid>();
 	
 	/**
@@ -28,6 +28,15 @@ public class AirSystem {
 		for (int i = 0; i < solenoid.length; i++) {
 			int channel = solenoid[i];
 			solenoids.add(new Solenoid(channel));
+		}
+	}
+	
+	public AirSystem(Compressor compressor, int PcmNum, int[] solenoid ){
+		this.compressor = compressor;
+		this.PcmNum = PcmNum;
+		for (int i = 0; i < solenoid.length; i++) {
+			int channel = solenoid[i];
+			solenoids.add(new Solenoid(PcmNum,channel));
 		}
 	}
 	
@@ -47,6 +56,31 @@ public class AirSystem {
 		for(Solenoid solenoid : solenoids){
 			solenoid.set(RETRACTED);
 		}
+	}
+	
+	/**Get the current being used by the compressor.
+	 * @return current consumed in amps for the compressor
+	 */
+	public float getCurrent(){
+		return compressor.getCompressorCurrent();
+	}
+	
+	public void printDiags(){
+		//Problems-System.out.println("Compressor disconnected: " + compressor.getCompressorNotConnectedFault());
+		System.out.println("Compressor current is too high: " +
+							compressor.getCompressorCurrentTooHighFault());
+		System.out.println("Solenoids blacklisted: " + countBlacklistedSolenoids());
+		System.out.println("Compressor current: " + getCurrent() + "Amps");
+	}
+	
+	public int countBlacklistedSolenoids(){
+		int count = 0;
+		for(Solenoid solenoid : solenoids){
+			if (solenoid.isBlackListed() == true){
+				count++;
+			}
+		}
+		return count;
 	}
 
 	/**
