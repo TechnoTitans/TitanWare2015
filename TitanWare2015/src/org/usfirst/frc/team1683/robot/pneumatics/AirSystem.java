@@ -31,6 +31,11 @@ public class AirSystem {
 		}
 	}
 	
+	/**
+	 * @param compressor - the compressor for the air system, usually one per robot.
+	 * @param PcmNum - the PCM ID that the AirSystem is connected to.
+	 * @param solenoid - an int array of all the solenoid channels of an AirSystem.
+	 */
 	public AirSystem(Compressor compressor, int PcmNum, int[] solenoid ){
 		this.compressor = compressor;
 		this.PcmNum = PcmNum;
@@ -65,6 +70,9 @@ public class AirSystem {
 		return compressor.getCompressorCurrent();
 	}
 	
+	/**Prints various messages to NetConsole regarding the status of the AirSystem
+	 * 
+	 */
 	public void printDiags(){
 		//Problems-System.out.println("Compressor disconnected: " + compressor.getCompressorNotConnectedFault());
 		System.out.println("Compressor current is too high: " +
@@ -73,6 +81,10 @@ public class AirSystem {
 		System.out.println("Compressor current: " + getCurrent() + "Amps");
 	}
 	
+	
+	/**
+	 * @return the count of blacklisted solenoids
+	 */
 	public int countBlacklistedSolenoids(){
 		int count = 0;
 		for(Solenoid solenoid : solenoids){
