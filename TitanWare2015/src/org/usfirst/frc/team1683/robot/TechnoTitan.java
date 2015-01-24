@@ -52,7 +52,7 @@ public class TechnoTitan extends IterativeRobot {
      */
     public void testPeriodic() {
     	//soloTester.test();
-    	stateMachine.run();
+    	stateMachine.test();
     	//visionTest.test();
     }
     
