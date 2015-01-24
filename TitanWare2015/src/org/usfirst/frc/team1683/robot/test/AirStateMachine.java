@@ -33,7 +33,7 @@ public class AirStateMachine {
 		air.retract();
 		timer = new Timer();
 		//valveDelay = DriverStation.getDouble("delay");
-		valveDelay = 0.05;
+		valveDelay = 0.075;
 		this.stickNum = 0;
 		
 		DriverStation.prefDouble("delay", .020);
@@ -46,7 +46,7 @@ public class AirStateMachine {
 		air.retract();
 		timer = new Timer();
 		//valveDelay = DriverStation.getDouble("delay");
-		valveDelay = 0.05;
+		valveDelay = 0.075;
 		this.stickNum = stickNum;
 		
 		//DriverStation.prefDouble("delay", .020);

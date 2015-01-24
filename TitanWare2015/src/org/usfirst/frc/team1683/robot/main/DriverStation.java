@@ -184,4 +184,10 @@ public class DriverStation {
            return false;
        }
     }
+    
+    public static boolean antiBounce(Joystick joystick, int button){
+    	boolean pressed = false;
+    	
+    	return true;
+    }
 }
