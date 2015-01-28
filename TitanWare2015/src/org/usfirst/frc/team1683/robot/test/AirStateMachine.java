@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1683.robot.test;
 
 import org.usfirst.frc.team1683.robot.HWR;
+import edu.wpi.first.wpilibj.Preferences;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.pneumatics.AirSystem;
 
@@ -16,6 +17,7 @@ public class AirStateMachine {
 	double valveDelay;
 	Timer timer;
 	int stickNum;
+	Preferences preferences;
 	
 	//State Machine Variables
 	static final int INIT_CASE				 = 0;
@@ -36,7 +38,7 @@ public class AirStateMachine {
 		valveDelay = 0.075;
 		this.stickNum = 0;
 		
-		//DriverStation.prefDouble("delay", 0.075);
+		//preferences.putDouble("delay", 0.075);
 	}
 	
 	public AirStateMachine(int[] solenoids, int stickNum, int button) {

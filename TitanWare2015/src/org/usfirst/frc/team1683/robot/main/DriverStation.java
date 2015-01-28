@@ -75,7 +75,7 @@ public class DriverStation {
      */
     
     /**
-     * Sends the integer to be stored in Preferences in the cRIO
+     * Sends the integer to be stored in Preferences in the roboRIO
      * @param key Name of the value 
      * @param val int Value to be sent 
      */
@@ -84,7 +84,7 @@ public class DriverStation {
     }
     
     /**
-     * Sends the boolean to be stored in Preferences in the cRIO
+     * Sends the boolean to be stored in Preferences in the roboRIO
      * @param key Name of the value 
      * @param val boolean Value to be sent 
      */
@@ -93,7 +93,7 @@ public class DriverStation {
     }
     
     /**
-     * Sends the String to be stored in Preferences in the cRIO
+     * Sends the String to be stored in Preferences in the roboRIO
      * @param key Name of the value
      * @param val String Value to be sent 
      */
@@ -102,7 +102,7 @@ public class DriverStation {
     }
     
     /**
-     * Sends the double to be stored in Preferences in the cRIO
+     * Sends the double to be stored in Preferences in the roboRIO
      * @param key Name of the value
      * @param val double value to be sent
      */
@@ -111,11 +111,11 @@ public class DriverStation {
     }
     
     /*
-     * Methods to get data from the cRIO
+     * Methods to get data from the roboRIO
      */
     
      /**
-     * Receives the value from cRIO
+     * Receives the value from roboRIO
      * Default is false if no boolean value is found with the key
      * @param key Value name 
      */
@@ -124,7 +124,7 @@ public class DriverStation {
     }
     
     /**
-     * Receives the value from cRIO
+     * Receives the value from roboRIO
      * Default is "null" if no string is found with the key
      * @param key Value name 
      * @return null if no string is found
@@ -134,7 +134,7 @@ public class DriverStation {
     }
     
     /**
-     * Receives the value from cRIO
+     * Receives the value from roboRIO
      * Default is 0.0 if no double is found with the key
      * @param key Value name 
      * @return 0.0 if key is not found
@@ -144,7 +144,7 @@ public class DriverStation {
     }
     
     /**
-     * Receives the value from cRIO
+     * Receives the value from roboRIO
      * Default is 0 if no integer found with the key
      * @param key Value name 
      * @return 0 if key is not found 
