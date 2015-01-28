@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team1683.robot;
 
+import org.usfirst.frc.team1683.robot.drivetrain.TalonSRX;
 import org.usfirst.frc.team1683.robot.main.Autonomous;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.main.TeleOp;
@@ -8,6 +9,7 @@ import org.usfirst.frc.team1683.robot.main.TeleOp;
 //import org.usfirst.frc.team1683.robot.test.VisionTest;
 
 import org.usfirst.frc.team1683.robot.test.AirStateMachine;
+import org.usfirst.frc.team1683.robot.test.TalonSRXTest;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 
@@ -23,6 +25,7 @@ public class TechnoTitan extends IterativeRobot {
 	//AirSystemTester soloTester;
 	AirStateMachine stateMachine;
 	//VisionTest visionTest;
+	TalonSRXTest talonTest;
 	
 	/**
      * This function is run when the robot is first started up and should be
@@ -32,7 +35,7 @@ public class TechnoTitan extends IterativeRobot {
     	//soloTester = new AirSystemTester(new int[]{PCM.SOLENOID_0} ,1);
     	stateMachine = new AirStateMachine(new int[]{PCM.SOLENOID_0}, HWR.AUX_JOYSTICK,1);
     	//visionTest = new VisionTest();
-    	
+    	talonTest = new TalonSRXTest(new TalonSRX(1));
     	DriverStation.prefDouble("delay", 0.075);
     }
 
@@ -57,6 +60,7 @@ public class TechnoTitan extends IterativeRobot {
     	//soloTester.test();
     	stateMachine.test();
     	//visionTest.test();
+    	talonTest.test();
     }
     
 }
