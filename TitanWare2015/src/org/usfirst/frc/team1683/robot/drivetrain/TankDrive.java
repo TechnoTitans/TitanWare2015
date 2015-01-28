@@ -4,7 +4,11 @@ import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
 
 import edu.wpi.first.wpilibj.Joystick;
-
+/**
+ * 
+ * @author Animesh Koratana & Seung-Seok
+ *
+ */
 public class TankDrive extends DriveTrain{
 
 	MotorGroup left;

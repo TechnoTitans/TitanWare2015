@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 
 /**Class to represent any particular system of solenoids acting in unison.
  * The compressor is shared amongst these systems.
- * @author Sreyas Mirthipati
+ * @author Animesh Koratana
  *
  */
 public class AirSystem {

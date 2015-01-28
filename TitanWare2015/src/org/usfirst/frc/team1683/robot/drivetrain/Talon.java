@@ -1,5 +1,9 @@
 package org.usfirst.frc.team1683.robot.drivetrain;
-
+/**
+ * 
+ * @author Animesh Koratana & Seung-Seok
+ *
+ */
 public class Talon extends edu.wpi.first.wpilibj.Talon implements Motor{
 
 	boolean hasEncoder;

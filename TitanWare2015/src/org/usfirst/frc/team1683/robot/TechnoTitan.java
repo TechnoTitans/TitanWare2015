@@ -1,11 +1,9 @@
-
 package org.usfirst.frc.team1683.robot;
 
 import org.usfirst.frc.team1683.robot.main.Autonomous;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.main.TeleOp;
-//import org.usfirst.frc.team1683.robot.test.AirSystemTester;
-//import org.usfirst.frc.team1683.robot.test.VisionTest;
+
 
 import org.usfirst.frc.team1683.robot.test.AirStateMachine;
 

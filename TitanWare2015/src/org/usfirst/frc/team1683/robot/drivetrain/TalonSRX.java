@@ -1,5 +1,9 @@
 package org.usfirst.frc.team1683.robot.drivetrain;
-
+/**
+ * 
+ * @author Animesh Koratana & Seung-Seok
+ *
+ */
 public class TalonSRX extends edu.wpi.first.wpilibj.TalonSRX implements Motor{
 
 	boolean hasEncoder;
