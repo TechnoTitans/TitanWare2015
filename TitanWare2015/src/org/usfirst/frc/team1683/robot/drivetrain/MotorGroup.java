@@ -3,7 +3,11 @@ package org.usfirst.frc.team1683.robot.drivetrain;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * 
+ * @author Animesh Koratana
+ *
+ */
 public class MotorGroup {
 	List<Motor> motors;
 	

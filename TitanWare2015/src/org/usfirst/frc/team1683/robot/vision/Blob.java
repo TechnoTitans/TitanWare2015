@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1683.robot.vision;
 
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.networktables2.type.NumberArray;
 import edu.wpi.first.wpilibj.tables.TableKeyNotDefinedException;
 
@@ -39,7 +40,7 @@ public class Blob {
 //			System.out.println("try works");
 			final NumberArray COG_X = new NumberArray();
 //			final NumberArray COG_Y = new NumberArray();
-			Vision.table.retrieveValue("COG_X", COG_X);
+			NetworkTable.getTable("Vision").retrieveValue("COG_X", COG_X);
 //			Vision.table.retrieveValue("COG_Y", COG_Y);
 			if (COG_X.size()>0){
 				System.out.println(COG_X.get(0));// + ' ' + COG_X.get(1));

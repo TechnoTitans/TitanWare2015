@@ -9,13 +9,13 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
  */
 public class Vision {
 	
-	public static NetworkTable table;
+	public NetworkTable table;
 	
 	/**
 	 * Constructor
 	 */
 	public Vision() {
-		table = NetworkTable.getTable("Vision"); // Table to get data from RoboRealm
+		this.table = NetworkTable.getTable("Vision"); // Table to get data from RoboRealm
 	}
 	
 //	/**

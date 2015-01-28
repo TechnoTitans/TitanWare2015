@@ -19,4 +19,5 @@ public class AnalogAccel extends AnalogAccelerometer implements Sensor {
 	public double getRaw() {
 		return super.getAcceleration();
 	}
+
 }
