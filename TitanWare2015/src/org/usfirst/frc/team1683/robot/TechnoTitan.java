@@ -12,6 +12,7 @@ import org.usfirst.frc.team1683.robot.test.AirStateMachine;
 import org.usfirst.frc.team1683.robot.test.TalonSRXTest;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Joystick;
 
 /**
  * The VM is configured to automatically run this class, and to call the
