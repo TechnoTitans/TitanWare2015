@@ -15,6 +15,7 @@ public class Blob {
 	public int height;
 	public int width;
 	public final int INDEX;
+	NetworkTable table;
 //	public final NumberArray data;
 	
 	/**
@@ -22,10 +23,10 @@ public class Blob {
 	 * @param table Network Table
 	 * @param index Index of blob
 	 */
-	public Blob(int index) {
+	public Blob(NetworkTable table, int index) {
 		this.INDEX = index;
+		this.table = table;
 //		this.data = new NumberArray();
-//		table.retrieveValue("blobs", data);
 	}
 	
 	/**
@@ -33,26 +34,27 @@ public class Blob {
 	 * @param table
 	 * @return
 	 */
-	public void getCenter(){
+	public ScreenPos getCenter(){
 		int xPos;
 		int yPos;
 		try {
-//			System.out.println("try works");
-			final NumberArray COG_X = new NumberArray();
+			xPos = (int) table.getNumber("COG_X");
+//			final NumberArray COG_X = new NumberArray();
 //			final NumberArray COG_Y = new NumberArray();
-			NetworkTable.getTable("Vision").retrieveValue("COG_X", COG_X);
+//			table.retrieveValue("COG_X", COG_X);
 //			Vision.table.retrieveValue("COG_Y", COG_Y);
-			if (COG_X.size()>0){
-				System.out.println(COG_X.get(0));// + ' ' + COG_X.get(1));
-				}
-			else {
-				System.out.println("Nope");
-			}
+//			if (COG_X.size()>0){
+//				System.out.println(COG_X.get(0));// + ' ' + COG_X.get(1));
+//				}
+//			else {
+//				System.out.println("Array is empty.");
+			System.out.println(xPos);
+//			}
 		}
 		catch(TableKeyNotDefinedException exp) {
-			System.out.println("Error");
+			System.out.println("TableKeyNotDefinedException");
 		}
 		
-//		return new ScreenPos(xPos, yPos);
+		return null;
 	}
 }

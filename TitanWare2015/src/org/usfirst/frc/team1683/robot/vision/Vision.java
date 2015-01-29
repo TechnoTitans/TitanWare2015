@@ -1,6 +1,6 @@
 package org.usfirst.frc.team1683.robot.vision;
 
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.CameraServer;
 
 /**
  * Class to interpret output from RoboRealm
@@ -9,13 +9,15 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
  */
 public class Vision {
 	
-	public NetworkTable table;
+//	public static NetworkTable table;
+//	public CameraServer server;
 	
 	/**
 	 * Constructor
 	 */
 	public Vision() {
-		this.table = NetworkTable.getTable("Vision"); // Table to get data from RoboRealm
+		CameraServer.getInstance().startAutomaticCapture("cam1");
+//		table = NetworkTable.getTable("Vision"); // Table to get data from RoboRealm
 	}
 	
 //	/**

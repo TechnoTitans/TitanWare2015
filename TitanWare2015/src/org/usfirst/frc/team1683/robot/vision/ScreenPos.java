@@ -20,7 +20,7 @@ public class ScreenPos {
 	 * @param xPos The X position of the coordinate.
 	 * @param yPos The Y position of the coordinate.
 	 */
-	public ScreenPos(int xPos, int yPos) {
+	public ScreenPos(int xPos, int yPos) throws CoordinateOutOfBoundsError {
 		if(coordValid(xPos,'x') && coordValid(yPos,'y')) {
 			this.xPos = xPos;
 			this.yPos = yPos;
