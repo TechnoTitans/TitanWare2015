@@ -37,7 +37,7 @@ public class TechnoTitan extends IterativeRobot {
     	//soloTester = new AirSystemTester(new int[]{PCM.SOLENOID_0} ,1);
     	stateMachine = new AirStateMachine(new int[]{PCM.SOLENOID_0}, HWR.AUX_JOYSTICK,1);
     	//visionTest = new VisionTest();
-    	talonTest = new TalonSRXTest(new TalonSRX(1));
+    	//talonTest = new TalonSRXTest(new TalonSRX(1));
     	DriverStation.prefDouble("delay", 0.075);
     	tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, new int[]{HWR.RIGHT_MOTOR}, Talon.class, HWR.GYRO);
     }
@@ -63,7 +63,7 @@ public class TechnoTitan extends IterativeRobot {
     	//soloTester.test();
     	stateMachine.test();
     	//visionTest.test();
-    	talonTest.test();
+    	//talonTest.test();
     	tankDrive.driveMode(DriverStation.rightStick, DriverStation.leftStick);
     }
     
