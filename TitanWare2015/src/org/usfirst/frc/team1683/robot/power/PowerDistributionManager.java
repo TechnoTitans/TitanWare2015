@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
  * @author Animesh Koratana
  *
  */
-public class PowerDistributionManager {
+public class PowerDistributionManager implements Runnable{
 	
 	private PowerDistributionPanel powerDistPanel;
 	List<RobotElementListener> channelListeners;
@@ -48,6 +48,21 @@ public class PowerDistributionManager {
 		for (Iterator<RobotElementListener> iterator = channelListeners.iterator(); iterator.hasNext();) {
 			RobotElementListener robotElementListener = (RobotElementListener) iterator.next();
 			robotElementListener.listenAndReact();
+		}
+	}
+
+	@Override
+	public void run() {
+		while (true){
+			temperature.listen(powerDistPanel.getTemperature());
+			voltage.listen(powerDistPanel.getVoltage());
+			power.listen(powerDistPanel.getTotalPower());
+			energy.listen(powerDistPanel.getTotalEnergy());
+			current.listen(powerDistPanel.getTotalCurrent());
+			for (Iterator<RobotElementListener> iterator = channelListeners.iterator(); iterator.hasNext();) {
+				RobotElementListener robotElementListener = (RobotElementListener) iterator.next();
+				robotElementListener.listenAndReact();
+			}
 		}
 	}
 
