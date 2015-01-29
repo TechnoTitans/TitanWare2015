@@ -1,16 +1,17 @@
 package org.usfirst.frc.team1683.robot;
 
 import org.usfirst.frc.team1683.robot.drivetrain.TalonSRX;
+import org.usfirst.frc.team1683.robot.drivetrain.TankDrive;
 import org.usfirst.frc.team1683.robot.main.Autonomous;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.main.TeleOp;
-
-
+import org.usfirst.frc.team1683.robot.sensors.Gyro;
 import org.usfirst.frc.team1683.robot.test.AirStateMachine;
 import org.usfirst.frc.team1683.robot.test.TalonSRXTest;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Talon;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -25,6 +26,8 @@ public class TechnoTitan extends IterativeRobot {
 	AirStateMachine stateMachine;
 	//VisionTest visionTest;
 	TalonSRXTest talonTest;
+	Gyro gyro;
+	TankDrive tankDrive;
 	
 	/**
      * This function is run when the robot is first started up and should be
@@ -36,6 +39,7 @@ public class TechnoTitan extends IterativeRobot {
     	//visionTest = new VisionTest();
     	talonTest = new TalonSRXTest(new TalonSRX(1));
     	DriverStation.prefDouble("delay", 0.075);
+    	tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, new int[]{HWR.RIGHT_MOTOR}, Talon.class, HWR.GYRO);
     }
 
     /**
@@ -60,6 +64,7 @@ public class TechnoTitan extends IterativeRobot {
     	stateMachine.test();
     	//visionTest.test();
     	talonTest.test();
+    	tankDrive.driveMode(DriverStation.rightStick, DriverStation.leftStick);
     }
     
 }
