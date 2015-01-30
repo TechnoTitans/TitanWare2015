@@ -11,8 +11,11 @@ public class HWR {
 	public static final int RIGHT_MOTOR				= HWP.PWM_1;
 	
 	public static final int GYRO					= HWP.DIO_0;
-
-
+	
+	public static final int LEFT_CHANNEL_A			= HWP.DIO_1;
+	public static final int LEFT_CHANNEL_B			= HWP.DIO_2;
+	public static final int RIGHT_CHANNEL_A			= HWP.DIO_3;
+	public static final int RIGHT_CHANNEL_B			= HWP.DIO_4;
 
 
 

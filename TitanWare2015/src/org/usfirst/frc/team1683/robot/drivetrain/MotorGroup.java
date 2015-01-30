@@ -10,6 +10,7 @@ import java.util.List;
  */
 public class MotorGroup {
 	List<Motor> motors;
+	Encoder encoder;
 	
 	public MotorGroup(int[] channelNumbers, Class<Motor> motorType, boolean inverseDirection)  {
 		motors = new ArrayList<Motor>();
@@ -21,6 +22,20 @@ public class MotorGroup {
 				motors.add(new TalonSRX(j, inverseDirection));
 			}
 		}
+	}
+	
+	public MotorGroup(int[] channelNumbers, Class<Motor> motorType, boolean inverseDirection, Encoder encoder)
+	{
+		motors = new ArrayList<Motor>();
+		for (int i = 0; i < channelNumbers.length; i++) {
+			int j = channelNumbers[i];
+			if (motorType.equals(Talon.class)){
+				motors.add(new Talon(j, inverseDirection));
+			}else if (motorType.equals(TalonSRX.class)){
+				motors.add(new TalonSRX(j, inverseDirection));
+			}
+		}
+		this.encoder = encoder;
 	}
 	
 	public void moveDistance(double distanceInMeters){

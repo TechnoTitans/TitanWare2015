@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1683.robot.drivetrain;
 
+import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
 
@@ -21,6 +22,14 @@ public class TankDrive extends DriveTrain{
 	public TankDrive(int[] leftMotorInputs,boolean leftInverse, int[] rightMotorInputs, boolean rightInverse, Class motorType, int gyroChannel) {
 		left = new MotorGroup(leftMotorInputs, motorType, leftInverse);
 		right = new MotorGroup(rightMotorInputs, motorType, rightInverse);
+		gyro = new Gyro(gyroChannel);
+		startAngle = gyro.getAngle();
+	}
+	
+	public TankDrive(int[] leftMotorInputs,boolean leftInverse, int[] rightMotorInputs, boolean rightInverse, 
+			Class motorType, int gyroChannel, int leftChannelA, int leftChannelB, int rightChannelA, int rightChannelB) {
+		left = new MotorGroup(leftMotorInputs, motorType, leftInverse, new Encoder(leftChannelA, leftChannelB, leftInverse));
+		right = new MotorGroup(rightMotorInputs, motorType, rightInverse, new Encoder(rightChannelA, rightChannelB, rightInverse));
 		gyro = new Gyro(gyroChannel);
 		startAngle = gyro.getAngle();
 	}

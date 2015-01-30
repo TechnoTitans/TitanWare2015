@@ -9,6 +9,9 @@ public class DriveTester implements Tester{
 	double distance;
 	double bearing;
 	
+//	DriverStation.prefDouble("distance", 1);
+//	DriverStation.prefDouble("bearing", 90);
+	
 	public DriveTester(DriveTrain driveTrain){
 		this.driveTrain = driveTrain;
 		distance = DriverStation.getDouble("distance");

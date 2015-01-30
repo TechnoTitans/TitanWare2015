@@ -37,6 +37,8 @@ public class TechnoTitan extends IterativeRobot {
     	DriverStation.prefDouble("bearing", 90);
     	
     	tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, true , new int[]{HWR.RIGHT_MOTOR},false , Talon.class, HWR.GYRO);
+//    	tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, true , new int[]{HWR.RIGHT_MOTOR},false , Talon.class, HWR.GYRO, 
+//    			HWR.LEFT_CHANNEL_A, HWR.LEFT_CHANNEL_B, HWR.RIGHT_CHANNEL_A, HWR.RIGHT_CHANNEL_B);
     	
 //    	stateMachine = new AirStateMachine(new int[]{PCM.SOLENOID_0,PCM.SOLENOID_1,PCM.SOLENOID_2,
 //    			PCM.SOLENOID_3,PCM.SOLENOID_4,PCM.SOLENOID_5,PCM.SOLENOID_6}, HWR.AUX_JOYSTICK,1);

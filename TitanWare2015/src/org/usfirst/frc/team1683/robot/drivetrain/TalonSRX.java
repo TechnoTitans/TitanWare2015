@@ -23,6 +23,7 @@ public class TalonSRX extends edu.wpi.first.wpilibj.TalonSRX implements Motor{
 		super(channel);
 		this.encoder = new Encoder(aChannel, bChannel, reverseDirection);
 		this.hasEncoder = true;
+		this.reverseDirection = reverseDirection;
 	}
 
 	public void moveDistance(double distanceInMeters){
