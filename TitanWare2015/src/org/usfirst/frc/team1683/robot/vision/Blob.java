@@ -14,7 +14,7 @@ public class Blob {
 	public ScreenPos center;
 	public int height;
 	public int width;
-	public final int INDEX;
+//	public final int INDEX;
 	NetworkTable table;
 //	public final NumberArray data;
 	
@@ -23,38 +23,38 @@ public class Blob {
 	 * @param table Network Table
 	 * @param index Index of blob
 	 */
-	public Blob(NetworkTable table, int index) {
-		this.INDEX = index;
+	public Blob(NetworkTable table) {
+//		this.INDEX = index;
 		this.table = table;
 //		this.data = new NumberArray();
 	}
 	
 	/**
-	 * Gets center of blob specified.
-	 * @param table
-	 * @return
+	 * Gets the center of all blobs on screen
+	 * @param table 	NetworkTable
+	 * @return 			An array of blobs and their centers. 
 	 */
-	public ScreenPos getCenter(){
-		int xPos;
-		int yPos;
+	public ScreenPos[] getCenter(){
+//		int xPos;
+//		int yPos;
+		NumberArray COG_X = new NumberArray();
 		try {
-			xPos = (int) table.getNumber("COG_X");
-//			final NumberArray COG_X = new NumberArray();
+//			xPos = (int) table.getNumber("COG_X");
 //			final NumberArray COG_Y = new NumberArray();
-//			table.retrieveValue("COG_X", COG_X);
+			NetworkTable.getTable("Vision").retrieveValue("COG_X", COG_X);
 //			Vision.table.retrieveValue("COG_Y", COG_Y);
-//			if (COG_X.size()>0){
-//				System.out.println(COG_X.get(0));// + ' ' + COG_X.get(1));
-//				}
-//			else {
-//				System.out.println("Array is empty.");
-			System.out.println(xPos);
-//			}
+			if (COG_X.size()>0){
+				System.out.println(COG_X.get(0));// + ' ' + COG_X.get(1));
+			}
+			else {
+				System.out.println("Array is empty.");
+//				System.out.println();
+			}
 		}
 		catch(TableKeyNotDefinedException exp) {
 			System.out.println("TableKeyNotDefinedException");
 		}
-		
+
 		return null;
 	}
 }

@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.CameraServer;
 public class Vision {
 	
 //	public static NetworkTable table;
-//	public CameraServer server;
 	
 	/**
 	 * Constructor
