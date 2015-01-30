@@ -40,7 +40,7 @@ public class TechnoTitan extends IterativeRobot {
     	DriverStation.prefDouble("bearing", 90);
     	gyro =new Gyro(HWR.GYRO);
     	gyrotest = new GyroTest(gyro);
-    	tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, true , new int[]{HWR.RIGHT_MOTOR},false , Talon.class, HWR.GYRO);
+//    	tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, true , new int[]{HWR.RIGHT_MOTOR},false , Talon.class, HWR.GYRO);
 //    	tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, true , new int[]{HWR.RIGHT_MOTOR},false , Talon.class, HWR.GYRO, 
 //    			HWR.LEFT_CHANNEL_A, HWR.LEFT_CHANNEL_B, HWR.RIGHT_CHANNEL_A, HWR.RIGHT_CHANNEL_B);
     	
@@ -76,7 +76,7 @@ public class TechnoTitan extends IterativeRobot {
     	visionTest.test();
     	//talonTest.test();
 //    	tankDrive.driveMode(DriverStation.rightStick, DriverStation.leftStick);
-    	driveTester.test();
+//    	driveTester.test();
     	gyrotest.test();
     }
     
