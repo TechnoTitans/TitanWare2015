@@ -14,9 +14,10 @@ public class Talon extends edu.wpi.first.wpilibj.Talon implements Motor{
 	double mediumSpeed;
 	double highSpeed;	
 
-	public Talon(int channel) {
+	public Talon(int channel, boolean reverseDirection) {
 		super(channel);
 		this.hasEncoder = false;
+		this.reverseDirection = reverseDirection;
 	}
 	public Talon (int channel, int aChannel, int bChannel, boolean reverseDirection){
 		super(channel);

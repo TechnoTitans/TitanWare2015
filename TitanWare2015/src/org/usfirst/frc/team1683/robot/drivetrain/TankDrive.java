@@ -18,9 +18,9 @@ public class TankDrive extends DriveTrain{
 	
 	double startAngle;
 	
-	public TankDrive(int[] leftMotorInputs, int[] rightMotorInputs, Class motorType, int gyroChannel) {
-		left = new MotorGroup(leftMotorInputs, motorType);
-		right = new MotorGroup(rightMotorInputs, motorType);
+	public TankDrive(int[] leftMotorInputs,boolean leftInverse, int[] rightMotorInputs, boolean rightInverse, Class motorType, int gyroChannel) {
+		left = new MotorGroup(leftMotorInputs, motorType, leftInverse);
+		right = new MotorGroup(rightMotorInputs, motorType, rightInverse);
 		gyro = new Gyro(gyroChannel);
 		startAngle = gyro.getAngle();
 	}

@@ -7,8 +7,8 @@ import org.usfirst.frc.team1683.robot.main.DriverStation;
 public class PickerUpper {
 	MotorGroup motors;
 	
-	public PickerUpper(int[] pickerUpperChannels, Class<Motor> talonSRX){
-		this.motors = new MotorGroup(pickerUpperChannels, talonSRX);
+	public PickerUpper(int[] pickerUpperChannels, Class<Motor> talonSRX, boolean inverseDirection){
+		this.motors = new MotorGroup(pickerUpperChannels, talonSRX, inverseDirection);
 	}
 	
 	public void run(){

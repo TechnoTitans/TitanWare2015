@@ -14,8 +14,9 @@ public class TalonSRX extends edu.wpi.first.wpilibj.TalonSRX implements Motor{
 	double mediumSpeed;
 	double highSpeed;	
 
-	public TalonSRX(int channel) {
+	public TalonSRX(int channel, boolean reverseDirection) {
 		super(channel);
+		this.reverseDirection = reverseDirection;
 		this.hasEncoder = false;
 	}
 	public TalonSRX (int channel, int aChannel, int bChannel, boolean reverseDirection){

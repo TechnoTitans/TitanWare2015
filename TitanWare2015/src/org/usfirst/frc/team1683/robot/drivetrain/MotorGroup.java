@@ -1,8 +1,8 @@
 package org.usfirst.frc.team1683.robot.drivetrain;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * 
  * @author Animesh Koratana
@@ -11,16 +11,14 @@ import java.util.List;
 public class MotorGroup {
 	List<Motor> motors;
 	
-	public MotorGroup(int[] channelNumbers, Class<Motor> motorType)  {
+	public MotorGroup(int[] channelNumbers, Class<Motor> motorType, boolean inverseDirection)  {
 		motors = new ArrayList<Motor>();
 		for (int i = 0; i < channelNumbers.length; i++) {
 			int j = channelNumbers[i];
-			try {
-				motorType.getConstructor(Double.class).newInstance(j);
-			} catch (InstantiationException | IllegalAccessException
-					| IllegalArgumentException | InvocationTargetException
-					| NoSuchMethodException | SecurityException e) {
-				e.printStackTrace();
+			if (motorType.equals(Talon.class)){
+				motors.add(new Talon(j, inverseDirection));
+			}else if (motorType.equals(TalonSRX.class)){
+				motors.add(new TalonSRX(j, inverseDirection));
 			}
 		}
 	}
@@ -48,4 +46,5 @@ public class MotorGroup {
 			motor.stop();
 		} 
 	}
+
 }
