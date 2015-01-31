@@ -9,16 +9,15 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 public class VisionTest implements Tester{
 	
 	Vision vision;
-	NetworkTable table;
+//	NetworkTable table;
 	Blob blobs;
 	
 	public VisionTest() {
 		vision = new Vision();
-		table = NetworkTable.getTable("Vision");
-		blobs = new Blob(table);
+//		table = NetworkTable.getTable("Vision");
 	}
 	
 	public void test() {
-		blobs.getCenter();
+		vision.getData();
 	}
 }
