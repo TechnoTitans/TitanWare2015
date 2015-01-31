@@ -14,5 +14,6 @@ public abstract class DriveTrain{
 	public abstract void turnAngle(double bearing);
 	public abstract void setBackToOriginalPos();
 	public abstract void driveMode(Joystick leftStick, Joystick rightStick);
+	public abstract void antiDrift();
 	
 }

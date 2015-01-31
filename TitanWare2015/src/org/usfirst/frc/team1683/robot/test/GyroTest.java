@@ -9,9 +9,9 @@ public class GyroTest implements Tester{
     Gyro gyro;
     double sensitivity=0.008;
     double bestSensitivity;
-    final int npoints =5;
+    final int npoints =10;
     final double driftTime=10;
-    final double range=0.0005;
+    final double range=0.001;
     final double sensitivityIncrement=2*range/npoints;
     double newDrift,bestDrift;
     public GyroTest(Gyro gyro){
