@@ -5,6 +5,7 @@ import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
 /**
  * 
  * @author Animesh Koratana & Seung-Seok
@@ -16,7 +17,7 @@ public class TankDrive extends DriveTrain{
 	MotorGroup right;
 	
 	Gyro gyro;
-	
+	static final double	 kp=0.03;
 	double startAngle;
 	/**
 	 * Constructor
@@ -104,5 +105,13 @@ public class TankDrive extends DriveTrain{
 		turnAngle(startAngle);
 		startAngle = 0;
 	}
+	@Override
+	public void antiDrift() {
+		// TODO Auto-generated method stub
+		double angle=gyro.getAngle();
+		turnAngle(-angle*kp);
+		Timer.delay(0.2);
+		
+	}	
 
 }
