@@ -5,6 +5,7 @@ import org.usfirst.frc.team1683.robot.drivetrain.TankDrive;
 import org.usfirst.frc.team1683.robot.main.Autonomous;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.main.TeleOp;
+import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
 import org.usfirst.frc.team1683.robot.test.DriveTester;
 import org.usfirst.frc.team1683.robot.test.GyroTest;
@@ -29,6 +30,7 @@ public class TechnoTitan extends IterativeRobot {
     Gyro gyro;
     GyroTest gyrotest;
 	TankDrive tankDrive;
+	PickerUpper pickerUpper;
 	
 	/**
      * This function is run when the robot is first started up and should be
@@ -38,9 +40,10 @@ public class TechnoTitan extends IterativeRobot {
     	DriverStation.prefDouble("delay", 0.075);
     	DriverStation.prefDouble("distance", 1);
     	DriverStation.prefDouble("bearing", 90);
-    	gyro =new Gyro(HWR.GYRO);
-    	gyrotest = new GyroTest(gyro);
-//    	tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, true , new int[]{HWR.RIGHT_MOTOR},false , Talon.class, HWR.GYRO);
+//  	gyro =new Gyro(HWR.GYRO);
+//  	gyrotest = new GyroTest(gyro);
+    	tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, false , new int[]{HWR.RIGHT_MOTOR},true , Talon.class, HWR.GYRO);
+    	pickerUpper = new PickerUpper(new int[]{HWR.BELT_MOTOR}, Talon.class, false);
 //    	tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, true , new int[]{HWR.RIGHT_MOTOR},false , Talon.class, HWR.GYRO, 
 //    			HWR.LEFT_CHANNEL_A, HWR.LEFT_CHANNEL_B, HWR.RIGHT_CHANNEL_A, HWR.RIGHT_CHANNEL_B);
     	
@@ -49,7 +52,7 @@ public class TechnoTitan extends IterativeRobot {
 //    	soloTester = new AirSystemTester(new int[]{PCM.SOLENOID_0} ,1);
     //	visionTest = new VisionTest();
 //    	talonTest = new TalonSRXTest(new TalonSRX(1));
-    	driveTester = new DriveTester(tankDrive);
+//  	driveTester = new DriveTester(tankDrive);
 
     }
 
@@ -64,15 +67,16 @@ public class TechnoTitan extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        TeleOp.run();
+        tankDrive.driveMode(DriverStation.leftStick, DriverStation.rightStick);
+        pickerUpper.run();
     }
     
     /**
      * This function is called periodically during test mode
      */
     public void testInit(){
-    	gyro.reset();
-    	gyrotest.getBestSensitivity();
+    //	gyro.reset();
+    	//gyrotest.getBestSensitivity();
     }
     public void testPeriodic() {
     	//soloTester.test();
@@ -81,7 +85,8 @@ public class TechnoTitan extends IterativeRobot {
     	//talonTest.test();
 //    	tankDrive.driveMode(DriverStation.rightStick, DriverStation.leftStick);
 //    	driveTester.test();
-    	gyrotest.test();
+    	//gyrotest.test();
+    	pickerUpper.run();
     }
     
 }

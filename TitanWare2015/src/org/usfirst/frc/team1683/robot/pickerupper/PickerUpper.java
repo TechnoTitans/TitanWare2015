@@ -11,11 +11,11 @@ public class PickerUpper {
 	/**
 	 * Constructor
 	 * @param pickerUpperChannels
-	 * @param talonSRX
+	 * @param motorType
 	 * @param inverseDirection
 	 */
-	public PickerUpper(int[] pickerUpperChannels, Class<Motor> talonSRX, boolean inverseDirection){
-		this.motors = new MotorGroup(pickerUpperChannels, talonSRX, inverseDirection);
+	public PickerUpper(int[] pickerUpperChannels, Class motorType, boolean inverseDirection){
+		this.motors = new MotorGroup(pickerUpperChannels, motorType, inverseDirection);
 	}
 	/**
 	 * Constructor
@@ -25,9 +25,9 @@ public class PickerUpper {
 	 * @param beltChannelA
 	 * @param beltChannelB
 	 */
-	public PickerUpper(int[] pickerUpperChannels, Class<Motor> talonSRX, boolean inverseDirection,
+	public PickerUpper(int[] pickerUpperChannels, Class motorType, boolean inverseDirection,
 			int beltChannelA, int beltChannelB){
-		this.motors = new MotorGroup(pickerUpperChannels, talonSRX, inverseDirection, 
+		this.motors = new MotorGroup(pickerUpperChannels, motorType, inverseDirection, 
 				new Encoder(beltChannelA, beltChannelB, inverseDirection));
 	}
 	/**
