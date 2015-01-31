@@ -23,7 +23,7 @@ public class TechnoTitan extends IterativeRobot {
      
 //	AirSystemTester soloTester;
 //	AirStateMachine stateMachine;
-	VisionTest visionTest;
+//	VisionTest visionTest;
 	DriveTester driveTester;
 //	TalonSRXTest talonTest;
     Gyro gyro;
@@ -47,7 +47,7 @@ public class TechnoTitan extends IterativeRobot {
 //    	stateMachine = new AirStateMachine(new int[]{PCM.SOLENOID_0,PCM.SOLENOID_1,PCM.SOLENOID_2,
 //    			PCM.SOLENOID_3,PCM.SOLENOID_4,PCM.SOLENOID_5,PCM.SOLENOID_6}, HWR.AUX_JOYSTICK,1);
 //    	soloTester = new AirSystemTester(new int[]{PCM.SOLENOID_0} ,1);
-    	visionTest = new VisionTest();
+    //	visionTest = new VisionTest();
 //    	talonTest = new TalonSRXTest(new TalonSRX(1));
     	driveTester = new DriveTester(tankDrive);
 
@@ -70,10 +70,13 @@ public class TechnoTitan extends IterativeRobot {
     /**
      * This function is called periodically during test mode
      */
+    public void testInit(){
+    	gyro.reset();
+    }
     public void testPeriodic() {
     	//soloTester.test();
 //    	stateMachine.test();
-    	visionTest.test();
+    	//visionTest.test();
     	//talonTest.test();
 //    	tankDrive.driveMode(DriverStation.rightStick, DriverStation.leftStick);
 //    	driveTester.test();

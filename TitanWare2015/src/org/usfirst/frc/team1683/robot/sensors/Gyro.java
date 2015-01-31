@@ -2,7 +2,7 @@ package org.usfirst.frc.team1683.robot.sensors;
 
 public class Gyro extends edu.wpi.first.wpilibj.Gyro implements Sensor {
 
-	private final double SENSITIVITY = 0.009; 
+	private final double SENSITIVITY = 0.0067; 
 
 	public Gyro(int channel) {
 		super(channel);
