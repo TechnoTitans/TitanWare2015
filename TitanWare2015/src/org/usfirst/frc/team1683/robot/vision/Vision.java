@@ -31,7 +31,7 @@ public class Vision {
 		COG_Y 		= new NumberArray();
 		HEIGHT		= new NumberArray();
 		WIDTH		= new NumberArray();
-	}
+	} 
 	
 	/**
 	 * @return Returns all the blobs seen on screen and their properties.

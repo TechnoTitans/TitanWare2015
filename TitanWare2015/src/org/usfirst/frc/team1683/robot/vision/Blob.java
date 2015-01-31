@@ -11,7 +11,7 @@ public class Blob {
 	public final int HEIGHT;
 	public final int WIDTH;
 	public final int X_POS;
-	public final int Y_POS;	
+	public final int Y_POS;
 	
 	/**
 	 * Constructor

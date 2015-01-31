@@ -18,6 +18,6 @@ public class VisionTest implements Tester{
 	}
 	
 	public void test() {
-		vision.getData();
+		vision.getData(); 
 	}
 }

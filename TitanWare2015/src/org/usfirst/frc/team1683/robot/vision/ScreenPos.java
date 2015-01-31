@@ -66,7 +66,7 @@
 //	public double getYPos() {
 //		return yPos;
 //	}
-//
+// 
 //	/**
 //	 * Checks if given position is valid on the coordinate plane
 //	 * @param pos Position to be checked
