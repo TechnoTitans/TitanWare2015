@@ -14,8 +14,10 @@ public class DriveTester implements Tester{
 	
 	public DriveTester(DriveTrain driveTrain){
 		this.driveTrain = driveTrain;
-		distance = DriverStation.getDouble("distance");
-		bearing = DriverStation.getDouble("bearing");
+		//distance = DriverStation.getDouble("distance");
+		//bearing = DriverStation.getDouble("bearing");
+		distance = 1.5;
+		bearing = 180;
 	}
 	
 	public void test(){

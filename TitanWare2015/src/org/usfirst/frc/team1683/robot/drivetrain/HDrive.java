@@ -5,8 +5,9 @@ import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.pneumatics.AirSystem;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.Joystick;
 
-public class HDrive {
+public class HDrive extends DriveTrain{
 	AirSystem drivePistons;
 	TankDrive tankDrive;
 	MotorGroup hMotors;
@@ -29,12 +30,15 @@ public class HDrive {
 		this.tankDrive = tankDrive;
 		hMotors = new MotorGroup(channelNumbers, motorType, false);
 		this.triggerButton = triggerButton;
+		
 	}
+	
+	
 	
 	/**
 	 * Runs driving sequence periodically
 	 */
-	public void driveMode(){
+	public void driveMode(Joystick leftStick, Joystick rightStick){
 		double speed = (DriverStation.rightStick.getRawAxis(DriverStation.XAxis) 
 				+ DriverStation.leftStick.getRawAxis(DriverStation.XAxis))/2 ;
 		hMotors.set(speed);
@@ -70,4 +74,29 @@ public class HDrive {
 		return drivePistons.isExtended();
 	}
 	
+	public void goStraight(double distance){
+		tankDrive.goStraight(distance);
+	}
+	
+	public void turnAngle(double bearing){
+		tankDrive.turnAngle(bearing);
+	}
+	
+	public void setBackToOriginalPos(){
+		tankDrive.setBackToOriginalPos();
+	}
+	
+	public void antiDrift(){
+		tankDrive.antiDrift();
+	}
+	/**
+	 * 
+	 * @param distance
+	 * @param direction = +1 or -1
+	 */
+	public void goSideways(double distance, int direction)
+	{
+		if(!isDeployed())
+			deployWheels();
+	}
 }
