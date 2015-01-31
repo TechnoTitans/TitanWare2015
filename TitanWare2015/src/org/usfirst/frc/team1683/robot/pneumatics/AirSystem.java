@@ -2,6 +2,9 @@ package org.usfirst.frc.team1683.robot.pneumatics;
 
 import java.util.ArrayList;
 
+import org.usfirst.frc.team1683.robot.HWR;
+import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
+
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Solenoid;
 
@@ -14,10 +17,11 @@ public class AirSystem {
 	//Constants to change depending on plumbing of robot
 	final static boolean EXTENDED = true;
 	final static boolean RETRACTED = false;
-	
+
 	Compressor compressor;
 	int PcmNum;
 	ArrayList<Solenoid> solenoids = new ArrayList<Solenoid>();
+	PressureSensor pressure = new PressureSensor(HWR.PRESSURE_SENSOR);
 	
 	/**
 	 * @param compressor - the compressor for the air system, usually one per robot.
@@ -63,6 +67,15 @@ public class AirSystem {
 		}
 	}
 	
+	public boolean isExtended(){
+		boolean isExtended = true;
+		for(Solenoid solenoid : solenoids){
+			if (!solenoid.get())
+				isExtended = false;
+		}
+		return isExtended;
+	}
+	
 	/**Get the current being used by the compressor.
 	 * @return current consumed in amps for the compressor
 	 */
@@ -79,6 +92,7 @@ public class AirSystem {
 							compressor.getCompressorCurrentTooHighFault());
 		System.out.println("Solenoids blacklisted: " + countBlacklistedSolenoids());
 		System.out.println("Compressor current: " + getCurrent() + "Amps");
+		System.out.println("Pressure: " + pressure.getPressure());
 	}
 	
 	

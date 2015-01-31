@@ -18,6 +18,17 @@ public class DriverStation {
 	
 	public static boolean[][] lasts = new boolean[3][11];
 	
+	
+	public static int getStickNum(Joystick joystick){
+		if (joystick.equals(leftStick))
+			return HWR.LEFT_JOYSTICK;
+		else if (joystick.equals(rightStick))
+			return HWR.RIGHT_JOYSTICK;
+		else if (joystick.equals(auxStick))
+			return HWR.AUX_JOYSTICK;
+		else
+			return 10;
+	}
 	/**
      * Sends the value to SmartDashboard 
      * @param key Value name
