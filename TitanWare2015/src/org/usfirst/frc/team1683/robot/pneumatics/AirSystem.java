@@ -63,6 +63,15 @@ public class AirSystem {
 		}
 	}
 	
+	public boolean isExtended(){
+		boolean isExtended = true;
+		for(Solenoid solenoid : solenoids){
+			if (!solenoid.get())
+				isExtended = false;
+		}
+		return isExtended;
+	}
+	
 	/**Get the current being used by the compressor.
 	 * @return current consumed in amps for the compressor
 	 */
