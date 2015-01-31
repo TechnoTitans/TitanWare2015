@@ -11,7 +11,16 @@ public class HDrive {
 	TankDrive tankDrive;
 	MotorGroup hMotors;
 	int triggerButton;
-	
+	/**
+	 * Constructor
+	 * @param tankDrive
+	 * @param rightPiston
+	 * @param leftPiston
+	 * @param rightMotor
+	 * @param leftMotor
+	 * @param motorType
+	 * @param triggerButton
+	 */
 	public HDrive(TankDrive tankDrive, int rightPiston, int leftPiston, int rightMotor, int leftMotor, 
 			Class<Motor> motorType, int triggerButton) {
 		int[] channelNumbers = {leftMotor, rightMotor};
@@ -22,6 +31,9 @@ public class HDrive {
 		this.triggerButton = triggerButton;
 	}
 	
+	/**
+	 * Runs driving sequence periodically
+	 */
 	public void driveMode(){
 		double speed = (DriverStation.rightStick.getRawAxis(DriverStation.XAxis) 
 				+ DriverStation.leftStick.getRawAxis(DriverStation.XAxis))/2 ;
@@ -36,14 +48,24 @@ public class HDrive {
 		
 	}
 	
+	/**
+	 * puts down the middle wheels
+	 */
 	public void deployWheels(){
 		drivePistons.extend();
 	}
 	
+	/**
+	 * brings the middle wheels back up
+	 */
 	public void liftWheels(){
 		drivePistons.retract();
 	}
 	
+	/**
+	 * checks if the middle wheels are down
+	 * @return
+	 */
 	public boolean isDeployed(){
 		return drivePistons.isExtended();
 	}
