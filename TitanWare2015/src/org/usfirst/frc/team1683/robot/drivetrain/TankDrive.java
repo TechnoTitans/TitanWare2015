@@ -15,9 +15,11 @@ public class TankDrive extends DriveTrain{
 
 	MotorGroup left;
 	MotorGroup right;
-	
+	public Encoder leftEncoder;
+	public Encoder rightEncoder;
 	Gyro gyro;
 	static final double	 kp=0.03;
+	double waitTime=0.2;
 	double startAngle;
 	/**
 	 * Constructor
@@ -49,8 +51,10 @@ public class TankDrive extends DriveTrain{
 	 */
 	public TankDrive(int[] leftMotorInputs,boolean leftInverse, int[] rightMotorInputs, boolean rightInverse, 
 			Class motorType, int gyroChannel, int leftChannelA, int leftChannelB, int rightChannelA, int rightChannelB) {
-		left = new MotorGroup(leftMotorInputs, motorType, leftInverse, new Encoder(leftChannelA, leftChannelB, leftInverse));
-		right = new MotorGroup(rightMotorInputs, motorType, rightInverse, new Encoder(rightChannelA, rightChannelB, rightInverse));
+		leftEncoder = new Encoder(leftChannelA, leftChannelB, leftInverse);
+		rightEncoder = new Encoder(rightChannelA, rightChannelB, rightInverse);
+		left = new MotorGroup(leftMotorInputs, motorType, leftInverse, leftEncoder);
+		right = new MotorGroup(rightMotorInputs, motorType, rightInverse, rightEncoder);
 		gyro = new Gyro(gyroChannel);
 		startAngle = gyro.getAngle();
 	}
@@ -110,7 +114,7 @@ public class TankDrive extends DriveTrain{
 		// TODO Auto-generated method stub
 		double angle=gyro.getAngle();
 		turnAngle(-angle*kp);
-		Timer.delay(0.2);
+		Timer.delay(waitTime);
 		
 	}	
 
