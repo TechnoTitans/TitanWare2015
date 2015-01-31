@@ -13,26 +13,41 @@ public class Talon extends edu.wpi.first.wpilibj.Talon implements Motor{
 	double lowSpeed;
 	double mediumSpeed;
 	double highSpeed;	
-
+	/**
+	 * Constructor
+	 * @param channel
+	 * @param reverseDirection
+	 */
 	public Talon(int channel, boolean reverseDirection) {
 		super(channel);
 		this.hasEncoder = false;
 		this.reverseDirection = reverseDirection;
 	}
+	/**
+	 * Constructor
+	 * @param channel
+	 * @param aChannel
+	 * @param bChannel
+	 * @param reverseDirection
+	 */
 	public Talon (int channel, int aChannel, int bChannel, boolean reverseDirection){
 		super(channel);
 		this.encoder = new Encoder(aChannel, bChannel, reverseDirection);
 		this.reverseDirection = reverseDirection;
 		this.hasEncoder = true;
 	}
-
+	/**
+	 * Moves the robot a certain distance
+	 */
 	public void moveDistance(double distanceInMeters){
 		if (hasEncoder){
 			Thread thread = new Thread(new MotorMover(this, distanceInMeters));
 			thread.run();
 		}
 	}
-
+	/**
+	 * sets the speed
+	 */
 	@Override
 	public void set(double speed){
 		if (reverseDirection){
@@ -41,7 +56,9 @@ public class Talon extends edu.wpi.first.wpilibj.Talon implements Motor{
 			super.set(speed);
 		}
 	}
-	
+	/**
+	 * moves the robot a certain degrees
+	 */
 	public void moveDegrees(double degrees){
 		double radians = degrees * (Math.PI/180);		//converts degrees to radians
 		double distance = radians*Encoder.WHEEL_RADIUS;	//converts radians to distance

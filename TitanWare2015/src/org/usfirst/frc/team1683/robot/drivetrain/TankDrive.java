@@ -18,14 +18,34 @@ public class TankDrive extends DriveTrain{
 	Gyro gyro;
 	
 	double startAngle;
-	
+	/**
+	 * Constructor
+	 * @param leftMotorInputs
+	 * @param leftInverse
+	 * @param rightMotorInputs
+	 * @param rightInverse
+	 * @param motorType
+	 * @param gyroChannel
+	 */
 	public TankDrive(int[] leftMotorInputs,boolean leftInverse, int[] rightMotorInputs, boolean rightInverse, Class motorType, int gyroChannel) {
 		left = new MotorGroup(leftMotorInputs, motorType, leftInverse);
 		right = new MotorGroup(rightMotorInputs, motorType, rightInverse);
 		gyro = new Gyro(gyroChannel);
 		startAngle = gyro.getAngle();
 	}
-	
+	/**
+	 * Constructor
+	 * @param leftMotorInputs
+	 * @param leftInverse
+	 * @param rightMotorInputs
+	 * @param rightInverse
+	 * @param motorType
+	 * @param gyroChannel
+	 * @param leftChannelA
+	 * @param leftChannelB
+	 * @param rightChannelA
+	 * @param rightChannelB
+	 */
 	public TankDrive(int[] leftMotorInputs,boolean leftInverse, int[] rightMotorInputs, boolean rightInverse, 
 			Class motorType, int gyroChannel, int leftChannelA, int leftChannelB, int rightChannelA, int rightChannelB) {
 		left = new MotorGroup(leftMotorInputs, motorType, leftInverse, new Encoder(leftChannelA, leftChannelB, leftInverse));
@@ -33,7 +53,9 @@ public class TankDrive extends DriveTrain{
 		gyro = new Gyro(gyroChannel);
 		startAngle = gyro.getAngle();
 	}
-	
+	/**
+	 * runs the driving sequence
+	 */
 	public void driveMode(Joystick rightStick, Joystick leftStick) {
 		double leftSpeed = leftStick.getRawAxis(DriverStation.YAxis);
 		double rightSpeed = rightStick.getRawAxis(DriverStation.YAxis);
@@ -41,12 +63,17 @@ public class TankDrive extends DriveTrain{
 		right.set(rightSpeed);
 	}
 	
+	/**
+	 * drives the robot straight over a set amount of meters
+	 */
 	@Override
 	public void goStraight(double distanceInMeters) {
 		left.moveDistance(distanceInMeters);
 		right.moveDistance(distanceInMeters);
 	}
-
+	/**
+	 * turns the robot for a certain angle
+	 */
 	@Override
 	public void turnAngle(double bearing) {
 		gyro.add(startAngle);
@@ -67,7 +94,9 @@ public class TankDrive extends DriveTrain{
 			right.stop();
 		}
 	}
-
+	/**
+	 * turns the robot back to its original position
+	 */
 	@Override
 	public void setBackToOriginalPos() {
 		startAngle = gyro.add(startAngle)%360;
