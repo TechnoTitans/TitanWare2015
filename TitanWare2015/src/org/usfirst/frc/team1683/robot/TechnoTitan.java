@@ -72,6 +72,7 @@ public class TechnoTitan extends IterativeRobot {
      */
     public void testInit(){
     	gyro.reset();
+    	gyrotest.getBestSensitivity();
     }
     public void testPeriodic() {
     	//soloTester.test();
