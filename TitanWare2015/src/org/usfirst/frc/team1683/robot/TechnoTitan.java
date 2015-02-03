@@ -4,12 +4,12 @@ import org.usfirst.frc.team1683.robot.drivetrain.Talon;
 import org.usfirst.frc.team1683.robot.drivetrain.TankDrive;
 import org.usfirst.frc.team1683.robot.main.Autonomous;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
-import org.usfirst.frc.team1683.robot.main.TeleOp;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
+import org.usfirst.frc.team1683.robot.power.PowerDistributionManager;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
 import org.usfirst.frc.team1683.robot.test.DriveTester;
 import org.usfirst.frc.team1683.robot.test.GyroTest;
-import org.usfirst.frc.team1683.robot.test.VisionTest;
+import org.usfirst.frc.team1683.robot.test.TalonTest;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 
@@ -21,18 +21,20 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  * directory.
  */
 public class TechnoTitan extends IterativeRobot {
-     
+     public static boolean debug = true;
 //	AirSystemTester soloTester;
 //	AirStateMachine stateMachine;
 //	VisionTest visionTest;
 	DriveTester driveTester;
 //	TalonSRXTest talonTest;
     Gyro gyro;
+    TalonTest talonTest;
     GyroTest gyrotest;
 	TankDrive tankDrive;
 	PickerUpper pickerUpper;
 	Autonomous autonomous;
 	int autonomousMode;
+	PowerDistributionManager powerDistributionManager;
 	/**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -45,6 +47,9 @@ public class TechnoTitan extends IterativeRobot {
 //  	gyrotest = new GyroTest(gyro);
     	tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, false , new int[]{HWR.RIGHT_MOTOR},true , Talon.class, HWR.GYRO);
     	pickerUpper = new PickerUpper(new int[]{HWR.BELT_MOTOR}, Talon.class, false);
+    	powerDistributionManager = new PowerDistributionManager(null,15);
+    	new Thread(powerDistributionManager).run();
+    	
 //    	tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, true , new int[]{HWR.RIGHT_MOTOR},false , Talon.class, HWR.GYRO, 
 //    			HWR.LEFT_CHANNEL_A, HWR.LEFT_CHANNEL_B, HWR.RIGHT_CHANNEL_A, HWR.RIGHT_CHANNEL_B);
     	
@@ -52,7 +57,7 @@ public class TechnoTitan extends IterativeRobot {
 //    			PCM.SOLENOID_3,PCM.SOLENOID_4,PCM.SOLENOID_5,PCM.SOLENOID_6}, HWR.AUX_JOYSTICK,1);
 //    	soloTester = new AirSystemTester(new int[]{PCM.SOLENOID_0} ,1);
 //		visionTest = new VisionTest();
-//    	talonTest = new TalonSRXTest(new TalonSRX(1));
+    	talonTest = new TalonTest(new Talon(3,true));
 //  	driveTester = new DriveTester(tankDrive);
     	
     }
@@ -91,7 +96,8 @@ public class TechnoTitan extends IterativeRobot {
 //    	tankDrive.driveMode(DriverStation.rightStick, DriverStation.leftStick);
 //    	driveTester.test();
     	//gyrotest.test();
-    	pickerUpper.run();
+//    	pickerUpper.run();
+    	talonTest.test();
     }
     
 }
