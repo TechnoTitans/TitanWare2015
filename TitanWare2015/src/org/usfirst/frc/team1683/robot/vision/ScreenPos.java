@@ -2,7 +2,7 @@
 //
 ///**
 // * Representation of coordinates on RoboRealm. Bottom left corner represents (0,0).
-// * @author David
+// * @author David Luo
 // *
 // */
 //

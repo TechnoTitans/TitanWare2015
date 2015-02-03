@@ -1,0 +1,176 @@
+<head><version>2.70.2</version></head>
+<Axis_Internet_Camera disabled>
+  <auto_back_light>TRUE</auto_back_light>
+  <auto_exposure>FALSE</auto_exposure>
+  <auto_white_balance>TRUE</auto_white_balance>
+  <brightness_value>50</brightness_value>
+  <camera_type>1</camera_type>
+  <color_level_value>50</color_level_value>
+  <compression_index>3</compression_index>
+  <contrast_value>50</contrast_value>
+  <exposure_value>50</exposure_value>
+  <ip_address>10.16.83.11</ip_address>
+  <is_active>TRUE</is_active>
+  <mirrot>FALSE</mirrot>
+  <password>FRC</password>
+  <port>80</port>
+  <resolution>320x240</resolution>
+  <sharpness_value>50</sharpness_value>
+  <username>FRC</username>
+</Axis_Internet_Camera>
+<RGB_Filter>
+  <channel>64</channel>
+  <hue_value>110</hue_value>
+  <hysteresis>0</hysteresis>
+  <min_value>100</min_value>
+  <result_type>2</result_type>
+</RGB_Filter>
+<Close>
+  <close_borders>FALSE</close_borders>
+  <dilate_count>5</dilate_count>
+  <erode_count>5</erode_count>
+  <kernal_shape>4</kernal_shape>
+  <restrict_dilation>FALSE</restrict_dilation>
+  <symmetrical>TRUE</symmetrical>
+</Close>
+<Blob_Size>
+  <limit>1024</limit>
+  <mask>FALSE</mask>
+  <max_area>0</max_area>
+  <min_area>2000</min_area>
+  <threshold>5</threshold>
+  <treat_as_color_image>FALSE</treat_as_color_image>
+</Blob_Size>
+<Fill>
+  <check_border>FALSE</check_border>
+  <fill_with_average_color>FALSE</fill_with_average_color>
+  <four_pixel_connectivity>FALSE</four_pixel_connectivity>
+  <size>0</size>
+</Fill>
+<Convex_Hull/>
+<Marker>
+  <include_graphics>0</include_graphics>
+  <name>Totes</name>
+  <revert_to>Source</revert_to>
+</Marker>
+<Mean>
+  <filter_size>3</filter_size>
+</Mean>
+<RGB_Filter disabled>
+  <channel>16</channel>
+  <hue_value>125</hue_value>
+  <hysteresis>0</hysteresis>
+  <min_value>150</min_value>
+  <result_type>2</result_type>
+</RGB_Filter>
+<RGB_Filter>
+  <channel>256</channel>
+  <hue_value>00</hue_value>
+  <hysteresis>0</hysteresis>
+  <min_value>75</min_value>
+  <result_type>2</result_type>
+</RGB_Filter>
+<Blob_Filter>
+  <create_blob_array_variable>FALSE</create_blob_array_variable>
+  <filters>
+    <tab>
+      <filter>
+        <count_threshold>0</count_threshold>
+        <create_array>0</create_array>
+        <filter_id>8</filter_id>
+        <invert_count>0</invert_count>
+        <invert_threshold>0</invert_threshold>
+        <minimum_size>100</minimum_size>
+        <weight_threshold>0.5</weight_threshold>
+      </filter>
+      <filter:2>
+        <count_threshold>0</count_threshold>
+        <create_array>0</create_array>
+        <filter_id>33</filter_id>
+        <invert_count>0</invert_count>
+        <invert_threshold>0</invert_threshold>
+        <maximum_size>10000</maximum_size>
+        <weight_threshold>0.5</weight_threshold>
+      </filter:2>
+      <filter:3>
+        <count_threshold>0</count_threshold>
+        <create_array>0</create_array>
+        <filter_id>35</filter_id>
+        <invert_count>0</invert_count>
+        <invert_threshold>0</invert_threshold>
+        <weight_threshold>0.9</weight_threshold>
+      </filter:3>
+    </tab>
+    <tab:2/>
+    <tab:3/>
+    <tab:4/>
+    <tab:5/>
+    <tab:6/>
+  </filters>
+  <font_size>Normal (10pt)</font_size>
+  <largest_is_background>FALSE</largest_is_background>
+  <show_weights>FALSE</show_weights>
+  <sort_array_on_x>FALSE</sort_array_on_x>
+  <sort_array_on_y>FALSE</sort_array_on_y>
+</Blob_Filter>
+<Blob_Overlap>
+  <image1>Totes</image1>
+  <image2>Current</image2>
+  <invert_results>FALSE</invert_results>
+</Blob_Overlap>
+<Border/>
+<Dilate>
+  <avoid_connection>FALSE</avoid_connection>
+  <count>1</count>
+  <dilate_borders>FALSE</dilate_borders>
+</Dilate>
+<Colorize>
+  <rgb>#00FF00</rgb>
+</Colorize>
+<Marker>
+  <include_graphics>0</include_graphics>
+  <name>Outline</name>
+  <revert_to>Outline</revert_to>
+</Marker>
+<Fill>
+  <check_border>FALSE</check_border>
+  <fill_with_average_color>TRUE</fill_with_average_color>
+  <four_pixel_connectivity>FALSE</four_pixel_connectivity>
+  <size>0</size>
+</Fill>
+<Geometric_Statistics>
+  <basic_statistics>FALSE</basic_statistics>
+  <scope>1</scope>
+</Geometric_Statistics>
+<Math>
+  <all_channels>TRUE</all_channels>
+  <bias>0</bias>
+  <divisor>1</divisor>
+  <function>15</function>
+  <image1>Source</image1>
+  <image2>Outline</image2>
+</Math>
+<Display_Variables>
+  <border_color>red</border_color>
+  <dim_background>TRUE</dim_background>
+  <display_as_annotation>FALSE</display_as_annotation>
+  <display_value_only>FALSE</display_value_only>
+  <font_color>white</font_color>
+  <font_size>Normal (10pt)</font_size>
+  <northeast>HEIGHT
+WIDTH
+</northeast>
+  <northwest>COG_Y
+COG_X
+</northwest>
+</Display_Variables>
+<NetworkTables>
+  <delay>100</delay>
+  <filter_type_index>0</filter_type_index>
+  <hostname>roborio-1683.local</hostname>
+  <port>1735</port>
+  <prefix>/Vision/</prefix>
+  <variables_to_send>COG_X
+COG_Y</variables_to_send>
+  <variable_type_index>0</variable_type_index>
+</NetworkTables>

@@ -2,8 +2,7 @@ package org.usfirst.frc.team1683.robot.vision;
 
 /**
  * Representation of blobs seen by RoboRealm
- * @author David
- *
+ * @author David Luo
  */
 public class Blob {
 	
@@ -29,5 +28,11 @@ public class Blob {
 		this.Y_POS 	= Y_POS;
 	}
 	
+	/**
+	 * @return String representation of Blob object. For testing purposes.
+	 */
+	public String toString() {
+		return "Index: " + INDEX + " Height: " + HEIGHT + " Width: " + WIDTH + " X_POS: " + X_POS + " Y_POS: " + Y_POS;
+	}
 	
 }

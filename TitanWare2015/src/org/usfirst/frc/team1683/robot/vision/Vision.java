@@ -7,24 +7,31 @@ import edu.wpi.first.wpilibj.tables.TableKeyNotDefinedException;
 
 /**
  * Class to interpret output from RoboRealm
- * @author David
- *
+ * @author David Luo
  */
 public class Vision {
 	
 	public static NetworkTable table;
-	NumberArray COG_X;
-	NumberArray COG_Y;
-	NumberArray HEIGHT;
-	NumberArray WIDTH;
-	int BLOB_COUNT;
-	Blob[] blobs;
+	private NumberArray COG_X;
+	private NumberArray COG_Y;
+	private NumberArray HEIGHT; // Height of blobs in Pixels
+	private NumberArray WIDTH; // Width of blobs in Pixels
+	private int BLOB_COUNT;
+	private final String CAM_ID 			= "cam1";
+	
+	// Predetermined actual dimensions of object represented by blob.
+	private final int REF_HEIGHT_INCHES 	= 0; 
+	private final int REF_WIDTH_INCHES 		= 0;
+	private final int REF_HEIGHT_PIXELS 	= 0;
+	private final int REF_WIDTH_PIXELS		= 0;
+	private final int REF_DISTANCE			= 0; // Always in inches.
 	
 	/**
 	 * Constructor
+	 * Starts camera server for USB camera
 	 */
 	public Vision() {
-		CameraServer.getInstance().startAutomaticCapture("cam1");
+		CameraServer.getInstance().startAutomaticCapture(CAM_ID);
 		table 		= NetworkTable.getTable("Vision"); // Table to get data from RoboRealm
 		BLOB_COUNT 	= (int) Vision.table.getNumber("BLOB_COUNT");
 		COG_X		= new NumberArray();
@@ -34,15 +41,17 @@ public class Vision {
 	} 
 	
 	/**
-	 * @return Returns all the blobs seen on screen and their properties.
+	 * @return Returns all the blobs seen on screen and their properties in an array.
 	 */
 	public Blob[] getData() {
-		blobs = new Blob[BLOB_COUNT];
+		Blob[] blobs = new Blob[BLOB_COUNT];
+		
+		// Might want to wrap in if statement instead.
 		try {
-			Vision.table.retrieveValue("COG_X", 		COG_X);
-			Vision.table.retrieveValue("COG_Y", 		COG_Y);
-			Vision.table.retrieveValue("HEIGHT", 		HEIGHT);
-			Vision.table.retrieveValue("WIDTH", 		WIDTH);			
+			Vision.table.retrieveValue("COG_X", 	COG_X);
+			Vision.table.retrieveValue("COG_Y", 	COG_Y);
+			Vision.table.retrieveValue("HEIGHT", 	HEIGHT);
+			Vision.table.retrieveValue("WIDTH", 	WIDTH);			
 		}
 		catch(TableKeyNotDefinedException exp) {
 			System.out.println("TableKeyNotDefinedException");
@@ -55,4 +64,12 @@ public class Vision {
 		return blobs;
 	}
 	
+	/**
+	 * Calculates the approximate distance from blob with reference heights and widths
+	 * @return Array of distances to all blobs on screen.
+	 */
+	public int[] calcDistance() {
+		
+		return null;
+	}
 }
