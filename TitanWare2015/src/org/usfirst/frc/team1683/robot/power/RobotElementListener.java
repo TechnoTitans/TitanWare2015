@@ -47,6 +47,7 @@ public class RobotElementListener{
 					System.out.println(problem);
 				}else{
 					log.write(problem);
+					System.out.println(problem);
 				}
 				
 			}
@@ -55,10 +56,10 @@ public class RobotElementListener{
 
 	public boolean updatedValues(){
 		double current = powerDistBoard.getCurrent(this.channel);
-		if (current > (idleValue+(idleValue * 0.05)) || current< (idleValue-(idleValue * 0.05))){
+		if (current > (idleValue+(idleValue * 0.09)) || current< (idleValue-(idleValue * 0.09))){
 			currents.add(current);
 			if (TechnoTitan.debug){
-				System.out.println("Channel " + channel + "Current: "+ current );
+				System.out.println("Channel " + channel + " Current: "+ current );
 			}
 			return true;
 		}else{

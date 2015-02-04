@@ -39,9 +39,10 @@ public class RobotStatisticListener {
 						+ "Mean  Was: "+ mean 
 						+ "StDev Was: "+ stDev;
 				if (log == null){
-					log.write(problem);
+					System.out.println(problem);
 				}else{
 					System.out.println(problem);
+					log.write(problem);
 				}
 				
 			}

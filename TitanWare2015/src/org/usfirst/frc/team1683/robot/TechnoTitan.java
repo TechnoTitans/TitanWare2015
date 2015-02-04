@@ -48,7 +48,8 @@ public class TechnoTitan extends IterativeRobot {
     	tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, false , new int[]{HWR.RIGHT_MOTOR},true , Talon.class, HWR.GYRO);
     	pickerUpper = new PickerUpper(new int[]{HWR.BELT_MOTOR}, Talon.class, false);
     	powerDistributionManager = new PowerDistributionManager(null,15);
-    	new Thread(powerDistributionManager).run();
+    	Thread thread = new Thread("Power Distribution Manager");
+    	new Thread(powerDistributionManager, "Power Distribution Manager").start();
     	
 //    	tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, true , new int[]{HWR.RIGHT_MOTOR},false , Talon.class, HWR.GYRO, 
 //    			HWR.LEFT_CHANNEL_A, HWR.LEFT_CHANNEL_B, HWR.RIGHT_CHANNEL_A, HWR.RIGHT_CHANNEL_B);
