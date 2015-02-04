@@ -24,7 +24,7 @@ public class PickerUpper {
 	 * @param talonSRX
 	 * @param inverseDirection
 	 */
-	public PickerUpper(int[] pickerUpperChannels, Class<Motor> talonSRX, boolean inverseDirection){
+	public PickerUpper(int[] pickerUpperChannels, Class talonSRX, boolean inverseDirection){
 		this.motors = new MotorGroup(pickerUpperChannels, talonSRX, inverseDirection);
 
 	}

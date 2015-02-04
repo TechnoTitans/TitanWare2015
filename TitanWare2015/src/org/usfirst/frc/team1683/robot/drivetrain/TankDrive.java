@@ -1,6 +1,5 @@
 package org.usfirst.frc.team1683.robot.drivetrain;
 
-import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
 
@@ -117,5 +116,13 @@ public class TankDrive extends DriveTrain{
 		Timer.delay(waitTime);
 		
 	}	
-
+	
+	public void stop() {
+		left.stop();
+		right.stop();
+	}
+	
+	public void goSideways(double distance) {
+		
+	}
 }

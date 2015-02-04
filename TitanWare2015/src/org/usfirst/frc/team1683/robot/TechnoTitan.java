@@ -2,8 +2,8 @@ package org.usfirst.frc.team1683.robot;
 
 import org.usfirst.frc.team1683.robot.drivetrain.Talon;
 import org.usfirst.frc.team1683.robot.drivetrain.TankDrive;
-import org.usfirst.frc.team1683.robot.main.Autonomous;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
+import org.usfirst.frc.team1683.robot.main.autonomous.AutonomousSelector;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
 import org.usfirst.frc.team1683.robot.power.PowerDistributionManager;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
@@ -32,8 +32,7 @@ public class TechnoTitan extends IterativeRobot {
     GyroTest gyrotest;
 	TankDrive tankDrive;
 	PickerUpper pickerUpper;
-	Autonomous autonomous;
-	int autonomousMode;
+	AutonomousSelector autonomous;
 	PowerDistributionManager powerDistributionManager;
 	/**
      * This function is run when the robot is first started up and should be
@@ -64,7 +63,7 @@ public class TechnoTitan extends IterativeRobot {
     }
 
     public void autonomousInit(){
-    	autonomous = new Autonomous(autonomousMode);
+    	autonomous = new AutonomousSelector();
     }
     
     /**

@@ -23,7 +23,7 @@ public class HDrive extends DriveTrain{
 	 * @param triggerButton
 	 */
 	public HDrive(TankDrive tankDrive, int rightPiston, int leftPiston, int rightMotor, int leftMotor, 
-			Class<Motor> motorType, int triggerButton) {
+			Class motorType, int triggerButton) {
 		int[] channelNumbers = {leftMotor, rightMotor};
 		int[] pistons = {rightPiston, leftPiston};
 		drivePistons = new AirSystem(new Compressor(), pistons);
@@ -89,14 +89,19 @@ public class HDrive extends DriveTrain{
 	public void antiDrift(){
 		tankDrive.antiDrift();
 	}
+	
+	public void stop(){
+		tankDrive.stop();
+	}
 	/**
 	 * 
 	 * @param distance
 	 * @param direction = +1 or -1
 	 */
-	public void goSideways(double distance, int direction)
+	public void goSideways(double distance)
 	{
 		if(!isDeployed())
 			deployWheels();
+		hMotors.moveDistance(distance);
 	}
 }

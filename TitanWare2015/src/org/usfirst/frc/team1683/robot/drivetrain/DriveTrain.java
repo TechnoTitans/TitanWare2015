@@ -15,5 +15,6 @@ public abstract class DriveTrain{
 	public abstract void setBackToOriginalPos();
 	public abstract void driveMode(Joystick leftStick, Joystick rightStick);
 	public abstract void antiDrift();
-	
+	public abstract void stop();
+	public abstract void goSideways(double distance);
 }
