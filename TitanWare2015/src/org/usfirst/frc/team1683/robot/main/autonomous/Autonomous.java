@@ -28,10 +28,13 @@ public abstract class Autonomous {
 	public static int presentState = INIT_CASE;
 	public static int nextState;
 	public static int driveCount = 0;
-	
+	public static int liftCount = 0;
 	protected static double driveDistance;
 	protected static double sideDistance;
 	protected static double liftDistance; 
+	protected static double adjustDistance;
+	protected static double dropDistance;
+	protected static double backDistance;
 	
 	public Autonomous(){
 		tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, true , new int[]{HWR.RIGHT_MOTOR},false , Talon.class, HWR.GYRO, 
