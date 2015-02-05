@@ -1,12 +1,14 @@
 package org.usfirst.frc.team1683.robot.power;
 
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.usfirst.frc.team1683.robot.TechnoTitan;
 
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * 
  * @author Animesh Koratana
@@ -20,12 +22,12 @@ public class RobotElementListener{
 	int channel;
 	
 	List<Double> currents;
-	PrintWriter log;
+	Logger log;
 	
 	private double idleValue = 0;
 
 
-	public RobotElementListener(PowerDistributionPanel powerDistPanel, int channel, PrintWriter log) {
+	public RobotElementListener(PowerDistributionPanel powerDistPanel, int channel, Logger log) {
 		this.powerDistBoard = powerDistPanel;
 		this.channel = channel;
 		currents = new ArrayList<Double>();
@@ -45,8 +47,10 @@ public class RobotElementListener{
 						+ "Mean Current Was: "+ mean + "StDev Current Was: "+ stDev;
 				if (log == null){
 					System.out.println(problem);
+					SmartDashboard.putString(PowerDistributionManager.KEY, problem);
 				}else{
-					log.write(problem);
+					log.log(Level.WARNING, problem);
+					SmartDashboard.putString(PowerDistributionManager.KEY, problem);
 					System.out.println(problem);
 				}
 				

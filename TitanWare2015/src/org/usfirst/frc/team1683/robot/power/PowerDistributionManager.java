@@ -1,9 +1,12 @@
 package org.usfirst.frc.team1683.robot.power;
 
-import java.io.PrintWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
@@ -14,6 +17,9 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
  */
 public class PowerDistributionManager implements Runnable{
 	
+	Logger log;
+	public final static String KEY = "PowerDistributionManager";
+	
 	private PowerDistributionPanel powerDistPanel;
 	List<RobotElementListener> channelListeners;
 	RobotStatisticListener temperature;
@@ -23,7 +29,8 @@ public class PowerDistributionManager implements Runnable{
 	RobotStatisticListener current;
 	
 
-	public PowerDistributionManager(PrintWriter log, int ... channelsToWatch) {
+	public PowerDistributionManager(int ... channelsToWatch) {
+		initLogger();
 		powerDistPanel = new PowerDistributionPanel();
 		channelListeners = new ArrayList<RobotElementListener>();
 		for (int i = 0; i < channelsToWatch.length; i++) {
@@ -40,6 +47,26 @@ public class PowerDistributionManager implements Runnable{
 	
 	public PowerDistributionPanel getPowerDistributionPanel(){
 		return powerDistPanel;
+	}
+	
+	public void initLogger(){
+		log = Logger.getGlobal();  
+        FileHandler fh;  
+        try {  
+            // This block configure the logger with handler and formatter
+            fh = new FileHandler("/Logs/PowerDistManager.log");  
+            log.addHandler(fh);
+            SimpleFormatter formatter = new SimpleFormatter();  
+            fh.setFormatter(formatter);  
+
+            // the following statement is used to log any messages  
+            log.info("Power Distribution Manager:");  
+
+        } catch (SecurityException e) {  
+            e.printStackTrace();  
+        } catch (IOException e) {  
+            e.printStackTrace();  
+        }
 	}
 	
 	public void periodicCheck(){

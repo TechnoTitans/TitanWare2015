@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  * directory.
  */
 public class TechnoTitan extends IterativeRobot {
-     public static boolean debug = true;
+    public static boolean debug = true;
 //	AirSystemTester soloTester;
 //	AirStateMachine stateMachine;
 //	VisionTest visionTest;
@@ -46,10 +46,8 @@ public class TechnoTitan extends IterativeRobot {
 //  	gyrotest = new GyroTest(gyro);
     	tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, false , new int[]{HWR.RIGHT_MOTOR},true , Talon.class, HWR.GYRO);
     	pickerUpper = new PickerUpper(new int[]{HWR.BELT_MOTOR}, Talon.class, false);
-    	powerDistributionManager = new PowerDistributionManager(null,15);
-    	Thread thread = new Thread("Power Distribution Manager");
-    	new Thread(powerDistributionManager, "Power Distribution Manager").start();
-    	
+    	powerDistributionManager = new PowerDistributionManager(15);
+    	new Thread(powerDistributionManager, "Power Distribution Manager").start();    	
 //    	tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, true , new int[]{HWR.RIGHT_MOTOR},false , Talon.class, HWR.GYRO, 
 //    			HWR.LEFT_CHANNEL_A, HWR.LEFT_CHANNEL_B, HWR.RIGHT_CHANNEL_A, HWR.RIGHT_CHANNEL_B);
     	
@@ -99,5 +97,11 @@ public class TechnoTitan extends IterativeRobot {
 //    	pickerUpper.run();
     	talonTest.test();
     }
+    
+//    @Override 
+//    public void disabledInit(){
+//    	
+//    }
+    
     
 }

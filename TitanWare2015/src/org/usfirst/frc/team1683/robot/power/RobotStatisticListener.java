@@ -1,9 +1,12 @@
 package org.usfirst.frc.team1683.robot.power;
 
-import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.usfirst.frc.team1683.robot.TechnoTitan;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * 
  * @author Animesh Koratana
@@ -15,12 +18,12 @@ public class RobotStatisticListener {
 	
 	private ArrayList<Double> data;
 	
-	private PrintWriter log;
+	private Logger log;
 	private static int maxNumberOfStDev = 2;
 	
 	private double idleValue = 0;
 	
-	public RobotStatisticListener(String statistic, PrintWriter log, double normalValue) {
+	public RobotStatisticListener(String statistic, Logger log, double normalValue) {
 		this.statistic = statistic;
 		this.log = log;
 		data = new ArrayList<Double>();
@@ -40,9 +43,11 @@ public class RobotStatisticListener {
 						+ "StDev Was: "+ stDev;
 				if (log == null){
 					System.out.println(problem);
+					SmartDashboard.putString(PowerDistributionManager.KEY, problem);
 				}else{
 					System.out.println(problem);
-					log.write(problem);
+					log.log(Level.WARNING, problem);
+					SmartDashboard.putString(PowerDistributionManager.KEY, problem);
 				}
 				
 			}
