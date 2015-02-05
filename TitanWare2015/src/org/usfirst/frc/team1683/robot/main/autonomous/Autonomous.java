@@ -21,7 +21,9 @@ public abstract class Autonomous {
 	public static final int DRIVE_FORWARD 				= 1;
 	public static final int DRIVE_BACKWARD				= 2;
 	public static final int DRIVE_SIDEWAYS				= 3;
+	public static final int LIFT_BARREL                 = 4;
 	public static final int END_CASE 					= 10;
+	
 	
 	public static int presentState = INIT_CASE;
 	public static int nextState;
@@ -29,6 +31,7 @@ public abstract class Autonomous {
 	
 	protected static double driveDistance;
 	protected static double sideDistance;
+	protected static double liftDistance; 
 	
 	public Autonomous(){
 		tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, true , new int[]{HWR.RIGHT_MOTOR},false , Talon.class, HWR.GYRO, 
@@ -41,5 +44,6 @@ public abstract class Autonomous {
 		//Preferences from the SmartDashboard
 		driveDistance = DriverStation.getDouble("driveDistance");
 		sideDistance = DriverStation.getDouble("sideDistance");
+		liftDistance = DriverStation.getDouble("liftDistance");
 	}
 }
