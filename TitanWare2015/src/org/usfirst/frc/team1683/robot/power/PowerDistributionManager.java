@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1683.robot.power;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -20,19 +21,21 @@ public class PowerDistributionManager implements Runnable{
 	RobotStatisticListener power;
 	RobotStatisticListener energy;
 	RobotStatisticListener current;
+	
 
 	public PowerDistributionManager(PrintWriter log, int ... channelsToWatch) {
 		powerDistPanel = new PowerDistributionPanel();
+		channelListeners = new ArrayList<RobotElementListener>();
 		for (int i = 0; i < channelsToWatch.length; i++) {
 			int channel = channelsToWatch[i];
-			RobotElementListener listener = new RobotElementListener(channel, log);
+			RobotElementListener listener = new RobotElementListener(powerDistPanel, channel, log);
 			channelListeners.add(listener);
 		}
-		temperature = new RobotStatisticListener("Temperature", log);
-		voltage = new RobotStatisticListener("Voltage", log);
-		power = new RobotStatisticListener("Power", log);
-		energy = new RobotStatisticListener("Energy", log);
-		current = new RobotStatisticListener("Current", log);
+		temperature = new RobotStatisticListener("Temperature", log, powerDistPanel.getTemperature());
+		voltage = new RobotStatisticListener("Voltage", log,powerDistPanel.getVoltage());
+		power = new RobotStatisticListener("Power", log, powerDistPanel.getTotalPower());
+		energy = new RobotStatisticListener("Energy", log, powerDistPanel.getTotalEnergy());
+		current = new RobotStatisticListener("Current", log, powerDistPanel.getTotalCurrent());
 	}
 	
 	public PowerDistributionPanel getPowerDistributionPanel(){
