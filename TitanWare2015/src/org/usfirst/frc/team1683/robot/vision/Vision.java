@@ -16,15 +16,22 @@ public class Vision {
 	private NumberArray COG_Y;
 	private NumberArray HEIGHT; // Height of blobs in Pixels
 	private NumberArray WIDTH; // Width of blobs in Pixels
-	private int BLOB_COUNT;
+	private int blobCount;
 	private final String CAM_ID 			= "cam1";
 	
 	// Predetermined actual dimensions of object represented by blob.
-	private final int REF_HEIGHT_INCHES 	= 0; 
-	private final int REF_WIDTH_INCHES 		= 0;
-	private final int REF_HEIGHT_PIXELS 	= 0;
-	private final int REF_WIDTH_PIXELS		= 0;
-	private final int REF_DISTANCE			= 0; // Always in inches.
+	// All variables are in Meters.
+	private final double REF_HEIGHT 		= 19.5*2.54/100; 
+	private final double REF_WIDTH 			= 29.25*2.54/100;
+	private final double TOTE_WIDTH 		= 26.9*2.54/100;
+	private final double TOTE_HEIGHT 		= 12.1*2.54/100;
+	private final double REF_DISTANCE		= 21*2.54/100; // Always in meters.
+	// Resolution of picture.
+	private final int REF_HEIGHT_PIXELS 	= 240;
+	private final int REF_WIDTH_PIXELS		= 320;
+	// Calculated Field of View
+	private final double HORIZ_FOV_DEG		= 69.7089;
+	private final double VERT_FOV_DEG		= 49.8095;
 	
 	/**
 	 * Constructor
@@ -33,7 +40,6 @@ public class Vision {
 	public Vision() {
 		CameraServer.getInstance().startAutomaticCapture(CAM_ID);
 		table 		= NetworkTable.getTable("Vision"); // Table to get data from RoboRealm
-		BLOB_COUNT 	= (int) Vision.table.getNumber("BLOB_COUNT");
 		COG_X		= new NumberArray();
 		COG_Y 		= new NumberArray();
 		HEIGHT		= new NumberArray();
@@ -44,7 +50,8 @@ public class Vision {
 	 * @return Returns all the blobs seen on screen and their properties in an array.
 	 */
 	public Blob[] getData() {
-		Blob[] blobs = new Blob[BLOB_COUNT];
+		blobCount 	= (int) Vision.table.getNumber("BLOB_COUNT");
+		Blob[] blobs = new Blob[blobCount];
 		
 		// Might want to wrap in if statement instead.
 		try {
@@ -65,11 +72,13 @@ public class Vision {
 	}
 	
 	/**
-	 * Calculates the approximate distance from blob with reference heights and widths
+	 * Calculates the approximate distance from blob.
+	 * @param Blob who's distance is to be calculated.
 	 * @return Array of distances to all blobs on screen.
 	 */
-	public int[] calcDistance() {
-		
-		return null;
+	public double calcDistance(Blob blob) {
+		double apparentWidth = TOTE_WIDTH * ((double)blob.WIDTH/REF_WIDTH);
+		double distance = (apparentWidth/2)/Math.tan(Math.toRadians(HORIZ_FOV_DEG));
+		return distance;
 	}
 }

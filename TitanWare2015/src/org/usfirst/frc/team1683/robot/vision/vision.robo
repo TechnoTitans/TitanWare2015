@@ -1,5 +1,5 @@
-<head><version>2.70.2</version></head>
-<Axis_Internet_Camera disabled>
+<head><version>2.71.5</version></head>
+<Axis_Internet_Camera>
   <auto_back_light>TRUE</auto_back_light>
   <auto_exposure>FALSE</auto_exposure>
   <auto_white_balance>TRUE</auto_white_balance>
@@ -18,6 +18,11 @@
   <sharpness_value>50</sharpness_value>
   <username>FRC</username>
 </Axis_Internet_Camera>
+<Marker>
+  <include_graphics>0</include_graphics>
+  <name>Main</name>
+  <revert_to>Current</revert_to>
+</Marker>
 <RGB_Filter>
   <channel>64</channel>
   <hue_value>110</hue_value>
@@ -56,14 +61,14 @@
 <Mean>
   <filter_size>3</filter_size>
 </Mean>
-<RGB_Filter disabled>
+<RGB_Filter>
   <channel>16</channel>
-  <hue_value>125</hue_value>
+  <hue_value>75</hue_value>
   <hysteresis>0</hysteresis>
-  <min_value>150</min_value>
+  <min_value>100</min_value>
   <result_type>2</result_type>
 </RGB_Filter>
-<RGB_Filter>
+<RGB_Filter disabled>
   <channel>256</channel>
   <hue_value>00</hue_value>
   <hysteresis>0</hysteresis>
@@ -118,6 +123,11 @@
   <image2>Current</image2>
   <invert_results>FALSE</invert_results>
 </Blob_Overlap>
+<Marker>
+  <include_graphics>0</include_graphics>
+  <name>Overlap</name>
+  <revert_to>Current</revert_to>
+</Marker>
 <Border/>
 <Dilate>
   <avoid_connection>FALSE</avoid_connection>
@@ -142,6 +152,7 @@
   <basic_statistics>FALSE</basic_statistics>
   <scope>1</scope>
 </Geometric_Statistics>
+<Blob_Count/>
 <Math>
   <all_channels>TRUE</all_channels>
   <bias>0</bias>
@@ -162,6 +173,7 @@ WIDTH
 </northeast>
   <northwest>COG_Y
 COG_X
+BLOB_COUNT
 </northwest>
 </Display_Variables>
 <NetworkTables>
@@ -170,7 +182,29 @@ COG_X
   <hostname>roborio-1683.local</hostname>
   <port>1735</port>
   <prefix>/Vision/</prefix>
-  <variables_to_send>COG_X
-COG_Y</variables_to_send>
+  <variables_to_send>BLOB_COUNT
+COG_X
+COG_Y
+HEIGHT
+WIDTH</variables_to_send>
   <variable_type_index>0</variable_type_index>
 </NetworkTables>
+<function>
+<function_name>Can</function_name>
+<function_always_run>0</function_always_run>
+<Marker disabled>
+  <include_graphics>0</include_graphics>
+  <name>Main2</name>
+  <revert_to>Main</revert_to>
+</Marker>
+<Color_Filter disabled>
+  <adjust_lighting>FALSE</adjust_lighting>
+  <colors>#99861F
+
+</colors>
+  <color_bias>1.0</color_bias>
+  <match_distance>80</match_distance>
+  <min_color>100</min_color>
+  <min_intensity>100</min_intensity>
+</Color_Filter>
+</function>

@@ -13,7 +13,7 @@ public class VisionTest implements Tester{
 	
 	Vision vision;
 //	NetworkTable table;
-	Blob blobs;
+	Blob[] blobs;
 	
 	public VisionTest() {
 		vision = new Vision();
@@ -21,6 +21,12 @@ public class VisionTest implements Tester{
 	}
 	
 	public void test() {
-		vision.getData(); 
+		blobs = vision.getData();
+		if (blobs.length > 0) {
+			System.out.println(vision.calcDistance(blobs[0]));
+		}
+		else {
+			System.out.println("Error 404. Tote not found.");
+		}
 	}
 }
