@@ -37,6 +37,8 @@ public class HDrive extends DriveTrain{
 	
 	/**
 	 * Runs driving sequence periodically
+	 * @param leftStick
+	 * @param rightStick
 	 */
 	public void driveMode(Joystick leftStick, Joystick rightStick){
 		double speed = (DriverStation.rightStick.getRawAxis(DriverStation.XAxis) 
@@ -68,35 +70,52 @@ public class HDrive extends DriveTrain{
 	
 	/**
 	 * checks if the middle wheels are down
-	 * @return
+	 * @return whether the H-drive pistons are extended or not
 	 */
 	public boolean isDeployed(){
 		return drivePistons.isExtended();
 	}
 	
+	/**
+	 * drives robot straight given distance
+	 * @param distance - positive/negative determines direction
+	 */
 	public void goStraight(double distance){
 		tankDrive.goStraight(distance);
 	}
 	
+	/**
+	 * turns robot specific angle using the gyro
+	 * @param bearing - determines where to turn to
+	 */
 	public void turnAngle(double bearing){
 		tankDrive.turnAngle(bearing);
 	}
 	
+	/**
+	 * sets robot back to original orientation
+	 * Status: Not-Completed
+	 */
 	public void setBackToOriginalPos(){
 		tankDrive.setBackToOriginalPos();
 	}
 	
+	/**
+	 * uses gyro to correct path drifting
+	 */
 	public void antiDrift(){
 		tankDrive.antiDrift();
 	}
 	
+	/**
+	 * stops the drive train
+	 */
 	public void stop(){
 		tankDrive.stop();
 	}
 	/**
-	 * 
-	 * @param distance
-	 * @param direction = +1 or -1
+	 * deploys H-drive wheels if not deployed and moves sideways given distance
+	 * @param distance - positive/negative affects direction
 	 */
 	public void goSideways(double distance)
 	{
