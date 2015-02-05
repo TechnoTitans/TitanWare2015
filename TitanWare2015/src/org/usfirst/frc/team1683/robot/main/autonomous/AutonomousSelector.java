@@ -15,5 +15,7 @@ public class AutonomousSelector {
 			Auto_2.run();
 		else if (autonomousMode == 3)
 			Auto_3.run();
+		else if (autonomousMode == 4)
+			Auto_4.run();
 	}
 }

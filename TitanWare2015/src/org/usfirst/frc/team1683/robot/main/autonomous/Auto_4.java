@@ -54,7 +54,7 @@ public class Auto_4 extends Autonomous{
 		{
 			driveTrain.stop();
 			nextState = END_CASE;
-			break;
+			break; 
 		}
 		}
 		presentState = nextState;
