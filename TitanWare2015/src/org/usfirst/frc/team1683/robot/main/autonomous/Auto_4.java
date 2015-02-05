@@ -4,9 +4,7 @@ public class Auto_4 extends Autonomous{
 	/**
 	 * @author Sneha
 	 */
-	public static final int LIFT_TOTE				= 5;
-	public static final int ALIGN_TOTE				= 6;
-	public static final int DROP_TOTE				= 7;
+	
 	public static void run(){
 		switch(presentState){
 		case INIT_CASE:

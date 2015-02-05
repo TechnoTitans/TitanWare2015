@@ -22,6 +22,9 @@ public abstract class Autonomous {
 	public static final int DRIVE_BACKWARD				= 2;
 	public static final int DRIVE_SIDEWAYS				= 3;
 	public static final int LIFT_BARREL                 = 4;
+	public static final int LIFT_TOTE					= 5;
+	public static final int ALIGN_TOTE					= 6;
+	public static final int DROP_TOTE					= 7;
 	public static final int END_CASE 					= 10;
 	
 	
