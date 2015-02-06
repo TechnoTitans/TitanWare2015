@@ -86,6 +86,10 @@ public class PickerUpper {
 	public void run(){
 		motors.set(DriverStation.auxStick.getRawAxis(DriverStation.YAxis));
 	}
+	
+	public void runAuto (double liftDistance){
+		motors.moveDistance(liftDistance);
+	}
 
 
 }
