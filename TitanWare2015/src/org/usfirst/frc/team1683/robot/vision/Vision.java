@@ -90,4 +90,9 @@ public class Vision {
 		
 		return distance;
 	}
+	
+	public Vector getCenterVector() {
+		
+		return null;
+	}
 }
