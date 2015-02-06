@@ -76,7 +76,7 @@ public class Vision {
 	/**
 	 * Calculates the approximate distance from blob.
 	 * @param Blob who's distance is to be calculated.
-	 * @return Array of distances to all blobs on screen.
+	 * @return Array distance away from blob in meters.
 	 */
 	public double calcDistance(Blob blob) {
 //		double apparentWidth = TOTE_WIDTH * ((double)blob.WIDTH/REF_WIDTH);
