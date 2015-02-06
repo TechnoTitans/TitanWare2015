@@ -30,8 +30,10 @@ public class Vision {
 	private final int REF_HEIGHT_PIXELS 	= 240;
 	private final int REF_WIDTH_PIXELS		= 320;
 	// Calculated Field of View
-	private final double HORIZ_FOV_DEG		= 69.7089;
+	private final double HORIZ_FOV_DEG		= 67; //69.7089;
 	private final double VERT_FOV_DEG		= 49.8095;
+	
+	private final double FOCAL_LENGTH		= (REF_WIDTH_PIXELS*REF_DISTANCE)/REF_WIDTH;
 	
 	/**
 	 * Constructor
@@ -77,8 +79,15 @@ public class Vision {
 	 * @return Array of distances to all blobs on screen.
 	 */
 	public double calcDistance(Blob blob) {
-		double apparentWidth = TOTE_WIDTH * ((double)blob.WIDTH/REF_WIDTH);
-		double distance = (apparentWidth/2)/Math.tan(Math.toRadians(HORIZ_FOV_DEG));
+//		double apparentWidth = TOTE_WIDTH * ((double)blob.WIDTH/REF_WIDTH);
+//		double distance = (apparentWidth/2)/Math.tan(Math.toRadians(HORIZ_FOV_DEG));
+		
+//		double distance = TOTE_WIDTH*REF_WIDTH/(2*blob.WIDTH*Math.tan(Math.toRadians(HORIZ_FOV_DEG)));
+		
+		final double COMPENSATION = (4.0/3.0);
+		
+		double distance = (TOTE_WIDTH*FOCAL_LENGTH)/blob.WIDTH * COMPENSATION;
+		
 		return distance;
 	}
 }
