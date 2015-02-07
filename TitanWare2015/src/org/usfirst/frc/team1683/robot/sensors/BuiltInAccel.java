@@ -21,7 +21,7 @@ public class BuiltInAccel extends BuiltInAccelerometer implements Sensor {
 	/**
 	 * @return  the X,Y,Z accelerations in an array of doubles
 	 */
-	public double[] getAll() {
+	public double[] getArray() {
 		return new double[]{super.getX(),super.getY(),super.getZ()};
 	}
 	
@@ -44,6 +44,22 @@ public class BuiltInAccel extends BuiltInAccelerometer implements Sensor {
 	 */
 	public double getZ() {
 		return super.getZ();
+	}
+	
+	/**
+	 * @return the angle of the robot from front to back
+	 */
+	public double getYZAngle() {
+		double angle = Math.atan(super.getY()/super.getZ());
+		return Math.toDegrees(angle);
+	}
+	
+	/**
+	 * @return the angle of the robot from side to side
+	 */
+	public double getXZAngle() {
+		double angle = Math.atan(super.getX()/super.getZ());
+		return Math.toDegrees(angle);
 	}
 
 }
