@@ -48,6 +48,9 @@ public class DriveTester implements Tester{
 		
 		if (DriverStation.auxStick.getRawButton(4))
 			pickerUpper.runAuto(5.0);
+		if(DriverStation.auxStick.getRawButton(6)){
+			pickerUpper.runAuto(-5.0);
+		}
 			
 		
 			

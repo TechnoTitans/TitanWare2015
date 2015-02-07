@@ -51,9 +51,9 @@ public class TechnoTitan extends IterativeRobot {
      	//gyro =new Gyro(HWR.GYRO);
 //   	analogGyro=new Gyro(new AnalogInput(HWR.GYRO));
 //   	gyrotest = new GyroTest(analogGyro);
-//    	encoder = new Encoder(HWR.BELT_CHANNEL_A, HWR.BELT_CHANNEL_B, false);
-    	tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, false , new int[]{HWR.RIGHT_MOTOR},true , Talon.class, HWR.GYRO);
-    	pickerUpper = new PickerUpper(new int[]{HWR.BELT_MOTOR}, Motor.class, false,HWR.BELT_CHANNEL_A,HWR.BELT_CHANNEL_B,HWR.LEFT_H_PISTON,HWR.LEFT_MOTOR,HWR.RIGHT_MOTOR,Motor.class);
+    	encoder = new Encoder(HWR.BELT_CHANNEL_A, HWR.BELT_CHANNEL_B, false);
+//    	tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, false , new int[]{HWR.RIGHT_MOTOR},true , Talon.class, HWR.GYRO);
+    	pickerUpper = new PickerUpper(new int[]{HWR.BELT_MOTOR}, Talon.class, false,HWR.LEFT_H_PISTON,encoder,HWR.LEFT_MOTOR,HWR.RIGHT_MOTOR,Motor.class);
 //    	powerDistributionManager = new PowerDistributionManager(15);
 //    	new Thread(powerDistributionManager, "Power Distribution Manager").start();    	
 //   	tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, true , new int[]{HWR.RIGHT_MOTOR},false , Talon.class, HWR.GYRO, 
@@ -64,8 +64,8 @@ public class TechnoTitan extends IterativeRobot {
 //    	soloTester = new AirSystemTester(new int[]{PCM.SOLENOID_0} ,1);
 //		visionTest = new VisionTest();
 //    	talonTest = new TalonTest(new Talon(3,true));
-    	encoder=new Encoder(HWR.BELT_CHANNEL_A,HWR.BELT_CHANNEL_B,false);
-    	driveTester = new DriveTester(tankDrive, tankDrive, encoder, pickerUpper);
+    
+    	driveTester = new DriveTester(tankDrive, tankDrive,encoder, pickerUpper);
     	
     }
 
@@ -84,7 +84,7 @@ public class TechnoTitan extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        tankDrive.driveMode(DriverStation.leftStick, DriverStation.rightStick);
+   //     tankDrive.driveMode(DriverStation.leftStick, DriverStation.rightStick);
         pickerUpper.run();
     }
     

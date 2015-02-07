@@ -43,15 +43,16 @@ public class PickerUpper {
 	 * @param rightMotor
 	 * @param motorType
 	 */
-	public PickerUpper(int[] pickerUpperChannels, Class<Motor> talonSRX, boolean inverseDirection,
-			int beltChannelA, int beltChannelB, int liftPiston, int leftMotor, int rightMotor, Class<Motor> motorType){
+	public PickerUpper(int[] pickerUpperChannels, Class talonSRX, boolean inverseDirection,
+			 int liftPiston,Encoder encoder, int leftMotor, int rightMotor, Class<Motor> motorType){
 		this.motors = new MotorGroup(pickerUpperChannels, talonSRX, inverseDirection, 
 				encoder);
 		int[] channelNumbers = {leftMotor, rightMotor};
 		int [] piston = {liftPiston};
 		liftPistons = new AirSystem(new Compressor(), piston);
 		liftMotors = new MotorGroup(channelNumbers, motorType , false);
-		encoder = new Encoder (beltChannelA, beltChannelB, inverseDirection);
+		this.encoder=encoder;
+		
 		
 	}
 
@@ -99,6 +100,8 @@ public class PickerUpper {
 	   
 		if (Math.abs(encoder.getDisplacement(47.0/700.0)) <= Math.abs(liftDistance))
 			motors.set(speed);
+		else
+			motors.set(0);
 		
 	}
 
