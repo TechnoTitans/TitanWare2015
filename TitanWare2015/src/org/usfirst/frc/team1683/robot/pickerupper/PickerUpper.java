@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1683.robot.pickerupper;
 
+import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.drivetrain.Encoder;
 import org.usfirst.frc.team1683.robot.drivetrain.Motor;
 import org.usfirst.frc.team1683.robot.drivetrain.MotorGroup;
@@ -16,7 +17,9 @@ public class PickerUpper {
 	MotorGroup motors;
 	AirSystem liftPistons;
 	MotorGroup liftMotors;
+	Encoder encoder;
 	int liftButton;
+	final double AUTO_LIFT_SPEED = 0.5;
 
 	/**
 	 * Constructor
@@ -35,8 +38,7 @@ public class PickerUpper {
 	 * @param inverseDirection
 	 * @param beltChannelA
 	 * @param beltChannelB
-	 * @param rightPiston
-	 * @param leftPiston
+	 * @param liftPiston
 	 * @param leftMotor
 	 * @param rightMotor
 	 * @param motorType
@@ -44,11 +46,13 @@ public class PickerUpper {
 	public PickerUpper(int[] pickerUpperChannels, Class<Motor> talonSRX, boolean inverseDirection,
 			int beltChannelA, int beltChannelB, int liftPiston, int leftMotor, int rightMotor, Class<Motor> motorType){
 		this.motors = new MotorGroup(pickerUpperChannels, talonSRX, inverseDirection, 
-				new Encoder(beltChannelA, beltChannelB, inverseDirection));
+				encoder);
 		int[] channelNumbers = {leftMotor, rightMotor};
 		int [] piston = {liftPiston};
 		liftPistons = new AirSystem(new Compressor(), piston);
 		liftMotors = new MotorGroup(channelNumbers, motorType , false);
+		encoder = new Encoder (beltChannelA, beltChannelB, inverseDirection);
+		
 	}
 
 	public void liftMode(Joystick auxStick) {
@@ -61,8 +65,6 @@ public class PickerUpper {
 			uprightPickerUpper();	
 		}
 	}
-
-
 
 
 	/**
@@ -88,7 +90,10 @@ public class PickerUpper {
 	}
 	
 	public void runAuto (double liftDistance){
-		motors.moveDistance(liftDistance);
+		// Need to find getDisplacement parameter value (DISTANCE_PER_PULSE) for belt motor.
+		if (encoder.getDisplacement(47.0/700.0) <= liftDistance)
+			motors.set(AUTO_LIFT_SPEED);
+		
 	}
 
 
