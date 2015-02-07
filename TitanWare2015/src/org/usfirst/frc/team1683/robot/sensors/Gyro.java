@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.AnalogInput;
 public class Gyro extends edu.wpi.first.wpilibj.Gyro implements Sensor {
 
 	public final static double SENSITIVITY = 0.009; 
+	public final static double driftRate = 0.3333;
     AnalogInput channel;
 	
 	public Gyro(int channel) {
@@ -24,7 +25,9 @@ public class Gyro extends edu.wpi.first.wpilibj.Gyro implements Sensor {
 	public double getVoltage(){
 		return channel.getAverageVoltage();
 	}
-	
+	public double getDirection(){
+		return super.getAngle()%360;
+	}
 		
     @Override
 	public double getRaw() {

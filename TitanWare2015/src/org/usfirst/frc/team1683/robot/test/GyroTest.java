@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class GyroTest implements Tester{
     Gyro gyro;
+    Timer timer;
     double sensitivity=0.008;
     double bestSensitivity;
     final int npoints =10;
@@ -16,13 +17,14 @@ public class GyroTest implements Tester{
     final double sensitivityIncrement=2*range/npoints;
     double newDrift,bestDrift;
    
-    public GyroTest(Gyro gyro){
+    public GyroTest(Gyro gyro,Timer timer){
     	this.gyro = gyro;
+    	this.timer=timer;
     }
 	@Override
 	public void test() {
 		// TODO Auto-generated method stub
-		DriverStation.sendData("Current Angle from Gyro", gyro.getAngle());
+		DriverStation.sendData("Current Angle from Gyro", (gyro.getDirection()-(timer.get()*Gyro.driftRate)));
 		DriverStation.sendData("Current Gyro Voltage", gyro.getVoltage());
 		Timer.delay(.2);
 	}
