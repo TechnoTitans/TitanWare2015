@@ -4,6 +4,10 @@ import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 
 public class BuiltInAccel extends BuiltInAccelerometer implements Sensor {
 
+	public enum Status {
+		FLAT, CLIMBING, DESCENDING, TIPPING, UNDETERMINED
+	}
+	
 	public BuiltInAccel() {
 		super();
 	}
@@ -60,6 +64,20 @@ public class BuiltInAccel extends BuiltInAccelerometer implements Sensor {
 	public double getXZAngle() {
 		double angle = Math.atan(super.getX()/super.getZ());
 		return Math.toDegrees(angle);
+	}
+	
+	public Status getStatus() {
+		if(-5 < getYZAngle() && getYZAngle() < 5)
+			return Status.FLAT;
+		else if(10 < getYZAngle() && getYZAngle() < 20)
+			return Status.CLIMBING;
+		else if(-20 < getYZAngle() && getYZAngle() < -10)
+			return Status.DESCENDING;
+		else if(-95 < getYZAngle() && getYZAngle() < -30)
+			return Status.TIPPING;
+		else
+			return Status.UNDETERMINED;
+		
 	}
 
 }
