@@ -14,34 +14,59 @@ public class Auto_4 extends Autonomous{
 		}
 		case LIFT_TOTE:
 		{	
-			//need to add method which returns hook to bottom
 			pickerUpper.runAuto(liftDistance);
 			nextState = DRIVE_SIDEWAYS;
+			break;
+		}
+		case IS_TOTE_LIFTED:
+		{	
+			if (isToteLifted) {
+				nextState = DRIVE_SIDEWAYS;
+			}
+			else if (isToteLiftedCount >= 3) {
+				nextState = DRIVE_FORWARD;
+			}
+			else {
+				nextState = LIFT_TOTE;
+				isToteLiftedCount++;
+			}
+			
 			break;
 		}
 		case DRIVE_SIDEWAYS:
 		{
 			driveTrain.goSideways(sideDistance);
-			liftCount++;
-			if(liftCount == 1) {
-				nextState = DROP_TOTE;
-			}
-			else {
-				nextState = DRIVE_FORWARD;
-			}
+			nextState = ADJUST_TOTE;
 			break;
 		}
-		case ALIGN_TOTE:
+		case ADJUST_TOTE:
 		{
+			//how to adjust tote not quite clear, but it does need adjusting
 			driveTrain.goStraight(backDistance);
-			nextState = LIFT_TOTE;
+			nextState = DROP_TOTE;
 			break;
 		}
 		case DROP_TOTE:
 		{
 			driveTrain.goStraight(adjustDistance);
 			pickerUpper.runAuto(dropDistance);
-			nextState = ALIGN_TOTE;
+			liftCount++;
+			if(liftCount <= 1) {
+				nextState = LIFT_POSITION;
+			}
+			else {
+				nextState = DRIVE_FORWARD;
+			}
+			break;
+		}
+		case LIFT_POSITION:
+		{	
+			//variables need to be added here. 
+			pickerUpper.runAuto(-6.0);
+			driveTrain.goStraight(-3.0);
+			pickerUpper.runAuto(-6.0);
+			driveTrain.goStraight(3.0);
+			nextState = LIFT_TOTE; 
 			break;
 		}
 		case DRIVE_FORWARD:
@@ -54,9 +79,9 @@ public class Auto_4 extends Autonomous{
 		{
 			driveTrain.stop();
 			nextState = END_CASE;
-			break; 
+			break;
 		}
 		}
-		presentState = nextState;
+		presentState = nextState; 
 	}
 }

@@ -23,8 +23,10 @@ public abstract class Autonomous {
 	public static final int DRIVE_SIDEWAYS				= 3;
 	public static final int LIFT_BARREL                 = 4;
 	public static final int LIFT_TOTE					= 5;
-	public static final int ALIGN_TOTE					= 6;
+	public static final int ADJUST_TOTE					= 6;
 	public static final int DROP_TOTE					= 7;
+	public static final int LIFT_POSITION				= 8;
+	public static final int IS_TOTE_LIFTED				= 9;
 	public static final int END_CASE 					= 10;
 	
 	
@@ -32,12 +34,15 @@ public abstract class Autonomous {
 	public static int nextState;
 	public static int driveCount = 0;
 	public static int liftCount = 0;
+	public static int isToteLiftedCount = 0;
 	protected static double driveDistance;
 	protected static double sideDistance;
 	protected static double liftDistance; 
 	protected static double adjustDistance;
 	protected static double dropDistance;
 	protected static double backDistance;
+	protected static boolean isToteLifted;
+	 
 	
 	public Autonomous(){
 		tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, true , new int[]{HWR.RIGHT_MOTOR},false , Talon.class, HWR.GYRO, 
