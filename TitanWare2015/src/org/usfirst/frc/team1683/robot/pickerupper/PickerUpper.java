@@ -42,12 +42,12 @@ public class PickerUpper {
 	 * @param motorType
 	 */
 	public PickerUpper(int[] pickerUpperChannels, Class<Motor> talonSRX, boolean inverseDirection,
-			int beltChannelA, int beltChannelB, int rightPiston, int leftPiston, int leftMotor, int rightMotor, Class<Motor> motorType){
+			int beltChannelA, int beltChannelB, int liftPiston, int leftMotor, int rightMotor, Class<Motor> motorType){
 		this.motors = new MotorGroup(pickerUpperChannels, talonSRX, inverseDirection, 
 				new Encoder(beltChannelA, beltChannelB, inverseDirection));
 		int[] channelNumbers = {leftMotor, rightMotor};
-		int[] pistons = {rightPiston, leftPiston};
-		liftPistons = new AirSystem(new Compressor(), pistons);
+		int [] piston = {liftPiston};
+		liftPistons = new AirSystem(new Compressor(), piston);
 		liftMotors = new MotorGroup(channelNumbers, motorType , false);
 	}
 
