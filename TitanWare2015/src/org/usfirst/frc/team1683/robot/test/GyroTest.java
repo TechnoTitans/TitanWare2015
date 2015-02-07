@@ -3,6 +3,7 @@ package org.usfirst.frc.team1683.robot.test;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
 
+
 import edu.wpi.first.wpilibj.Timer;
 
 public class GyroTest implements Tester{
@@ -14,6 +15,7 @@ public class GyroTest implements Tester{
     final double range=0.001;
     final double sensitivityIncrement=2*range/npoints;
     double newDrift,bestDrift;
+   
     public GyroTest(Gyro gyro){
     	this.gyro = gyro;
     }
@@ -21,6 +23,7 @@ public class GyroTest implements Tester{
 	public void test() {
 		// TODO Auto-generated method stub
 		DriverStation.sendData("Current Angle from Gyro", gyro.getAngle());
+		DriverStation.sendData("Current Gyro Voltage", gyro.getVoltage());
 		Timer.delay(.2);
 	}
 	public double getAngleDelayed(double x){
