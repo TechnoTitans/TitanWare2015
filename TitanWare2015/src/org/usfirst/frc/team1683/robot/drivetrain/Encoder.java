@@ -8,7 +8,7 @@ public class Encoder extends edu.wpi.first.wpilibj.Encoder{
     private static final double WHEEL_DISTANCE_PER_PULSE=47.0/700.0;//inches/pulse
     public static final double WHEEL_RADIUS = 0.0; //must be determined through measurement
     //Above value has been confirmed from past revisions as the constant for the robot not the mule
-    //may require retuning on 2nd day of Competition.
+    //may require re-tuning on 2nd day of Competition.
     /**
      * Constructor
      * @param aChannel
@@ -42,4 +42,5 @@ public class Encoder extends edu.wpi.first.wpilibj.Encoder{
     public double getDistanceMeters(){
         return getDistanceFt()*0.3048;
     }
+       
 }
