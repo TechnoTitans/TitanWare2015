@@ -91,8 +91,14 @@ public class PickerUpper {
 	
 	public void runAuto (double liftDistance){
 		// Need to find getDisplacement parameter value (DISTANCE_PER_PULSE) for belt motor.
-		if (encoder.getDisplacement(47.0/700.0) <= liftDistance)
-			motors.set(AUTO_LIFT_SPEED);
+	   double speed;
+	   if (liftDistance >= 0.0)
+		   speed = AUTO_LIFT_SPEED;
+	   else
+		   speed = -AUTO_LIFT_SPEED;
+	   
+		if (Math.abs(encoder.getDisplacement(47.0/700.0)) <= Math.abs(liftDistance))
+			motors.set(speed);
 		
 	}
 

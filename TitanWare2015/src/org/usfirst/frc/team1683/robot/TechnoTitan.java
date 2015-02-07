@@ -63,7 +63,7 @@ public class TechnoTitan extends IterativeRobot {
 //    	soloTester = new AirSystemTester(new int[]{PCM.SOLENOID_0} ,1);
 //		visionTest = new VisionTest();
 //    	talonTest = new TalonTest(new Talon(3,true));
-    	driveTester = new DriveTester(tankDrive, tankDrive, encoder);
+    	driveTester = new DriveTester(tankDrive, tankDrive, encoder, pickerUpper);
     	
     }
 
