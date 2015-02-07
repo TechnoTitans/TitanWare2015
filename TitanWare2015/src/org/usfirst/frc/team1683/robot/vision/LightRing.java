@@ -11,6 +11,7 @@ public class LightRing {
 	 */
 	public LightRing(int talonChannel) {
 		ring = new Talon(talonChannel);
+		this.maxOn();
 	}
 	
 	/**
