@@ -3,6 +3,7 @@ package org.usfirst.frc.team1683.robot;
 import org.usfirst.frc.team1683.robot.drivetrain.Encoder;
 import org.usfirst.frc.team1683.robot.drivetrain.Talon;
 import org.usfirst.frc.team1683.robot.drivetrain.TankDrive;
+import org.usfirst.frc.team1683.robot.drivetrain.Motor;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.main.autonomous.AutonomousSelector;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
@@ -51,8 +52,8 @@ public class TechnoTitan extends IterativeRobot {
 //   	analogGyro=new Gyro(new AnalogInput(HWR.GYRO));
 //   	gyrotest = new GyroTest(analogGyro);
 //    	encoder = new Encoder(HWR.BELT_CHANNEL_A, HWR.BELT_CHANNEL_B, false);
-    	//tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, false , new int[]{HWR.RIGHT_MOTOR},true , Talon.class, HWR.GYRO);
-    	//pickerUpper = new PickerUpper(new int[]{HWR.BELT_MOTOR}, Talon.class, false);
+    	tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, false , new int[]{HWR.RIGHT_MOTOR},true , Talon.class, HWR.GYRO);
+    	pickerUpper = new PickerUpper(new int[]{HWR.BELT_MOTOR}, Motor.class, false,HWR.BELT_CHANNEL_A,HWR.BELT_CHANNEL_B,HWR.LEFT_H_PISTON,HWR.LEFT_MOTOR,HWR.RIGHT_MOTOR,Motor.class);
 //    	powerDistributionManager = new PowerDistributionManager(15);
 //    	new Thread(powerDistributionManager, "Power Distribution Manager").start();    	
 //   	tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, true , new int[]{HWR.RIGHT_MOTOR},false , Talon.class, HWR.GYRO, 
@@ -63,6 +64,7 @@ public class TechnoTitan extends IterativeRobot {
 //    	soloTester = new AirSystemTester(new int[]{PCM.SOLENOID_0} ,1);
 //		visionTest = new VisionTest();
 //    	talonTest = new TalonTest(new Talon(3,true));
+    	encoder=new Encoder(HWR.BELT_CHANNEL_A,HWR.BELT_CHANNEL_B,false);
     	driveTester = new DriveTester(tankDrive, tankDrive, encoder, pickerUpper);
     	
     }
@@ -90,7 +92,7 @@ public class TechnoTitan extends IterativeRobot {
      * This function is called periodically during test mode
      */
     public void testInit(){
-    	analogGyro.reset();
+  //  	analogGyro.reset();
     	//gyrotest.getBestSensitivity();
     }
     public void testPeriodic() {
