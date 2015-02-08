@@ -2,11 +2,13 @@ package org.usfirst.frc.team1683.robot.vision;
 
 import edu.wpi.first.wpilibj.Talon;
 
+/**Class to handle the light ring for the camera
+ * @author Sreyas Mirthipati
+ */
 public class LightRing {
 	Talon ring;
-	final int BRIGHTNESS_FACTOR = 100;
 	
-	/**
+	/**Constructor - defaults to maximum brightness when instantiated
 	 * @param talonChannel - channel of the Talon that controls the light ring
 	 */
 	public LightRing(int talonChannel) {

@@ -3,6 +3,9 @@ package org.usfirst.frc.team1683.robot.test;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.sensors.BuiltInAccel;
 
+/**This class contains tests for the BuiltInAccel class
+ * @author Sreyas Mirthipati
+ */
 public class BuiltInAccelTester implements Tester {
 
 	BuiltInAccel accel;

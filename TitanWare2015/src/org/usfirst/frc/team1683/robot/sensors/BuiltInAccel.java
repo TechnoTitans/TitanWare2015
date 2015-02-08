@@ -2,12 +2,22 @@ package org.usfirst.frc.team1683.robot.sensors;
 
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 
+/**Class to handle 3-axis Accelerometer in the RoboRIO
+ * @author Sreyas Mirthipati
+ */
 public class BuiltInAccel extends BuiltInAccelerometer implements Sensor {
 
-	public enum Status {
+	/**Various positions the robot can be tilted in
+	 * @author Sreyas Mirthipati
+	 *
+	 */
+	public enum TiltStatus {
 		FLAT, CLIMBING, DESCENDING, TIPPING, UNDETERMINED
 	}
 	
+	/**Constructor
+	 * 
+	 */
 	public BuiltInAccel() {
 		super();
 	}
@@ -66,17 +76,20 @@ public class BuiltInAccel extends BuiltInAccelerometer implements Sensor {
 		return Math.toDegrees(angle);
 	}
 	
-	public Status getStatus() {
+	/**
+	 * @return the tilt position that the robot is currently in
+	 */
+	public TiltStatus getStatus() {
 		if(-5 < getYZAngle() && getYZAngle() < 5)
-			return Status.FLAT;
+			return TiltStatus.FLAT;
 		else if(10 < getYZAngle() && getYZAngle() < 20)
-			return Status.CLIMBING;
+			return TiltStatus.CLIMBING;
 		else if(-20 < getYZAngle() && getYZAngle() < -10)
-			return Status.DESCENDING;
+			return TiltStatus.DESCENDING;
 		else if(-95 < getYZAngle() && getYZAngle() < -30)
-			return Status.TIPPING;
+			return TiltStatus.TIPPING;
 		else
-			return Status.UNDETERMINED;
+			return TiltStatus.UNDETERMINED;
 		
 	}
 
