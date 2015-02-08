@@ -97,7 +97,21 @@ public class Vision {
 		
 		return distance;
 	}
-	
+
+	/**
+	 * Gets the closest Blob in the array.
+	 * @param blobs The array of Blobs.
+	 * @return The closest Blob.
+	 */
+	public Blob getClosestBlob(Blob[] blobs) {
+		Blob closest = blobs[0];
+		for (Blob blob : blobs) {
+			if (calcDistance(blob) < calcDistance(closest)) {
+				closest = blob;
+			}
+		}
+		return closest;
+	}
 	/**
 	 * Gets the vector pointing towards the center.
 	 * @return Vector object representing center vector;
@@ -105,5 +119,12 @@ public class Vision {
 	public Vector getCenterVector(Blob blob) {
 		Vector center = new Vector(blob.X_POS, blob.Y_POS, CENTER_X, CENTER_Y);
 		return center;
+	}
+	
+	/**
+	 * Attempts to center the closest blob on screen horizontally.
+	 */
+	public void centerClosestBlob() {
+		
 	}
 }
