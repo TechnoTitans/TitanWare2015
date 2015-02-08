@@ -12,11 +12,14 @@ import edu.wpi.first.wpilibj.tables.TableKeyNotDefinedException;
 public class Vision {
 	
 	public static NetworkTable table;
+	// Variables to hold values retrieved from NetworkTable (RoboRealm).
 	private NumberArray COG_X;
 	private NumberArray COG_Y;
 	private NumberArray HEIGHT; // Height of blobs in Pixels
 	private NumberArray WIDTH; // Width of blobs in Pixels
 	private int blobCount;
+	
+	// Camera ID manually retrieved from RoboRIO web interface.
 	private final String CAM_ID 			= "cam1";
 	
 	// Predetermined actual dimensions of object represented by blob.
@@ -32,6 +35,10 @@ public class Vision {
 	// Calculated Field of View
 	private final double HORIZ_FOV_DEG		= 67; //69.7089;
 	private final double VERT_FOV_DEG		= 49.8095;
+	
+	private final double CENTER_X = REF_HEIGHT_PIXELS/2;
+	private final double CENTER_Y = REF_WIDTH_PIXELS/2;
+	
 	
 	private final double FOCAL_LENGTH		= (REF_WIDTH_PIXELS*REF_DISTANCE)/REF_WIDTH;
 	
@@ -91,8 +98,12 @@ public class Vision {
 		return distance;
 	}
 	
-	public Vector getCenterVector() {
-		
-		return null;
+	/**
+	 * Gets the vector pointing towards the center.
+	 * @return Vector object representing center vector;
+	 */
+	public Vector getCenterVector(Blob blob) {
+		Vector center = new Vector(blob.X_POS, blob.Y_POS, CENTER_X, CENTER_Y);
+		return center;
 	}
 }
