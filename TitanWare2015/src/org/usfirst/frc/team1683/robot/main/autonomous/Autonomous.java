@@ -9,6 +9,8 @@ import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
 
+import edu.wpi.first.wpilibj.Timer;
+
 public abstract class Autonomous {
 
 	protected static TankDrive tankDrive;
@@ -16,6 +18,7 @@ public abstract class Autonomous {
 	protected static HDrive hDrive;
 	protected static Gyro gyro;
 	protected static DriveTrain driveTrain;
+	protected static Timer timer;
 	
 	public static final int INIT_CASE 					= 0;
 	public static final int DRIVE_FORWARD 				= 1;
@@ -42,6 +45,7 @@ public abstract class Autonomous {
 	protected static double dropDistance;
 	protected static double backDistance;
 	protected static boolean isToteLifted;
+	protected static boolean enablePrinting;
 	 
 	
 	public Autonomous(){
@@ -56,5 +60,16 @@ public abstract class Autonomous {
 		driveDistance = DriverStation.getDouble("driveDistance");
 		sideDistance = DriverStation.getDouble("sideDistance");
 		liftDistance = DriverStation.getDouble("liftDistance");
+		timer = new Timer();
+	}
+	
+	public static void printState(){
+		if (enablePrinting){
+			if (nextState != presentState){
+				System.out.println("Present State is: "+presentState);
+				System.out.println("Next State is: "+nextState);
+				System.out.println("Current Time: "+timer.get());
+			}
+		}
 	}
 }

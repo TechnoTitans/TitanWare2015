@@ -6,6 +6,7 @@ public class Auto_1 extends Autonomous{
 		switch(presentState){
 		case INIT_CASE:
 		{
+			timer.start();
 			nextState = DRIVE_FORWARD;
 			break;
 		}
@@ -22,6 +23,7 @@ public class Auto_1 extends Autonomous{
 			break;
 		}
 		}
+		printState();
 		presentState = nextState;
 	}
 }

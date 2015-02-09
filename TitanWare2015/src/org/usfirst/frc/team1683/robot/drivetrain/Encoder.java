@@ -9,14 +9,16 @@ public class Encoder extends edu.wpi.first.wpilibj.Encoder{
     public static final double WHEEL_RADIUS = 0.0; //must be determined through measurement
     //Above value has been confirmed from past revisions as the constant for the robot not the mule
     //may require re-tuning on 2nd day of Competition.
+    double wheelDistancePerPulse;
     /**
      * Constructor
      * @param aChannel
      * @param bChannel
      * @param reverseDirection 
      */
-    public Encoder(int aChannel, int bChannel, boolean reverseDirection){
+    public Encoder(int aChannel, int bChannel, boolean reverseDirection, double wheelDistancePerPulse){
             super(aChannel, bChannel, reverseDirection);
+            this.wheelDistancePerPulse = wheelDistancePerPulse;
     }
     /**
      * Gets distance from encoder in terms of inches

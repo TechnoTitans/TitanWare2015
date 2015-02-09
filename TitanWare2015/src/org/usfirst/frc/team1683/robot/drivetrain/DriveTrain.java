@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import edu.wpi.first.wpilibj.Joystick;
 
 public abstract class DriveTrain{
-	public final static double lowSpeed = .2;
-	public final static double mediumSpeed = .5;
-	public final static double highSpeed = 1.0;
+	public final static double LOW_SPEED = .2;
+	public final static double MEDIUM_SPEED = .5;
+	public final static double HIGH_SPEED = 1.0;
 	
 	ArrayList<Motor> motors = new ArrayList<>();
 	

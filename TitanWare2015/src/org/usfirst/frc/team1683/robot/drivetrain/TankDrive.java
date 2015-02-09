@@ -49,9 +49,10 @@ public class TankDrive extends DriveTrain{
 	 * @param rightChannelB
 	 */
 	public TankDrive(int[] leftMotorInputs,boolean leftInverse, int[] rightMotorInputs, boolean rightInverse, 
-			Class motorType, int gyroChannel, int leftChannelA, int leftChannelB, int rightChannelA, int rightChannelB) {
-		leftEncoder = new Encoder(leftChannelA, leftChannelB, leftInverse);
-		rightEncoder = new Encoder(rightChannelA, rightChannelB, rightInverse);
+			Class<Motor> motorType, int gyroChannel, int leftChannelA, int leftChannelB, 
+			int rightChannelA, int rightChannelB, double wheelDistancePerPulse) {
+		leftEncoder = new Encoder(leftChannelA, leftChannelB, leftInverse, wheelDistancePerPulse);
+		rightEncoder = new Encoder(rightChannelA, rightChannelB, rightInverse, wheelDistancePerPulse);
 		left = new MotorGroup(leftMotorInputs, motorType, leftInverse, leftEncoder);
 		right = new MotorGroup(rightMotorInputs, motorType, rightInverse, rightEncoder);
 		gyro = new Gyro(gyroChannel);
@@ -84,15 +85,15 @@ public class TankDrive extends DriveTrain{
 		gyro.reset();
 		if (bearing >= 0 && bearing <= 180){
 			while(gyro.getAngle()<bearing){
-				left.set(lowSpeed);
-				right.set(-lowSpeed);
+				left.set(LOW_SPEED);
+				right.set(-LOW_SPEED);
 			}
 			left.stop();
 			right.stop();
 		}else if (bearing>180 && bearing<360){
 			while(gyro.getAngle()<bearing){
-				left.set(-lowSpeed);
-				right.set(lowSpeed);
+				left.set(-LOW_SPEED);
+				right.set(LOW_SPEED);
 			}
 			left.stop();
 			right.stop();

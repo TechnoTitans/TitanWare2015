@@ -82,6 +82,7 @@ public class Auto_4 extends Autonomous{
 			break;
 		}
 		}
+		printState();
 		presentState = nextState; 
 	}
 }

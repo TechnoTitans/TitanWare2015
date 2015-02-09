@@ -14,17 +14,17 @@ public class DriveTester implements Tester{
 	TankDrive tankDrive;
 	double distance;
 	double bearing;
-	Encoder encoder;
+	Encoder beltEncoder;
 	Preferences prefs;
 	PickerUpper pickerUpper;
 	
 //	DriverStation.prefDouble("distance", 1);
 //	DriverStation.prefDouble("bearing", 90);
 	
-	public DriveTester(DriveTrain driveTrain, TankDrive tankDrive, Encoder encoder, PickerUpper pickerUpper){
+	public DriveTester(DriveTrain driveTrain, TankDrive tankDrive, Encoder beltEncoder, PickerUpper pickerUpper){
 		this.driveTrain = driveTrain;
 		this.tankDrive = tankDrive;
-		this.encoder = encoder;
+		this.beltEncoder = beltEncoder;
 		this.pickerUpper = pickerUpper;
 		//distance = DriverStation.getDouble("distance");
 		//bearing = DriverStation.getDouble("bearing");
@@ -43,7 +43,7 @@ public class DriveTester implements Tester{
 		if (DriverStation.rightStick.getRawButton(6))
 			driveTrain.setBackToOriginalPos();
 		
-		double beltDistance = encoder.getDisplacement(47.0/700.0);
+		double beltDistance = beltEncoder.getDisplacement(47.0/700.0);
 		DriverStation.sendData("Belt Distance", beltDistance);
 		
 		if (DriverStation.auxStick.getRawButton(4))

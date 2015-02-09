@@ -36,6 +36,7 @@ public class Auto_2 extends Autonomous{
 			break;
 		}
 		}
+		printState();
 		presentState = nextState;
 	}
 }
