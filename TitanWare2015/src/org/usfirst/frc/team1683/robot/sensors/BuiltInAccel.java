@@ -11,6 +11,15 @@ public class BuiltInAccel extends BuiltInAccelerometer implements Sensor {
 	 * @author Sreyas Mirthipati
 	 *
 	 */
+	private final int FLAT_MIN = -5;
+	private final int FLAT_MAX = 5;
+	private final int CLIMBING_MIN = 10;
+	private final int CLIMBING_MAX = 16;
+	private final int DESCENDING_MIN = -16;
+	private final int DESCENDING_MAX = -10;
+	private final int TIPPING_MIN = -95;
+	private final int TIPPING_MAX = -30;
+	
 	public enum TiltStatus {
 		FLAT, CLIMBING, DESCENDING, TIPPING, UNDETERMINED
 	}
@@ -80,13 +89,13 @@ public class BuiltInAccel extends BuiltInAccelerometer implements Sensor {
 	 * @return the tilt position that the robot is currently in
 	 */
 	public TiltStatus getStatus() {
-		if(-5 < getYZAngle() && getYZAngle() < 5)
+		if(FLAT_MIN < getYZAngle() && getYZAngle() < FLAT_MAX)
 			return TiltStatus.FLAT;
-		else if(10 < getYZAngle() && getYZAngle() < 16)
+		else if(CLIMBING_MIN < getYZAngle() && getYZAngle() < CLIMBING_MAX)
 			return TiltStatus.CLIMBING;
-		else if(-16 < getYZAngle() && getYZAngle() < -10)
+		else if(DESCENDING_MIN < getYZAngle() && getYZAngle() < DESCENDING_MAX)
 			return TiltStatus.DESCENDING;
-		else if(-95 < getYZAngle() && getYZAngle() < -30)
+		else if(TIPPING_MIN < getYZAngle() && getYZAngle() < TIPPING_MAX)
 			return TiltStatus.TIPPING;
 		else
 			return TiltStatus.UNDETERMINED;
