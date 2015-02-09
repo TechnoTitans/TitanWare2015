@@ -82,9 +82,9 @@ public class BuiltInAccel extends BuiltInAccelerometer implements Sensor {
 	public TiltStatus getStatus() {
 		if(-5 < getYZAngle() && getYZAngle() < 5)
 			return TiltStatus.FLAT;
-		else if(10 < getYZAngle() && getYZAngle() < 20)
+		else if(10 < getYZAngle() && getYZAngle() < 16)
 			return TiltStatus.CLIMBING;
-		else if(-20 < getYZAngle() && getYZAngle() < -10)
+		else if(-16 < getYZAngle() && getYZAngle() < -10)
 			return TiltStatus.DESCENDING;
 		else if(-95 < getYZAngle() && getYZAngle() < -30)
 			return TiltStatus.TIPPING;
