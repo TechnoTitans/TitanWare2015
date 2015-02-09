@@ -26,8 +26,7 @@ public class Encoder extends edu.wpi.first.wpilibj.Encoder{
      */
 //     Needs to be changed such that WHEEL_DISTANCE_PER_PULSE is set in the constructor;
     public double getDistance () {
-        
-        this.setDistancePerPulse(WHEEL_DISTANCE_PER_PULSE); // Need to figure out DISTANCE_PER_PULSE
+        this.setDistancePerPulse(wheelDistancePerPulse); // Need to figure out DISTANCE_PER_PULSE
         return Math.abs(super.getDistance()); 
     }
     /**

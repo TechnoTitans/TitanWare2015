@@ -41,8 +41,7 @@ public class TechnoTitan extends IterativeRobot {
 	PowerDistributionManager powerDistributionManager;
 	Encoder liftEncoder;
 	
-	public static double driveEncoderWDPP = 47/700;
-	public static double liftEncoderWDPP = 47/700;
+	
 	/**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -54,7 +53,7 @@ public class TechnoTitan extends IterativeRobot {
      	//gyro =new Gyro(HWR.GYRO);
 //   	analogGyro=new Gyro(new AnalogInput(HWR.GYRO));
 //   	gyrotest = new GyroTest(analogGyro);
-    	liftEncoder = new Encoder(HWR.BELT_CHANNEL_A, HWR.BELT_CHANNEL_B, false, liftEncoderWDPP);
+    	liftEncoder = new Encoder(HWR.BELT_CHANNEL_A, HWR.BELT_CHANNEL_B, false, HWR.liftEncoderWDPP);
 //    	tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, false , new int[]{HWR.RIGHT_MOTOR},true , Talon.class, HWR.GYRO);
     	pickerUpper = new PickerUpper(new int[]{HWR.BELT_MOTOR}, Talon.class, false,HWR.LEFT_H_PISTON,liftEncoder,HWR.LEFT_MOTOR,HWR.RIGHT_MOTOR,Motor.class);
 //    	powerDistributionManager = new PowerDistributionManager(15);

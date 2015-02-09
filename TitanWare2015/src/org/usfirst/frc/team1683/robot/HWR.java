@@ -29,11 +29,11 @@ public class HWR {
 	public static double liftEncoderWDPP = 47/700;
 		
 	//Encoder Reverse Directions
-	public static boolean leftDriveEncoderReverse = false;
-	public static boolean rightDriveEncoderReverse = false;
-	public static boolean leftHEncoderReverse = false;
-	public static boolean rightHEncoderReverse = false;
-	public static boolean beltEncoderReverse = false;
+	public static boolean leftDriveEncoderReverse 		= false;
+	public static boolean rightDriveEncoderReverse 		= false;
+	public static boolean leftHEncoderReverse 			= false;
+	public static boolean rightHEncoderReverse 			= false;
+	public static boolean beltEncoderReverse 			= false;
 	
 	//Pneumatics
 	public static final int PRESSURE_SENSOR 		= HWP.ANALOG_0;

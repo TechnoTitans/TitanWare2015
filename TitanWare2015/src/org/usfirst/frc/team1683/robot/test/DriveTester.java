@@ -32,10 +32,15 @@ public class DriveTester implements Tester{
 		bearing = 180;
 	}
 	
+	public double averageDistance(){
+		return ((tankDrive.leftEncoder.getDistanceMeters()
+				+tankDrive.rightEncoder.getDistanceMeters())/2);
+	}
+	
 	public void test(){
 		if (DriverStation.rightStick.getRawButton(4)){
 			driveTrain.goStraight(distance);
-		    while(tankDrive.leftEncoder.getDistanceMeters()<distance)
+		    while(averageDistance()<distance)
 		    	driveTrain.antiDrift();
 		}
 		if (DriverStation.rightStick.getRawButton(5))
