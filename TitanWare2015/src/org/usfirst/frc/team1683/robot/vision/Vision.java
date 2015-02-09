@@ -39,7 +39,7 @@ public class Vision {
 //	private final double VERT_FOV_DEG		= 49.8095;
 	
 	private final double CENTER_X = REF_HEIGHT_PIXELS/2;
-	private final double CENTER_Y = REF_WIDTH_PIXELS/2;
+//	private final double CENTER_Y = REF_WIDTH_PIXELS/2;
 	
 	private final double FOCAL_LENGTH		= (REF_WIDTH_PIXELS*REF_DISTANCE)/REF_WIDTH;
 	
@@ -61,6 +61,7 @@ public class Vision {
 	} 
 	
 	/**
+	 * Gets the data about blobs.
 	 * @return Returns all the blobs seen on screen and their properties in an array.
 	 */
 	public Blob[] getData() {
@@ -77,7 +78,7 @@ public class Vision {
 			Vision.table.retrieveValue("AREA", 		AREA);
 		}
 		catch(TableKeyNotDefinedException exp) {
-			System.out.println("TableKeyNotDefinedException");
+//			System.out.println("TableKeyNotDefinedException");
 		}
 		
 		for (int i = 0; i < blobs.length; i++) {
@@ -152,19 +153,19 @@ public class Vision {
 	 * Attempts to center the closest blob on screen horizontally.
 	 */
 	public void centerClosestBlob(TankDrive driver) {
-		Blob[] data = getData();
+		Blob closest = getClosestBlob(getData());
 		
 		final double SPEED = 3;
 		
-		if (Math.abs(getClosestBlob(data).X_POS - CENTER_X) <= CENTER_THRESHOLD) {
+		if (Math.abs(closest.X_POS - CENTER_X) <= CENTER_THRESHOLD) {
 			driver.stop(); // No idea how this method is supposed to work yet.
 		}
 		// If right of tote, go left.
-		else if (getClosestBlob(data).X_POS - CENTER_X > 0) {
+		else if (closest.X_POS - CENTER_X > 0) {
 			driver.goSideways(-SPEED);
 		}
 		// If left of tote, go right.
-		else if(getClosestBlob(data).X_POS - CENTER_X < 0) {
+		else if(closest.X_POS - CENTER_X < 0) {
 			driver.goSideways(SPEED);
 		}
 		else {
