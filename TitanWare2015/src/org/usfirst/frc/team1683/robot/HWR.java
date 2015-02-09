@@ -24,9 +24,23 @@ public class HWR {
 	public static final int BELT_CHANNEL_A          = HWP.DIO_5;
 	public static final int BELT_CHANNEL_B          = HWP.DIO_6;
 	
+	//Encoder Wheel Distance Per Pulse
+	public static double driveEncoderWDPP = 47/700;
+	public static double liftEncoderWDPP = 47/700;
+		
+	//Encoder Reverse Directions
+	public static boolean leftDriveEncoderReverse = false;
+	public static boolean rightDriveEncoderReverse = false;
+	public static boolean leftHEncoderReverse = false;
+	public static boolean rightHEncoderReverse = false;
+	public static boolean beltEncoderReverse = false;
+	
+	//Pneumatics
 	public static final int PRESSURE_SENSOR 		= HWP.ANALOG_0;
 	
-	public static final int LEFT_H_PISTON		= PCM.SOLENOID_0;
-	public static final int RIGHT_H_PISTON		= PCM.SOLENOID_1;
-
+	//Pistons
+	public static final int LEFT_H_PISTON			= PCM.SOLENOID_0;
+	public static final int RIGHT_H_PISTON			= PCM.SOLENOID_1;
+	
+	
 }
