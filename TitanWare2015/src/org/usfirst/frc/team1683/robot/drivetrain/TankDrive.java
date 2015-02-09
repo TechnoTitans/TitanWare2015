@@ -49,7 +49,7 @@ public class TankDrive extends DriveTrain{
 	 * @param rightChannelB
 	 */
 	public TankDrive(int[] leftMotorInputs,boolean leftInverse, int[] rightMotorInputs, boolean rightInverse, 
-			Class<Motor> motorType, int gyroChannel, int leftChannelA, int leftChannelB, 
+			Class motorType, int gyroChannel, int leftChannelA, int leftChannelB, 
 			int rightChannelA, int rightChannelB, double wheelDistancePerPulse) {
 		leftEncoder = new Encoder(leftChannelA, leftChannelB, leftInverse, wheelDistancePerPulse);
 		rightEncoder = new Encoder(rightChannelA, rightChannelB, rightInverse, wheelDistancePerPulse);
