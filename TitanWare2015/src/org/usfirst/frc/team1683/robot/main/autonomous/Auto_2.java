@@ -1,7 +1,7 @@
 package org.usfirst.frc.team1683.robot.main.autonomous;
 
 public class Auto_2 extends Autonomous{
-
+	//Pushes all three totes into the Auto Zone
 	public static void run(){
 		switch(presentState){
 		case INIT_CASE:

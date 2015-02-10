@@ -4,6 +4,8 @@ public class Auto_3 extends Autonomous{
 	/**
 	 * @author komals
 	 */
+	//Lifts the barrel, and uses the barrel to push the tote into the Auto Zone to get the barrel, tote, and robot in the 
+	//Auto Zone
 	public static void run(){
 		switch(presentState){
 		case INIT_CASE:
