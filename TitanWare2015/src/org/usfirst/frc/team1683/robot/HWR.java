@@ -52,10 +52,10 @@ public class HWR {
 	
 	//PickerUpper constants
 	public static final double MOVE_MIN             = 0.0;
-	public static final double MOVE_MAX             = 36.0;
+	public static final double MOVE_MAX             = 52.0;
 	public static final double MOVE_ZERO_OFFSET     = 2.5;
 	public static final double LIFT_MIN             = 12.0;
-	public static final double LIFT_MAX             = 60.0;
+	public static final double LIFT_MAX             = 63.0;
 	public static final double LIFT_H_INC           = 0.5;
 	public static final double SLOPE                = (LIFT_MAX - LIFT_MIN)/(MOVE_MAX - MOVE_ZERO_OFFSET);
 	public static final double B1                   = LIFT_MIN - (SLOPE * MOVE_ZERO_OFFSET);

@@ -128,6 +128,7 @@ public class PickerUpper {
 	}
 	
 	//targetHeight and height should be in meters
+	//assumes lift movement corresponds directly to height change
 	public void liftToHeight(double targetHeight, HDrive hDrive)
 	{
 		setToZero();
@@ -135,6 +136,18 @@ public class PickerUpper {
 		if (hDrive.isDeployed())
 			height+=HWR.H_DRIVE_HEIGHT;
 		motors.moveDistance(targetHeight-height);
+	}
+	
+	//accomodates for the error between lift movement and height change
+	public void liftToHeight2(double targetHeight, HDrive hDrive)
+	{
+		setToZero();
+		double b;
+		if (hDrive.isDeployed())
+			b = HWR.B2;
+		else
+			b = HWR.B1;
+		motors.moveDistance((targetHeight-b)/HWR.SLOPE);
 	}
 	
 	public void setToZero(){
