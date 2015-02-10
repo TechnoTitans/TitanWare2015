@@ -86,7 +86,7 @@ public abstract class Autonomous {
 	 * Attempts to center the robot in front of the closest tote.
 	 */
 	public static void centerTote() {
-		double centerDistance = vision.centerOffset()/120;
+		double centerDistance = vision.centerOffset()/240;
 		if (vision.isCentered() == -1) {
 			driveTrain.goSideways(centerDistance);
 //			nextState = CENTER_TOTE;
