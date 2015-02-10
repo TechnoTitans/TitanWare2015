@@ -44,7 +44,7 @@ public class DriveTester implements Tester{
 		    	driveTrain.antiDrift();
 		}
 		if (DriverStation.rightStick.getRawButton(5))
-			driveTrain.turnAngle(bearing);
+			driveTrain.turnAngle(bearing, tankDrive.left, tankDrive.right);
 		if (DriverStation.rightStick.getRawButton(6))
 			driveTrain.setBackToOriginalPos();
 		
