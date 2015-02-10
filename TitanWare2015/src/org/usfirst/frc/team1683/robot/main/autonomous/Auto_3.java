@@ -20,6 +20,12 @@ public class Auto_3 extends Autonomous{
 		case DRIVE_SIDEWAYS:
 		{
 			driveTrain.goSideways(sideDistance);
+			nextState = CENTER_TOTE;
+			break;
+		}
+		case CENTER_TOTE:
+		{
+			centerTote();
 			nextState = DRIVE_FORWARD;
 			break;
 		}

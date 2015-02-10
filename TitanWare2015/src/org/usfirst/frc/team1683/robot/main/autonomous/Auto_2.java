@@ -15,20 +15,30 @@ public class Auto_2 extends Autonomous{
 			driveTrain.goStraight(driveDistance);
 			if (driveCount<3){
 				nextState = DRIVE_BACKWARD;
+				break;
 			}
 			else{
 				nextState = END_CASE;
+				break;
 			}
 		}
 		case DRIVE_BACKWARD:
 		{
 			driveTrain.goStraight(-driveDistance);
 			nextState = DRIVE_SIDEWAYS;
+			break;
 		}
 		case DRIVE_SIDEWAYS:
 		{
-			driveTrain.goSideways(sideDistance);
+			driveTrain.goSideways(sideDistance);			
+			nextState = CENTER_TOTE;
+			break;
+		}
+		case CENTER_TOTE:
+		{
+			centerTote();
 			nextState = DRIVE_FORWARD;
+			break;
 		}
 		case END_CASE:
 		{

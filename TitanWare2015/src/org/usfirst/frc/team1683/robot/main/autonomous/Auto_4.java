@@ -36,6 +36,12 @@ public class Auto_4 extends Autonomous{
 		case DRIVE_SIDEWAYS:
 		{
 			driveTrain.goSideways(sideDistance);
+			nextState = CENTER_TOTE;
+			break;
+		}
+		case CENTER_TOTE:
+		{
+			centerTote();
 			nextState = ADJUST_TOTE;
 			break;
 		}

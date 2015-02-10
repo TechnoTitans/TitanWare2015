@@ -18,7 +18,7 @@ public class Auto_1 extends Autonomous{
 		}
 		case END_CASE:
 		{
-			driveTrain.stop();
+			driveTrain.stop();			
 			nextState = END_CASE;
 			break;
 		}

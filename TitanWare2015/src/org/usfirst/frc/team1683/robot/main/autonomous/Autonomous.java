@@ -3,12 +3,12 @@ package org.usfirst.frc.team1683.robot.main.autonomous;
 import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.drivetrain.DriveTrain;
 import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
-import org.usfirst.frc.team1683.robot.drivetrain.Motor;
 import org.usfirst.frc.team1683.robot.drivetrain.Talon;
 import org.usfirst.frc.team1683.robot.drivetrain.TankDrive;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
+import org.usfirst.frc.team1683.robot.vision.Vision;
 
 import edu.wpi.first.wpilibj.Timer;
 
@@ -20,11 +20,13 @@ public abstract class Autonomous {
 	protected static Gyro gyro;
 	protected static DriveTrain driveTrain;
 	protected static Timer timer;
+	protected static Vision vision;
 	
 	public static final int INIT_CASE 					= 0;
 	public static final int DRIVE_FORWARD 				= 1;
 	public static final int DRIVE_BACKWARD				= 2;
 	public static final int DRIVE_SIDEWAYS				= 3;
+	public static final int CENTER_TOTE					= 11;
 	public static final int LIFT_BARREL                 = 4;
 	public static final int LIFT_TOTE					= 5;
 	public static final int ADJUST_TOTE					= 6;
@@ -66,6 +68,7 @@ public abstract class Autonomous {
 		sideDistance = DriverStation.getDouble("sideDistance");
 		liftDistance = DriverStation.getDouble("liftDistance");
 		timer = new Timer();
+		vision = new Vision();
 	}
 	
 	public static void printState(){
@@ -75,6 +78,26 @@ public abstract class Autonomous {
 				System.out.println("Next State is: "+nextState);
 				System.out.println("Current Time: "+timer.get());
 			}
+		}
+	}
+	
+	/**
+	 * @author David Luo
+	 * Attempts to center the robot in front of the closest tote.
+	 */
+	public static void centerTote() {
+		double centerDistance = vision.centerOffset()/120;
+		if (vision.isCentered() == -1) {
+			driveTrain.goSideways(centerDistance);
+//			nextState = CENTER_TOTE;
+		}
+		else if (vision.isCentered() == 1) {
+			driveTrain.goSideways(centerDistance);
+//			nextState = CENTER_TOTE;
+		}
+		else {
+			driveTrain.stop();
+//			nextState = DRIVE_FORWARD;	
 		}
 	}
 }

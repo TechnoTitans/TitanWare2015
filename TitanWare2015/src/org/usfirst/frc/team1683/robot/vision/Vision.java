@@ -43,7 +43,7 @@ public class Vision {
 	
 	private final double FOCAL_LENGTH		= (REF_WIDTH_PIXELS*REF_DISTANCE)/REF_WIDTH;
 	
-	// Distance away from center needed in order to be considered centered.
+	// Distance away from center needed in order to be considered centered in Pixels.
 	private final double CENTER_THRESHOLD	= 10.0;
 	
 	/**
@@ -178,7 +178,8 @@ public class Vision {
 	 * @param blob The blob to be checked.
 	 * @return The side of the blob the robot is on. 0 for centered, -1 for on the left of blob, +1 for on the right, 2 for unexpected error.
 	 */
-	public int isCentered(Blob blob) {
+	public int isCentered() {
+		Blob blob = getClosestBlob(getData());
 		if (Math.abs(blob.X_POS - CENTER_X) <= CENTER_THRESHOLD) {
 			return 0;
 		}
@@ -198,7 +199,15 @@ public class Vision {
 	 * @param blob The target blob
 	 * @return How far off center the target blob is.
 	 */
-	public double centerOffset(Blob blob) {
-		return blob.X_POS - CENTER_X;
+	public double centerOffset() {
+		Blob blob = getClosestBlob(getData());
+		double offset = blob.X_POS - CENTER_X;
+		
+		// Anti-divide-by-zero if statement
+		if (offset == 0) {
+			offset = 1;
+		}
+		
+		return offset;
 	}
 }
