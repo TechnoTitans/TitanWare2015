@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class TankDrive extends DriveTrain{
 
-	MotorGroup left;
-	MotorGroup right;
+	public MotorGroup left;
+	public MotorGroup right;
 	public Encoder leftEncoder;
 	public Encoder rightEncoder;
 	Gyro gyro;
