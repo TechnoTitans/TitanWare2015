@@ -19,6 +19,7 @@ public class PickerUpper {
 	public Encoder beltEncoder;
 	int liftButton;
 	final double AUTO_LIFT_SPEED = 0.5;
+	
 
 	/**
 	 * Constructor

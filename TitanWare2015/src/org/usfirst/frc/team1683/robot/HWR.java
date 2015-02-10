@@ -50,6 +50,17 @@ public class HWR {
 	public static final int LEFT_LIFT_PISTON		= PCM.SOLENOID_2;
 	public static final int RIGHT_LIFT_PISTON		= PCM.SOLENOID_3;
 	
+	//PickerUpper constants
+	public static final double MOVE_MIN             = 0.0;
+	public static final double MOVE_MAX             = 36.0;
+	public static final double MOVE_ZERO_OFFSET     = 2.5;
+	public static final double LIFT_MIN             = 12.0;
+	public static final double LIFT_MAX             = 60.0;
+	public static final double LIFT_H_INC           = 0.5;
+	public static final double SLOPE                = (LIFT_MAX - LIFT_MIN)/(MOVE_MAX - MOVE_ZERO_OFFSET);
+	public static final double B1                   = LIFT_MIN - (SLOPE * MOVE_ZERO_OFFSET);
+	public static final double B2                   = B1 + LIFT_H_INC;
+	
 	//Robot Dimensions
 	public static final double H_DRIVE_HEIGHT		= 0.5;
 	public static final double ROBOT_HEIGHT			= 2.00;
