@@ -1,6 +1,8 @@
 package org.usfirst.frc.team1683.robot.pickerupper;
 
+import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.drivetrain.Encoder;
+import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
 import org.usfirst.frc.team1683.robot.drivetrain.MotorGroup;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.pneumatics.AirSystem;
@@ -26,6 +28,25 @@ public class PickerUpper {
 	 */
 	public PickerUpper(int[] pickerUpperChannels, Class motorType, boolean inverseDirection){
 		this.motors = new MotorGroup(pickerUpperChannels, motorType, inverseDirection);
+	}
+	
+	/**
+	 * Constructor
+	 * @param motorType
+	 * @param inverseDirection
+	 * @param liftSolenoids
+	 * @param pickerUpperChannels
+	 * @param beltChannelA
+	 * @param beltChannelB
+	 * @param reverseDirection
+	 * @param wdpp
+	 */
+	public PickerUpper(Class motorType, boolean inverseDirection, int[] liftSolenoids, int[] pickerUpperChannels,
+			 int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp){
+		this.motors = new MotorGroup(pickerUpperChannels, motorType, inverseDirection, 
+				beltEncoder);
+		beltEncoder = new Encoder(beltChannelA, beltChannelB, reverseDirection, wdpp);
+		liftPistons = new AirSystem(new Compressor(), liftSolenoids);
 	}
 	/**
 	 * Constructor
@@ -100,7 +121,26 @@ public class PickerUpper {
 		
 	}
 	
+	public void liftHeight(double changeInHeight)
+	{
+		motors.moveDistance(changeInHeight);
+	}
 	
-
-
+	//targetHeight and height should be in meters
+	public void liftToHeight(double targetHeight, HDrive hDrive)
+	{
+		setToZero();
+		double height = HWR.ROBOT_HEIGHT + HWR.DISTANCE_TO_INDEX;
+		if (hDrive.isDeployed())
+			height+=HWR.H_DRIVE_HEIGHT;
+		motors.moveDistance(targetHeight-height);
+	}
+	
+	public void setToZero(){
+		//while (!sensor.getRawValue())
+		while (true) //temporary - infinite loop
+		{
+			motors.set(-AUTO_LIFT_SPEED);
+		}
+	}
 }

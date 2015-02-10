@@ -25,7 +25,6 @@ public class Encoder extends edu.wpi.first.wpilibj.Encoder{
      * Gets distance from encoder in terms of inches
      * @return distance in inches
      */
-//     Needs to be changed such that WHEEL_DISTANCE_PER_PULSE is set in the constructor;
     public double getDistance () {
         this.setDistancePerPulse(wheelDistancePerPulse); // Need to figure out DISTANCE_PER_PULSE
         return Math.abs(super.getDistance()); 
