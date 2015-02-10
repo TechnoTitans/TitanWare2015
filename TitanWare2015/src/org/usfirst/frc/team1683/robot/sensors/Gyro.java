@@ -4,8 +4,9 @@ import edu.wpi.first.wpilibj.AnalogInput;
 
 public class Gyro extends edu.wpi.first.wpilibj.Gyro implements Sensor {
 
-	public final static double SENSITIVITY = 0.009; 
+	public final static double SENSITIVITY = 0.0073; 
 	public final static double driftRate = 0.3333;
+	public final static double HDRIVE_THRESHOLD=5;
     AnalogInput channel;
 	
 	public Gyro(int channel) {
