@@ -176,7 +176,7 @@ public class Vision {
 	/**
 	 * Checks if the blob is centered.
 	 * @param blob The blob to be checked.
-	 * @return If the blob is centered.
+	 * @return The side of the blob the robot is on. 0 for centered, -1 for on the left of blob, +1 for on the right, 2 for unexpected error.
 	 */
 	public int isCentered(Blob blob) {
 		if (Math.abs(blob.X_POS - CENTER_X) <= CENTER_THRESHOLD) {
