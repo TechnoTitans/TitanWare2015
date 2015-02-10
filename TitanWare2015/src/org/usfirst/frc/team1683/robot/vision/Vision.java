@@ -149,27 +149,56 @@ public class Vision {
 //		return center;
 //	}
 	
+//	/**
+//	 * Attempts to center the closest blob on screen horizontally.
+//	 */
+//	public void centerClosestBlob(TankDrive driver) {
+//		Blob closest = getClosestBlob(getData());
+//		
+//		final double SPEED = 3;
+//		
+//		if (Math.abs(closest.X_POS - CENTER_X) <= CENTER_THRESHOLD) {
+//			driver.stop(); // No idea how this method is supposed to work yet.
+//		}
+//		// If right of tote, go left.
+//		else if (closest.X_POS - CENTER_X > 0) {
+//			driver.goSideways(-SPEED);
+//		}
+//		// If left of tote, go right.
+//		else if(closest.X_POS - CENTER_X < 0) {
+//			driver.goSideways(SPEED);
+//		}
+//		else {
+//			driver.stop();
+//		}
+//	}
+	
 	/**
-	 * Attempts to center the closest blob on screen horizontally.
+	 * Checks if the blob is centered.
+	 * @param blob The blob to be checked.
+	 * @return If the blob is centered.
 	 */
-	public void centerClosestBlob(TankDrive driver) {
-		Blob closest = getClosestBlob(getData());
-		
-		final double SPEED = 3;
-		
-		if (Math.abs(closest.X_POS - CENTER_X) <= CENTER_THRESHOLD) {
-			driver.stop(); // No idea how this method is supposed to work yet.
+	public int isCentered(Blob blob) {
+		if (Math.abs(blob.X_POS - CENTER_X) <= CENTER_THRESHOLD) {
+			return 0;
 		}
-		// If right of tote, go left.
-		else if (closest.X_POS - CENTER_X > 0) {
-			driver.goSideways(-SPEED);
+		else if (blob.X_POS - CENTER_X > 0) {
+			return -1;
 		}
-		// If left of tote, go right.
-		else if(closest.X_POS - CENTER_X < 0) {
-			driver.goSideways(SPEED);
+		else if (blob.X_POS - CENTER_X < 0) {
+			return 1;
 		}
 		else {
-			driver.stop();
+			return 2;
 		}
+	}
+	
+	/**
+	 * Determines how far off center the target blob is.
+	 * @param blob The target blob
+	 * @return How far off center the target blob is.
+	 */
+	public double centerOffset(Blob blob) {
+		return blob.X_POS - CENTER_X;
 	}
 }
