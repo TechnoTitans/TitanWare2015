@@ -22,22 +22,24 @@ public abstract class Autonomous {
 	protected static Timer timer;
 	protected static Vision vision;
 	
-	public static final int INIT_CASE 					= 0;
-	public static final int DRIVE_FORWARD 				= 1;
-	public static final int DRIVE_BACKWARD				= 2;
-	public static final int DRIVE_SIDEWAYS				= 3;
-	public static final int CENTER_TOTE					= 11;
-	public static final int LIFT_BARREL                 = 4;
-	public static final int LIFT_TOTE					= 5;
-	public static final int ADJUST_TOTE					= 6;
-	public static final int DROP_TOTE					= 7;
-	public static final int LIFT_POSITION				= 8;
-	public static final int IS_TOTE_LIFTED				= 9;
-	public static final int END_CASE 					= 10;
+	public static enum State {
+		INIT_CASE, 					
+		DRIVE_FORWARD, 				
+		DRIVE_BACKWARD,				
+		DRIVE_SIDEWAYS,			
+		LIFT_BARREL,           
+		LIFT_TOTE,	
+		ADJUST_TOTE,		
+		DROP_TOTE,		
+		LIFT_POSITION,		
+		IS_TOTE_LIFTED,	
+		CENTER_TOTE,
+		END_CASE,		
+	}
 	
 	
-	public static int presentState = INIT_CASE;
-	public static int nextState;
+	public static State presentState = State.INIT_CASE;
+	public static State nextState;
 	public static int driveCount = 0;
 	public static int liftCount = 0;
 	public static int isToteLiftedCount = 0;

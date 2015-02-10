@@ -8,37 +8,37 @@ public class Auto_3 extends Autonomous{
 		switch(presentState){
 		case INIT_CASE:
 		{
-			nextState = LIFT_BARREL;
+			nextState = State.LIFT_BARREL;
 			break;
 		}
 		case LIFT_BARREL:
 		{
 			pickerUpper.runAuto(liftDistance);
-			nextState = DRIVE_SIDEWAYS;
+			nextState = State.DRIVE_SIDEWAYS;
 			break;
 		}
 		case DRIVE_SIDEWAYS:
 		{
 			driveTrain.goSideways(sideDistance);
-			nextState = CENTER_TOTE;
+			nextState = State.CENTER_TOTE;
 			break;
 		}
 		case CENTER_TOTE:
 		{
 			centerTote();
-			nextState = DRIVE_FORWARD;
+			nextState = State.DRIVE_FORWARD;
 			break;
 		}
 		case DRIVE_FORWARD:
 		{
 			driveTrain.goStraight(driveDistance);
-			nextState = END_CASE;
+			nextState = State.END_CASE;
 			break;
 		}
 		case END_CASE:
 		{
 			driveTrain.stop();
-			nextState = END_CASE;
+			nextState = State.END_CASE;
 			break;
 		}
 		}
