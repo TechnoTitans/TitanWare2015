@@ -57,4 +57,7 @@ public class HWR {
 	
 	//Buttons
 	public static final int DEPLOY_H_DRIVE			= 1;
+	
+	//Light Ring
+	public static final int LIGHT_RING				= HWP.PWM_0;
 }

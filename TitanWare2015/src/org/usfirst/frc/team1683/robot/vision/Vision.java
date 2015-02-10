@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1683.robot.vision;
 
+import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.drivetrain.TankDrive;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
@@ -13,6 +14,7 @@ import edu.wpi.first.wpilibj.tables.TableKeyNotDefinedException;
 public class Vision {
 	
 	public static NetworkTable table;
+	public static LightRing ring;
 	// Variables to hold values retrieved from NetworkTable (RoboRealm).
 	private NumberArray COG_X;
 	private NumberArray COG_Y;
@@ -53,11 +55,14 @@ public class Vision {
 	public Vision() {
 //		CameraServer.getInstance().startAutomaticCapture(CAM_ID);
 		table 		= NetworkTable.getTable("Vision"); // Table to get data from RoboRealm
+		ring		= new LightRing(HWR.LIGHT_RING);
 		COG_X		= new NumberArray();
 		COG_Y 		= new NumberArray();
 		HEIGHT		= new NumberArray();
 		WIDTH		= new NumberArray();
 		AREA		= new NumberArray();
+		
+		ring.maxOn();
 	} 
 	
 	/**
