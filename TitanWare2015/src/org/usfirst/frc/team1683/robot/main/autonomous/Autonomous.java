@@ -3,6 +3,7 @@ package org.usfirst.frc.team1683.robot.main.autonomous;
 import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.drivetrain.DriveTrain;
 import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
+import org.usfirst.frc.team1683.robot.drivetrain.Motor;
 import org.usfirst.frc.team1683.robot.drivetrain.Talon;
 import org.usfirst.frc.team1683.robot.drivetrain.TankDrive;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
@@ -49,10 +50,14 @@ public abstract class Autonomous {
 
 	
 	public Autonomous(){
-		tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, true , new int[]{HWR.RIGHT_MOTOR},false , Talon.class, HWR.GYRO, 
+		tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, true, new int[]{HWR.RIGHT_MOTOR}, false, Talon.class, HWR.GYRO, 
     			HWR.LEFT_CHANNEL_A, HWR.LEFT_CHANNEL_B, HWR.RIGHT_CHANNEL_A, HWR.RIGHT_CHANNEL_B, 1);
 //		hDrive = new HDrive(tankDrive, HWR.RIGHT_H_PISTON, HWR.LEFT_H_PISTON, HWR.LEFT_H_MOTOR, HWR.RIGHT_H_MOTOR,
 //				Talon.class, 0); //last parameter is irrelevant to autonomous
+		hDrive = new HDrive(new int[]{HWR.LEFT_MOTOR}, true , new int[]{HWR.RIGHT_MOTOR},false , Talon.class, HWR.GYRO, 
+    			HWR.LEFT_CHANNEL_A, HWR.LEFT_CHANNEL_B, HWR.RIGHT_CHANNEL_A, HWR.RIGHT_CHANNEL_B, 
+    			HWR.RIGHT_H_PISTON, HWR.LEFT_H_PISTON, HWR.RIGHT_H_MOTOR, HWR.LEFT_H_MOTOR, 
+    			Talon.class, 1, HWR.driveEncoderWDPP);
 		driveTrain = tankDrive;
 //		driveTrain = hDrive;
 		pickerUpper = new PickerUpper(new int[]{HWR.BELT_MOTOR}, Talon.class, false);

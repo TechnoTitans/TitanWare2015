@@ -53,9 +53,10 @@ public class TechnoTitan extends IterativeRobot {
      	//gyro =new Gyro(HWR.GYRO);
 //   	analogGyro=new Gyro(new AnalogInput(HWR.GYRO));
 //   	gyrotest = new GyroTest(analogGyro);
-    	liftEncoder = new Encoder(HWR.BELT_CHANNEL_A, HWR.BELT_CHANNEL_B, false, HWR.liftEncoderWDPP);
 //    	tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, false , new int[]{HWR.RIGHT_MOTOR},true , Talon.class, HWR.GYRO);
-    	pickerUpper = new PickerUpper(new int[]{HWR.BELT_MOTOR}, Talon.class, false,HWR.LEFT_H_PISTON,liftEncoder,HWR.LEFT_MOTOR,HWR.RIGHT_MOTOR,Motor.class);
+    	pickerUpper = new PickerUpper(Talon.class, false, false,
+    			new int[] {HWR.LEFT_LIFT_PISTON, HWR.RIGHT_LIFT_PISTON},HWR.LEFT_BELT_MOTOR,HWR.RIGHT_BELT_MOTOR,
+    			HWR.BELT_CHANNEL_A, HWR.BELT_CHANNEL_B, HWR.beltEncoderReverse, HWR.liftEncoderWDPP);
 //    	powerDistributionManager = new PowerDistributionManager(15);
 //    	new Thread(powerDistributionManager, "Power Distribution Manager").start();    	
 //   	tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, true , new int[]{HWR.RIGHT_MOTOR},false , Talon.class, HWR.GYRO, 
@@ -67,7 +68,7 @@ public class TechnoTitan extends IterativeRobot {
 //		visionTest = new VisionTest();
 //    	talonTest = new TalonTest(new Talon(3,true));
     
-    	driveTester = new DriveTester(tankDrive, tankDrive, liftEncoder, pickerUpper);
+    	driveTester = new DriveTester(tankDrive, tankDrive, pickerUpper);
     	
     }
 

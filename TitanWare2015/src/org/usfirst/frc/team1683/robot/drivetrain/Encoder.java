@@ -5,7 +5,7 @@ package org.usfirst.frc.team1683.robot.drivetrain;
  */
 public class Encoder extends edu.wpi.first.wpilibj.Encoder{
     //private final double TURNING_WHEEL_DISTANCE_PER_PULSE = 0.01840659135;
-    private static final double WHEEL_DISTANCE_PER_PULSE=47.0/700.0;//inches/pulse
+    //private static final double WHEEL_DISTANCE_PER_PULSE=47.0/700.0;//inches/pulse
     public static final double WHEEL_RADIUS = 0.0; //must be determined through measurement
     //Above value has been confirmed from past revisions as the constant for the robot not the mule
     //may require re-tuning on 2nd day of Competition.
@@ -14,7 +14,8 @@ public class Encoder extends edu.wpi.first.wpilibj.Encoder{
      * Constructor
      * @param aChannel
      * @param bChannel
-     * @param reverseDirection 
+     * @param reverseDirection
+     * @param wheelDistancePerPulse
      */
     public Encoder(int aChannel, int bChannel, boolean reverseDirection, double wheelDistancePerPulse){
             super(aChannel, bChannel, reverseDirection);

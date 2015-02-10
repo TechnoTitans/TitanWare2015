@@ -91,6 +91,7 @@ public class TalonSRX extends edu.wpi.first.wpilibj.TalonSRX implements Motor{
 		this.stop();
 		
 	}
+	
 
 
 }

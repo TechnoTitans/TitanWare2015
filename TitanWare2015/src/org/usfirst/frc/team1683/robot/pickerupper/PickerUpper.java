@@ -1,6 +1,5 @@
 package org.usfirst.frc.team1683.robot.pickerupper;
 
-import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.drivetrain.Encoder;
 import org.usfirst.frc.team1683.robot.drivetrain.Motor;
 import org.usfirst.frc.team1683.robot.drivetrain.MotorGroup;
@@ -16,43 +15,43 @@ import edu.wpi.first.wpilibj.Talon;
 public class PickerUpper {
 	MotorGroup motors;
 	AirSystem liftPistons;
-	MotorGroup liftMotors;
-	Encoder encoder;
+	MotorGroup leftLiftMotor;
+	MotorGroup rightLiftMotor;
+	public Encoder beltEncoder;
 	int liftButton;
 	final double AUTO_LIFT_SPEED = 0.5;
 
 	/**
 	 * Constructor
 	 * @param pickerUpperChannels
-	 * @param talonSRX
+	 * @param motorType
 	 * @param inverseDirection
 	 */
-	public PickerUpper(int[] pickerUpperChannels, Class talonSRX, boolean inverseDirection){
-		this.motors = new MotorGroup(pickerUpperChannels, talonSRX, inverseDirection);
+	public PickerUpper(int[] pickerUpperChannels, Class motorType, boolean inverseDirection){
+		this.motors = new MotorGroup(pickerUpperChannels, motorType, inverseDirection);
 	}
 	/**
 	 * Constructor
-	 * @param pickerUpperChannels
-	 * @param talonSRX
-	 * @param inverseDirection
-	 * @param beltChannelA
-	 * @param beltChannelB
-	 * @param liftPiston
+	 * @param motorType
+	 * @param leftInverseDirection - reverseDirection for left motor
+	 * @param rightInverseDirection - reverseDirection for right motor
+	 * @param liftSolenoids - ports for lift pistons
 	 * @param leftMotor
 	 * @param rightMotor
-	 * @param motorType
+	 * @param beltChannelA
+	 * @param beltChannelB
+	 * @param reverseDirection - reverseDirection for encoder
+	 * @param wdpp - wheel distance per pulse for lift encoder
 	 */
-	public PickerUpper(int[] pickerUpperChannels, Class talonSRX, boolean inverseDirection,
-			 int liftPiston,Encoder encoder, int leftMotor, int rightMotor, Class<Motor> motorType){
-		this.motors = new MotorGroup(pickerUpperChannels, talonSRX, inverseDirection, 
-				encoder);
-		int[] channelNumbers = {leftMotor, rightMotor};
-		int [] piston = {liftPiston};
-		liftPistons = new AirSystem(new Compressor(), piston);
-		liftMotors = new MotorGroup(channelNumbers, motorType , false);
-		this.encoder=encoder;
-		
-		
+	public PickerUpper(Class motorType, boolean leftInverseDirection, boolean rightInverseDirection,
+			 int[] liftSolenoids, int leftMotor, int rightMotor,
+			 int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp){
+//		this.motors = new MotorGroup(pickerUpperChannels, talonSRX, inverseDirection, 
+//				encoder);
+		beltEncoder = new Encoder(beltChannelA, beltChannelB, reverseDirection, wdpp);
+		liftPistons = new AirSystem(new Compressor(), liftSolenoids);
+		leftLiftMotor = new MotorGroup(new int[]{leftMotor}, motorType , leftInverseDirection, beltEncoder);
+		rightLiftMotor = new MotorGroup(new int[]{rightMotor}, motorType, rightInverseDirection, beltEncoder);
 	}
 
 	public void liftMode(Joystick auxStick) {
@@ -97,7 +96,7 @@ public class PickerUpper {
 	   else
 		   speed = -AUTO_LIFT_SPEED;
 	   
-		if (Math.abs(encoder.getDisplacement(47.0/700.0)) <= Math.abs(liftDistance))
+		if (Math.abs(beltEncoder.getDisplacement(47.0/700.0)) <= Math.abs(liftDistance))
 			motors.set(speed);
 		else
 			motors.set(0);

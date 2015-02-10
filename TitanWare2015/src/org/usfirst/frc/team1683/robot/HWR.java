@@ -9,9 +9,12 @@ public class HWR {
 	
 	public static final int LEFT_MOTOR				= HWP.PWM_0;
 	public static final int RIGHT_MOTOR				= HWP.PWM_1;
-	public static final int BELT_MOTOR				= HWP.PWM_2;
+	public static final int LEFT_BELT_MOTOR			= HWP.PWM_2;
+	public static final int RIGHT_BELT_MOTOR		= HWP.PWM_5;
 	public static final int LEFT_H_MOTOR			= HWP.PWM_3;
 	public static final int RIGHT_H_MOTOR			= HWP.PWM_4;
+	
+	public static final int BELT_MOTOR				= HWP.PWM_2; //temporary - testing purposes
 
 	// Gyro MUST BE 0 OR 1
 	public static final int GYRO					= HWP.ANALOG_1;
@@ -41,6 +44,8 @@ public class HWR {
 	//Pistons
 	public static final int LEFT_H_PISTON			= PCM.SOLENOID_0;
 	public static final int RIGHT_H_PISTON			= PCM.SOLENOID_1;
+	public static final int LEFT_LIFT_PISTON		= PCM.SOLENOID_2;
+	public static final int RIGHT_LIFT_PISTON		= PCM.SOLENOID_3;
 	
 	
 }

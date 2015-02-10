@@ -21,15 +21,15 @@ public class DriveTester implements Tester{
 //	DriverStation.prefDouble("distance", 1);
 //	DriverStation.prefDouble("bearing", 90);
 	
-	public DriveTester(DriveTrain driveTrain, TankDrive tankDrive, Encoder beltEncoder, PickerUpper pickerUpper){
+	public DriveTester(DriveTrain driveTrain, TankDrive tankDrive, PickerUpper pickerUpper){
 		this.driveTrain = driveTrain;
 		this.tankDrive = tankDrive;
-		this.beltEncoder = beltEncoder;
 		this.pickerUpper = pickerUpper;
 		//distance = DriverStation.getDouble("distance");
 		//bearing = DriverStation.getDouble("bearing");
 		distance = 1.5;
 		bearing = 180;
+		beltEncoder = pickerUpper.beltEncoder;
 	}
 	
 	public double averageDistance(){

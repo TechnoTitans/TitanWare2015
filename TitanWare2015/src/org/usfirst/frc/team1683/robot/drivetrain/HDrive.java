@@ -1,6 +1,5 @@
 package org.usfirst.frc.team1683.robot.drivetrain;
 
-import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.pneumatics.AirSystem;
 
@@ -13,9 +12,9 @@ public class HDrive extends TankDrive{
 	int triggerButton;
 	/**
 	 * Constructor
-	 * @param leftMotorInputs
+	 * @param leftMotorInputs - left side of drive train
 	 * @param leftInverse
-	 * @param rightMotorInputs
+	 * @param rightMotorInputs - right side of drive train
 	 * @param rightInverse
 	 * @param motorType
 	 * @param gyroChannel
@@ -25,15 +24,16 @@ public class HDrive extends TankDrive{
 	 * @param rightChannelB
 	 * @param rightPiston
 	 * @param leftPiston
-	 * @param rightMotor
-	 * @param leftMotor
+	 * @param rightMotor - right H motor
+	 * @param leftMotor - left H motor
 	 * @param hMotorType
 	 * @param triggerButton
+	 * @param wheelDistancePerPulse
 	 */
 	public HDrive(int[] leftMotorInputs,boolean leftInverse, int[] rightMotorInputs, boolean rightInverse, 
-			Class<Motor> motorType, int gyroChannel, int leftChannelA, int leftChannelB, int rightChannelA, int rightChannelB, 
+			Class motorType, int gyroChannel, int leftChannelA, int leftChannelB, int rightChannelA, int rightChannelB, 
 			int rightPiston, int leftPiston, int rightMotor, int leftMotor, 
-			Class<Motor> hMotorType, int triggerButton, double wheelDistancePerPulse) {
+			Class hMotorType, int triggerButton, double wheelDistancePerPulse) {
 		super(leftMotorInputs, leftInverse, rightMotorInputs, rightInverse, 
 				motorType, gyroChannel, leftChannelA, leftChannelB, rightChannelA, rightChannelA, wheelDistancePerPulse);
 		int[] channelNumbers = {leftMotor, rightMotor};
