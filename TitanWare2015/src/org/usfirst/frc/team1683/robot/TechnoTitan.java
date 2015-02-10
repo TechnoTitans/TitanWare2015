@@ -2,6 +2,7 @@ package org.usfirst.frc.team1683.robot;
 
 import org.usfirst.frc.team1683.robot.drivetrain.Encoder;
 import org.usfirst.frc.team1683.robot.drivetrain.Talon;
+import org.usfirst.frc.team1683.robot.drivetrain.TalonSRX;
 import org.usfirst.frc.team1683.robot.drivetrain.TankDrive;
 import org.usfirst.frc.team1683.robot.drivetrain.Motor;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
@@ -11,6 +12,7 @@ import org.usfirst.frc.team1683.robot.power.PowerDistributionManager;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
 import org.usfirst.frc.team1683.robot.test.DriveTester;
 import org.usfirst.frc.team1683.robot.test.GyroTest;
+import org.usfirst.frc.team1683.robot.test.TalonSRXTest;
 import org.usfirst.frc.team1683.robot.test.TalonTest;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -34,6 +36,7 @@ public class TechnoTitan extends IterativeRobot {
     Gyro analogGyro;
     AnalogInput analog;
     TalonTest talonTest;
+    TalonSRXTest talonsrxtest;
     GyroTest gyrotest;
 	TankDrive tankDrive;
 	PickerUpper pickerUpper;
@@ -57,8 +60,8 @@ public class TechnoTitan extends IterativeRobot {
     	pickerUpper = new PickerUpper(Talon.class, false, false,
     			new int[] {HWR.LEFT_LIFT_PISTON, HWR.RIGHT_LIFT_PISTON},HWR.LEFT_BELT_MOTOR,HWR.RIGHT_BELT_MOTOR,
     			HWR.BELT_CHANNEL_A, HWR.BELT_CHANNEL_B, HWR.beltEncoderReverse, HWR.liftEncoderWDPP);
-//    	powerDistributionManager = new PowerDistributionManager(15);
-//    	new Thread(powerDistributionManager, "Power Distribution Manager").start();    	
+    	talonsrxtest = new TalonSRXTest(new TalonSRX(0, true));
+    	
 //   	tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, true , new int[]{HWR.RIGHT_MOTOR},false , Talon.class, HWR.GYRO, 
 //    			HWR.LEFT_CHANNEL_A, HWR.LEFT_CHANNEL_B, HWR.RIGHT_CHANNEL_A, HWR.RIGHT_CHANNEL_B);
     	
@@ -105,6 +108,8 @@ public class TechnoTitan extends IterativeRobot {
     	//talonTest.test();
 //    	tankDrive.driveMode(DriverStation.rightStick, DriverStation.leftStick);
     	driveTester.test();
+    	talonsrxtest.test();
+    	
 //   	gyrotest.test();
 //    	pickerUpper.run();
 //    	talonTest.test();

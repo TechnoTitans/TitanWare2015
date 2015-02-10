@@ -1,15 +1,12 @@
 package org.usfirst.frc.team1683.robot.pickerupper;
 
 import org.usfirst.frc.team1683.robot.drivetrain.Encoder;
-import org.usfirst.frc.team1683.robot.drivetrain.Motor;
 import org.usfirst.frc.team1683.robot.drivetrain.MotorGroup;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.pneumatics.AirSystem;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Talon;
 
 
 public class PickerUpper {
@@ -102,6 +99,8 @@ public class PickerUpper {
 			motors.set(0);
 		
 	}
+	
+	
 
 
 }

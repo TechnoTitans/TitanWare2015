@@ -1,10 +1,13 @@
 package org.usfirst.frc.team1683.robot.drivetrain;
+
+import edu.wpi.first.wpilibj.CANTalon;
+
 /**
  * 
  * @author Animesh Koratana & Seung-Seok
  *
  */
-public class TalonSRX extends edu.wpi.first.wpilibj.TalonSRX implements Motor{
+public class TalonSRX extends CANTalon implements Motor{
 
 	boolean hasEncoder;
 	boolean reverseDirection;
@@ -32,6 +35,7 @@ public class TalonSRX extends edu.wpi.first.wpilibj.TalonSRX implements Motor{
 	 */
 	public TalonSRX (int channel, int aChannel, int bChannel, boolean reverseDirection, double wheelDistancePerPulse){
 		super(channel);
+		super.changeControlMode(ControlMode.Current);
 		this.encoder = new Encoder(aChannel, bChannel, reverseDirection, wheelDistancePerPulse);
 		this.hasEncoder = true;
 		this.reverseDirection = reverseDirection;
@@ -42,7 +46,7 @@ public class TalonSRX extends edu.wpi.first.wpilibj.TalonSRX implements Motor{
 	public void moveDistance(double distanceInMeters){
 		if (hasEncoder){
 			Thread thread = new Thread(new MotorMover(this, distanceInMeters));
-			thread.run();
+			thread.start();
 		}
 	}
 	/**
@@ -74,6 +78,7 @@ public class TalonSRX extends edu.wpi.first.wpilibj.TalonSRX implements Motor{
 			this.distanceInMeters = distanceInMeters;
 			this.talon = talon;
 		}
+		
 		@Override
 		public void run() {
 			encoder.reset();

@@ -49,7 +49,12 @@ public class PowerDistributionManager implements Runnable{
 		return powerDistPanel;
 	}
 	
-	public void initLogger(){
+	public void start(){
+		Thread thread = new Thread(this, "Power Distribution Manager");
+		thread.start();
+	}
+	
+	private void initLogger(){
 		log = Logger.getGlobal();  
         FileHandler fh;  
         try {  
@@ -69,7 +74,7 @@ public class PowerDistributionManager implements Runnable{
         }
 	}
 	
-	public void periodicCheck(){
+	private void periodicCheck(){
 		temperature.listen(powerDistPanel.getTemperature());
 		voltage.listen(powerDistPanel.getVoltage());
 		power.listen(powerDistPanel.getTotalPower());
@@ -84,15 +89,7 @@ public class PowerDistributionManager implements Runnable{
 	@Override
 	public void run() {
 		while (true){
-			temperature.listen(powerDistPanel.getTemperature());
-			voltage.listen(powerDistPanel.getVoltage());
-			power.listen(powerDistPanel.getTotalPower());
-			energy.listen(powerDistPanel.getTotalEnergy());
-			current.listen(powerDistPanel.getTotalCurrent());
-			for (Iterator<RobotElementListener> iterator = channelListeners.iterator(); iterator.hasNext();) {
-				RobotElementListener robotElementListener = (RobotElementListener) iterator.next();
-				robotElementListener.listenAndReact();
-			}
+			periodicCheck();
 		}
 	}
 
