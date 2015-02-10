@@ -1,15 +1,18 @@
 package org.usfirst.frc.team1683.robot.drivetrain;
 
+import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.pneumatics.AirSystem;
+import org.usfirst.frc.team1683.robot.sensors.Gyro;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Joystick;
 
 public class HDrive extends TankDrive{
 	AirSystem drivePistons;
-	MotorGroup hMotors;
+	MotorGroup hLeftMotors,hRightMotors;
 	int triggerButton;
+	double angleBeforeDeploy;
 	/**
 	 * Constructor
 	 * @param leftMotorInputs - left side of drive train
@@ -39,7 +42,8 @@ public class HDrive extends TankDrive{
 		int[] channelNumbers = {leftMotor, rightMotor};
 		int[] pistons = {rightPiston, leftPiston};
 		drivePistons = new AirSystem(new Compressor(), pistons);
-		hMotors = new MotorGroup(channelNumbers, hMotorType, false);
+		hLeftMotors = new MotorGroup(new int[] {leftMotor}, hMotorType, false);
+		hRightMotors= new MotorGroup(new int[]{rightMotor},hMotorType, false);
 		this.triggerButton = triggerButton;
 	}
 	
@@ -53,7 +57,8 @@ public class HDrive extends TankDrive{
 	public void driveMode(Joystick leftStick, Joystick rightStick){
 		double speed = (DriverStation.rightStick.getRawAxis(DriverStation.XAxis) 
 				+ DriverStation.leftStick.getRawAxis(DriverStation.XAxis))/2 ;
-		hMotors.set(speed);
+		hLeftMotors.set(speed);
+		hRightMotors.set(speed);
 		super.driveMode(leftStick, rightStick);
 		if (DriverStation.rightStick.getRawButton(triggerButton) && 
 				DriverStation.leftStick.getRawButton(triggerButton)) {
@@ -68,14 +73,22 @@ public class HDrive extends TankDrive{
 	 * puts down the middle wheels
 	 */
 	public void deployWheels(){
+		angleBeforeDeploy=super.gyro.getAngle();
 		drivePistons.extend();
+		if(Math.abs(gyro.getAngle()-angleBeforeDeploy)>Gyro.HDRIVE_THRESHOLD){
+			super.turnAngle(angleBeforeDeploy, hLeftMotors, hRightMotors);
+		}
 	}
 	
 	/**
 	 * brings the middle wheels back up
 	 */
 	public void liftWheels(){
+		angleBeforeDeploy=super.gyro.getAngle();
 		drivePistons.retract();
+		if(Math.abs(gyro.getAngle()-angleBeforeDeploy)>Gyro.HDRIVE_THRESHOLD){
+			super.turnAngle(angleBeforeDeploy, hLeftMotors, hRightMotors);
+		}
 	}
 	
 	/**
@@ -94,6 +107,7 @@ public class HDrive extends TankDrive{
 	{
 		if(!isDeployed())
 			deployWheels();
-		hMotors.moveDistance(distance);
+		hLeftMotors.moveDistance(distance);
+		hRightMotors.moveDistance(distance);
 	}
 }

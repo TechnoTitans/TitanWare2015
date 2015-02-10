@@ -80,7 +80,7 @@ public class TankDrive extends DriveTrain{
 	 * turns the robot for a certain angle
 	 */
 	@Override
-	public void turnAngle(double bearing) {
+	public void turnAngle(double bearing, MotorGroup left, MotorGroup right) {
 		gyro.add(startAngle);
 		gyro.reset();
 		if (bearing >= 0 && bearing <= 180){
@@ -106,14 +106,14 @@ public class TankDrive extends DriveTrain{
 	public void setBackToOriginalPos() {
 		startAngle = gyro.add(startAngle)%360;
 		gyro.reset();
-		turnAngle(startAngle);
+		turnAngle(startAngle,left,right);
 		startAngle = 0;
 	}
 	@Override
 	public void antiDrift() {
 		// TODO Auto-generated method stub
 		double angle=gyro.getAngle();
-		turnAngle(-angle*kp);
+		turnAngle(-angle*kp,left,right);
 		Timer.delay(waitTime);
 		
 	}	

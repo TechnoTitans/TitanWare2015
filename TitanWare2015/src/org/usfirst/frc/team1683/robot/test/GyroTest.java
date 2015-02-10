@@ -24,7 +24,7 @@ public class GyroTest implements Tester{
 	@Override
 	public void test() {
 		// TODO Auto-generated method stub
-		DriverStation.sendData("Current Angle from Gyro", (gyro.getDirection()-(timer.get()*Gyro.driftRate)));
+		DriverStation.sendData("Current Angle from Gyro", (gyro.getDirection()));//-(timer.get()*Gyro.driftRate)));
 		DriverStation.sendData("Current Gyro Voltage", gyro.getVoltage());
 		Timer.delay(.2);
 	}
