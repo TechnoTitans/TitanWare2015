@@ -75,9 +75,9 @@ public abstract class Autonomous {
 	
 	public static void printState(){
 		if (enablePrinting){
-			if (nextState != presentState){
-				System.out.println("Present State is: "+presentState);
-				System.out.println("Next State is: "+nextState);
+			if (!nextState.equals(presentState)){
+				System.out.println("Present State is: "+presentState.toString());
+				System.out.println("Next State is: "+nextState.toString());
 				System.out.println("Current Time: "+timer.get());
 			}
 		}
