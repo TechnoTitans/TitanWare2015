@@ -38,7 +38,7 @@ public class HDrive extends TankDrive{
 			int rightPiston, int leftPiston, int rightMotor, int leftMotor, 
 			Class hMotorType, int triggerButton, double wheelDistancePerPulse) {
 		super(leftMotorInputs, leftInverse, rightMotorInputs, rightInverse, 
-				motorType, gyroChannel, leftChannelA, leftChannelB, rightChannelA, rightChannelA, wheelDistancePerPulse);
+				motorType, gyroChannel, leftChannelA, leftChannelB, rightChannelA, rightChannelB, wheelDistancePerPulse);
 		int[] channelNumbers = {leftMotor, rightMotor};
 		int[] pistons = {rightPiston, leftPiston};
 		drivePistons = new AirSystem(new Compressor(), pistons);

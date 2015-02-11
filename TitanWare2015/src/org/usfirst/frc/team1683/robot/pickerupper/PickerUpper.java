@@ -4,6 +4,7 @@ import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.drivetrain.Encoder;
 import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
 import org.usfirst.frc.team1683.robot.drivetrain.MotorGroup;
+import org.usfirst.frc.team1683.robot.drivetrain.Talon;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.pneumatics.AirSystem;
 

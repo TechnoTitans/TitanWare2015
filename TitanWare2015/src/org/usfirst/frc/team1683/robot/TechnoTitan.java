@@ -1,10 +1,10 @@
 package org.usfirst.frc.team1683.robot;
 
 import org.usfirst.frc.team1683.robot.drivetrain.Encoder;
+import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
 import org.usfirst.frc.team1683.robot.drivetrain.Talon;
 import org.usfirst.frc.team1683.robot.drivetrain.TalonSRX;
 import org.usfirst.frc.team1683.robot.drivetrain.TankDrive;
-import org.usfirst.frc.team1683.robot.drivetrain.Motor;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.main.autonomous.AutonomousSelector;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
@@ -43,6 +43,7 @@ public class TechnoTitan extends IterativeRobot {
 	AutonomousSelector autonomous;
 	PowerDistributionManager powerDistributionManager;
 	Encoder liftEncoder;
+	HDrive drive;
 	
 	
 	/**
@@ -53,26 +54,16 @@ public class TechnoTitan extends IterativeRobot {
     	DriverStation.prefDouble("delay", 0.075);
     	DriverStation.prefDouble("distance", 1);
     	DriverStation.prefDouble("bearing", 90);
-     	//gyro =new Gyro(HWR.GYRO);
-//   	analogGyro=new Gyro(new AnalogInput(HWR.GYRO));
-//   	gyrotest = new GyroTest(analogGyro);
-//    	tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, false , new int[]{HWR.RIGHT_MOTOR},true , Talon.class, HWR.GYRO);
-    	pickerUpper = new PickerUpper(Talon.class, false, false,
-    			new int[] {HWR.LEFT_LIFT_PISTON, HWR.RIGHT_LIFT_PISTON},HWR.LEFT_BELT_MOTOR,HWR.RIGHT_BELT_MOTOR,
-    			HWR.BELT_CHANNEL_A, HWR.BELT_CHANNEL_B, HWR.beltEncoderReverse, HWR.liftEncoderWDPP);
-    	talonsrxtest = new TalonSRXTest(new TalonSRX(0, true));
-    	
-//   	tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, true , new int[]{HWR.RIGHT_MOTOR},false , Talon.class, HWR.GYRO, 
-//    			HWR.LEFT_CHANNEL_A, HWR.LEFT_CHANNEL_B, HWR.RIGHT_CHANNEL_A, HWR.RIGHT_CHANNEL_B);
-    	
-//    	stateMachine = new AirStateMachine(new int[]{PCM.SOLENOID_0,PCM.SOLENOID_1,PCM.SOLENOID_2,
-//    			PCM.SOLENOID_3,PCM.SOLENOID_4,PCM.SOLENOID_5,PCM.SOLENOID_6}, HWR.AUX_JOYSTICK,1);
-//    	soloTester = new AirSystemTester(new int[]{PCM.SOLENOID_0} ,1);
-//		visionTest = new VisionTest();
-//    	talonTest = new TalonTest(new Talon(3,true));
-    
-    	driveTester = new DriveTester(tankDrive, tankDrive, pickerUpper);
-    	
+        pickerUpper = new PickerUpper(new int[]{HWR.BELT_MOTOR},Talon.class , HWR.beltEncoderReverse);
+        powerDistributionManager = new PowerDistributionManager(HWR.BACK_LEFT_MOTOR,HWR.FRONT_LEFT_MOTOR,HWR.BACK_RIGHT_MOTOR,HWR.FRONT_RIGHT_MOTOR, HWR.BELT_MOTOR );
+        powerDistributionManager.start();
+        drive = new HDrive(new int[]{HWR.BACK_LEFT_MOTOR,HWR.FRONT_LEFT_MOTOR}, false, 
+        		new int[]{HWR.BACK_RIGHT_MOTOR,HWR.FRONT_RIGHT_MOTOR}, true, 
+        		TalonSRX.class, HWR.GYRO, 
+        		HWR.LEFT_CHANNEL_A, HWR.LEFT_CHANNEL_B, 
+        		HWR.RIGHT_CHANNEL_A, HWR.RIGHT_CHANNEL_B, 
+        		HWR.LEFT_H_PISTON, HWR.RIGHT_H_PISTON, 
+        		HWR.FRONT_H_MOTOR, HWR.BACK_H_MOTOR, Talon.class, 1, 4);
     }
 
     public void autonomousInit(){
@@ -92,33 +83,19 @@ public class TechnoTitan extends IterativeRobot {
     public void teleopPeriodic() {
    //     tankDrive.driveMode(DriverStation.leftStick, DriverStation.rightStick);
         pickerUpper.run();
+        drive.driveMode(DriverStation.leftStick, DriverStation.rightStick);
     }
     
     /**
      * This function is called periodically during test mode
      */
     public void testInit(){
-  //  	analogGyro.reset();
-    	//gyrotest.getBestSensitivity();
+
     }
     public void testPeriodic() {
-    	//soloTester.test();
-//    	stateMachine.test();
-    	//visionTest.test();
-    	//talonTest.test();
-//    	tankDrive.driveMode(DriverStation.rightStick, DriverStation.leftStick);
-    	driveTester.test();
-    	talonsrxtest.test();
-    	
-//   	gyrotest.test();
-//    	pickerUpper.run();
-//    	talonTest.test();
+
     }
-    
-//    @Override 
-//    public void disabledInit(){
-//    	
-//    }
+
     
     
 }

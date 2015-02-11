@@ -54,13 +54,13 @@ public abstract class Autonomous {
 
 	
 	public Autonomous(){
-		tankDrive = new TankDrive(new int[]{HWR.LEFT_MOTOR}, true, new int[]{HWR.RIGHT_MOTOR}, false, Talon.class, HWR.GYRO, 
+		tankDrive = new TankDrive(new int[]{HWR.FRONT_LEFT_MOTOR, HWR.BACK_LEFT_MOTOR}, true, new int[]{HWR.FRONT_RIGHT_MOTOR, HWR.BACK_RIGHT_MOTOR}, false, Talon.class, HWR.GYRO, 
     			HWR.LEFT_CHANNEL_A, HWR.LEFT_CHANNEL_B, HWR.RIGHT_CHANNEL_A, HWR.RIGHT_CHANNEL_B, 1);
 //		hDrive = new HDrive(tankDrive, HWR.RIGHT_H_PISTON, HWR.LEFT_H_PISTON, HWR.LEFT_H_MOTOR, HWR.RIGHT_H_MOTOR,
 //				Talon.class, 0); //last parameter is irrelevant to autonomous
-		hDrive = new HDrive(new int[]{HWR.LEFT_MOTOR}, true , new int[]{HWR.RIGHT_MOTOR},false , Talon.class, HWR.GYRO, 
+		hDrive = new HDrive(new int[]{HWR.FRONT_LEFT_MOTOR, HWR.BACK_LEFT_MOTOR}, true , new int[]{HWR.FRONT_RIGHT_MOTOR, HWR.BACK_RIGHT_MOTOR},false , Talon.class, HWR.GYRO, 
     			HWR.LEFT_CHANNEL_A, HWR.LEFT_CHANNEL_B, HWR.RIGHT_CHANNEL_A, HWR.RIGHT_CHANNEL_B, 
-    			HWR.RIGHT_H_PISTON, HWR.LEFT_H_PISTON, HWR.RIGHT_H_MOTOR, HWR.LEFT_H_MOTOR, 
+    			HWR.RIGHT_H_PISTON, HWR.LEFT_H_PISTON, HWR.FRONT_H_MOTOR, HWR.BACK_H_MOTOR, 
     			Talon.class, 1, HWR.driveEncoderWDPP);
 		driveTrain = tankDrive;
 //		driveTrain = hDrive;
