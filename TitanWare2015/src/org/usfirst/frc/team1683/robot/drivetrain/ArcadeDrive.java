@@ -21,8 +21,8 @@ public class ArcadeDrive extends HDrive{
 		double turnSpeed = joystick.getRawAxis(DriverStation.ZAxis);
 		super.left.set(driveSpeed);
 		super.right.set(driveSpeed);
-		super.hLeftMotors.set(strafeSpeed);
-		super.hRightMotors.set(strafeSpeed);
+		super.hBackMotors.set(strafeSpeed);
+		super.hFrontMotors.set(strafeSpeed);
 		if (joystick.getRawButton(1)){
 			deployWheels();
 		}
