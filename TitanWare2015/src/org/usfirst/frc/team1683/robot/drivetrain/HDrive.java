@@ -13,6 +13,7 @@ public class HDrive extends TankDrive{
 	int triggerButton;
 	double angleBeforeDeploy;
 	DrivePistons pistons;
+	boolean isLifted;
 	/**
 	 * Constructor
 	 * @param leftMotorInputs - left side of drive train
@@ -74,22 +75,28 @@ public class HDrive extends TankDrive{
 	 * puts down the middle wheels
 	 */
 	public void deployWheels(){
-		angleBeforeDeploy=super.gyro.getAngle();
-		pistons.changeState();
-		if(Math.abs(gyro.getAngle()-angleBeforeDeploy)>Gyro.HDRIVE_THRESHOLD){
-			super.turnAngle(angleBeforeDeploy, hBackMotors, hFrontMotors);
+		if (isLifted){
+			angleBeforeDeploy=super.gyro.getAngle();
+			pistons.changeState();
+			if(Math.abs(gyro.getAngle()-angleBeforeDeploy)>Gyro.HDRIVE_THRESHOLD){
+				super.turnAngle(angleBeforeDeploy, hBackMotors, hFrontMotors);
+			}
 		}
+		isLifted = false;
 	}
 	
 	/**
 	 * brings the middle wheels back up
 	 */
 	public void liftWheels(){
-		angleBeforeDeploy=super.gyro.getAngle();
-		pistons.changeState();
-		if(Math.abs(gyro.getAngle()-angleBeforeDeploy)>Gyro.HDRIVE_THRESHOLD){
-			super.turnAngle(angleBeforeDeploy, hBackMotors, hFrontMotors);
+		if (!isLifted){
+			angleBeforeDeploy=super.gyro.getAngle();
+			pistons.changeState();
+			if(Math.abs(gyro.getAngle()-angleBeforeDeploy)>Gyro.HDRIVE_THRESHOLD){
+				super.turnAngle(angleBeforeDeploy, hBackMotors, hFrontMotors);
+			}
 		}
+		isLifted = true;
 	}
 	
 	/**
@@ -119,6 +126,7 @@ public class HDrive extends TankDrive{
 			Compressor compressor = new Compressor();
 			frontAirSystem = new AirSystem(compressor, new int[]{pistons[0]}, pressure);
 			backAirSystem = new AirSystem(compressor, new int[]{pistons[1]}, pressure);
+			isLifted = false;
 		}
 		
 		public AirSystem getFrontAirSystem(){
@@ -127,6 +135,10 @@ public class HDrive extends TankDrive{
 		public AirSystem getBackAirSystem(){
 			return backAirSystem;
 		}
+		public void liftWheels(){
+			
+		}
+		
 		public void changeState(){
 			if (frontAirSystem.isExtended()){
 				frontAirSystem.retract();
