@@ -43,8 +43,8 @@ public class HDrive extends TankDrive{
 		int[] channelNumbers = {frontMotor, backMotor};
 		int[] pistons = {rightPiston, leftPiston};
 		drivePistons = new AirSystem(new Compressor(), pistons);
-		hBackMotors = new MotorGroup(new int[] {backMotor}, hMotorType, true);
-		hFrontMotors= new MotorGroup(new int[]{frontMotor},hMotorType, false);
+		hBackMotors = new MotorGroup(new int[] {backMotor}, hMotorType, false);
+		hFrontMotors= new MotorGroup(new int[]{frontMotor},hMotorType, true);
 		this.triggerButton = triggerButton;
 	}
 	

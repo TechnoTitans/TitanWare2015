@@ -47,8 +47,8 @@ public class TechnoTitan extends IterativeRobot {
         pickerUpper = new PickerUpper(new int[]{HWR.BELT_MOTOR},Talon.class , HWR.beltEncoderReverse);
         powerDistributionManager = new PowerDistributionManager(HWR.BACK_LEFT_MOTOR,HWR.FRONT_LEFT_MOTOR,HWR.BACK_RIGHT_MOTOR,HWR.FRONT_RIGHT_MOTOR, HWR.BELT_MOTOR );
         powerDistributionManager.start();
-        drive = new HDrive(new int[]{HWR.BACK_LEFT_MOTOR,HWR.FRONT_LEFT_MOTOR}, false, 
-        		new int[]{HWR.BACK_RIGHT_MOTOR,HWR.FRONT_RIGHT_MOTOR}, true, 
+        drive = new HDrive(new int[]{HWR.BACK_LEFT_MOTOR,HWR.FRONT_LEFT_MOTOR}, true, 
+        		new int[]{HWR.BACK_RIGHT_MOTOR,HWR.FRONT_RIGHT_MOTOR}, false, 
         		TalonSRX.class, HWR.GYRO, 
         		HWR.LEFT_CHANNEL_A, HWR.LEFT_CHANNEL_B, 
         		HWR.RIGHT_CHANNEL_A, HWR.RIGHT_CHANNEL_B, 
