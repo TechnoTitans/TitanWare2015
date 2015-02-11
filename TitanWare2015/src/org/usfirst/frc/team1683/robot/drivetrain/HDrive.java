@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Joystick;
 
 public class HDrive extends TankDrive{
-	AirSystem drivePistons;
 	MotorGroup hBackMotors,hFrontMotors;
 	int triggerButton;
 	double angleBeforeDeploy;
+	DrivePistons pistons;
 	/**
 	 * Constructor
 	 * @param leftMotorInputs - left side of drive train
@@ -41,8 +41,7 @@ public class HDrive extends TankDrive{
 		super(leftMotorInputs, leftInverse, rightMotorInputs, rightInverse, 
 				motorType, gyroChannel, leftChannelA, leftChannelB, rightChannelA, rightChannelB, wheelDistancePerPulse);
 		int[] channelNumbers = {frontMotor, backMotor};
-		int[] pistons = {rightPiston, leftPiston};
-		drivePistons = new AirSystem(new Compressor(), pistons);
+		pistons = new DrivePistons(new int[]{rightPiston, leftPiston});
 		hBackMotors = new MotorGroup(new int[] {backMotor}, hMotorType, false);
 		hFrontMotors= new MotorGroup(new int[]{frontMotor},hMotorType, true);
 		this.triggerButton = triggerButton;
@@ -75,7 +74,7 @@ public class HDrive extends TankDrive{
 	 */
 	public void deployWheels(){
 		angleBeforeDeploy=super.gyro.getAngle();
-		drivePistons.extend();
+		pistons.changeState();
 		if(Math.abs(gyro.getAngle()-angleBeforeDeploy)>Gyro.HDRIVE_THRESHOLD){
 			super.turnAngle(angleBeforeDeploy, hBackMotors, hFrontMotors);
 		}
@@ -86,7 +85,7 @@ public class HDrive extends TankDrive{
 	 */
 	public void liftWheels(){
 		angleBeforeDeploy=super.gyro.getAngle();
-		drivePistons.retract();
+		pistons.changeState();
 		if(Math.abs(gyro.getAngle()-angleBeforeDeploy)>Gyro.HDRIVE_THRESHOLD){
 			super.turnAngle(angleBeforeDeploy, hBackMotors, hFrontMotors);
 		}
@@ -97,7 +96,7 @@ public class HDrive extends TankDrive{
 	 * @return whether the H-drive pistons are extended or not
 	 */
 	public boolean isDeployed(){
-		return drivePistons.isExtended();
+		return pistons.getBackAirSystem().isExtended();
 	}
 	
 	/**
@@ -106,9 +105,35 @@ public class HDrive extends TankDrive{
 	 */
 	public void goSideways(double distance)
 	{
-		if(!isDeployed())
+//		if(!isDeployed())
 			deployWheels();
 		hBackMotors.moveDistance(distance);
 		hFrontMotors.moveDistance(distance);
+	}
+	
+	private class DrivePistons{
+		AirSystem frontAirSystem;
+		AirSystem backAirSystem;
+		public DrivePistons(int[] pistons) { //front piston, back Piston
+			Compressor compressor = new Compressor();
+			frontAirSystem = new AirSystem(compressor, new int[]{pistons[0]});
+			backAirSystem = new AirSystem(compressor, new int[]{pistons[1]});
+		}
+		
+		public AirSystem getFrontAirSystem(){
+			return frontAirSystem;
+		}
+		public AirSystem getBackAirSystem(){
+			return backAirSystem;
+		}
+		public void changeState(){
+			if (frontAirSystem.isExtended()){
+				frontAirSystem.retract();
+				backAirSystem.extend();
+			}else{
+				frontAirSystem.extend();
+				backAirSystem.retract();
+			}
+		}
 	}
 }
