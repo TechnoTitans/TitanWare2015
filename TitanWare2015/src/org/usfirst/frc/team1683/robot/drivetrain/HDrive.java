@@ -1,6 +1,5 @@
 package org.usfirst.frc.team1683.robot.drivetrain;
 
-import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.pneumatics.AirSystem;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
@@ -10,7 +9,7 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class HDrive extends TankDrive{
 	AirSystem drivePistons;
-	MotorGroup hLeftMotors,hRightMotors;
+	MotorGroup hBackMotors,hFrontMotors;
 	int triggerButton;
 	double angleBeforeDeploy;
 	/**
@@ -27,23 +26,25 @@ public class HDrive extends TankDrive{
 	 * @param rightChannelB
 	 * @param rightPiston
 	 * @param leftPiston
-	 * @param rightMotor - right H motor
-	 * @param leftMotor - left H motor
+	 * @param frontMotor - right H motor
+	 * @param backMotor - left H motor
 	 * @param hMotorType
 	 * @param triggerButton
 	 * @param wheelDistancePerPulse
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public HDrive(int[] leftMotorInputs,boolean leftInverse, int[] rightMotorInputs, boolean rightInverse, 
 			Class motorType, int gyroChannel, int leftChannelA, int leftChannelB, int rightChannelA, int rightChannelB, 
-			int rightPiston, int leftPiston, int rightMotor, int leftMotor, 
-			Class hMotorType, int triggerButton, double wheelDistancePerPulse) {
+			int rightPiston, int leftPiston, 
+			int frontMotor, int backMotor, Class hMotorType, 
+			int triggerButton, double wheelDistancePerPulse) {
 		super(leftMotorInputs, leftInverse, rightMotorInputs, rightInverse, 
 				motorType, gyroChannel, leftChannelA, leftChannelB, rightChannelA, rightChannelB, wheelDistancePerPulse);
-		int[] channelNumbers = {leftMotor, rightMotor};
+		int[] channelNumbers = {frontMotor, backMotor};
 		int[] pistons = {rightPiston, leftPiston};
 		drivePistons = new AirSystem(new Compressor(), pistons);
-		hLeftMotors = new MotorGroup(new int[] {leftMotor}, hMotorType, false);
-		hRightMotors= new MotorGroup(new int[]{rightMotor},hMotorType, false);
+		hBackMotors = new MotorGroup(new int[] {backMotor}, hMotorType, true);
+		hFrontMotors= new MotorGroup(new int[]{frontMotor},hMotorType, false);
 		this.triggerButton = triggerButton;
 	}
 	
@@ -57,9 +58,9 @@ public class HDrive extends TankDrive{
 	public void driveMode(Joystick leftStick, Joystick rightStick){
 		double speed = (DriverStation.rightStick.getRawAxis(DriverStation.XAxis) 
 				+ DriverStation.leftStick.getRawAxis(DriverStation.XAxis))/2 ;
-		hLeftMotors.set(speed);
-		hRightMotors.set(speed);
-		super.driveMode(leftStick, rightStick);
+		hBackMotors.set(speed);
+		hFrontMotors.set(speed);
+		super.driveMode(rightStick, leftStick);
 		if (DriverStation.rightStick.getRawButton(triggerButton) && 
 				DriverStation.leftStick.getRawButton(triggerButton)) {
 			deployWheels();
@@ -76,7 +77,7 @@ public class HDrive extends TankDrive{
 		angleBeforeDeploy=super.gyro.getAngle();
 		drivePistons.extend();
 		if(Math.abs(gyro.getAngle()-angleBeforeDeploy)>Gyro.HDRIVE_THRESHOLD){
-			super.turnAngle(angleBeforeDeploy, hLeftMotors, hRightMotors);
+			super.turnAngle(angleBeforeDeploy, hBackMotors, hFrontMotors);
 		}
 	}
 	
@@ -87,7 +88,7 @@ public class HDrive extends TankDrive{
 		angleBeforeDeploy=super.gyro.getAngle();
 		drivePistons.retract();
 		if(Math.abs(gyro.getAngle()-angleBeforeDeploy)>Gyro.HDRIVE_THRESHOLD){
-			super.turnAngle(angleBeforeDeploy, hLeftMotors, hRightMotors);
+			super.turnAngle(angleBeforeDeploy, hBackMotors, hFrontMotors);
 		}
 	}
 	
@@ -107,7 +108,7 @@ public class HDrive extends TankDrive{
 	{
 		if(!isDeployed())
 			deployWheels();
-		hLeftMotors.moveDistance(distance);
-		hRightMotors.moveDistance(distance);
+		hBackMotors.moveDistance(distance);
+		hFrontMotors.moveDistance(distance);
 	}
 }
