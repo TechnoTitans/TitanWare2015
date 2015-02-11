@@ -1,9 +1,12 @@
 package org.usfirst.frc.team1683.robot.test;
 
 import org.usfirst.frc.team1683.robot.HWR;
+
 import edu.wpi.first.wpilibj.Preferences;
+
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.pneumatics.AirSystem;
+import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Joystick;
@@ -28,8 +31,8 @@ public class AirStateMachine {
 	int presentState = INIT_CASE;
 	int nextState;
 	
-	public AirStateMachine(int[] solenoids, int button) {
-		air = new AirSystem(new Compressor(),solenoids);
+	public AirStateMachine(int[] solenoids, int button, PressureSensor pressure) {
+		air = new AirSystem(new Compressor(),solenoids, pressure);
 		stick = new Joystick(HWR.AUX_JOYSTICK);
 		buttonAssignment = button;
 		air.retract();
@@ -41,8 +44,8 @@ public class AirStateMachine {
 		//preferences.putDouble("delay", 0.075);
 	}
 	
-	public AirStateMachine(int[] solenoids, int stickNum, int button) {
-		air = new AirSystem(new Compressor(),solenoids);
+	public AirStateMachine(int[] solenoids, int stickNum, int button, PressureSensor pressure) {
+		air = new AirSystem(new Compressor(),solenoids, pressure);
 		stick = new Joystick(stickNum);
 		buttonAssignment = button;
 		air.retract();

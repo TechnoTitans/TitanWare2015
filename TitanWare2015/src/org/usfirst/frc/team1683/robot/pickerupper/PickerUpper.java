@@ -7,6 +7,7 @@ import org.usfirst.frc.team1683.robot.drivetrain.MotorGroup;
 import org.usfirst.frc.team1683.robot.drivetrain.Talon;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.pneumatics.AirSystem;
+import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Joystick;
@@ -20,7 +21,7 @@ public class PickerUpper {
 	public Encoder beltEncoder;
 	int liftButton;
 	final double AUTO_LIFT_SPEED = 0.5;
-	
+	PressureSensor pressure;
 
 	/**
 	 * Constructor
@@ -44,11 +45,12 @@ public class PickerUpper {
 	 * @param wdpp
 	 */
 	public PickerUpper(Class motorType, boolean inverseDirection, int[] liftSolenoids, int[] pickerUpperChannels,
-			 int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp){
+			 int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp, PressureSensor pressure){
 		this.motors = new MotorGroup(pickerUpperChannels, motorType, inverseDirection, 
 				beltEncoder);
 		beltEncoder = new Encoder(beltChannelA, beltChannelB, reverseDirection, wdpp);
-		liftPistons = new AirSystem(new Compressor(), liftSolenoids);
+		liftPistons = new AirSystem(new Compressor(), liftSolenoids, pressure);
+		this.pressure = pressure;
 	}
 	/**
 	 * Constructor
@@ -69,7 +71,7 @@ public class PickerUpper {
 //		this.motors = new MotorGroup(pickerUpperChannels, talonSRX, inverseDirection, 
 //				encoder);
 		beltEncoder = new Encoder(beltChannelA, beltChannelB, reverseDirection, wdpp);
-		liftPistons = new AirSystem(new Compressor(), liftSolenoids);
+		liftPistons = new AirSystem(new Compressor(), liftSolenoids, pressure);
 		leftLiftMotor = new MotorGroup(new int[]{leftMotor}, motorType , leftInverseDirection, beltEncoder);
 		rightLiftMotor = new MotorGroup(new int[]{rightMotor}, motorType, rightInverseDirection, beltEncoder);
 	}

@@ -21,13 +21,14 @@ public class AirSystem {
 	Compressor compressor;
 	int PcmNum;
 	ArrayList<Solenoid> solenoids = new ArrayList<Solenoid>();
-	PressureSensor pressure = new PressureSensor(HWR.PRESSURE_SENSOR);
+	PressureSensor pressure;
 	
 	/**
 	 * @param compressor - the compressor for the air system, usually one per robot.
 	 * @param solenoid - an int array of all the solenoid channels of an AirSystem.
 	 */
-	public AirSystem(Compressor compressor, int[] solenoid ) {
+	public AirSystem(Compressor compressor, int[] solenoid , PressureSensor pressure) {
+		this.pressure = pressure;
 		this.compressor = compressor;
 		for (int i = 0; i < solenoid.length; i++) {
 			int channel = solenoid[i];

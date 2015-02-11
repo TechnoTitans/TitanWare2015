@@ -3,6 +3,7 @@ package org.usfirst.frc.team1683.robot.drivetrain;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.pneumatics.AirSystem;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
+import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Joystick;
@@ -35,13 +36,13 @@ public class HDrive extends TankDrive{
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public HDrive(int[] leftMotorInputs,boolean leftInverse, int[] rightMotorInputs, boolean rightInverse, 
 			Class motorType, int gyroChannel, int leftChannelA, int leftChannelB, int rightChannelA, int rightChannelB, 
-			int rightPiston, int leftPiston, 
+			int rightPiston, int leftPiston, PressureSensor pressure,
 			int frontMotor, int backMotor, Class hMotorType, 
 			int triggerButton, double wheelDistancePerPulse) {
 		super(leftMotorInputs, leftInverse, rightMotorInputs, rightInverse, 
 				motorType, gyroChannel, leftChannelA, leftChannelB, rightChannelA, rightChannelB, wheelDistancePerPulse);
 		int[] channelNumbers = {frontMotor, backMotor};
-		pistons = new DrivePistons(new int[]{rightPiston, leftPiston});
+		pistons = new DrivePistons(new int[]{rightPiston, leftPiston}, pressure);
 		hBackMotors = new MotorGroup(new int[] {backMotor}, hMotorType, false);
 		hFrontMotors= new MotorGroup(new int[]{frontMotor},hMotorType, true);
 		this.triggerButton = triggerButton;
@@ -114,10 +115,10 @@ public class HDrive extends TankDrive{
 	private class DrivePistons{
 		AirSystem frontAirSystem;
 		AirSystem backAirSystem;
-		public DrivePistons(int[] pistons) { //front piston, back Piston
+		public DrivePistons(int[] pistons, PressureSensor pressure) { //front piston, back Piston
 			Compressor compressor = new Compressor();
-			frontAirSystem = new AirSystem(compressor, new int[]{pistons[0]});
-			backAirSystem = new AirSystem(compressor, new int[]{pistons[1]});
+			frontAirSystem = new AirSystem(compressor, new int[]{pistons[0]}, pressure);
+			backAirSystem = new AirSystem(compressor, new int[]{pistons[1]}, pressure);
 		}
 		
 		public AirSystem getFrontAirSystem(){
