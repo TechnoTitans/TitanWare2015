@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1683.robot.power;
+package org.usfirst.frc.team1683.robot.statistics;
 
 import java.util.ArrayList;
 import java.util.Iterator;

@@ -8,14 +8,10 @@ import org.usfirst.frc.team1683.robot.drivetrain.TankDrive;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.main.autonomous.AutonomousSelector;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
-import org.usfirst.frc.team1683.robot.power.PowerDistributionManager;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
+import org.usfirst.frc.team1683.robot.statistics.PowerDistributionManager;
 import org.usfirst.frc.team1683.robot.test.DriveTester;
-import org.usfirst.frc.team1683.robot.test.GyroTest;
-import org.usfirst.frc.team1683.robot.test.TalonSRXTest;
-import org.usfirst.frc.team1683.robot.test.TalonTest;
 
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 /**
@@ -27,17 +23,9 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  */
 public class TechnoTitan extends IterativeRobot {
     public static boolean debug = true;
-//	AirSystemTester soloTester;
-//	AirStateMachine stateMachine;
-//	VisionTest visionTest;
+    
 	DriveTester driveTester;
-//	TalonSRXTest talonTest;
     Gyro gyro;
-    Gyro analogGyro;
-    AnalogInput analog;
-    TalonTest talonTest;
-    TalonSRXTest talonsrxtest;
-    GyroTest gyrotest;
 	TankDrive tankDrive;
 	PickerUpper pickerUpper;
 	AutonomousSelector autonomous;
@@ -90,7 +78,7 @@ public class TechnoTitan extends IterativeRobot {
      * This function is called periodically during test mode
      */
     public void testInit(){
-
+    	
     }
     public void testPeriodic() {
 
