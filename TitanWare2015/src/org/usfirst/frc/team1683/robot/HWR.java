@@ -15,7 +15,7 @@ public class HWR {
 	public static final int BACK_RIGHT_MOTOR		= HWP.CAN_4;
 	
 	//Motors For HDrive
-	public static final int BACK_H_MOTOR			= HWP.PWM_3;
+	public static final int BACK_H_MOTOR			= HWP.PWM_2;
 	public static final int FRONT_H_MOTOR			= HWP.PWM_4;
 	
 	//Motors for Belt
