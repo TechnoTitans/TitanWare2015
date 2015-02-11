@@ -8,11 +8,11 @@ public class HWR {
 	public static final int RIGHT_JOYSTICK 			= HWP.JOY_2;
 	
 	//Motors For Drive
-	public static final int FRONT_LEFT_MOTOR		= HWP.PWM_1;
-	public static final int BACK_LEFT_MOTOR			= HWP.PWM_2;
+	public static final int FRONT_LEFT_MOTOR		= HWP.CAN_1;
+	public static final int BACK_LEFT_MOTOR			= HWP.CAN_2;
 
-	public static final int FRONT_RIGHT_MOTOR		= HWP.PWM_3;
-	public static final int BACK_RIGHT_MOTOR		= HWP.PWM_4;
+	public static final int FRONT_RIGHT_MOTOR		= HWP.CAN_3;
+	public static final int BACK_RIGHT_MOTOR		= HWP.CAN_4;
 	
 	//Motors For HDrive
 	public static final int BACK_H_MOTOR			= HWP.PWM_3;

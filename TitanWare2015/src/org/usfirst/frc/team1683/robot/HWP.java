@@ -14,6 +14,13 @@ public class HWP {
 	public static final int PWM_8 = 8;
 	public static final int PWM_9 = 9;
 	
+	//Controller Area Network (CAN)
+	public static final int CAN_0 = 0;	//do not assign to any TalonSRX (default)
+	public static final int CAN_1 = 1;
+	public static final int CAN_2 = 2;
+	public static final int CAN_3 = 3;
+	public static final int CAN_4 = 4;
+	public static final int CAN_5 = 5;
 	// Analog
 	public static final int ANALOG_0 = 0;
 	public static final int ANALOG_1 = 1;
