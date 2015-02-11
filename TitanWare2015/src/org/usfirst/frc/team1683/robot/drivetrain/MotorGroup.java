@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.usfirst.frc.team1683.robot.TechnoTitan;
+import org.usfirst.frc.team1683.robot.main.DriverStation;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -99,7 +100,7 @@ public class MotorGroup implements Runnable{
 			for(Motor motor: motors){
 				if (motor.hasEncoder()){
 					String name = "Encoder for motor "+ motor.getChannel();
-					SmartDashboard.putNumber(name ,motor.getEncoder().getDistance());
+					DriverStation.sendData(name ,motor.getEncoder().getDistance());
 				}
 			}
 		}
