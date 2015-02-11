@@ -95,10 +95,12 @@ public class MotorGroup implements Runnable{
 	}
 	@Override
 	public void run() {
-		for(Motor motor: motors){
-			if (motor.hasEncoder()){
-				String name = "Encoder for motor "+ motor.getChannel();
-				SmartDashboard.putNumber(name ,motor.getEncoder().getDistance());
+		while (true){
+			for(Motor motor: motors){
+				if (motor.hasEncoder()){
+					String name = "Encoder for motor "+ motor.getChannel();
+					SmartDashboard.putNumber(name ,motor.getEncoder().getDistance());
+				}
 			}
 		}
 		
