@@ -96,6 +96,18 @@ public class TalonSRX extends CANTalon implements Motor{
 		this.stop();
 		
 	}
+	@Override
+	public boolean hasEncoder() {
+		return hasEncoder;
+	}
+	@Override
+	public Encoder getEncoder() {
+		return encoder;
+	}
+	@Override
+	public int getChannel() {
+		return super.getDeviceID();
+	}
 	
 
 

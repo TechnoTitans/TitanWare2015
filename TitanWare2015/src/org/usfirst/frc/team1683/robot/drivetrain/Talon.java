@@ -96,5 +96,13 @@ public class Talon extends edu.wpi.first.wpilibj.Talon implements Motor{
 		this.stop();
 		
 	}
+	@Override
+	public boolean hasEncoder() {
+		return hasEncoder;
+	}
+	@Override
+	public Encoder getEncoder() {
+		return encoder;
+	}
 
 }
