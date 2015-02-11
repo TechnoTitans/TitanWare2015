@@ -136,7 +136,7 @@ public class Vision {
 	 */
 	public Blob getClosestBlob2(Blob[] blobs) {
 		Blob closest = blobs[0];
-		// Successful use of for each loop.
+		// Successful use of for each loop.his 
 		for (Blob blob : blobs) {
 			if (blob.AREA < closest.AREA) {
 				closest = blob;
@@ -144,15 +144,6 @@ public class Vision {
 		}
 		return closest;
 	}
-	
-//	/**
-//	 * Gets the vector pointing towards the center.
-//	 * @return Vector object representing center vector;
-//	 */
-//	public Vector getCenterVector(Blob blob) {
-//		Vector center = new Vector(blob.X_POS, blob.Y_POS, CENTER_X, CENTER_Y);
-//		return center;
-//	}
 	
 //	/**
 //	 * Attempts to center the closest blob on screen horizontally.
