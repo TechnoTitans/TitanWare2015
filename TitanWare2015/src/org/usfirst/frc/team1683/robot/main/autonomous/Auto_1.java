@@ -2,7 +2,9 @@ package org.usfirst.frc.team1683.robot.main.autonomous;
 
 
 public class Auto_1 extends Autonomous{
-	//Drives Forward 
+	/**
+	 * Pushes tote forward
+	 */
 	public static void run(){
 		switch(presentState){
 		case INIT_CASE:
