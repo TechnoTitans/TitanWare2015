@@ -26,14 +26,16 @@ public class HWR {
 	public static final int GYRO					= HWP.ANALOG_1;
 
 	//Encoders
-	public static final int LEFT_CHANNEL_A			= HWP.DIO_1;
-	public static final int LEFT_CHANNEL_B			= HWP.DIO_2;
+	public static final int LEFT_CHANNEL_A			= HWP.DIO_5;
+	public static final int LEFT_CHANNEL_B			= HWP.DIO_6;
 	public static final int RIGHT_CHANNEL_A			= HWP.DIO_3;
 	public static final int RIGHT_CHANNEL_B			= HWP.DIO_4;
-	public static final int BELT_CHANNEL_A          = HWP.DIO_5; //actual port is 0
-	public static final int BELT_CHANNEL_B          = HWP.DIO_6; //actual port is 1
+	public static final int BELT_CHANNEL_A          = HWP.DIO_0; //actual port is 0
+	public static final int BELT_CHANNEL_B          = HWP.DIO_1; //actual port is 1
 	public static final int H_CHANNEL_A				= HWP.DIO_7;
 	public static final int H_CHANNEL_B				= HWP.DIO_8;
+	public static final int PHOTOGATE 				= HWP.DIO_9;
+
 
 	//Encoder Wheel Distance Per Pulse
 	public static double driveEncoderWDPP 			= 47/700;

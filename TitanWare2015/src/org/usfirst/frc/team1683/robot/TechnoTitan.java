@@ -9,6 +9,7 @@ import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.main.autonomous.AutonomousSelector;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
+import org.usfirst.frc.team1683.robot.sensors.Photogate;
 import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 import org.usfirst.frc.team1683.robot.statistics.PowerDistributionManager;
 import org.usfirst.frc.team1683.robot.test.DriveTester;
@@ -36,6 +37,7 @@ public class TechnoTitan extends IterativeRobot {
 	Encoder liftEncoder;
 	HDrive drive;
 	PressureSensor pressure;
+	Photogate photogate;
 	
 	
 	/**
@@ -46,10 +48,10 @@ public class TechnoTitan extends IterativeRobot {
     	DriverStation.prefDouble("delay", 0.075);
     	DriverStation.prefDouble("distance", 1);
     	DriverStation.prefDouble("bearing", 90);
-        pickerUpper = new PickerUpper(new int[]{HWR.BELT_MOTOR},Talon.class , HWR.beltEncoderReverse);
         powerDistributionManager = new PowerDistributionManager(HWR.BACK_LEFT_MOTOR,HWR.FRONT_LEFT_MOTOR,HWR.BACK_RIGHT_MOTOR,HWR.FRONT_RIGHT_MOTOR, HWR.BELT_MOTOR );
         powerDistributionManager.start();
         pressure = new PressureSensor(HWR.PRESSURE_SENSOR);
+        photogate = new Photogate(HWR.PHOTOGATE);
         drive = new HDrive(new int[]{HWR.BACK_LEFT_MOTOR,HWR.FRONT_LEFT_MOTOR}, true, 
         		new int[]{HWR.BACK_RIGHT_MOTOR,HWR.FRONT_RIGHT_MOTOR}, false, 
         		TalonSRX.class, HWR.GYRO, 
@@ -57,6 +59,7 @@ public class TechnoTitan extends IterativeRobot {
         		HWR.RIGHT_CHANNEL_A, HWR.RIGHT_CHANNEL_B, 
         		HWR.LEFT_H_PISTON, HWR.RIGHT_H_PISTON, pressure, 
         		HWR.FRONT_H_MOTOR, HWR.BACK_H_MOTOR, Talon.class, HWR.DEPLOY_H_DRIVE, HWR.driveEncoderWDPP);
+        pickerUpper = new PickerUpper(Talon.class, false, new int[]{HWR.LEFT_LIFT_PISTON, HWR.RIGHT_LIFT_PISTON}, new int[]{HWR.BELT_MOTOR}, HWR.BELT_CHANNEL_A, HWR.BELT_CHANNEL_B, false, 6, pressure, photogate);
     }
 
     public void autonomousInit(){
