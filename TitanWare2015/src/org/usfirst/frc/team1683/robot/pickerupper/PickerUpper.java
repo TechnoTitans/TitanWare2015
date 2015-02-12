@@ -79,15 +79,17 @@ public class PickerUpper {
 		leftLiftMotor = new MotorGroup(new int[]{leftMotor}, motorType , leftInverseDirection, beltEncoder);
 		rightLiftMotor = new MotorGroup(new int[]{rightMotor}, motorType, rightInverseDirection, beltEncoder);
 		this.photogate = photogate;
+		uprightPickerUpper();
 	}
 
 	public void liftMode(int joystickNubmer) {
 		int button = HWR.PICKER_UPPER;
 		if (DriverStation.antiBounce(joystickNubmer, button)) {
-			angledPickerUpper();
-		}
-		else {
-			uprightPickerUpper();	
+			if (isForward){
+				angledPickerUpper();
+			}else{
+				uprightPickerUpper();
+			}
 		}
 	}
 

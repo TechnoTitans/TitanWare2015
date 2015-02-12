@@ -6,6 +6,7 @@ import java.util.List;
 import org.usfirst.frc.team1683.robot.TechnoTitan;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -97,10 +98,14 @@ public class MotorGroup implements Runnable{
 	@Override
 	public void run() {
 		while (true){
+			Timer.delay(0.25);
 			for(Motor motor: motors){
 				if (motor.hasEncoder()){
 					String name = "Encoder for motor "+ motor.getChannel();
-					DriverStation.sendData(name ,motor.getEncoder().getDistance());
+					if (TechnoTitan.debug){
+						System.out.println(name + motor.getEncoder().getDistance());
+					}
+					DriverStation.sendData(name , motor.getEncoder().getDistance());
 				}
 			}
 		}
