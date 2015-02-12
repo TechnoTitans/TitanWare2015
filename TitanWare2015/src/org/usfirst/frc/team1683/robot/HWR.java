@@ -30,8 +30,8 @@ public class HWR {
 	public static final int LEFT_CHANNEL_B			= HWP.DIO_2;
 	public static final int RIGHT_CHANNEL_A			= HWP.DIO_3;
 	public static final int RIGHT_CHANNEL_B			= HWP.DIO_4;
-	public static final int BELT_CHANNEL_A          = HWP.DIO_5;
-	public static final int BELT_CHANNEL_B          = HWP.DIO_6;
+	public static final int BELT_CHANNEL_A          = HWP.DIO_5; //actual port is 0
+	public static final int BELT_CHANNEL_B          = HWP.DIO_6; //actual port is 1
 	public static final int H_CHANNEL_A				= HWP.DIO_7;
 	public static final int H_CHANNEL_B				= HWP.DIO_8;
 

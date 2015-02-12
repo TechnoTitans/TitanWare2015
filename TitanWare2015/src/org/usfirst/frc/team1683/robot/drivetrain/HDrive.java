@@ -148,5 +148,10 @@ public class HDrive extends TankDrive{
 				backAirSystem.retract();
 			}
 		}
+		
+		public void EncoderValues (){
+			DriverStation.sendData("leftEncoder", leftEncoder.get());
+			DriverStation.sendData("rightEncoder", rightEncoder.get());
+		}
 	}
 }
