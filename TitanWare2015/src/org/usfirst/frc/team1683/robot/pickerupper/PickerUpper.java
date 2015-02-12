@@ -4,9 +4,9 @@ import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.drivetrain.Encoder;
 import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
 import org.usfirst.frc.team1683.robot.drivetrain.MotorGroup;
-import org.usfirst.frc.team1683.robot.drivetrain.Talon;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.pneumatics.AirSystem;
+import org.usfirst.frc.team1683.robot.sensors.Photogate;
 import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -15,13 +15,15 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class PickerUpper {
 	MotorGroup motors;
-	AirSystem liftPistons;
+	DualActionPistons pistons;
 	MotorGroup leftLiftMotor;
 	MotorGroup rightLiftMotor;
 	public Encoder beltEncoder;
 	int liftButton;
 	final double AUTO_LIFT_SPEED = 0.5;
 	PressureSensor pressure;
+	boolean isForward;
+	Photogate photogate;
 
 	/**
 	 * Constructor
@@ -45,12 +47,13 @@ public class PickerUpper {
 	 * @param wdpp
 	 */
 	public PickerUpper(Class motorType, boolean inverseDirection, int[] liftSolenoids, int[] pickerUpperChannels,
-			 int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp, PressureSensor pressure){
+			 int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp, PressureSensor pressure, Photogate photogate){
 		this.motors = new MotorGroup(pickerUpperChannels, motorType, inverseDirection, 
 				beltEncoder);
 		beltEncoder = new Encoder(beltChannelA, beltChannelB, reverseDirection, wdpp);
-		liftPistons = new AirSystem(new Compressor(), liftSolenoids, pressure);
 		this.pressure = pressure;
+		this.photogate = photogate;
+		pistons = new DualActionPistons(liftSolenoids, pressure);
 	}
 	/**
 	 * Constructor
@@ -67,13 +70,15 @@ public class PickerUpper {
 	 */
 	public PickerUpper(Class motorType, boolean leftInverseDirection, boolean rightInverseDirection,
 			 int[] liftSolenoids, int leftMotor, int rightMotor,
-			 int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp){
+			 int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp, Photogate photogate, PressureSensor pressure){
 //		this.motors = new MotorGroup(pickerUpperChannels, talonSRX, inverseDirection, 
 //				encoder);
+		this.pressure = pressure;
 		beltEncoder = new Encoder(beltChannelA, beltChannelB, reverseDirection, wdpp);
-		liftPistons = new AirSystem(new Compressor(), liftSolenoids, pressure);
+		pistons = new DualActionPistons(liftSolenoids, pressure);
 		leftLiftMotor = new MotorGroup(new int[]{leftMotor}, motorType , leftInverseDirection, beltEncoder);
 		rightLiftMotor = new MotorGroup(new int[]{rightMotor}, motorType, rightInverseDirection, beltEncoder);
+		this.photogate = photogate;
 	}
 
 	public void liftMode(Joystick auxStick) {
@@ -92,14 +97,20 @@ public class PickerUpper {
 	 * Lifts the pickerupper device into the straight position
 	 */
 	public void uprightPickerUpper() {
-		liftPistons.extend();
+		if (!isForward){
+			pistons.changeState();
+			isForward = true;
+		}
 	}
 
 	/**
 	 * Brings back the pickerupper device into an angle
 	 */
 	public void angledPickerUpper() {
-		liftPistons.retract();
+		if (isForward){
+			pistons.changeState();
+			isForward = false;
+		}
 	}
 
 
@@ -154,10 +165,38 @@ public class PickerUpper {
 	}
 	
 	public void setToZero(){
-		//while (!sensor.getRawValue())
-		while (true) //temporary - infinite loop
-		{
+		while (!photogate.get()){
 			motors.set(-AUTO_LIFT_SPEED);
 		}
 	}
+	
+	private class DualActionPistons{
+		AirSystem frontAirSystem;
+		AirSystem backAirSystem;
+		public DualActionPistons(int[] pistons, PressureSensor pressure) { //front piston, back Piston
+			Compressor compressor = new Compressor();
+			frontAirSystem = new AirSystem(compressor, new int[]{pistons[0]}, pressure);
+			backAirSystem = new AirSystem(compressor, new int[]{pistons[1]}, pressure);
+			isForward = false;
+		}
+		
+		public AirSystem getFrontAirSystem(){
+			return frontAirSystem;
+		}
+		public AirSystem getBackAirSystem(){
+			return backAirSystem;
+		}
+		
+		public void changeState(){
+			if (frontAirSystem.isExtended()){
+				frontAirSystem.retract();
+				backAirSystem.extend();
+			}else{
+				frontAirSystem.extend();
+				backAirSystem.retract();
+			}
+		}
+	}
+	
+	
 }
