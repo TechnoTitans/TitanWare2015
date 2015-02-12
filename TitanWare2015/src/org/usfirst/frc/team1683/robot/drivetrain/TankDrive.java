@@ -126,4 +126,9 @@ public class TankDrive extends DriveTrain{
 	public void goSideways(double distance) {
 		
 	}
+	
+	public void EncoderValues (){
+		DriverStation.sendData("leftEncoder", leftEncoder.get());
+		DriverStation.sendData("rightEncoder", rightEncoder.get());
+	}
 }
