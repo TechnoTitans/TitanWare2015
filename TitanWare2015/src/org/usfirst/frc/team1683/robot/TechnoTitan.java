@@ -8,14 +8,11 @@ import org.usfirst.frc.team1683.robot.drivetrain.TankDrive;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.main.autonomous.AutonomousSelector;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
-import org.usfirst.frc.team1683.robot.power.PowerDistributionManager;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
+import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
+import org.usfirst.frc.team1683.robot.statistics.PowerDistributionManager;
 import org.usfirst.frc.team1683.robot.test.DriveTester;
-import org.usfirst.frc.team1683.robot.test.GyroTest;
-import org.usfirst.frc.team1683.robot.test.TalonSRXTest;
-import org.usfirst.frc.team1683.robot.test.TalonTest;
 
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 /**
@@ -27,23 +24,18 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  */
 public class TechnoTitan extends IterativeRobot {
     public static boolean debug = true;
-//	AirSystemTester soloTester;
-//	AirStateMachine stateMachine;
-//	VisionTest visionTest;
+    public static final boolean POSTENCODERVALUES = true;
+
+    
 	DriveTester driveTester;
-//	TalonSRXTest talonTest;
     Gyro gyro;
-    Gyro analogGyro;
-    AnalogInput analog;
-    TalonTest talonTest;
-    TalonSRXTest talonsrxtest;
-    GyroTest gyrotest;
 	TankDrive tankDrive;
 	PickerUpper pickerUpper;
 	AutonomousSelector autonomous;
 	PowerDistributionManager powerDistributionManager;
 	Encoder liftEncoder;
 	HDrive drive;
+	PressureSensor pressure;
 	
 	
 	/**
@@ -57,13 +49,14 @@ public class TechnoTitan extends IterativeRobot {
         pickerUpper = new PickerUpper(new int[]{HWR.BELT_MOTOR},Talon.class , HWR.beltEncoderReverse);
         powerDistributionManager = new PowerDistributionManager(HWR.BACK_LEFT_MOTOR,HWR.FRONT_LEFT_MOTOR,HWR.BACK_RIGHT_MOTOR,HWR.FRONT_RIGHT_MOTOR, HWR.BELT_MOTOR );
         powerDistributionManager.start();
-        drive = new HDrive(new int[]{HWR.BACK_LEFT_MOTOR,HWR.FRONT_LEFT_MOTOR}, false, 
-        		new int[]{HWR.BACK_RIGHT_MOTOR,HWR.FRONT_RIGHT_MOTOR}, true, 
+        pressure = new PressureSensor(HWR.PRESSURE_SENSOR);
+        drive = new HDrive(new int[]{HWR.BACK_LEFT_MOTOR,HWR.FRONT_LEFT_MOTOR}, true, 
+        		new int[]{HWR.BACK_RIGHT_MOTOR,HWR.FRONT_RIGHT_MOTOR}, false, 
         		TalonSRX.class, HWR.GYRO, 
         		HWR.LEFT_CHANNEL_A, HWR.LEFT_CHANNEL_B, 
         		HWR.RIGHT_CHANNEL_A, HWR.RIGHT_CHANNEL_B, 
-        		HWR.LEFT_H_PISTON, HWR.RIGHT_H_PISTON, 
-        		HWR.FRONT_H_MOTOR, HWR.BACK_H_MOTOR, Talon.class, 1, 4);
+        		HWR.LEFT_H_PISTON, HWR.RIGHT_H_PISTON, pressure, 
+        		HWR.FRONT_H_MOTOR, HWR.BACK_H_MOTOR, Talon.class, HWR.DEPLOY_H_DRIVE, HWR.driveEncoderWDPP);
     }
 
     public void autonomousInit(){
@@ -90,7 +83,7 @@ public class TechnoTitan extends IterativeRobot {
      * This function is called periodically during test mode
      */
     public void testInit(){
-
+    	
     }
     public void testPeriodic() {
 

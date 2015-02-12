@@ -9,4 +9,7 @@ public interface Motor {
 	public void set(double speed);
 	public void moveDegrees(double degrees);
 	public void stop();
+	public boolean hasEncoder();
+	public Encoder getEncoder();
+	public int getChannel();
 }

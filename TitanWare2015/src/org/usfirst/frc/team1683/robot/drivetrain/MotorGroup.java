@@ -3,12 +3,17 @@ package org.usfirst.frc.team1683.robot.drivetrain;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.usfirst.frc.team1683.robot.TechnoTitan;
+import org.usfirst.frc.team1683.robot.main.DriverStation;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /**
  * 
  * @author Animesh Koratana
  *
  */
-public class MotorGroup {
+public class MotorGroup implements Runnable{
 	List<Motor> motors;
 	Encoder encoder;
 	/**
@@ -26,6 +31,9 @@ public class MotorGroup {
 			}else if (motorType.equals(TalonSRX.class)){
 				motors.add(new TalonSRX(j, inverseDirection));
 			}
+		}
+		if (TechnoTitan.POSTENCODERVALUES){
+			new Thread(this, "EncoderPost").start();
 		}
 	}
 	/**
@@ -85,6 +93,18 @@ public class MotorGroup {
 		for (Motor motor: motors){
 			motor.stop();
 		} 
+	}
+	@Override
+	public void run() {
+		while (true){
+			for(Motor motor: motors){
+				if (motor.hasEncoder()){
+					String name = "Encoder for motor "+ motor.getChannel();
+					DriverStation.sendData(name ,motor.getEncoder().getDistance());
+				}
+			}
+		}
+		
 	}
 
 }
