@@ -8,6 +8,8 @@ public class Auto_2 extends Autonomous{
 		switch(presentState){
 		case INIT_CASE:
 		{
+			timer.start();
+			visionTimer.start();
 			nextState = State.DRIVE_FORWARD;
 			break;
 		}
@@ -34,12 +36,12 @@ public class Auto_2 extends Autonomous{
 		{
 			driveTrain.goSideways(sideDistance);			
 			nextState = State.CENTER_TOTE;
+			visionTimer.reset();
 			break;
 		}
 		case CENTER_TOTE:
 		{
-			centerTote();
-			nextState = State.DRIVE_FORWARD;
+			nextState = centerTote(State.DRIVE_FORWARD);
 			break;
 		}
 		case END_CASE:

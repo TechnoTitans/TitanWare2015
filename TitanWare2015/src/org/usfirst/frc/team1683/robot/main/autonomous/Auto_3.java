@@ -9,6 +9,8 @@ public class Auto_3 extends Autonomous{
 		switch(presentState){
 		case INIT_CASE:
 		{
+			timer.start();
+			visionTimer.start();
 			nextState = State.LIFT_BARREL;
 			break;
 		}
@@ -22,12 +24,12 @@ public class Auto_3 extends Autonomous{
 		{
 			driveTrain.goSideways(sideDistance);
 			nextState = State.CENTER_TOTE;
+			visionTimer.reset();
 			break;
 		}
 		case CENTER_TOTE:
 		{
-			centerTote();
-			nextState = State.DRIVE_FORWARD;
+			nextState = centerTote(State.DRIVE_FORWARD);
 			break;
 		}
 		case DRIVE_FORWARD:

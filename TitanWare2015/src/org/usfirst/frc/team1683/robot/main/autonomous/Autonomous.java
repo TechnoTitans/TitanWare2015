@@ -21,6 +21,7 @@ public abstract class Autonomous {
 	protected static DriveTrain driveTrain;
 	protected static Timer timer;
 	protected static Vision vision;
+	protected static Timer visionTimer;
 	
 	public static enum State {
 		INIT_CASE, 					
@@ -51,6 +52,9 @@ public abstract class Autonomous {
 	protected static double backDistance;
 	protected static boolean isToteLifted;
 	protected static boolean enablePrinting;
+	
+	protected static double visionDistance = 0;
+	protected static final double VISION_TIMEOUT = 3;
 
 	
 	public Autonomous(){
@@ -71,6 +75,7 @@ public abstract class Autonomous {
 		liftDistance = DriverStation.getDouble("liftDistance");
 		timer = new Timer();
 		vision = new Vision();
+		visionTimer = new Timer();
 	}
 	
 	public static void printState(){
@@ -86,20 +91,29 @@ public abstract class Autonomous {
 	/**
 	 * @author David Luo
 	 * Attempts to center the robot in front of the closest tote.
+	 * @param next The state to be executed after CENTER_TOTE.
+	 * @return The next state to be executed (keep trying to center or skip).
 	 */
-	public static void centerTote() {
+	public static State centerTote(State next) {
 		double centerDistance = vision.centerOffset()/240;
-		if (vision.isCentered() == -1) {
-			driveTrain.goSideways(centerDistance);
-//			nextState = CENTER_TOTE;
-		}
-		else if (vision.isCentered() == 1) {
-			driveTrain.goSideways(centerDistance);
-//			nextState = CENTER_TOTE;
+		visionDistance += centerDistance;
+		if (visionTimer.get() <= VISION_TIMEOUT) {
+			if (vision.isCentered() == -1) {
+				driveTrain.goSideways(centerDistance);
+				return State.CENTER_TOTE;
+			}
+			else if (vision.isCentered() == 1) {
+				driveTrain.goSideways(centerDistance);
+				return State.CENTER_TOTE;
+			}
+			else {
+				driveTrain.stop();
+				return next;
+			}
 		}
 		else {
-			driveTrain.stop();
-//			nextState = DRIVE_FORWARD;	
+//			driveTrain.goSideways(visionDistance);
+			return next;
 		}
 	}
 }
