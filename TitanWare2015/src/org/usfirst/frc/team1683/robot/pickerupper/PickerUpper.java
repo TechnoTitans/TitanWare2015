@@ -81,10 +81,9 @@ public class PickerUpper {
 		this.photogate = photogate;
 	}
 
-	public void liftMode(Joystick auxStick) {
-		int joystickNum = 0;
-		int button = 3;
-		if (DriverStation.antiBounce(joystickNum, button)) {
+	public void liftMode(int joystickNubmer) {
+		int button = HWR.PICKER_UPPER;
+		if (DriverStation.antiBounce(joystickNubmer, button)) {
 			angledPickerUpper();
 		}
 		else {

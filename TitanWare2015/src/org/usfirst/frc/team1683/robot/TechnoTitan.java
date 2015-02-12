@@ -77,6 +77,7 @@ public class TechnoTitan extends IterativeRobot {
    //     tankDrive.driveMode(DriverStation.leftStick, DriverStation.rightStick);
         pickerUpper.run();
         drive.driveMode(DriverStation.leftStick, DriverStation.rightStick);
+        pickerUpper.liftMode(HWR.AUX_JOYSTICK);
     }
     
     /**
