@@ -56,7 +56,7 @@ public class TechnoTitan extends IterativeRobot {
         		HWR.LEFT_CHANNEL_A, HWR.LEFT_CHANNEL_B, 
         		HWR.RIGHT_CHANNEL_A, HWR.RIGHT_CHANNEL_B, 
         		HWR.LEFT_H_PISTON, HWR.RIGHT_H_PISTON, pressure, 
-        		HWR.FRONT_H_MOTOR, HWR.BACK_H_MOTOR, Talon.class, 1, 4);
+        		HWR.FRONT_H_MOTOR, HWR.BACK_H_MOTOR, Talon.class, HWR.DEPLOY_H_DRIVE, HWR.driveEncoderWDPP);
     }
 
     public void autonomousInit(){
