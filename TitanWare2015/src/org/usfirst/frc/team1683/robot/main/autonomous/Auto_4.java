@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1683.robot.main.autonomous;
 
+import org.usfirst.frc.team1683.robot.main.autonomous.Autonomous.State;
+
 public class Auto_4 extends Autonomous{
 	/**
 	 * Picks up all the totes and drives all of them into the Auto Zone and the robot into the Auto Zone
@@ -70,6 +72,7 @@ public class Auto_4 extends Autonomous{
 		default:
 		{
 			defaultState();
+			nextState = State.END_CASE;
 			break;
 		}
 		}

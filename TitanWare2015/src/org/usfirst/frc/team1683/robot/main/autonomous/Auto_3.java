@@ -47,6 +47,7 @@ public class Auto_3 extends Autonomous{
 		default:
 		{
 			defaultState();
+			nextState = State.END_CASE;
 			break;
 		}
 		}

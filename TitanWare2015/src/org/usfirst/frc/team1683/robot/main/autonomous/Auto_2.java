@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1683.robot.main.autonomous;
 
+import org.usfirst.frc.team1683.robot.main.autonomous.Autonomous.State;
+
 public class Auto_2 extends Autonomous{
 	/**
 	 * @author Seung-Seok Lee
@@ -53,6 +55,7 @@ public class Auto_2 extends Autonomous{
 		default:
 		{
 			defaultState();
+			nextState = State.END_CASE;
 			break;
 		}
 		}
