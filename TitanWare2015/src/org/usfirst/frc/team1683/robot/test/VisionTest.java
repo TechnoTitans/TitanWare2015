@@ -3,8 +3,6 @@ package org.usfirst.frc.team1683.robot.test;
 import org.usfirst.frc.team1683.robot.vision.Blob;
 import org.usfirst.frc.team1683.robot.vision.Vision;
 
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
-
 /**
  * Vision Test Class
  * @author David Luo

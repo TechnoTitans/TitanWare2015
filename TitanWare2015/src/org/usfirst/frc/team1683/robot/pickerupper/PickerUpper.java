@@ -179,6 +179,14 @@ public class PickerUpper implements Runnable{
 		liftToHeight(HWR.DOUBLE_TOTE_HEIGHT+getHeightFromHDrive());
 	}
 	
+	public void liftThirdTote(){
+		liftToHeight(HWR.TRIPLE_TOTE_HEIGHT+getHeightFromHDrive());
+	}
+	
+	public void liftFourthTote(){
+		liftToHeight(HWR.FOURTH_TOTE_HEIGHT+getHeightFromHDrive());
+	}
+	
 	public void liftBarrel(){
 		liftToHeight(HWR.BARREL_HEIGHT+getHeightFromHDrive());
 	}

@@ -86,6 +86,8 @@ public class HWR {
 	//heights for PickerUpper
 	public static final double SINGLE_TOTE_HEIGHT	= 60.0;
 	public static final double DOUBLE_TOTE_HEIGHT	= SINGLE_TOTE_HEIGHT - HOOK_INCREMENTS;
+	public static final double TRIPLE_TOTE_HEIGHT	= DOUBLE_TOTE_HEIGHT - HOOK_INCREMENTS;
+	public static final double FOURTH_TOTE_HEIGHT   = TRIPLE_TOTE_HEIGHT - HOOK_INCREMENTS;
 	public static final double BARREL_HEIGHT		= 60.0;
 
 	//Buttons

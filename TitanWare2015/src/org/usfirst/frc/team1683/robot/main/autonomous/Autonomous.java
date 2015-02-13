@@ -8,6 +8,8 @@ import org.usfirst.frc.team1683.robot.drivetrain.TankDrive;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
+import org.usfirst.frc.team1683.robot.sensors.Photogate;
+import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 import org.usfirst.frc.team1683.robot.vision.Vision;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -22,6 +24,8 @@ public abstract class Autonomous {
 	protected static Timer timer;
 	protected static Vision vision;
 	protected static Timer visionTimer;
+	protected static Photogate photogate;
+	protected static PressureSensor pressure;
 	
 	public static enum State {
 		INIT_CASE, 					
@@ -71,12 +75,16 @@ public abstract class Autonomous {
 //		hDrive = new HDrive(new int[]{HWR.FRONT_LEFT_MOTOR, HWR.BACK_LEFT_MOTOR}, true , new int[]{HWR.FRONT_RIGHT_MOTOR, HWR.BACK_RIGHT_MOTOR},false , Talon.class, HWR.GYRO, 
 //    			HWR.LEFT_CHANNEL_A, HWR.LEFT_CHANNEL_B, HWR.RIGHT_CHANNEL_A, HWR.RIGHT_CHANNEL_B, 
 //    			HWR.BACK_CHANNEL_A, HWR.BACK_CHANNEL_B,
-//        		HWR.FRONT_CHANNEL_A, HWR.FRONT_CHANNEL_B,HWR.RIGHT_H_PISTON, HWR.LEFT_H_PISTON,new PressureSensor(HWR.PRESSURE_SENSOR), 
-//				HWR.FRONT_H_MOTOR, HWR.BACK_H_MOTOR, Talon.class, 1, HWR.driveEncoderWDPP);
+//        		HWR.FRONT_CHANNEL_A, HWR.FRONT_CHANNEL_B,
+//				HWR.RIGHT_H_PISTON, HWR.LEFT_H_PISTON,new PressureSensor(HWR.PRESSURE_SENSOR), 
+//				HWR.FRONT_H_MOTOR, HWR.BACK_H_MOTOR, Talon.class, 
+//				HWR.DEPLOY_H_DRIVE, HWR.driveEncoderWDPP);
 		driveTrain = tankDrive;
 //		driveTrain = hDrive;
 		pickerUpper = new PickerUpper(new int[]{HWR.BELT_MOTOR}, Talon.class, false);
-		
+//		pickerUpper = new PickerUpper(Talon.class, HWR.BELT_INVERSE, new int[]{HWR.LEFT_LIFT_PISTON, HWR.RIGHT_LIFT_PISTON}, new int[]{HWR.BELT_MOTOR}, 
+//	        		HWR.BELT_CHANNEL_A, HWR.BELT_CHANNEL_B, HWR.beltEncoderReverse, HWR.liftEncoderWDPP, 
+//	        		pressure, photogate, hDrive);
 		timer = new Timer();
 		vision = new Vision();
 		visionTimer = new Timer();
@@ -85,6 +93,11 @@ public abstract class Autonomous {
 		driveDistance = DriverStation.getDouble("driveDistance");
 		sideDistance = DriverStation.getDouble("sideDistance");
 		liftDistance = DriverStation.getDouble("liftDistance");
+		adjustDistance = DriverStation.getDouble("adjustDistance");
+		backDistance = DriverStation.getDouble("backDistance");
+		robotDistance = DriverStation.getDouble("robotDistance");
+		toteSpaceDistance = DriverStation.getDouble("toteSpaceDistance");
+		enablePrinting = DriverStation.getBoolean("enablePrinting");
 	}
 	
 	/**

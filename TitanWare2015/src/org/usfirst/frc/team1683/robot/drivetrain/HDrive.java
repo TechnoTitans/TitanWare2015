@@ -64,14 +64,13 @@ public class HDrive extends TankDrive{
 				+ DriverStation.leftStick.getRawAxis(DriverStation.XAxis))/2 ;
 		hBackMotors.set(speed);
 		hFrontMotors.set(speed);
-		super.driveMode(rightStick, leftStick);
 		if (DriverStation.rightStick.getRawButton(triggerButton) && 
 				DriverStation.leftStick.getRawButton(triggerButton)) {
 			deployWheels();
-			super.stop(); //remove if omniwheels are used for middle wheels
 		}
 		else {
 			liftWheels();
+			super.driveMode(rightStick, leftStick);
 		}
 	}
 	
