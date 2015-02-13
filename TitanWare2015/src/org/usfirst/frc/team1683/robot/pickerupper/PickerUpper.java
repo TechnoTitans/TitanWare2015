@@ -58,6 +58,7 @@ public class PickerUpper implements Runnable{
 		this.pressure = pressure;
 		this.photogate = photogate;
 		pistons = new DualActionPistons(liftSolenoids, pressure);
+		this.hDrive = hDrive;
 //		isForward = true;
 //		pistons = new DoubleActionSolenoid(liftSolenoids, pressure);
 	}
