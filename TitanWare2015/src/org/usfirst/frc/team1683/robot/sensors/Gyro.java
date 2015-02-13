@@ -16,13 +16,14 @@ public class Gyro extends edu.wpi.first.wpilibj.Gyro implements Sensor {
 	    super.setSensitivity(SENSITIVITY);
 	}
 	
-//	public Gyro(AnalogInput channel){
-//		super(channel);
-//		this.channel=channel;
-//		super.setSensitivity(SENSITIVITY);
-//		super.initGyro();
-//		super.reset();
-//	}
+	public Gyro(AnalogInput channel){
+		super(channel);
+		this.channel=channel;
+		super.initGyro();
+		super.reset();
+		super.setSensitivity(SENSITIVITY);
+	}
+	
 	public double getVoltage(){
 		return channel.getAverageVoltage();
 	}
