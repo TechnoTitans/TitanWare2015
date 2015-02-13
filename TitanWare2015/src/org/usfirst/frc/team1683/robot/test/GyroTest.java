@@ -20,12 +20,17 @@ public class GyroTest implements Tester{
     public GyroTest(Gyro gyro,Timer timer){
     	this.gyro = gyro;
     	this.timer=timer;
+    	timer.start();
     }
 	@Override
 	public void test() {
 		// TODO Auto-generated method stub
-		DriverStation.sendData("Current Angle from Gyro", (gyro.getDirection()));//-(timer.get()*Gyro.driftRate)));
-		DriverStation.sendData("Current Gyro Voltage", gyro.getVoltage());
+		DriverStation.sendData("Current Direction of Gyro", (gyro.getDirection()));//-(timer.get()*Gyro.driftRate)));
+		DriverStation.sendData("Current Angle from Gyro", (gyro.getAngle()));
+		DriverStation.sendData("Gyro Voltage", gyro.getVoltage());
+//		DriverStation.sendData("Gyro Sensitivity", 100000*(.0065+DriverStation.auxStick.getRawAxis(3)*0.0005));
+//		gyro.setSensitivity(.0065+DriverStation.auxStick.getRawAxis(3)*0.0005);
+		DriverStation.sendData("Drift rate", gyro.getAngle()/timer.get());
 		Timer.delay(.2);
 	}
 	public double getAngleDelayed(double x){
