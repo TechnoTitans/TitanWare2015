@@ -44,11 +44,12 @@ public class HDrive extends TankDrive{
 			int triggerButton, double wheelDistancePerPulse) {
 		super(leftMotorInputs, leftInverse, rightMotorInputs, rightInverse, 
 				motorType, gyroChannel, leftChannelA, leftChannelB, rightChannelA, rightChannelB, wheelDistancePerPulse);
-		int[] channelNumbers = {frontMotor, backMotor};
 		pistons = new DrivePistons(new int[]{rightPiston, leftPiston}, pressure);
 		hBackMotors = new MotorGroup("HBackMotors", new int[] {backMotor}, hMotorType, false, new Encoder(backChannelA, backChannelB, true, wheelDistancePerPulse));
 		hFrontMotors= new MotorGroup("HFrontMotors", new int[]{frontMotor},hMotorType, true, new Encoder(frontChannelA, frontChannelB, true, wheelDistancePerPulse));
 		this.triggerButton = triggerButton;
+//		isLifted = true;
+//		pistons = new DoubleActionSolenoid(new int[]{rightPiston, leftPiston}, pressure);
 	}
 	
 	
@@ -67,6 +68,7 @@ public class HDrive extends TankDrive{
 		if (DriverStation.rightStick.getRawButton(triggerButton) && 
 				DriverStation.leftStick.getRawButton(triggerButton)) {
 			deployWheels();
+			super.stop(); //remove if omniwheels are used for middle wheels
 		}
 		else {
 			liftWheels();
@@ -131,12 +133,14 @@ public class HDrive extends TankDrive{
 			isLifted = false;
 		}
 		
+		@SuppressWarnings("unused")
 		public AirSystem getFrontAirSystem(){
 			return frontAirSystem;
 		}
 		public AirSystem getBackAirSystem(){
 			return backAirSystem;
 		}
+		@SuppressWarnings("unused")
 		public void liftWheels(){
 			
 		}
@@ -151,9 +155,5 @@ public class HDrive extends TankDrive{
 			}
 		}
 		
-		public void EncoderValues (){
-			DriverStation.sendData("leftEncoder", leftEncoder.get());
-			DriverStation.sendData("rightEncoder", rightEncoder.get());
-		}
 	}
 }

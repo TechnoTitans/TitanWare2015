@@ -2,6 +2,7 @@ package org.usfirst.frc.team1683.robot.main.autonomous;
 
 public class Auto_2 extends Autonomous{
 	/**
+	 * @author Seung-Seok Lee
 	 * Pushes all three totes into the Auto Zone
 	 */
 	public static void run(){
@@ -47,6 +48,11 @@ public class Auto_2 extends Autonomous{
 		case END_CASE:
 		{
 			nextState = State.END_CASE;
+			break;
+		}
+		default:
+		{
+			defaultState();
 			break;
 		}
 		}

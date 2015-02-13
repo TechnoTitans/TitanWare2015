@@ -49,15 +49,6 @@ public class DriveTester implements Tester{
 			driveTrain.setBackToOriginalPos();
 		
 		double beltDistance = beltEncoder.getDisplacement(47.0/700.0);
-		DriverStation.sendData("Belt Distance", beltDistance);
-		
-		if (DriverStation.auxStick.getRawButton(4))
-			pickerUpper.runAuto(5.0);
-		if(DriverStation.auxStick.getRawButton(6)){
-			pickerUpper.runAuto(-5.0);
-		}
-			
-		
-			
+		DriverStation.sendData("Belt Distance", beltDistance);	
 	}
 }

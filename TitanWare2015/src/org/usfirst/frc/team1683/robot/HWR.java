@@ -21,6 +21,12 @@ public class HWR {
 	//Motors for Belt
 	public static final int BELT_MOTOR				= HWP.PWM_1;
 
+	//Motor Inverse Directions
+	public static final boolean LEFT_INVERSE		= false;
+	public static final boolean RIGHT_INVERSE		= false;
+	public static final boolean BELT_INVERSE		= false;
+	public static final boolean LEFT_H_INVERSE		= false;
+	public static final boolean RIGHT_H_INVERSE		= false;
 
 	// Gyro MUST BE 0 OR 1
 	public static final int GYRO					= HWP.ANALOG_1;
@@ -70,18 +76,25 @@ public class HWR {
 	public static final double B1                   = LIFT_MIN - (SLOPE * MOVE_ZERO_OFFSET);
 	public static final double B2                   = B1 + LIFT_H_INC;
 
-	//Robot Dimensions
+	//Dimensions
+	public static final double TOTE_HEIGHT			= 12.1;
 	public static final double H_DRIVE_HEIGHT		= 0.5;
 	public static final double ROBOT_HEIGHT			= 2.00;
 	public static final double DISTANCE_TO_INDEX	= 0.1;
+	public static final double HOOK_INCREMENTS		= 13.0;
+	
+	//heights for PickerUpper
+	public static final double SINGLE_TOTE_HEIGHT	= 60.0;
+	public static final double DOUBLE_TOTE_HEIGHT	= SINGLE_TOTE_HEIGHT - HOOK_INCREMENTS;
+	public static final double BARREL_HEIGHT		= 60.0;
 
 	//Buttons
 	public static final int DEPLOY_H_DRIVE			= 1;
 	public static final int PICKER_UPPER			= 1;
 	public static final int CALIBRATE_BELT			= 7;
 	public static final int GO_TO_HOME				= 9;
-
-
+	public static final int LIFT_FIRST_TOTE			= 10;
+	public static final int LIFT_SECOND_TOTE		= 11;
 
 	//Light Ring
 	public static final int LIGHT_RING				= HWP.PWM_0;

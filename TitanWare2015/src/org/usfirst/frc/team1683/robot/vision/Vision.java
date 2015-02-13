@@ -1,8 +1,6 @@
 package org.usfirst.frc.team1683.robot.vision;
 
 import org.usfirst.frc.team1683.robot.HWR;
-import org.usfirst.frc.team1683.robot.drivetrain.TankDrive;
-
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.networktables2.type.NumberArray;
 import edu.wpi.first.wpilibj.tables.TableKeyNotDefinedException;

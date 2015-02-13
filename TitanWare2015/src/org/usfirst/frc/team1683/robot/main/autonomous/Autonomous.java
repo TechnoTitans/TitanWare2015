@@ -8,7 +8,6 @@ import org.usfirst.frc.team1683.robot.drivetrain.TankDrive;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
-import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 import org.usfirst.frc.team1683.robot.vision.Vision;
 
 import edu.wpi.first.wpilibj.Timer;
@@ -36,7 +35,12 @@ public abstract class Autonomous {
 		LIFT_POSITION,		
 		IS_TOTE_LIFTED,	
 		CENTER_TOTE,
-		END_CASE,		
+		ADJUST_FORWARD,
+		ADJUST_BACKWARD,
+		TURN,
+		GO_FORWARD,
+		MOVE_FORWARD,
+		END_CASE		
 	}
 	
 	
@@ -51,8 +55,11 @@ public abstract class Autonomous {
 	protected static double adjustDistance;
 	protected static double dropDistance;
 	protected static double backDistance;
+	protected static double robotDistance;
+	protected static double toteSpaceDistance;
 	protected static boolean isToteLifted;
 	protected static boolean enablePrinting;
+	public static boolean errorWarning;
 	
 	protected static double visionDistance = 0;
 	protected static final double VISION_TIMEOUT = 3;
@@ -61,25 +68,30 @@ public abstract class Autonomous {
 	public Autonomous(){
 		tankDrive = new TankDrive(new int[]{HWR.FRONT_LEFT_MOTOR, HWR.BACK_LEFT_MOTOR}, true, new int[]{HWR.FRONT_RIGHT_MOTOR, HWR.BACK_RIGHT_MOTOR}, false, Talon.class, HWR.GYRO, 
     			HWR.LEFT_CHANNEL_A, HWR.LEFT_CHANNEL_B, HWR.RIGHT_CHANNEL_A, HWR.RIGHT_CHANNEL_B, 1);
-//		hDrive = new HDrive(tankDrive, HWR.RIGHT_H_PISTON, HWR.LEFT_H_PISTON, HWR.LEFT_H_MOTOR, HWR.RIGHT_H_MOTOR,
-//				Talon.class, 0); //last parameter is irrelevant to autonomous
 //		hDrive = new HDrive(new int[]{HWR.FRONT_LEFT_MOTOR, HWR.BACK_LEFT_MOTOR}, true , new int[]{HWR.FRONT_RIGHT_MOTOR, HWR.BACK_RIGHT_MOTOR},false , Talon.class, HWR.GYRO, 
 //    			HWR.LEFT_CHANNEL_A, HWR.LEFT_CHANNEL_B, HWR.RIGHT_CHANNEL_A, HWR.RIGHT_CHANNEL_B, 
 //    			HWR.BACK_CHANNEL_A, HWR.BACK_CHANNEL_B,
-//        		HWR.FRONT_CHANNEL_A, HWR.FRONT_CHANNEL_B,HWR.RIGHT_H_PISTON, HWR.LEFT_H_PISTON,new PressureSensor(HWR.PRESSURE_SENSOR), HWR.FRONT_H_MOTOR, HWR.BACK_H_MOTOR, 
-//    			Talon.class, 1, HWR.driveEncoderWDPP);
+//        		HWR.FRONT_CHANNEL_A, HWR.FRONT_CHANNEL_B,HWR.RIGHT_H_PISTON, HWR.LEFT_H_PISTON,new PressureSensor(HWR.PRESSURE_SENSOR), 
+//				HWR.FRONT_H_MOTOR, HWR.BACK_H_MOTOR, Talon.class, 1, HWR.driveEncoderWDPP);
 		driveTrain = tankDrive;
 //		driveTrain = hDrive;
 		pickerUpper = new PickerUpper(new int[]{HWR.BELT_MOTOR}, Talon.class, false);
+		
+		timer = new Timer();
+		vision = new Vision();
+		visionTimer = new Timer();
+		
 		//Preferences from the SmartDashboard
 		driveDistance = DriverStation.getDouble("driveDistance");
 		sideDistance = DriverStation.getDouble("sideDistance");
 		liftDistance = DriverStation.getDouble("liftDistance");
-		timer = new Timer();
-		vision = new Vision();
-		visionTimer = new Timer();
 	}
 	
+	/**
+	 * @author Seung-Seok Lee
+	 * prints out current and next state and the time during switches between states
+	 * sends the above information to the SmartDashboard
+	 */
 	public static void printState(){
 		if (enablePrinting){
 			if (!nextState.equals(presentState)){
@@ -87,6 +99,21 @@ public abstract class Autonomous {
 				System.out.println("Next State is: "+nextState.toString());
 				System.out.println("Current Time: "+timer.get());
 			}
+		}
+		DriverStation.sendData("presentState", presentState.toString());
+		DriverStation.sendData("nextState", nextState.toString());
+		DriverStation.sendData("time", timer.get());
+	}
+	
+	/**
+	 * @author Seung-Seok Lee
+	 * default case for all autonomous sequences - prints out error in state machine once
+	 */
+	public static void defaultState(){
+		if (errorWarning)
+		{
+			System.out.println("Error in State Machine");
+			errorWarning = false;
 		}
 	}
 	

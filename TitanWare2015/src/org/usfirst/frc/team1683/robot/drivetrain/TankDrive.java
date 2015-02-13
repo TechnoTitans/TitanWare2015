@@ -29,6 +29,7 @@ public class TankDrive extends DriveTrain{
 	 * @param motorType
 	 * @param gyroChannel
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public TankDrive(int[] leftMotorInputs,boolean leftInverse, int[] rightMotorInputs, boolean rightInverse, Class motorType, int gyroChannel) {
 		left = new MotorGroup("Left Drive",leftMotorInputs, motorType, leftInverse);
 		right = new MotorGroup("Right Drive",rightMotorInputs, motorType, rightInverse);
@@ -48,6 +49,7 @@ public class TankDrive extends DriveTrain{
 	 * @param rightChannelA
 	 * @param rightChannelB
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public TankDrive(int[] leftMotorInputs,boolean leftInverse, int[] rightMotorInputs, boolean rightInverse, 
 			Class motorType, int gyroChannel, int leftChannelA, int leftChannelB, 
 			int rightChannelA, int rightChannelB, double wheelDistancePerPulse) {

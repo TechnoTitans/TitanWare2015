@@ -1,11 +1,11 @@
 package org.usfirst.frc.team1683.robot;
 
-import org.usfirst.frc.team1683.robot.drivetrain.Encoder;
 import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
 import org.usfirst.frc.team1683.robot.drivetrain.Talon;
 import org.usfirst.frc.team1683.robot.drivetrain.TalonSRX;
 import org.usfirst.frc.team1683.robot.drivetrain.TankDrive;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
+import org.usfirst.frc.team1683.robot.main.autonomous.Autonomous;
 import org.usfirst.frc.team1683.robot.main.autonomous.AutonomousSelector;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
@@ -34,7 +34,6 @@ public class TechnoTitan extends IterativeRobot {
 	PickerUpper pickerUpper;
 	AutonomousSelector autonomous;
 	PowerDistributionManager powerDistributionManager;
-	Encoder liftEncoder;
 	HDrive drive;
 	PressureSensor pressure;
 	Photogate photogate;
@@ -61,11 +60,14 @@ public class TechnoTitan extends IterativeRobot {
         		HWR.FRONT_CHANNEL_A, HWR.FRONT_CHANNEL_B,
         		HWR.LEFT_H_PISTON, HWR.RIGHT_H_PISTON, pressure, 
         		HWR.FRONT_H_MOTOR, HWR.BACK_H_MOTOR, Talon.class, HWR.DEPLOY_H_DRIVE, HWR.driveEncoderWDPP);
-        pickerUpper = new PickerUpper(Talon.class, false, new int[]{HWR.LEFT_LIFT_PISTON, HWR.RIGHT_LIFT_PISTON}, new int[]{HWR.BELT_MOTOR}, HWR.BELT_CHANNEL_A, HWR.BELT_CHANNEL_B, false, HWR.liftEncoderWDPP, pressure, photogate);
+        pickerUpper = new PickerUpper(Talon.class, HWR.BELT_INVERSE, new int[]{HWR.LEFT_LIFT_PISTON, HWR.RIGHT_LIFT_PISTON}, new int[]{HWR.BELT_MOTOR}, 
+        		HWR.BELT_CHANNEL_A, HWR.BELT_CHANNEL_B, HWR.beltEncoderReverse, HWR.liftEncoderWDPP, 
+        		pressure, photogate, drive);
     }
 
     public void autonomousInit(){
     	autonomous = new AutonomousSelector();
+    	Autonomous.errorWarning = true;
     }
     
     /**

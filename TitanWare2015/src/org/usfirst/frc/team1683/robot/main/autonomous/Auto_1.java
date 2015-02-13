@@ -25,6 +25,11 @@ public class Auto_1 extends Autonomous{
 			nextState = State.END_CASE;
 			break;
 		}
+		default:
+		{
+			defaultState();
+			break;
+		}
 		}
 		printState();
 		presentState = nextState;

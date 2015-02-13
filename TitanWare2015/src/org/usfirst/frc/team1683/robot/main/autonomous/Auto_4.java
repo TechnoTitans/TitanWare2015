@@ -1,82 +1,59 @@
 package org.usfirst.frc.team1683.robot.main.autonomous;
 
-import org.usfirst.frc.team1683.robot.main.autonomous.Autonomous.State;
-
 public class Auto_4 extends Autonomous{
 	/**
 	 * Picks up all the totes and drives all of them into the Auto Zone and the robot into the Auto Zone
 	 * @author Sneha
 	 */
 	public static void run(){
-		switch(presentState){
+		switch(presentState)
+		{
 		case INIT_CASE:
 		{
-			timer.start();
-			visionTimer.start();
-			nextState = State.LIFT_TOTE;
+			pickerUpper.goToZero();
+			nextState = State.ADJUST_FORWARD;
+			break;
+		}
+		case ADJUST_FORWARD:
+		{
+			driveTrain.goStraight(adjustDistance);
+			nextState = State.CENTER_TOTE;
+			break;
+		}
+		case CENTER_TOTE:
+		{
+			nextState = centerTote(State.DROP_TOTE);
+			break;
+		}
+		case DROP_TOTE:
+		{
+			pickerUpper.drop();
+			if (liftCount<2)
+				nextState = State.LIFT_TOTE;
+			else
+				nextState = State.DRIVE_FORWARD;
 			break;
 		}
 		case LIFT_TOTE:
-		{	
-			pickerUpper.runAuto(liftDistance);
-			nextState = State.DRIVE_SIDEWAYS;
+		{
+			if (liftCount<1)
+				pickerUpper.liftFirstTote();
+			else
+				pickerUpper.liftSecondTote();
+			liftCount++;
+			nextState = State.ADJUST_BACKWARD;
 			break;
 		}
-		case IS_TOTE_LIFTED:
-		{	
-			if (isToteLifted) {
-				nextState = State.DRIVE_SIDEWAYS;
-			}
-			else if (isToteLiftedCount >= 3) {
-				nextState = State.DRIVE_FORWARD;
-			}
-			else {
-				nextState = State.LIFT_TOTE;
-				isToteLiftedCount++;
-			}
-			
+		case ADJUST_BACKWARD:
+		{
+			driveTrain.goStraight(-adjustDistance);
+			nextState = State.DRIVE_SIDEWAYS;
 			break;
 		}
 		case DRIVE_SIDEWAYS:
 		{
 			driveTrain.goSideways(sideDistance);
-			nextState = State.CENTER_TOTE;
-			visionTimer.reset();
-			break;
-		}
-		case CENTER_TOTE:
-		{
-			nextState = centerTote(State.ADJUST_TOTE);
-			break;
-		}
-		case ADJUST_TOTE:
-		{
-			//how to adjust tote not quite clear, but it does need adjusting
-			driveTrain.goStraight(backDistance);
-			nextState = State.DROP_TOTE;
-			break;
-		}
-		case DROP_TOTE:
-		{
-			driveTrain.goStraight(adjustDistance);
-			pickerUpper.runAuto(dropDistance);
-			liftCount++;
-			if(liftCount <= 1) {
-				nextState = State.LIFT_POSITION;
-			}
-			else {
-				nextState = State.DRIVE_FORWARD;
-			}
-			break;
-		}
-		case LIFT_POSITION:
-		{	
-			//variables need to be added here. 
-			pickerUpper.runAuto(-6.0);
-			driveTrain.goStraight(-3.0);
-			pickerUpper.runAuto(-6.0);
-			driveTrain.goStraight(3.0);
-			nextState = State.LIFT_TOTE; 
+			nextState = State.ADJUST_FORWARD;
 			break;
 		}
 		case DRIVE_FORWARD:
@@ -87,12 +64,16 @@ public class Auto_4 extends Autonomous{
 		}
 		case END_CASE:
 		{
-			driveTrain.stop();
 			nextState = State.END_CASE;
+			break;
+		}
+		default:
+		{
+			defaultState();
 			break;
 		}
 		}
 		printState();
-		presentState = nextState; 
+		presentState = nextState;
 	}
 }

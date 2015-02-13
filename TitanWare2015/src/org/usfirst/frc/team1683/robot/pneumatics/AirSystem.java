@@ -2,7 +2,6 @@ package org.usfirst.frc.team1683.robot.pneumatics;
 
 import java.util.ArrayList;
 
-import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 
 import edu.wpi.first.wpilibj.Compressor;

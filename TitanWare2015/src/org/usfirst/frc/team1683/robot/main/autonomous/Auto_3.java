@@ -16,7 +16,7 @@ public class Auto_3 extends Autonomous{
 		}
 		case LIFT_BARREL:
 		{
-			pickerUpper.runAuto(liftDistance);
+			pickerUpper.liftBarrel();
 			nextState = State.DRIVE_SIDEWAYS;
 			break;
 		}
@@ -42,6 +42,11 @@ public class Auto_3 extends Autonomous{
 		{
 			driveTrain.stop();
 			nextState = State.END_CASE;
+			break;
+		}
+		default:
+		{
+			defaultState();
 			break;
 		}
 		}

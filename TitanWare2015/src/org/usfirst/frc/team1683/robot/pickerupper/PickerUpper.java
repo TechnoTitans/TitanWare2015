@@ -24,19 +24,21 @@ public class PickerUpper implements Runnable{
 	boolean isForward;
 	Photogate photogate;
 	double beltTargetPosition;
+	HDrive hDrive;
 
 	/**
-	 * Constructor
+	 * Constructor - one motor lift without encoder
 	 * @param pickerUpperChannels
 	 * @param motorType
 	 * @param inverseDirection
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public PickerUpper(int[] pickerUpperChannels, Class motorType, boolean inverseDirection){
 		this.motors = new MotorGroup("Picker Upper", pickerUpperChannels, motorType, inverseDirection);
 	}
 	
 	/**
-	 * Constructor
+	 * Constructor - one motor lift with encoder
 	 * @param motorType
 	 * @param inverseDirection
 	 * @param liftSolenoids
@@ -46,17 +48,21 @@ public class PickerUpper implements Runnable{
 	 * @param reverseDirection
 	 * @param wdpp
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public PickerUpper(Class motorType, boolean inverseDirection, int[] liftSolenoids, int[] pickerUpperChannels,
-			 int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp, PressureSensor pressure, Photogate photogate){
+			 int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp, 
+			 PressureSensor pressure, Photogate photogate, HDrive hDrive){
 		beltEncoder = new Encoder(beltChannelA, beltChannelB, reverseDirection, wdpp);
 		this.motors = new MotorGroup("Picker Upper", pickerUpperChannels, motorType, inverseDirection, 
 				beltEncoder);
 		this.pressure = pressure;
 		this.photogate = photogate;
 		pistons = new DualActionPistons(liftSolenoids, pressure);
+//		isForward = true;
+//		pistons = new DoubleActionSolenoid(liftSolenoids, pressure);
 	}
 	/**
-	 * Constructor
+	 * Constructor - two motor lift with encoder
 	 * @param motorType
 	 * @param leftInverseDirection - reverseDirection for left motor
 	 * @param rightInverseDirection - reverseDirection for right motor
@@ -68,11 +74,10 @@ public class PickerUpper implements Runnable{
 	 * @param reverseDirection - reverseDirection for encoder
 	 * @param wdpp - wheel distance per pulse for lift encoder
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public PickerUpper(Class motorType, boolean leftInverseDirection, boolean rightInverseDirection,
 			 int[] liftSolenoids, int leftMotor, int rightMotor,
 			 int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp, Photogate photogate, PressureSensor pressure){
-//		this.motors = new MotorGroup(pickerUpperChannels, talonSRX, inverseDirection, 
-//				encoder);
 		this.pressure = pressure;
 		beltEncoder = new Encoder(beltChannelA, beltChannelB, reverseDirection, wdpp);
 		pistons = new DualActionPistons(liftSolenoids, pressure);
@@ -82,23 +87,29 @@ public class PickerUpper implements Runnable{
 		uprightPickerUpper();
 	}
 
-	public void liftMode(int joystickNubmer) {
+	public void liftMode(int joystickNumber) {
 		motors.set(DriverStation.auxStick.getRawAxis(DriverStation.YAxis));
-		int button = HWR.PICKER_UPPER;
-		if (DriverStation.antiBounce(joystickNubmer, button)) {
+		if (DriverStation.antiBounce(joystickNumber, HWR.PICKER_UPPER)) {
 			if (isForward){
 				angledPickerUpper();
 			}else{
 				uprightPickerUpper();
 			}
 		}
-		int calibrateButton = HWR.CALIBRATE_BELT;
-		if (DriverStation.antiBounce(joystickNubmer, calibrateButton)){
+		if (DriverStation.antiBounce(joystickNumber, HWR.CALIBRATE_BELT)){
 			calibrateToZero();
 		}
-		if (DriverStation.antiBounce(joystickNubmer, HWR.GO_TO_HOME)){
+		if (DriverStation.antiBounce(joystickNumber, HWR.GO_TO_HOME)){
 			goToZero();
 		}
+		if (DriverStation.antiBounce(joystickNumber, HWR.LIFT_FIRST_TOTE)){
+			liftFirstTote();
+		}
+		if (DriverStation.antiBounce(joystickNumber, HWR.LIFT_SECOND_TOTE)){
+			liftSecondTote();
+		}
+		if (beltEncoder.getDistance()>HWR.MOVE_MAX)
+			motors.moveDistance(HWR.MOVE_MAX-beltEncoder.getDistance());
 	}
 
 
@@ -142,21 +153,9 @@ public class PickerUpper implements Runnable{
 		while (beltEncoder.getDistance()<0){
 			motors.set(AUTO_LIFT_SPEED);
 		}
-	}
-	
-	public void runAuto (double liftDistance){
-		// Need to find getDisplacement parameter value (DISTANCE_PER_PULSE) for belt motor.
-	   double speed;
-	   if (liftDistance >= 0.0)
-		   speed = AUTO_LIFT_SPEED;
-	   else
-		   speed = -AUTO_LIFT_SPEED;
-	   
-		if (Math.abs(beltEncoder.getDisplacement(47.0/700.0)) <= Math.abs(liftDistance))
-			motors.set(speed);
-		else
-			motors.set(0);
-		
+//		while (!photogate.get()){
+//			motors.set(-AUTO_LIFT_SPEED);
+//		}
 	}
 	
 	public void liftHeight(double changeInHeight)
@@ -164,36 +163,41 @@ public class PickerUpper implements Runnable{
 		motors.moveDistance(changeInHeight);
 	}
 	
-	//targetHeight and height should be in meters
-	//assumes lift movement corresponds directly to height change
-	public void liftToHeight(double targetHeight, HDrive hDrive)
-	{
-		setToZero();
-		double height = HWR.ROBOT_HEIGHT + HWR.DISTANCE_TO_INDEX;
-		if (hDrive.isDeployed())
-			height+=HWR.H_DRIVE_HEIGHT;
-		motors.moveDistance(targetHeight-height);
+	public void liftToHeight(double targetHeight){
+		DriverStation.sendData("Target Height", targetHeight);
+		double b = HWR.B1 +getHeightFromHDrive();
+		beltTargetPosition = (targetHeight-b)/HWR.SLOPE;
+		motors.moveDistance(beltTargetPosition - beltEncoder.getDisplacement(HWR.liftEncoderWDPP));
+		DriverStation.sendData("Belt Position", beltTargetPosition);
 	}
 	
-	//accomodates for the error between lift movement and height change
-	public void liftToHeight2(double targetHeight, HDrive hDrive){
-		DriverStation.sendData("Target Height", targetHeight);
+	public void liftFirstTote(){
+		liftToHeight(HWR.SINGLE_TOTE_HEIGHT+getHeightFromHDrive());
+	}
+	
+	public void liftSecondTote(){
+		liftToHeight(HWR.DOUBLE_TOTE_HEIGHT+getHeightFromHDrive());
+	}
+	
+	public void liftBarrel(){
+		liftToHeight(HWR.BARREL_HEIGHT+getHeightFromHDrive());
+	}
+	
+	public void drop(){
 		goToZero();
-		double b;
-		if (hDrive.isDeployed()){
-			b = HWR.B2;
-		}else{
-			b = HWR.B1;
-		}
-		beltTargetPosition = (targetHeight-b)/HWR.SLOPE;
-		motors.moveDistance(beltTargetPosition);
-		DriverStation.sendData("Belt Position", beltTargetPosition);
 	}
 	
 	public void setToZero(){
 		while (!photogate.get()){
 			motors.set(-AUTO_LIFT_SPEED);
 		}
+	}
+	
+	public double getHeightFromHDrive(){
+		if (hDrive.isDeployed())
+			return HWR.H_DRIVE_HEIGHT;
+		else
+			return 0;
 	}
 	
 	private class DualActionPistons{
@@ -206,9 +210,11 @@ public class PickerUpper implements Runnable{
 			isForward = false;
 		}
 		
+		@SuppressWarnings("unused")
 		public AirSystem getFrontAirSystem(){
 			return frontAirSystem;
 		}
+		@SuppressWarnings("unused")
 		public AirSystem getBackAirSystem(){
 			return backAirSystem;
 		}
@@ -222,10 +228,6 @@ public class PickerUpper implements Runnable{
 				backAirSystem.retract();
 			}
 		}
-		
-		
-		
-		
 	}
 	
 	

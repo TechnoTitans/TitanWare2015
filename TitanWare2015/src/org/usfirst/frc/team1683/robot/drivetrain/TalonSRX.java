@@ -85,7 +85,7 @@ public class TalonSRX extends CANTalon implements Motor{
 			while (encoder.getDistanceMeters() < distanceInMeters){
 				talon.set(mediumSpeed);
 			}
-			talon.stopMotor();
+			talon.set(0);
 			encoder.reset();
 		}
 
