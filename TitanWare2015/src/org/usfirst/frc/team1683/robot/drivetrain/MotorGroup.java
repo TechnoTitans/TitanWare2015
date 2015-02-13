@@ -7,7 +7,6 @@ import org.usfirst.frc.team1683.robot.TechnoTitan;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * 
@@ -15,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class MotorGroup implements Runnable{
+	String groupName;
 	List<Motor> motors;
 	Encoder encoder;
 	/**
@@ -23,7 +23,8 @@ public class MotorGroup implements Runnable{
 	 * @param motorType
 	 * @param inverseDirection
 	 */
-	public MotorGroup(int[] channelNumbers, Class<Motor> motorType, boolean inverseDirection)  {
+	public MotorGroup(String groupName, int[] channelNumbers, Class<Motor> motorType, boolean inverseDirection)  {
+		this.groupName = groupName;
 		motors = new ArrayList<Motor>();
 		for (int i = 0; i < channelNumbers.length; i++) {
 			int j = channelNumbers[i];
@@ -45,8 +46,9 @@ public class MotorGroup implements Runnable{
 	 * @param encoder
 	 */
 	
-	public MotorGroup(int[] channelNumbers, Class<Motor> motorType, boolean inverseDirection, Encoder encoder)
+	public MotorGroup(String groupName, int[] channelNumbers, Class<Motor> motorType, boolean inverseDirection, Encoder encoder)
 	{
+		this.groupName = groupName;
 		motors = new ArrayList<Motor>();
 		for (int i = 0; i < channelNumbers.length; i++) {
 			int j = channelNumbers[i];
@@ -57,6 +59,9 @@ public class MotorGroup implements Runnable{
 			}
 		}
 		this.encoder = encoder;
+		if (TechnoTitan.POSTENCODERVALUES){
+			new Thread(this, "EncoderPost").start();
+		}
 	}
 	
 	/**
@@ -99,13 +104,19 @@ public class MotorGroup implements Runnable{
 	public void run() {
 		while (true){
 			Timer.delay(0.25);
+			if (encoder != null){
+				if (TechnoTitan.POSTENCODERVALUES){
+					System.out.println(groupName + encoder.getDisplacement(encoder.getDistancePerPulse()));
+				}
+				DriverStation.sendData(groupName , encoder.getDisplacement(encoder.getDistancePerPulse()));
+			}
 			for(Motor motor: motors){
 				if (motor.hasEncoder()){
 					String name = "Encoder for motor "+ motor.getChannel();
 					if (TechnoTitan.debug){
-						System.out.println(name + motor.getEncoder().getDistance());
+						System.out.println(name + motor.getEncoder().getDisplacement(encoder.getDistancePerPulse()));
 					}
-					DriverStation.sendData(name , motor.getEncoder().getDistance());
+					DriverStation.sendData(name , motor.getEncoder().getDisplacement(encoder.getDistancePerPulse()));
 				}
 			}
 		}

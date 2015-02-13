@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  * directory.
  */
 public class TechnoTitan extends IterativeRobot {
-    public static boolean debug = true;
+    public static boolean debug = false;
     public static final boolean POSTENCODERVALUES = true;
 
     
@@ -56,10 +56,12 @@ public class TechnoTitan extends IterativeRobot {
         		new int[]{HWR.BACK_RIGHT_MOTOR,HWR.FRONT_RIGHT_MOTOR}, false, 
         		TalonSRX.class, HWR.GYRO, 
         		HWR.LEFT_CHANNEL_A, HWR.LEFT_CHANNEL_B, 
-        		HWR.RIGHT_CHANNEL_A, HWR.RIGHT_CHANNEL_B, 
+        		HWR.RIGHT_CHANNEL_A, HWR.RIGHT_CHANNEL_B,
+        		HWR.BACK_CHANNEL_A, HWR.BACK_CHANNEL_B,
+        		HWR.FRONT_CHANNEL_A, HWR.FRONT_CHANNEL_B,
         		HWR.LEFT_H_PISTON, HWR.RIGHT_H_PISTON, pressure, 
         		HWR.FRONT_H_MOTOR, HWR.BACK_H_MOTOR, Talon.class, HWR.DEPLOY_H_DRIVE, HWR.driveEncoderWDPP);
-        pickerUpper = new PickerUpper(Talon.class, false, new int[]{HWR.LEFT_LIFT_PISTON, HWR.RIGHT_LIFT_PISTON}, new int[]{HWR.BELT_MOTOR}, HWR.BELT_CHANNEL_A, HWR.BELT_CHANNEL_B, false, 6, pressure, photogate);
+        pickerUpper = new PickerUpper(Talon.class, false, new int[]{HWR.LEFT_LIFT_PISTON, HWR.RIGHT_LIFT_PISTON}, new int[]{HWR.BELT_MOTOR}, HWR.BELT_CHANNEL_A, HWR.BELT_CHANNEL_B, false, HWR.liftEncoderWDPP, pressure, photogate);
     }
 
     public void autonomousInit(){
@@ -78,7 +80,6 @@ public class TechnoTitan extends IterativeRobot {
      */
     public void teleopPeriodic() {
    //     tankDrive.driveMode(DriverStation.leftStick, DriverStation.rightStick);
-        pickerUpper.run();
         drive.driveMode(DriverStation.leftStick, DriverStation.rightStick);
         pickerUpper.liftMode(HWR.AUX_JOYSTICK);
     }
@@ -90,7 +91,7 @@ public class TechnoTitan extends IterativeRobot {
     	
     }
     public void testPeriodic() {
-
+    	
     }
 
     

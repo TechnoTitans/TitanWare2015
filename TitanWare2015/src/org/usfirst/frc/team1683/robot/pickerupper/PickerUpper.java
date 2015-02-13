@@ -10,10 +10,9 @@ import org.usfirst.frc.team1683.robot.sensors.Photogate;
 import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.Joystick;
 
 
-public class PickerUpper {
+public class PickerUpper implements Runnable{
 	MotorGroup motors;
 	DualActionPistons pistons;
 	MotorGroup leftLiftMotor;
@@ -24,6 +23,7 @@ public class PickerUpper {
 	PressureSensor pressure;
 	boolean isForward;
 	Photogate photogate;
+	double beltTargetPosition;
 
 	/**
 	 * Constructor
@@ -32,7 +32,7 @@ public class PickerUpper {
 	 * @param inverseDirection
 	 */
 	public PickerUpper(int[] pickerUpperChannels, Class motorType, boolean inverseDirection){
-		this.motors = new MotorGroup(pickerUpperChannels, motorType, inverseDirection);
+		this.motors = new MotorGroup("Picker Upper", pickerUpperChannels, motorType, inverseDirection);
 	}
 	
 	/**
@@ -48,9 +48,9 @@ public class PickerUpper {
 	 */
 	public PickerUpper(Class motorType, boolean inverseDirection, int[] liftSolenoids, int[] pickerUpperChannels,
 			 int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp, PressureSensor pressure, Photogate photogate){
-		this.motors = new MotorGroup(pickerUpperChannels, motorType, inverseDirection, 
-				beltEncoder);
 		beltEncoder = new Encoder(beltChannelA, beltChannelB, reverseDirection, wdpp);
+		this.motors = new MotorGroup("Picker Upper", pickerUpperChannels, motorType, inverseDirection, 
+				beltEncoder);
 		this.pressure = pressure;
 		this.photogate = photogate;
 		pistons = new DualActionPistons(liftSolenoids, pressure);
@@ -76,13 +76,14 @@ public class PickerUpper {
 		this.pressure = pressure;
 		beltEncoder = new Encoder(beltChannelA, beltChannelB, reverseDirection, wdpp);
 		pistons = new DualActionPistons(liftSolenoids, pressure);
-		leftLiftMotor = new MotorGroup(new int[]{leftMotor}, motorType , leftInverseDirection, beltEncoder);
-		rightLiftMotor = new MotorGroup(new int[]{rightMotor}, motorType, rightInverseDirection, beltEncoder);
+		leftLiftMotor = new MotorGroup("Left Lift Motor", new int[]{leftMotor}, motorType , leftInverseDirection, beltEncoder);
+		rightLiftMotor = new MotorGroup("Right Lift Motor",new int[]{rightMotor}, motorType, rightInverseDirection, beltEncoder);
 		this.photogate = photogate;
 		uprightPickerUpper();
 	}
 
 	public void liftMode(int joystickNubmer) {
+		motors.set(DriverStation.auxStick.getRawAxis(DriverStation.YAxis));
 		int button = HWR.PICKER_UPPER;
 		if (DriverStation.antiBounce(joystickNubmer, button)) {
 			if (isForward){
@@ -90,6 +91,13 @@ public class PickerUpper {
 			}else{
 				uprightPickerUpper();
 			}
+		}
+		int calibrateButton = HWR.CALIBRATE_BELT;
+		if (DriverStation.antiBounce(joystickNubmer, calibrateButton)){
+			calibrateToZero();
+		}
+		if (DriverStation.antiBounce(joystickNubmer, HWR.GO_TO_HOME)){
+			goToZero();
 		}
 	}
 
@@ -113,13 +121,27 @@ public class PickerUpper {
 			isForward = false;
 		}
 	}
+	
+	public void calibrateToZero(){
+		beltEncoder.reset();
+	}
+	
+	public void goToZero(){
+		new Thread(this).start();
+	}
 
 
 	/**
-	 * runs the motors for the pickerupper
+	 * Goes To Position
 	 */
+	@Override
 	public void run(){
-		motors.set(DriverStation.auxStick.getRawAxis(DriverStation.YAxis));
+		while(beltEncoder.getDistance() > 0) {
+			motors.set(-AUTO_LIFT_SPEED);
+		}
+		while (beltEncoder.getDistance()<0){
+			motors.set(AUTO_LIFT_SPEED);
+		}
 	}
 	
 	public void runAuto (double liftDistance){
@@ -154,15 +176,18 @@ public class PickerUpper {
 	}
 	
 	//accomodates for the error between lift movement and height change
-	public void liftToHeight2(double targetHeight, HDrive hDrive)
-	{
-		setToZero();
+	public void liftToHeight2(double targetHeight, HDrive hDrive){
+		DriverStation.sendData("Target Height", targetHeight);
+		goToZero();
 		double b;
-		if (hDrive.isDeployed())
+		if (hDrive.isDeployed()){
 			b = HWR.B2;
-		else
+		}else{
 			b = HWR.B1;
-		motors.moveDistance((targetHeight-b)/HWR.SLOPE);
+		}
+		beltTargetPosition = (targetHeight-b)/HWR.SLOPE;
+		motors.moveDistance(beltTargetPosition);
+		DriverStation.sendData("Belt Position", beltTargetPosition);
 	}
 	
 	public void setToZero(){
@@ -197,6 +222,8 @@ public class PickerUpper {
 				backAirSystem.retract();
 			}
 		}
+		
+		
 		
 		
 	}

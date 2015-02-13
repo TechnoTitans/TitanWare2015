@@ -36,7 +36,9 @@ public class HDrive extends TankDrive{
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public HDrive(int[] leftMotorInputs,boolean leftInverse, int[] rightMotorInputs, boolean rightInverse, 
-			Class motorType, int gyroChannel, int leftChannelA, int leftChannelB, int rightChannelA, int rightChannelB, 
+			Class motorType, int gyroChannel, int leftChannelA, int leftChannelB, int rightChannelA, int rightChannelB,
+			int backChannelA, int backChannelB,
+			int frontChannelA, int frontChannelB,
 			int rightPiston, int leftPiston, PressureSensor pressure,
 			int frontMotor, int backMotor, Class hMotorType, 
 			int triggerButton, double wheelDistancePerPulse) {
@@ -44,8 +46,8 @@ public class HDrive extends TankDrive{
 				motorType, gyroChannel, leftChannelA, leftChannelB, rightChannelA, rightChannelB, wheelDistancePerPulse);
 		int[] channelNumbers = {frontMotor, backMotor};
 		pistons = new DrivePistons(new int[]{rightPiston, leftPiston}, pressure);
-		hBackMotors = new MotorGroup(new int[] {backMotor}, hMotorType, false);
-		hFrontMotors= new MotorGroup(new int[]{frontMotor},hMotorType, true);
+		hBackMotors = new MotorGroup("HBackMotors", new int[] {backMotor}, hMotorType, false, new Encoder(backChannelA, backChannelB, true, wheelDistancePerPulse));
+		hFrontMotors= new MotorGroup("HFrontMotors", new int[]{frontMotor},hMotorType, true, new Encoder(frontChannelA, frontChannelB, true, wheelDistancePerPulse));
 		this.triggerButton = triggerButton;
 	}
 	

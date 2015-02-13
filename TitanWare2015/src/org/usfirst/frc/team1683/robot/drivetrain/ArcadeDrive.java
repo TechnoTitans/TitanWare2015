@@ -9,11 +9,14 @@ public class ArcadeDrive extends HDrive{
 	
 	public ArcadeDrive(int[] leftMotorInputs,boolean leftInverse, int[] rightMotorInputs, boolean rightInverse, 
 			Class<Motor> motorType, int gyroChannel, int leftChannelA, int leftChannelB, int rightChannelA, int rightChannelB, 
+			int backChannelA, int backChannelB,
+			int frontChannelA, int frontChannelB,
 			int rightPiston, int leftPiston, int rightMotor, int leftMotor, 
 			Class<Motor> hMotorType, int triggerButton, double wheelDistancePerPulse, PressureSensor pressure){
 		super(leftMotorInputs, leftInverse, rightMotorInputs, rightInverse, 
 				motorType, gyroChannel, leftChannelA, leftChannelB, rightChannelA, rightChannelB, 
-				rightPiston, leftPiston,pressure, rightMotor, leftMotor, hMotorType, triggerButton, wheelDistancePerPulse);
+				 backChannelA, backChannelB,
+				 frontChannelA,  frontChannelB,rightPiston, leftPiston,pressure, rightMotor, leftMotor, hMotorType, triggerButton, wheelDistancePerPulse);
 	}
 	
 	public void driveMode(Joystick joystick){

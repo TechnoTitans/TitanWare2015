@@ -27,7 +27,7 @@ public class Encoder extends edu.wpi.first.wpilibj.Encoder{
      */
     public double getDistance () {
         this.setDistancePerPulse(wheelDistancePerPulse); // Need to figure out DISTANCE_PER_PULSE
-        return Math.abs(super.getDistance()); 
+        return super.getDistance(); 
     }
     /**
      * Gets displacement from encoder in inches.
@@ -53,5 +53,10 @@ public class Encoder extends edu.wpi.first.wpilibj.Encoder{
     public double getDistanceMeters(){
         return getDistanceFt()*0.3048;
     }
+    
+    public double getDistancePerPulse(){
+    	return wheelDistancePerPulse;
+    }
+    
        
 }

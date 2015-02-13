@@ -30,8 +30,8 @@ public class TankDrive extends DriveTrain{
 	 * @param gyroChannel
 	 */
 	public TankDrive(int[] leftMotorInputs,boolean leftInverse, int[] rightMotorInputs, boolean rightInverse, Class motorType, int gyroChannel) {
-		left = new MotorGroup(leftMotorInputs, motorType, leftInverse);
-		right = new MotorGroup(rightMotorInputs, motorType, rightInverse);
+		left = new MotorGroup("Left Drive",leftMotorInputs, motorType, leftInverse);
+		right = new MotorGroup("Right Drive",rightMotorInputs, motorType, rightInverse);
 		gyro = new Gyro(gyroChannel);
 		startAngle = gyro.getAngle();
 	}
@@ -53,8 +53,8 @@ public class TankDrive extends DriveTrain{
 			int rightChannelA, int rightChannelB, double wheelDistancePerPulse) {
 		leftEncoder = new Encoder(leftChannelA, leftChannelB, leftInverse, wheelDistancePerPulse);
 		rightEncoder = new Encoder(rightChannelA, rightChannelB, rightInverse, wheelDistancePerPulse);
-		left = new MotorGroup(leftMotorInputs, motorType, leftInverse, leftEncoder);
-		right = new MotorGroup(rightMotorInputs, motorType, rightInverse, rightEncoder);
+		left = new MotorGroup("Left Drive",leftMotorInputs, motorType, leftInverse, leftEncoder);
+		right = new MotorGroup("Right Drive",rightMotorInputs, motorType, rightInverse, rightEncoder);
 		gyro = new Gyro(gyroChannel);
 		startAngle = gyro.getAngle();
 	}
