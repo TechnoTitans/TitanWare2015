@@ -44,7 +44,9 @@ public abstract class Autonomous {
 		TURN,
 		GO_FORWARD,
 		MOVE_FORWARD,
-		END_CASE		
+		END_CASE,
+		PRINT_ERROR,
+		RUN_OTHER_AUTO
 	}
 	
 	
