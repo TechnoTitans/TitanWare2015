@@ -46,7 +46,7 @@ public class HWR {
 
 
 	//Encoder Wheel Distance Per Pulse
-	public static double driveEncoderWDPP 			= 47/700;
+	public static double driveEncoderWDPP 			= 1;
 	public static double liftEncoderWDPP 			= 14.25/757.75;
 
 	//Encoder Reverse Directions
