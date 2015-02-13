@@ -168,8 +168,10 @@ public class PickerUpper implements Runnable{
 		DriverStation.sendData("Target Height", targetHeight);
 		double b = HWR.B1 +getHeightFromHDrive();
 		beltTargetPosition = (targetHeight-b)/HWR.SLOPE;
-		motors.moveDistance(beltTargetPosition - beltEncoder.getDisplacement(HWR.liftEncoderWDPP));
-		DriverStation.sendData("Belt Position", beltTargetPosition);
+		DriverStation.sendData("Belt Target Position", beltTargetPosition);
+		double beltMove = beltTargetPosition - beltEncoder.getDisplacement(HWR.liftEncoderWDPP);
+		motors.moveDistance(beltMove);
+		DriverStation.sendData("Belt Position", beltMove);
 	}
 	
 	public void liftFirstTote(){
