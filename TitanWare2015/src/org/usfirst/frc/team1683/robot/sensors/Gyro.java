@@ -28,7 +28,7 @@ public class Gyro extends edu.wpi.first.wpilibj.Gyro implements Sensor {
 		return channel.getAverageVoltage();
 	}
 	public double getDirection(){
-		return super.getAngle()%360;
+		return Math.abs(super.getAngle()%360);
 	}
 		
     @Override
