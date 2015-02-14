@@ -1,7 +1,5 @@
 package org.usfirst.frc.team1683.robot.main.autonomous;
 
-import org.usfirst.frc.team1683.robot.main.autonomous.Autonomous.State;
-
 public class Auto_4 extends Autonomous{
 	/**
 	 * Picks up all the totes and drives all of them into the Auto Zone and the robot into the Auto Zone
@@ -18,7 +16,7 @@ public class Auto_4 extends Autonomous{
 		}
 		case ADJUST_FORWARD:
 		{
-			driveTrain.goStraight(adjustDistance);
+			driveTrain.goForward(adjustDistance);
 			nextState = State.CENTER_TOTE;
 			break;
 		}
@@ -48,19 +46,19 @@ public class Auto_4 extends Autonomous{
 		}
 		case ADJUST_BACKWARD:
 		{
-			driveTrain.goStraight(-adjustDistance);
+			driveTrain.goForward(-adjustDistance);
 			nextState = State.DRIVE_SIDEWAYS;
 			break;
 		}
 		case DRIVE_SIDEWAYS:
 		{
-			driveTrain.goSideways(sideDistance);
+			driveTrain.moveSideways(sideDistance);
 			nextState = State.ADJUST_FORWARD;
 			break;
 		}
 		case DRIVE_FORWARD:
 		{
-			driveTrain.goStraight(driveDistance);
+			driveTrain.goForward(driveDistance);
 			nextState = State.END_CASE;
 			break;
 		}

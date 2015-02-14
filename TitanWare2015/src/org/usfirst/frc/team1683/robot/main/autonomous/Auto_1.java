@@ -1,8 +1,5 @@
 package org.usfirst.frc.team1683.robot.main.autonomous;
 
-import org.usfirst.frc.team1683.robot.main.autonomous.Autonomous.State;
-
-
 public class Auto_1 extends Autonomous{
 	/**
 	 * Pushes tote forward
@@ -17,7 +14,7 @@ public class Auto_1 extends Autonomous{
 		}
 		case DRIVE_FORWARD:
 		{
-			driveTrain.goStraight(driveDistance);
+			driveTrain.goForward(driveDistance);
 			nextState = State.END_CASE;
 			break;
 		}

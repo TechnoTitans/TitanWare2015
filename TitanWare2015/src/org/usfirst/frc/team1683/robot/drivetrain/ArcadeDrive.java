@@ -7,16 +7,21 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class ArcadeDrive extends HDrive{
 	
+	@SuppressWarnings("rawtypes")
 	public ArcadeDrive(int[] leftMotorInputs,boolean leftInverse, int[] rightMotorInputs, boolean rightInverse, 
-			Class<Motor> motorType, int gyroChannel, int leftChannelA, int leftChannelB, int rightChannelA, int rightChannelB, 
+			Class motorType, int gyroChannel, int leftChannelA, int leftChannelB, int rightChannelA, int rightChannelB,
 			int backChannelA, int backChannelB,
 			int frontChannelA, int frontChannelB,
-			int rightPiston, int leftPiston, int rightMotor, int leftMotor, 
-			Class<Motor> hMotorType, int triggerButton, double wheelDistancePerPulse, PressureSensor pressure){
-		super(leftMotorInputs, leftInverse, rightMotorInputs, rightInverse, 
-				motorType, gyroChannel, leftChannelA, leftChannelB, rightChannelA, rightChannelB, 
-				 backChannelA, backChannelB,
-				 frontChannelA,  frontChannelB,rightPiston, leftPiston,pressure, rightMotor, leftMotor, hMotorType, triggerButton, wheelDistancePerPulse);
+			int rightPiston, int leftPiston, PressureSensor pressure,
+			int frontMotor, int backMotor, Class hMotorType, 
+			int triggerButton, double driveWDPP, double HdriveWDPP, boolean leftReverseDirection, boolean rightReverseDirection,
+			boolean backReverseDirection, boolean frontReverseDirection){
+		super(leftMotorInputs, leftInverse, rightMotorInputs, rightInverse,
+				motorType, gyroChannel, leftChannelA, leftChannelB, rightChannelA, rightChannelB,
+				backChannelA, backChannelB, frontChannelA, frontChannelB,
+				rightPiston, leftPiston, pressure, frontMotor, backMotor, hMotorType,
+				triggerButton, driveWDPP, HdriveWDPP, leftReverseDirection, rightReverseDirection,
+				backReverseDirection, frontReverseDirection);
 	}
 	
 	public void driveMode(Joystick joystick){

@@ -90,7 +90,7 @@ public class PickerUpper implements Runnable{
 
 	public void liftMode(int joystickNumber) {
 		motors.set(DriverStation.auxStick.getRawAxis(DriverStation.YAxis));
-		if (DriverStation.antiBounce(joystickNumber, HWR.PICKER_UPPER)) {
+		if (DriverStation.antiBounce(joystickNumber, HWR.TOGGLE_BELT_PISTON)) {
 			if (isForward){
 				angledPickerUpper();
 			}else{
@@ -159,9 +159,14 @@ public class PickerUpper implements Runnable{
 //		}
 	}
 	
+	/**
+	 * 
+	 * @param changeInHeight - measured in inches
+	 */
 	public void liftHeight(double changeInHeight)
 	{
-		motors.moveDistance(changeInHeight);
+		double changeInBeltPosition = changeInHeight/HWR.SLOPE;
+		motors.moveDistanceInches(changeInBeltPosition);
 	}
 	
 	public void liftToHeight(double targetHeight){
@@ -170,9 +175,21 @@ public class PickerUpper implements Runnable{
 		beltTargetPosition = (targetHeight-b)/HWR.SLOPE;
 		DriverStation.sendData("Belt Target Position", beltTargetPosition);
 		double beltMove = beltTargetPosition - beltEncoder.getDisplacement(HWR.liftEncoderWDPP);
-		motors.moveDistance(beltMove);
-		DriverStation.sendData("Belt Position", beltMove);
+		motors.moveDistanceInches(beltMove);
+		DriverStation.sendData("Belt Move", beltMove);
 	}
+	
+	/*
+	public void liftToHeight(double targetHeight){
+		DriverStation.sendData("targetHeight", targetHeight);
+		double currentHeight = getCurrentHeight();
+		DriverStation.sendData("currentHeight", currentHeight);
+		double changeInHeight = targetHeight-currentHeight;
+		double changeInBeltPosition = changeInHeight/HWR.SLOPE;
+		DriverStation.sendData("changeInBeltPosition", changeInBeltPosition);
+		motors.moveDistanceInches(changeInBeltPosition);
+	}
+	*/
 	
 	public void liftFirstTote(){
 		liftToHeight(HWR.SINGLE_TOTE_HEIGHT+getHeightFromHDrive());
@@ -209,6 +226,11 @@ public class PickerUpper implements Runnable{
 			return HWR.H_DRIVE_HEIGHT;
 		else
 			return 0;
+	}
+	
+	public double getCurrentHeight(){
+		double b = getHeightFromHDrive() + HWR.ROBOT_HEIGHT + HWR.DISTANCE_TO_INDEX*HWR.SLOPE;
+		return HWR.SLOPE*beltEncoder.getDisplacement(beltEncoder.getDistancePerPulse())+b;
 	}
 	
 	private class DualActionPistons{

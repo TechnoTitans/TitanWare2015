@@ -22,7 +22,7 @@ public class Auto_3 extends Autonomous{
 		}
 		case DRIVE_SIDEWAYS:
 		{
-			driveTrain.goSideways(sideDistance);
+			driveTrain.moveSideways(sideDistance);
 			nextState = State.CENTER_TOTE;
 			visionTimer.reset();
 			break;
@@ -34,7 +34,7 @@ public class Auto_3 extends Autonomous{
 		}
 		case DRIVE_FORWARD:
 		{
-			driveTrain.goStraight(driveDistance);
+			driveTrain.goForward(driveDistance);
 			nextState = State.END_CASE;
 			break;
 		}

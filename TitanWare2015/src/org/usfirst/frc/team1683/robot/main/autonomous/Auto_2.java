@@ -1,7 +1,5 @@
 package org.usfirst.frc.team1683.robot.main.autonomous;
 
-import org.usfirst.frc.team1683.robot.main.autonomous.Autonomous.State;
-
 public class Auto_2 extends Autonomous{
 	/**
 	 * @author Seung-Seok Lee
@@ -19,7 +17,7 @@ public class Auto_2 extends Autonomous{
 		case DRIVE_FORWARD:
 		{
 			driveCount++;
-			driveTrain.goStraight(driveDistance);
+			driveTrain.goForward(driveDistance);
 			if (driveCount<3){
 				nextState = State.DRIVE_BACKWARD;
 				break;
@@ -31,13 +29,13 @@ public class Auto_2 extends Autonomous{
 		}
 		case DRIVE_BACKWARD:
 		{
-			driveTrain.goStraight(-driveDistance);
+			driveTrain.goForward(-driveDistance);
 			nextState = State.DRIVE_SIDEWAYS;
 			break;
 		}
 		case DRIVE_SIDEWAYS:
 		{
-			driveTrain.goSideways(sideDistance);			
+			driveTrain.moveSideways(sideDistance);			
 			nextState = State.CENTER_TOTE;
 			visionTimer.reset();
 			break;

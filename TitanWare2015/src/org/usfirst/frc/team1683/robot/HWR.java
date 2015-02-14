@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1683.robot;
 
+import org.usfirst.frc.team1683.robot.main.DriverStation;
+
 public class HWR {
 
 	// Joysticks
@@ -22,7 +24,7 @@ public class HWR {
 	public static final int BELT_MOTOR				= HWP.PWM_1;
 
 	//Motor Inverse Directions
-	public static final boolean LEFT_INVERSE		= false;
+	public static final boolean LEFT_INVERSE		= true;
 	public static final boolean RIGHT_INVERSE		= false;
 	public static final boolean BELT_INVERSE		= false;
 	public static final boolean LEFT_H_INVERSE		= false;
@@ -48,12 +50,13 @@ public class HWR {
 	//Encoder Wheel Distance Per Pulse
 	public static final double driveEncoderWDPP 			= 18.85/2040;
 	public static final double liftEncoderWDPP 				= 14.25/757.75;
+	public static final double hDriveEncoderWDPP			= 1.0;
 	
 	//Encoder Reverse Directions
-	public static final boolean leftDriveEncoderReverse 	= false;
+	public static final boolean leftDriveEncoderReverse 	= true;
 	public static final boolean rightDriveEncoderReverse 	= false;
-	public static final boolean leftHEncoderReverse 		= false;
-	public static final boolean rightHEncoderReverse 		= false;
+	public static final boolean backHEncoderReverse 		= false;
+	public static final boolean frontHEncoderReverse 		= false;
 	public static final boolean beltEncoderReverse			= false;
 
 	//Pneumatics
@@ -92,7 +95,7 @@ public class HWR {
 
 	//Buttons
 	public static final int DEPLOY_H_DRIVE			= 1;
-	public static final int PICKER_UPPER			= 1;
+	public static final int TOGGLE_BELT_PISTON		= 1;
 	public static final int CALIBRATE_BELT			= 7;
 	public static final int GO_TO_HOME				= 9;
 	public static final int LIFT_FIRST_TOTE			= 10;

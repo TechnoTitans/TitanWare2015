@@ -45,6 +45,11 @@ public class Talon extends edu.wpi.first.wpilibj.Talon implements Motor{
 			thread.start();
 		}
 	}
+	
+	public void moveDistanceInches(double distanceInInches){
+		double distanceInMeters = distanceInInches * .0254;
+		moveDistance(distanceInMeters);
+	}
 	/**
 	 * sets the speed
 	 */

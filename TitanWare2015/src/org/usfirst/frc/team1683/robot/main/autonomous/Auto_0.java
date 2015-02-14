@@ -1,13 +1,11 @@
 package org.usfirst.frc.team1683.robot.main.autonomous;
 
-import org.usfirst.frc.team1683.robot.main.autonomous.Autonomous.State;
-
 public class Auto_0 extends Autonomous{
 
-	
+	private static boolean error = true; 
 	
 	public static void run (){
-		boolean error = true; 
+		
 		switch(presentState){
 		case INIT_CASE:
 		{
@@ -16,7 +14,7 @@ public class Auto_0 extends Autonomous{
 		}
 		case PRINT_ERROR:
 		{
-			if(error = true){
+			if(error){
 				System.out.println("Not an Autonomous");
 				error = false;
 			}

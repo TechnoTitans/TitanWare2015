@@ -51,15 +51,14 @@ public class TechnoTitan extends IterativeRobot {
         powerDistributionManager.start();
         pressure = new PressureSensor(HWR.PRESSURE_SENSOR);
         photogate = new Photogate(HWR.PHOTOGATE);
-        drive = new HDrive(new int[]{HWR.BACK_LEFT_MOTOR,HWR.FRONT_LEFT_MOTOR}, true, 
-        		new int[]{HWR.BACK_RIGHT_MOTOR,HWR.FRONT_RIGHT_MOTOR}, false, 
+        drive = new HDrive(new int[]{HWR.BACK_LEFT_MOTOR,HWR.FRONT_LEFT_MOTOR}, HWR.LEFT_INVERSE, 
+        		new int[]{HWR.BACK_RIGHT_MOTOR,HWR.FRONT_RIGHT_MOTOR}, HWR.RIGHT_INVERSE, 
         		TalonSRX.class, HWR.GYRO, 
-        		HWR.LEFT_CHANNEL_A, HWR.LEFT_CHANNEL_B, 
-        		HWR.RIGHT_CHANNEL_A, HWR.RIGHT_CHANNEL_B,
-        		HWR.BACK_CHANNEL_A, HWR.BACK_CHANNEL_B,
-        		HWR.FRONT_CHANNEL_A, HWR.FRONT_CHANNEL_B,
+        		HWR.LEFT_CHANNEL_A, HWR.LEFT_CHANNEL_B, HWR.RIGHT_CHANNEL_A, HWR.RIGHT_CHANNEL_B,
+        		HWR.BACK_CHANNEL_A, HWR.BACK_CHANNEL_B, HWR.FRONT_CHANNEL_A, HWR.FRONT_CHANNEL_B,
         		HWR.LEFT_H_PISTON, HWR.RIGHT_H_PISTON, pressure, 
-        		HWR.FRONT_H_MOTOR, HWR.BACK_H_MOTOR, Talon.class, HWR.DEPLOY_H_DRIVE, HWR.driveEncoderWDPP);
+        		HWR.FRONT_H_MOTOR, HWR.BACK_H_MOTOR, Talon.class, HWR.DEPLOY_H_DRIVE, HWR.driveEncoderWDPP, HWR.hDriveEncoderWDPP,
+        		HWR.leftDriveEncoderReverse, HWR.rightDriveEncoderReverse, HWR.backHEncoderReverse, HWR.frontHEncoderReverse);
         pickerUpper = new PickerUpper(Talon.class, HWR.BELT_INVERSE, new int[]{HWR.LEFT_LIFT_PISTON, HWR.RIGHT_LIFT_PISTON}, new int[]{HWR.BELT_MOTOR}, 
         		HWR.BELT_CHANNEL_A, HWR.BELT_CHANNEL_B, HWR.beltEncoderReverse, HWR.liftEncoderWDPP, 
         		pressure, photogate, drive);

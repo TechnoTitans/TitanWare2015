@@ -49,6 +49,11 @@ public class TalonSRX extends CANTalon implements Motor{
 			thread.start();
 		}
 	}
+	
+	public void moveDistanceInches(double distanceInInches){
+		double distanceInMeters = distanceInInches*0.0254;
+		moveDistance(distanceInMeters);
+	}
 	/**
 	 * sets the speed
 	 */

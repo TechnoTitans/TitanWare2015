@@ -14,6 +14,8 @@ public class HDrive extends TankDrive{
 	double angleBeforeDeploy;
 	DrivePistons pistons;
 	boolean isLifted;
+	Encoder backEncoder;
+	Encoder frontEncoder;
 	/**
 	 * Constructor
 	 * @param leftMotorInputs - left side of drive train
@@ -41,12 +43,16 @@ public class HDrive extends TankDrive{
 			int frontChannelA, int frontChannelB,
 			int rightPiston, int leftPiston, PressureSensor pressure,
 			int frontMotor, int backMotor, Class hMotorType, 
-			int triggerButton, double wheelDistancePerPulse) {
+			int triggerButton, double driveWDPP, double HdriveWDPP, boolean leftReverseDirection, boolean rightReverseDirection,
+			boolean backReverseDirection, boolean frontReverseDirection) {
 		super(leftMotorInputs, leftInverse, rightMotorInputs, rightInverse, 
-				motorType, gyroChannel, leftChannelA, leftChannelB, rightChannelA, rightChannelB, wheelDistancePerPulse);
+				motorType, gyroChannel, leftChannelA, leftChannelB, rightChannelA, rightChannelB, 
+				driveWDPP, leftReverseDirection, rightReverseDirection);
 		pistons = new DrivePistons(new int[]{rightPiston, leftPiston}, pressure);
-		hBackMotors = new MotorGroup("HBackMotors", new int[] {backMotor}, hMotorType, false, new Encoder(backChannelA, backChannelB, true, wheelDistancePerPulse));
-		hFrontMotors= new MotorGroup("HFrontMotors", new int[]{frontMotor},hMotorType, true, new Encoder(frontChannelA, frontChannelB, true, wheelDistancePerPulse));
+		backEncoder = new Encoder(backChannelA, backChannelB, backReverseDirection, HdriveWDPP);
+		frontEncoder = new Encoder(frontChannelA, frontChannelB, frontReverseDirection, HdriveWDPP);
+		hBackMotors = new MotorGroup("HBackMotors", new int[] {backMotor}, hMotorType, false, backEncoder);
+		hFrontMotors= new MotorGroup("HFrontMotors", new int[]{frontMotor},hMotorType, true, frontEncoder);
 		this.triggerButton = triggerButton;
 //		isLifted = true;
 //		pistons = new DoubleActionSolenoid(new int[]{rightPiston, leftPiston}, pressure);
@@ -111,8 +117,8 @@ public class HDrive extends TankDrive{
 	}
 	
 	/**
-	 * deploys H-drive wheels if not deployed and moves sideways given distance
-	 * @param distance - positive/negative affects direction
+	 * deploys H-drive wheels if not deployed and moves sideways given distance in meters
+	 * @param distance (meters) - positive/negative affects direction
 	 */
 	public void goSideways(double distance)
 	{
@@ -120,6 +126,16 @@ public class HDrive extends TankDrive{
 			deployWheels();
 		hBackMotors.moveDistance(distance);
 		hFrontMotors.moveDistance(distance);
+	}
+	/**
+	 * deploys H-drive wheels if not deployed and moves sideways given distance in inches
+	 * @param distanceInInches - positive/negative affects direction
+	 */
+	public void moveSideways(double distanceInInches)
+	{
+		deployWheels();
+		hBackMotors.moveDistanceInches(distanceInInches);
+		hFrontMotors.moveDistanceInches(distanceInInches);
 	}
 	
 	private class DrivePistons{

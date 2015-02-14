@@ -52,9 +52,10 @@ public class TankDrive extends DriveTrain{
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public TankDrive(int[] leftMotorInputs,boolean leftInverse, int[] rightMotorInputs, boolean rightInverse, 
 			Class motorType, int gyroChannel, int leftChannelA, int leftChannelB, 
-			int rightChannelA, int rightChannelB, double wheelDistancePerPulse) {
-		leftEncoder = new Encoder(leftChannelA, leftChannelB, leftInverse, wheelDistancePerPulse);
-		rightEncoder = new Encoder(rightChannelA, rightChannelB, rightInverse, wheelDistancePerPulse);
+			int rightChannelA, int rightChannelB, double wheelDistancePerPulse,
+			boolean leftReversesDirection, boolean rightReverseDirection) {
+		leftEncoder = new Encoder(leftChannelA, leftChannelB, leftReversesDirection, wheelDistancePerPulse);
+		rightEncoder = new Encoder(rightChannelA, rightChannelB, rightReverseDirection, wheelDistancePerPulse);
 		left = new MotorGroup("Left Drive",leftMotorInputs, motorType, leftInverse, leftEncoder);
 		right = new MotorGroup("Right Drive",rightMotorInputs, motorType, rightInverse, rightEncoder);
 		gyro = new Gyro(gyroChannel);
@@ -71,12 +72,21 @@ public class TankDrive extends DriveTrain{
 	}
 	
 	/**
-	 * drives the robot straight over a set amount of meters
+	 * drives the robot straight over a set number of meters
+	 * @param distanceInMeters
 	 */
 	@Override
 	public void goStraight(double distanceInMeters) {
 		left.moveDistance(distanceInMeters);
 		right.moveDistance(distanceInMeters);
+	}
+	/**
+	 * drives the robot straight over a set number of inches
+	 * @param distanceInInches
+	 */
+	public void goForward(double distanceInInches){
+		left.moveDistanceInches(distanceInInches);
+		right.moveDistanceInches(distanceInInches);
 	}
 	/**
 	 * turns the robot for a certain angle
@@ -126,7 +136,11 @@ public class TankDrive extends DriveTrain{
 	}
 	
 	public void goSideways(double distance) {
-		
+		//placeholder
+	}
+	
+	public void moveSideways(double distanceInInches){
+		//placeholder
 	}
 	
 	public void EncoderValues (){

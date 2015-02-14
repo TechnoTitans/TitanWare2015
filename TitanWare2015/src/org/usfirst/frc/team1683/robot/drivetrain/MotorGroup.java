@@ -74,6 +74,12 @@ public class MotorGroup implements Runnable{
 		}
 	}
 	
+	public void moveDistanceInches(double distanceInInches){
+		for (Motor motor: motors){
+			motor.moveDistanceInches(distanceInInches);
+		}
+	}
+	
 	/**
 	 * moves the robot a certain amount of degrees 
 	 * @param degrees
