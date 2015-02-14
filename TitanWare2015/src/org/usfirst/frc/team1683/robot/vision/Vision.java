@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.tables.TableKeyNotDefinedException;
 public class Vision {
 	
 	public static NetworkTable table;
-//	public static LightRing ring;
+	public static LightRing ring;
 	// Variables to hold values retrieved from NetworkTable (RoboRealm).
 	private NumberArray COG_X;
 	private NumberArray COG_Y;
@@ -53,7 +53,7 @@ public class Vision {
 	public Vision() {
 //		CameraServer.getInstance().startAutomaticCapture(CAM_ID);
 		table 		= NetworkTable.getTable("Vision"); // Table to get data from RoboRealm
-//		ring		= new LightRing(HWR.LIGHT_RING);
+		ring		= new LightRing(HWR.LIGHT_RING);
 		COG_X		= new NumberArray();
 		COG_Y 		= new NumberArray();
 		HEIGHT		= new NumberArray();
