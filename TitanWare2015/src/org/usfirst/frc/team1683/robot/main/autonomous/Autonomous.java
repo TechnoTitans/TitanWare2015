@@ -78,7 +78,6 @@ public abstract class Autonomous {
 		this.vision = vision;
 		updatePreferences();
 		timer = new Timer();
-		vision = new Vision();
 		visionTimer = new Timer();
 	}
 
