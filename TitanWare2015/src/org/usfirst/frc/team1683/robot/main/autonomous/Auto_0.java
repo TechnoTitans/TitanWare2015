@@ -1,10 +1,17 @@
 package org.usfirst.frc.team1683.robot.main.autonomous;
 
+import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
+import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
+
 public class Auto_0 extends Autonomous{
+
+	public Auto_0(HDrive drive, PickerUpper pickerUpper) {
+		super(drive, pickerUpper);
+	}
 
 	private static boolean error = true; 
 	
-	public static void run (){
+	public void run (){
 		
 		switch(presentState){
 		case INIT_CASE:
@@ -23,7 +30,7 @@ public class Auto_0 extends Autonomous{
 		}
 		case RUN_OTHER_AUTO:
 		{
-			Auto_1.run();
+			autonomous = new Auto_1(hDrive, pickerUpper);
 			nextState = State.RUN_OTHER_AUTO;
 			break;
 		}

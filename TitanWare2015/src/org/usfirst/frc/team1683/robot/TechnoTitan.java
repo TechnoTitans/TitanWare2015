@@ -5,6 +5,7 @@ import org.usfirst.frc.team1683.robot.drivetrain.Talon;
 import org.usfirst.frc.team1683.robot.drivetrain.TalonSRX;
 import org.usfirst.frc.team1683.robot.drivetrain.TankDrive;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
+import org.usfirst.frc.team1683.robot.main.autonomous.Auto_0;
 import org.usfirst.frc.team1683.robot.main.autonomous.Autonomous;
 import org.usfirst.frc.team1683.robot.main.autonomous.AutonomousSelector;
 import org.usfirst.frc.team1683.robot.main.autonomous.PreferencesList;
@@ -33,7 +34,7 @@ public class TechnoTitan extends IterativeRobot {
     Gyro gyro;
 	TankDrive tankDrive;
 	PickerUpper pickerUpper;
-	AutonomousSelector autonomous;
+	Autonomous autonomous;
 	PowerDistributionManager powerDistributionManager;
 	HDrive drive;
 	PressureSensor pressure;
@@ -64,7 +65,8 @@ public class TechnoTitan extends IterativeRobot {
     }
 
     public void autonomousInit(){
-    	autonomous = new AutonomousSelector();
+    	autonomous = new Auto_0(drive, pickerUpper);
+    	autonomous.setAutonomous();
     	Autonomous.errorWarning = true;
     }
     
@@ -79,7 +81,6 @@ public class TechnoTitan extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-   //     tankDrive.driveMode(DriverStation.leftStick, DriverStation.rightStick);
         drive.driveMode(DriverStation.leftStick, DriverStation.rightStick);
         pickerUpper.liftMode(HWR.AUX_JOYSTICK);
     }

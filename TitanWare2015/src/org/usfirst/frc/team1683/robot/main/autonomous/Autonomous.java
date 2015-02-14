@@ -1,9 +1,7 @@
 package org.usfirst.frc.team1683.robot.main.autonomous;
 
-import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.drivetrain.DriveTrain;
 import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
-import org.usfirst.frc.team1683.robot.drivetrain.Talon;
 import org.usfirst.frc.team1683.robot.drivetrain.TankDrive;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
@@ -26,7 +24,7 @@ public abstract class Autonomous {
 	protected static Timer visionTimer;
 	protected static Photogate photogate;
 	protected static PressureSensor pressure;
-	
+
 	public static enum State {
 		INIT_CASE, 					
 		DRIVE_FORWARD, 				
@@ -48,8 +46,8 @@ public abstract class Autonomous {
 		PRINT_ERROR,
 		RUN_OTHER_AUTO
 	}
-	
-	
+
+
 	public static State presentState = State.INIT_CASE;
 	public static State nextState;
 	public static int driveCount = 0;
@@ -66,33 +64,21 @@ public abstract class Autonomous {
 	protected static boolean isToteLifted;
 	protected static boolean enablePrinting;
 	public static boolean errorWarning;
-	
+
 	protected static double visionDistance = 0;
 	protected static final double VISION_TIMEOUT = 3;
 
-	
-	public Autonomous(){
-		tankDrive = new TankDrive(new int[]{HWR.FRONT_LEFT_MOTOR, HWR.BACK_LEFT_MOTOR}, HWR.LEFT_INVERSE, 
-				new int[]{HWR.FRONT_RIGHT_MOTOR, HWR.BACK_RIGHT_MOTOR}, HWR.RIGHT_INVERSE, Talon.class, HWR.GYRO, 
-    			HWR.LEFT_CHANNEL_A, HWR.LEFT_CHANNEL_B, HWR.RIGHT_CHANNEL_A, HWR.RIGHT_CHANNEL_B,
-    			HWR.driveEncoderWDPP, HWR.leftDriveEncoderReverse, HWR.rightDriveEncoderReverse);
-//		hDrive = new HDrive(new int[]{HWR.FRONT_LEFT_MOTOR, HWR.BACK_LEFT_MOTOR}, true , new int[]{HWR.FRONT_RIGHT_MOTOR, HWR.BACK_RIGHT_MOTOR},false , Talon.class, HWR.GYRO, 
-//    			HWR.LEFT_CHANNEL_A, HWR.LEFT_CHANNEL_B, HWR.RIGHT_CHANNEL_A, HWR.RIGHT_CHANNEL_B, 
-//    			HWR.BACK_CHANNEL_A, HWR.BACK_CHANNEL_B,
-//        		HWR.FRONT_CHANNEL_A, HWR.FRONT_CHANNEL_B,
-//				HWR.RIGHT_H_PISTON, HWR.LEFT_H_PISTON,new PressureSensor(HWR.PRESSURE_SENSOR), 
-//				HWR.FRONT_H_MOTOR, HWR.BACK_H_MOTOR, Talon.class, 
-//				HWR.DEPLOY_H_DRIVE, HWR.driveEncoderWDPP);
+	protected static Autonomous autonomous;
+
+
+	public Autonomous(HDrive drive, PickerUpper pickerUpper){
 		driveTrain = tankDrive;
-//		driveTrain = hDrive;
-		pickerUpper = new PickerUpper(new int[]{HWR.BELT_MOTOR}, Talon.class, false);
-//		pickerUpper = new PickerUpper(Talon.class, HWR.BELT_INVERSE, new int[]{HWR.LEFT_LIFT_PISTON, HWR.RIGHT_LIFT_PISTON}, new int[]{HWR.BELT_MOTOR}, 
-//	        		HWR.BELT_CHANNEL_A, HWR.BELT_CHANNEL_B, HWR.beltEncoderReverse, HWR.liftEncoderWDPP, 
-//	        		pressure, photogate, hDrive);
+		this.hDrive = drive;
+		this.pickerUpper = pickerUpper;
 		timer = new Timer();
 		vision = new Vision();
 		visionTimer = new Timer();
-		
+
 		//Preferences from the SmartDashboard
 		driveDistance = DriverStation.getDouble("driveDistance");
 		sideDistance = DriverStation.getDouble("sideDistance");
@@ -103,7 +89,7 @@ public abstract class Autonomous {
 		toteSpaceDistance = DriverStation.getDouble("toteSpaceDistance");
 		enablePrinting = DriverStation.getBoolean("enablePrinting");
 	}
-	
+
 	/**
 	 * @author Seung-Seok Lee
 	 * prints out current and next state and the time during switches between states
@@ -122,6 +108,10 @@ public abstract class Autonomous {
 		DriverStation.sendData("time", timer.get());
 	}
 	
+	public static void runAuto(){
+		autonomous.run();
+	}
+
 	/**
 	 * @author Seung-Seok Lee
 	 * default case for all autonomous sequences - prints out error in state machine once
@@ -133,7 +123,7 @@ public abstract class Autonomous {
 			errorWarning = false;
 		}
 	}
-	
+
 	/**
 	 * @author David Luo
 	 * Attempts to center the robot in front of the closest tote.
@@ -158,8 +148,24 @@ public abstract class Autonomous {
 			}
 		}
 		else {
-//			driveTrain.goSideways(visionDistance);
+			//			driveTrain.goSideways(visionDistance);
 			return next;
 		}
 	}
+
+	public void setAutonomous(){
+		int autonomousMode = DriverStation.getInt("autonomousMode");
+		if (autonomousMode == 1)
+			autonomous = new Auto_1(hDrive, pickerUpper);
+		else if (autonomousMode == 2)
+			autonomous = new Auto_2(hDrive, pickerUpper);
+		else if (autonomousMode == 3)
+			autonomous = new Auto_3(hDrive, pickerUpper);
+		else if (autonomousMode == 4)
+			autonomous = new Auto_4(hDrive, pickerUpper);
+		else
+			autonomous = new Auto_0(hDrive, pickerUpper);
+	}
+	
+	public abstract void run();
 }

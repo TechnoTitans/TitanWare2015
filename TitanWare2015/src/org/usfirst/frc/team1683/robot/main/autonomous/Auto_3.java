@@ -1,11 +1,19 @@
 package org.usfirst.frc.team1683.robot.main.autonomous;
 
+import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
+import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
+
 public class Auto_3 extends Autonomous{
+	public Auto_3(HDrive drive, PickerUpper pickerUpper) {
+		super(drive, pickerUpper);
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * Lifts the barrel, and uses the barrel to push the tote into the Auto Zone to get the barrel, tote, and robot in the
 	 * @author komals
 	 */
-	public static void run(){
+	public void run(){
 		switch(presentState){
 		case INIT_CASE:
 		{

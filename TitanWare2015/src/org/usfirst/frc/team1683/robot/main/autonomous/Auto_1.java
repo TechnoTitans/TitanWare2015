@@ -1,10 +1,17 @@
 package org.usfirst.frc.team1683.robot.main.autonomous;
 
+import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
+import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
+
 public class Auto_1 extends Autonomous{
+	public Auto_1(HDrive drive, PickerUpper pickerUpper) {
+		super(drive, pickerUpper);
+	}
+
 	/**
 	 * Pushes tote forward
 	 */
-	public static void run(){
+	public void run(){
 		switch(presentState){
 		case INIT_CASE:
 		{

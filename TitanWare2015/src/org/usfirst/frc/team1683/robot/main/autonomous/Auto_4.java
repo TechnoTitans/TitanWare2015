@@ -1,11 +1,19 @@
 package org.usfirst.frc.team1683.robot.main.autonomous;
 
+import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
+import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
+
 public class Auto_4 extends Autonomous{
+	public Auto_4(HDrive drive, PickerUpper pickerUpper) {
+		super(drive, pickerUpper);
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * Picks up all the totes and drives all of them into the Auto Zone and the robot into the Auto Zone
 	 * @author Sneha
 	 */
-	public static void run(){
+	public void run(){
 		switch(presentState)
 		{
 		case INIT_CASE:
