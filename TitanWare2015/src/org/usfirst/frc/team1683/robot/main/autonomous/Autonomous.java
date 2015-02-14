@@ -76,16 +76,7 @@ public abstract class Autonomous {
 		this.hDrive = drive;
 		this.pickerUpper = pickerUpper;
 		this.vision = vision;
-
-		//Preferences from the SmartDashboard
-		driveDistance = DriverStation.getDouble("driveDistance");
-		sideDistance = DriverStation.getDouble("sideDistance");
-		liftDistance = DriverStation.getDouble("liftDistance");
-		adjustDistance = DriverStation.getDouble("adjustDistance");
-		backDistance = DriverStation.getDouble("backDistance");
-		robotDistance = DriverStation.getDouble("robotDistance");
-		toteSpaceDistance = DriverStation.getDouble("toteSpaceDistance");
-		enablePrinting = DriverStation.getBoolean("enablePrinting");
+		updatePreferences();
 		timer = new Timer();
 		vision = new Vision();
 		visionTimer = new Timer();
@@ -109,7 +100,20 @@ public abstract class Autonomous {
 		DriverStation.sendData("time", timer.get());
 	}
 
+	public static void updatePreferences(){
+		//Preferences from the SmartDashboard
+		driveDistance = DriverStation.getDouble("driveDistance");
+		sideDistance = DriverStation.getDouble("sideDistance");
+		liftDistance = DriverStation.getDouble("liftDistance");
+		adjustDistance = DriverStation.getDouble("adjustDistance");
+		backDistance = DriverStation.getDouble("backDistance");
+		robotDistance = DriverStation.getDouble("robotDistance");
+		toteSpaceDistance = DriverStation.getDouble("toteSpaceDistance");
+		enablePrinting = DriverStation.getBoolean("enablePrinting");
+	}
+
 	public static void runAuto(){
+		updatePreferences();
 		autonomous.run();
 	}
 

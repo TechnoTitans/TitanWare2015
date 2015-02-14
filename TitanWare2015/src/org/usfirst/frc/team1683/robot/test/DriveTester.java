@@ -62,7 +62,7 @@ public class DriveTester implements Tester{
 //		if (DriverStation.rightStick.getRawButton(6))
 //			driveTrain.setBackToOriginalPos();
 		
-		double beltDistance = beltEncoder.getDisplacement(47.0/700.0);
+		double beltDistance = beltEncoder.getDisplacement(HWR.liftEncoderWDPP);
 		DriverStation.sendData("Belt Distance", beltDistance);	
 	}
 }

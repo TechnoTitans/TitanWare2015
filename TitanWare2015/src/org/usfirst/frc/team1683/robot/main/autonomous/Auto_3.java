@@ -38,7 +38,8 @@ public class Auto_3 extends Autonomous{
 		}
 		case CENTER_TOTE:
 		{
-			nextState = centerTote(State.DRIVE_FORWARD);
+//			nextState = centerTote(State.DRIVE_FORWARD);
+			nextState = State.DRIVE_FORWARD;
 			break;
 		}
 		case DRIVE_FORWARD:
@@ -49,7 +50,8 @@ public class Auto_3 extends Autonomous{
 		}
 		case END_CASE:
 		{
-			hDrive.stop();
+
+//			hDrive.stop();
 			nextState = State.END_CASE;
 			break;
 		}

@@ -45,7 +45,7 @@ public class TechnoTitan extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-    	PreferencesList.set();
+//    	PreferencesList.set();
         powerDistributionManager = new PowerDistributionManager(HWR.BACK_LEFT_MOTOR,HWR.FRONT_LEFT_MOTOR,HWR.BACK_RIGHT_MOTOR,HWR.FRONT_RIGHT_MOTOR, HWR.BELT_MOTOR );
         powerDistributionManager.start();
         pressure = new PressureSensor(HWR.PRESSURE_SENSOR);
@@ -61,6 +61,7 @@ public class TechnoTitan extends IterativeRobot {
         pickerUpper = new PickerUpper(Talon.class, HWR.BELT_INVERSE, new int[]{HWR.LEFT_LIFT_PISTON, HWR.RIGHT_LIFT_PISTON}, new int[]{HWR.BELT_MOTOR}, 
         		HWR.BELT_CHANNEL_A, HWR.BELT_CHANNEL_B, HWR.beltEncoderReverse, HWR.liftEncoderWDPP, 
         		pressure, photogate, drive);
+        driveTester = new DriveTester(pickerUpper, drive);
     }
 
     public void autonomousInit(){
@@ -81,6 +82,7 @@ public class TechnoTitan extends IterativeRobot {
     public void teleopPeriodic() {
         drive.driveMode(DriverStation.leftStick, DriverStation.rightStick);
         pickerUpper.liftMode(HWR.AUX_JOYSTICK);
+        
     }
     
     /**
@@ -90,7 +92,7 @@ public class TechnoTitan extends IterativeRobot {
     	
     }
     public void testPeriodic() {
-    	
+    	driveTester.test();
     }
 
     
