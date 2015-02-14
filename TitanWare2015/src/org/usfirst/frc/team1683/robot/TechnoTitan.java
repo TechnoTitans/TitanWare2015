@@ -7,6 +7,7 @@ import org.usfirst.frc.team1683.robot.drivetrain.TankDrive;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.main.autonomous.Autonomous;
 import org.usfirst.frc.team1683.robot.main.autonomous.AutonomousSelector;
+import org.usfirst.frc.team1683.robot.main.autonomous.PreferencesList;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
 import org.usfirst.frc.team1683.robot.sensors.Photogate;
@@ -44,9 +45,7 @@ public class TechnoTitan extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-    	DriverStation.prefDouble("delay", 0.075);
-    	DriverStation.prefDouble("distance", 1);
-    	DriverStation.prefDouble("bearing", 90);
+    	PreferencesList.set();
         powerDistributionManager = new PowerDistributionManager(HWR.BACK_LEFT_MOTOR,HWR.FRONT_LEFT_MOTOR,HWR.BACK_RIGHT_MOTOR,HWR.FRONT_RIGHT_MOTOR, HWR.BELT_MOTOR );
         powerDistributionManager.start();
         pressure = new PressureSensor(HWR.PRESSURE_SENSOR);
