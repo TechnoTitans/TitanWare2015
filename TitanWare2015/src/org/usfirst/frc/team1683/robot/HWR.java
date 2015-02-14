@@ -100,7 +100,7 @@ public class HWR {
 	public static final int LIFT_SECOND_TOTE		= 11;
 
 	//Light Ring
-	public static final int LIGHT_RING				= HWP.PWM_0;
+	public static final int LIGHT_RING				= HWP.PWM_5;
 	
 	//Motor Constants
 	public static final double LOW_SPEED			= 0.25;
