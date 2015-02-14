@@ -98,6 +98,9 @@ public class HWR {
 	public static final int GO_TO_HOME				= 9;
 	public static final int LIFT_FIRST_TOTE			= 10;
 	public static final int LIFT_SECOND_TOTE		= 11;
+	public static final int UPRIGHT_BELT			= 2;
+	public static final int ANGLE_BELT				= 3;
+	public static final int FREEZE_BELT				= 1;
 
 	//Light Ring
 	public static final int LIGHT_RING				= HWP.PWM_5;

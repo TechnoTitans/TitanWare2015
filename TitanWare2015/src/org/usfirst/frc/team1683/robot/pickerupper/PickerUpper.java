@@ -92,13 +92,13 @@ public class PickerUpper implements Runnable{
 
 	public void liftMode(int joystickNumber) {
 		motors.set(DriverStation.auxStick.getRawAxis(DriverStation.YAxis));
-		if (DriverStation.antiBounce(joystickNumber, HWR.TOGGLE_BELT_PISTON)) {
+		/*if (DriverStation.antiBounce(joystickNumber, HWR.TOGGLE_BELT_PISTON)) {
 			if (isForward){
 				angledPickerUpper();
 			}else{
 				uprightPickerUpper();
 			}
-		}
+		}*/
 		if (DriverStation.antiBounce(joystickNumber, HWR.CALIBRATE_BELT)){
 			calibrateToZero();
 		}
@@ -118,6 +118,15 @@ public class PickerUpper implements Runnable{
 			motors.moveDistance(HWR.MOVE_MAX-beltEncoder.getDistance());
 		if (enableSensor&&photogate.get()){
 			calibrateToZero();
+		}
+		if (DriverStation.antiBounce(joystickNumber, HWR.UPRIGHT_BELT)){
+			pistons.upright();
+		}
+		if (DriverStation.antiBounce(joystickNumber, HWR.ANGLE_BELT)){
+			pistons.angle();
+		}
+		if (DriverStation.antiBounce(joystickNumber, HWR.FREEZE_BELT)){
+			pistons.freeze();
 		}
 	}
 
@@ -268,6 +277,21 @@ public class PickerUpper implements Runnable{
 				frontAirSystem.extend();
 				backAirSystem.retract();
 			}
+		}
+		
+		public void upright(){
+			frontAirSystem.retract();
+			backAirSystem.extend();
+		}
+		
+		public void angle(){
+			frontAirSystem.extend();
+			backAirSystem.retract();
+		}
+		
+		public void freeze(){
+			frontAirSystem.extend();
+			frontAirSystem.extend();
 		}
 	}
 	
