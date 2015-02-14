@@ -154,19 +154,5 @@ public abstract class Autonomous {
 		}
 	}
 
-	public void setAutonomous(){
-		int autonomousMode = DriverStation.getInt("autonomousMode");
-		if (autonomousMode == 1)
-			autonomous = new Auto_1(hDrive, pickerUpper, vision);
-		else if (autonomousMode == 2)
-			autonomous = new Auto_2(hDrive, pickerUpper, vision);
-		else if (autonomousMode == 3)
-			autonomous = new Auto_3(hDrive, pickerUpper, vision);
-		else if (autonomousMode == 4)
-			autonomous = new Auto_4(hDrive, pickerUpper, vision);
-		else
-			autonomous = new Auto_0(hDrive, pickerUpper, vision);
-	}
-
 	public abstract void run();
 }

@@ -98,8 +98,7 @@ public class TalonSRX extends CANTalon implements Motor{
 	
 	@Override
 	public void stop() {
-		this.stop();
-		
+		super.stopMotor();
 	}
 	@Override
 	public boolean hasEncoder() {

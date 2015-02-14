@@ -4,9 +4,8 @@ import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
 import org.usfirst.frc.team1683.robot.drivetrain.Talon;
 import org.usfirst.frc.team1683.robot.drivetrain.TalonSRX;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
-import org.usfirst.frc.team1683.robot.main.autonomous.Auto_0;
-import org.usfirst.frc.team1683.robot.main.autonomous.Auto_1;
 import org.usfirst.frc.team1683.robot.main.autonomous.Autonomous;
+import org.usfirst.frc.team1683.robot.main.autonomous.AutonomousSwitcher;
 import org.usfirst.frc.team1683.robot.main.autonomous.PreferencesList;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
@@ -33,7 +32,7 @@ public class TechnoTitan extends IterativeRobot {
 	DriveTester driveTester;
     Gyro gyro;
 	PickerUpper pickerUpper;
-	Autonomous autonomous;
+	AutonomousSwitcher autonomous;
 	PowerDistributionManager powerDistributionManager;
 	HDrive drive;
 	PressureSensor pressure;
@@ -65,8 +64,7 @@ public class TechnoTitan extends IterativeRobot {
     }
 
     public void autonomousInit(){
-    	autonomous = new Auto_1(drive, pickerUpper, vision);
-    	autonomous.setAutonomous();
+    	autonomous = new AutonomousSwitcher(drive, pickerUpper, vision);
     	Autonomous.errorWarning = true;
     }
     
