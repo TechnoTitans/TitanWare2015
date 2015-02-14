@@ -17,6 +17,8 @@ public class TankDrive extends DriveTrain{
 	public Encoder leftEncoder;
 	public Encoder rightEncoder;
 	Gyro gyro;
+	Thread currentThread;
+
 	static final double	 kp=0.03;
 	double waitTime=0.2;
 	double startAngle;
@@ -79,6 +81,7 @@ public class TankDrive extends DriveTrain{
 	public void goStraight(double distanceInMeters) {
 		left.moveDistance(distanceInMeters);
 		right.moveDistance(distanceInMeters);
+		currentThread = left.getCurrentThread();
 	}
 	/**
 	 * drives the robot straight over a set number of inches
@@ -87,6 +90,7 @@ public class TankDrive extends DriveTrain{
 	public void goForward(double distanceInInches){
 		left.moveDistanceInches(distanceInInches);
 		right.moveDistanceInches(distanceInInches);
+		currentThread = right.getCurrentThread();
 	}
 	/**
 	 * turns the robot for a certain angle

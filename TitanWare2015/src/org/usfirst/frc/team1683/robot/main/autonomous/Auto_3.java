@@ -27,6 +27,13 @@ public class Auto_3 extends Autonomous{
 		{
 			pickerUpper.liftBarrel();
 			nextState = State.DRIVE_SIDEWAYS;
+			synchronized (this) {
+				try {
+					this.wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 			break;
 		}
 		case DRIVE_SIDEWAYS:

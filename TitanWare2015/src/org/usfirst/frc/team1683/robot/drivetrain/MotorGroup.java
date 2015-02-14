@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class MotorGroup implements Runnable{
 	String groupName;
+	Thread currentThread;
 	List<Motor> motors;
 	Encoder encoder;
 	/**
@@ -78,8 +79,13 @@ public class MotorGroup implements Runnable{
 	public void moveDistanceInches(double distanceInInches){
 		if (encoder != null){
 			MotorMover mover = new MotorMover(distanceInInches * 0.0254);
-			new Thread(mover).start();
+			currentThread = new Thread(mover);
+			currentThread.start();
 		}
+	}
+	
+	public Thread getCurrentThread(){
+		return currentThread;
 	}
 
 	/**
@@ -152,6 +158,8 @@ public class MotorGroup implements Runnable{
 				} 
 			}
 			stop();
+			currentThread.notifyAll();
+			currentThread.destroy();
 			encoder.reset();
 		}
 

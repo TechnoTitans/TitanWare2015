@@ -126,6 +126,11 @@ public class HDrive extends TankDrive{
 			deployWheels();
 		hBackMotors.moveDistance(distance);
 		hFrontMotors.moveDistance(distance);
+		currentThread = hBackMotors.getCurrentThread();
+	}
+	
+	public Thread getCurrentThread(){
+		return currentThread;
 	}
 	/**
 	 * deploys H-drive wheels if not deployed and moves sideways given distance in inches
@@ -136,6 +141,7 @@ public class HDrive extends TankDrive{
 		deployWheels();
 		hBackMotors.moveDistanceInches(distanceInInches);
 		hFrontMotors.moveDistanceInches(distanceInInches);
+		currentThread = hBackMotors.getCurrentThread();
 	}
 	
 	private class DrivePistons{
