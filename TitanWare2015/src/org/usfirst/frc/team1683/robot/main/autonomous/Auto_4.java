@@ -25,7 +25,7 @@ public class Auto_4 extends Autonomous{
 		}
 		case ADJUST_FORWARD:
 		{
-			driveTrain.goForward(adjustDistance);
+			hDrive.goForward(adjustDistance);
 			nextState = State.CENTER_TOTE;
 			break;
 		}
@@ -55,19 +55,19 @@ public class Auto_4 extends Autonomous{
 		}
 		case ADJUST_BACKWARD:
 		{
-			driveTrain.goForward(-adjustDistance);
+			hDrive.goForward(-adjustDistance);
 			nextState = State.DRIVE_SIDEWAYS;
 			break;
 		}
 		case DRIVE_SIDEWAYS:
 		{
-			driveTrain.moveSideways(sideDistance);
+			hDrive.moveSideways(sideDistance);
 			nextState = State.ADJUST_FORWARD;
 			break;
 		}
 		case DRIVE_FORWARD:
 		{
-			driveTrain.goForward(driveDistance);
+			hDrive.goForward(driveDistance);
 			nextState = State.END_CASE;
 			break;
 		}

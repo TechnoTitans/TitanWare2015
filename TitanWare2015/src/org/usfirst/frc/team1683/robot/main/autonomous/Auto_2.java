@@ -26,7 +26,7 @@ public class Auto_2 extends Autonomous{
 		case DRIVE_FORWARD:
 		{
 			driveCount++;
-			driveTrain.goForward(driveDistance);
+			hDrive.goForward(driveDistance);
 			if (driveCount<3){
 				nextState = State.DRIVE_BACKWARD;
 				break;
@@ -38,13 +38,13 @@ public class Auto_2 extends Autonomous{
 		}
 		case DRIVE_BACKWARD:
 		{
-			driveTrain.goForward(-driveDistance);
+			hDrive.goForward(-driveDistance);
 			nextState = State.DRIVE_SIDEWAYS;
 			break;
 		}
 		case DRIVE_SIDEWAYS:
 		{
-			driveTrain.moveSideways(sideDistance);			
+			hDrive.moveSideways(sideDistance);			
 			nextState = State.CENTER_TOTE;
 			visionTimer.reset();
 			break;

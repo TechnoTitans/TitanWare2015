@@ -22,13 +22,13 @@ public class Auto_1 extends Autonomous{
 		}
 		case DRIVE_FORWARD:
 		{
-			driveTrain.goForward(driveDistance);
+			hDrive.goForward(driveDistance);
 			nextState = State.END_CASE;
 			break;
 		}
 		case END_CASE:
 		{
-			driveTrain.stop();			
+			hDrive.stop();			
 			nextState = State.END_CASE;
 			break;
 		}
