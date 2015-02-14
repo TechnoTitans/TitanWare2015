@@ -46,15 +46,15 @@ public class HWR {
 
 
 	//Encoder Wheel Distance Per Pulse
-	public static double driveEncoderWDPP 			= 18.85/2040;
-	public static double liftEncoderWDPP 			= 14.25/757.75;
+	public static final double driveEncoderWDPP 			= 18.85/2040;
+	public static final double liftEncoderWDPP 				= 14.25/757.75;
 	
 	//Encoder Reverse Directions
-	public static boolean leftDriveEncoderReverse 	= false;
-	public static boolean rightDriveEncoderReverse 	= false;
-	public static boolean leftHEncoderReverse 		= false;
-	public static boolean rightHEncoderReverse 		= false;
-	public static boolean beltEncoderReverse 		= false;
+	public static final boolean leftDriveEncoderReverse 	= false;
+	public static final boolean rightDriveEncoderReverse 	= false;
+	public static final boolean leftHEncoderReverse 		= false;
+	public static final boolean rightHEncoderReverse 		= false;
+	public static final boolean beltEncoderReverse			= false;
 
 	//Pneumatics
 	public static final int PRESSURE_SENSOR 		= HWP.ANALOG_0;
