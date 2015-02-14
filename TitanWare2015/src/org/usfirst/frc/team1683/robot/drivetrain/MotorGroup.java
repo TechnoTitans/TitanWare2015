@@ -3,6 +3,7 @@ package org.usfirst.frc.team1683.robot.drivetrain;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.TechnoTitan;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 
@@ -45,7 +46,7 @@ public class MotorGroup implements Runnable{
 	 * @param inverseDirection
 	 * @param encoder
 	 */
-	
+
 	public MotorGroup(String groupName, int[] channelNumbers, Class<Motor> motorType, boolean inverseDirection, Encoder encoder)
 	{
 		this.groupName = groupName;
@@ -63,7 +64,7 @@ public class MotorGroup implements Runnable{
 			new Thread(this, "EncoderPost").start();
 		}
 	}
-	
+
 	/**
 	 * moves the robot a certain distance
 	 * @param distanceInMeters
@@ -73,13 +74,14 @@ public class MotorGroup implements Runnable{
 			motor.moveDistance(distanceInMeters);
 		}
 	}
-	
+
 	public void moveDistanceInches(double distanceInInches){
-		for (Motor motor: motors){
-			motor.moveDistanceInches(distanceInInches);
+		if (encoder != null){
+			MotorMover mover = new MotorMover(distanceInInches * 0.0254);
+			new Thread(mover).start();
 		}
 	}
-	
+
 	/**
 	 * moves the robot a certain amount of degrees 
 	 * @param degrees
@@ -126,7 +128,33 @@ public class MotorGroup implements Runnable{
 				}
 			}
 		}
-		
+
+	}
+
+	public class MotorMover implements Runnable{
+
+		double distanceInMeters;
+
+		public MotorMover(double distanceInMeters) {
+			this.distanceInMeters = distanceInMeters;
+		}
+		@Override
+		public void run() {
+			encoder.reset();
+			double speed;
+			if (distanceInMeters>0)
+				speed = HWR.MEDIUM_SPEED;
+			else
+				speed = -HWR.MEDIUM_SPEED;
+			while (Math.abs(encoder.getDistanceMeters()) < distanceInMeters){
+				for (Motor motor: motors){
+					motor.set(speed);
+				} 
+			}
+			stop();
+			encoder.reset();
+		}
+
 	}
 
 }

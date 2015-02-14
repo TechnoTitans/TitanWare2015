@@ -32,7 +32,6 @@ public class TechnoTitan extends IterativeRobot {
     
 	DriveTester driveTester;
     Gyro gyro;
-	TankDrive tankDrive;
 	PickerUpper pickerUpper;
 	Autonomous autonomous;
 	PowerDistributionManager powerDistributionManager;

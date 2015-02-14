@@ -70,7 +70,7 @@ public class Talon extends edu.wpi.first.wpilibj.Talon implements Motor{
 		moveDistance(distance);							//travels distance
 	}
 
-	public class MotorMover implements Runnable{
+	private class MotorMover implements Runnable{
 
 		double distanceInMeters;
 		Talon talon;

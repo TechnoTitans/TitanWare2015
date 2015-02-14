@@ -74,7 +74,7 @@ public class TalonSRX extends CANTalon implements Motor{
 		moveDistance(distance);							//travels distance
 	}
 
-	public class MotorMover implements Runnable{
+	private class MotorMover implements Runnable{
 
 		double distanceInMeters;
 		TalonSRX talon;
