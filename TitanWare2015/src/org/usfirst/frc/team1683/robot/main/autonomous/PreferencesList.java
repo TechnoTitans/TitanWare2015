@@ -19,6 +19,8 @@ public class PreferencesList{
 		DriverStation.prefDouble("robotDistance", 2);
 		DriverStation.prefDouble("toteSpaceDistance", 2);
 		DriverStation.prefBoolean("enablePrinting", true);
+		
+		DriverStation.prefBoolean("enableLightSensor", true);
 	}
 	
 }
