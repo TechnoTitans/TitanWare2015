@@ -159,8 +159,8 @@ public class MotorGroup implements Runnable{
 			}
 			stop();
 			currentThread.notifyAll();
-			currentThread.destroy();
 			encoder.reset();
+			currentThread.destroy();
 		}
 
 	}

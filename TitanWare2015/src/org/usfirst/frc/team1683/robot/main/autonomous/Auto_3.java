@@ -26,7 +26,6 @@ public class Auto_3 extends Autonomous{
 		case LIFT_BARREL:
 		{
 			pickerUpper.liftBarrel();
-			nextState = State.DRIVE_SIDEWAYS;
 			synchronized (this) {
 				try {
 					this.wait();
@@ -34,6 +33,7 @@ public class Auto_3 extends Autonomous{
 					e.printStackTrace();
 				}
 			}
+			nextState = State.DRIVE_SIDEWAYS;
 			break;
 		}
 		case DRIVE_SIDEWAYS:
