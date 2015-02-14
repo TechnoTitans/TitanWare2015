@@ -2,10 +2,11 @@ package org.usfirst.frc.team1683.robot.main.autonomous;
 
 import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
+import org.usfirst.frc.team1683.robot.vision.Vision;
 
 public class Auto_3 extends Autonomous{
-	public Auto_3(HDrive drive, PickerUpper pickerUpper) {
-		super(drive, pickerUpper);
+	public Auto_3(HDrive drive, PickerUpper pickerUpper, Vision vision) {
+		super(drive, pickerUpper, vision);
 		// TODO Auto-generated constructor stub
 	}
 

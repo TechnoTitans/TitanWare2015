@@ -3,11 +3,9 @@ package org.usfirst.frc.team1683.robot;
 import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
 import org.usfirst.frc.team1683.robot.drivetrain.Talon;
 import org.usfirst.frc.team1683.robot.drivetrain.TalonSRX;
-import org.usfirst.frc.team1683.robot.drivetrain.TankDrive;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.main.autonomous.Auto_0;
 import org.usfirst.frc.team1683.robot.main.autonomous.Autonomous;
-import org.usfirst.frc.team1683.robot.main.autonomous.AutonomousSelector;
 import org.usfirst.frc.team1683.robot.main.autonomous.PreferencesList;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
@@ -15,6 +13,7 @@ import org.usfirst.frc.team1683.robot.sensors.Photogate;
 import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 import org.usfirst.frc.team1683.robot.statistics.PowerDistributionManager;
 import org.usfirst.frc.team1683.robot.test.DriveTester;
+import org.usfirst.frc.team1683.robot.vision.Vision;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 
@@ -38,6 +37,7 @@ public class TechnoTitan extends IterativeRobot {
 	HDrive drive;
 	PressureSensor pressure;
 	Photogate photogate;
+	Vision vision;
 	
 	
 	/**
@@ -64,7 +64,7 @@ public class TechnoTitan extends IterativeRobot {
     }
 
     public void autonomousInit(){
-    	autonomous = new Auto_0(drive, pickerUpper);
+    	autonomous = new Auto_0(drive, pickerUpper, vision);
     	autonomous.setAutonomous();
     	Autonomous.errorWarning = true;
     }

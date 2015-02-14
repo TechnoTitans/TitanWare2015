@@ -71,13 +71,11 @@ public abstract class Autonomous {
 	protected static Autonomous autonomous;
 
 
-	public Autonomous(HDrive drive, PickerUpper pickerUpper){
+	public Autonomous(HDrive drive, PickerUpper pickerUpper, Vision vision){
 		driveTrain = tankDrive;
 		this.hDrive = drive;
 		this.pickerUpper = pickerUpper;
-		timer = new Timer();
-		vision = new Vision();
-		visionTimer = new Timer();
+		this.vision = vision;
 
 		//Preferences from the SmartDashboard
 		driveDistance = DriverStation.getDouble("driveDistance");
@@ -88,6 +86,9 @@ public abstract class Autonomous {
 		robotDistance = DriverStation.getDouble("robotDistance");
 		toteSpaceDistance = DriverStation.getDouble("toteSpaceDistance");
 		enablePrinting = DriverStation.getBoolean("enablePrinting");
+		timer = new Timer();
+		vision = new Vision();
+		visionTimer = new Timer();
 	}
 
 	/**
@@ -107,7 +108,7 @@ public abstract class Autonomous {
 		DriverStation.sendData("nextState", nextState.toString());
 		DriverStation.sendData("time", timer.get());
 	}
-	
+
 	public static void runAuto(){
 		autonomous.run();
 	}
@@ -156,16 +157,16 @@ public abstract class Autonomous {
 	public void setAutonomous(){
 		int autonomousMode = DriverStation.getInt("autonomousMode");
 		if (autonomousMode == 1)
-			autonomous = new Auto_1(hDrive, pickerUpper);
+			autonomous = new Auto_1(hDrive, pickerUpper, vision);
 		else if (autonomousMode == 2)
-			autonomous = new Auto_2(hDrive, pickerUpper);
+			autonomous = new Auto_2(hDrive, pickerUpper, vision);
 		else if (autonomousMode == 3)
-			autonomous = new Auto_3(hDrive, pickerUpper);
+			autonomous = new Auto_3(hDrive, pickerUpper, vision);
 		else if (autonomousMode == 4)
-			autonomous = new Auto_4(hDrive, pickerUpper);
+			autonomous = new Auto_4(hDrive, pickerUpper, vision);
 		else
-			autonomous = new Auto_0(hDrive, pickerUpper);
+			autonomous = new Auto_0(hDrive, pickerUpper, vision);
 	}
-	
+
 	public abstract void run();
 }
