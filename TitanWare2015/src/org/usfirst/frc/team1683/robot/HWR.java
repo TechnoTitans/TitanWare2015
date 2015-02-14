@@ -101,4 +101,9 @@ public class HWR {
 
 	//Light Ring
 	public static final int LIGHT_RING				= HWP.PWM_0;
+	
+	//Motor Constants
+	public static final double LOW_SPEED			= 0.25;
+	public static final double MEDIUM_SPEED			= 0.50;
+	public static final double HIGH_SPEED			= 1.0;
 }
