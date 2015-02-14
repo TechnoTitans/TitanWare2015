@@ -1,7 +1,5 @@
 package org.usfirst.frc.team1683.robot;
 
-import org.usfirst.frc.team1683.robot.main.DriverStation;
-
 public class HWR {
 
 	// Joysticks
@@ -40,11 +38,11 @@ public class HWR {
 	public static final int LEFT_CHANNEL_B			= HWP.DIO_5;
 	public static final int RIGHT_CHANNEL_A			= HWP.DIO_2;
 	public static final int RIGHT_CHANNEL_B			= HWP.DIO_3;
-	public static final int FRONT_CHANNEL_A			= HWP.DIO_6;
+	public static final int FRONT_CHANNEL_A			= 10;
 	public static final int FRONT_CHANNEL_B			= HWP.DIO_7;
 	public static final int BACK_CHANNEL_A			= HWP.DIO_8;
 	public static final int BACK_CHANNEL_B			= HWP.DIO_9;
-	public static final int PHOTOGATE 				= 10;
+	public static final int PHOTOGATE 				= HWP.DIO_6;
 
 
 	//Encoder Wheel Distance Per Pulse

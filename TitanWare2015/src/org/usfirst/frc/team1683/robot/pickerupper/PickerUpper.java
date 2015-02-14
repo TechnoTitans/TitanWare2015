@@ -25,6 +25,7 @@ public class PickerUpper implements Runnable{
 	Photogate photogate;
 	double beltTargetPosition;
 	HDrive hDrive;
+	boolean enableSensor;
 
 	/**
 	 * Constructor - one motor lift without encoder
@@ -61,6 +62,7 @@ public class PickerUpper implements Runnable{
 		this.hDrive = hDrive;
 //		isForward = true;
 //		pistons = new DoubleActionSolenoid(liftSolenoids, pressure);
+		enableSensor = DriverStation.getBoolean("enableSensor");
 	}
 	/**
 	 * Constructor - two motor lift with encoder
@@ -109,8 +111,14 @@ public class PickerUpper implements Runnable{
 		if (DriverStation.antiBounce(joystickNumber, HWR.LIFT_SECOND_TOTE)){
 			liftSecondTote();
 		}
+		if (DriverStation.antiBounce(joystickNumber, 8)){
+			motors.moveDistanceInches(12);
+		}
 		if (beltEncoder.getDistance()>HWR.MOVE_MAX)
 			motors.moveDistance(HWR.MOVE_MAX-beltEncoder.getDistance());
+		if (enableSensor&&photogate.get()){
+			calibrateToZero();
+		}
 	}
 
 
