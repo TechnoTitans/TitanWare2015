@@ -144,6 +144,11 @@ public class HDrive extends TankDrive{
 		currentThread = hBackMotors.getCurrentThread();
 	}
 	
+	public void set(double speed){
+		hBackMotors.set(speed);
+		hFrontMotors.set(speed);
+	}
+	
 	private class DrivePistons{
 		AirSystem frontAirSystem;
 		AirSystem backAirSystem;

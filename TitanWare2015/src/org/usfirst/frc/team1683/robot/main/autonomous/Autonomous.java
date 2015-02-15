@@ -20,6 +20,7 @@ public abstract class Autonomous {
 	protected static Gyro gyro;
 	protected static DriveTrain driveTrain;
 	protected static Timer timer;
+	protected static Timer driveTimer;
 	protected static Vision vision;
 	protected static Timer visionTimer;
 	protected static Photogate photogate;
@@ -44,7 +45,8 @@ public abstract class Autonomous {
 		MOVE_FORWARD,
 		END_CASE,
 		PRINT_ERROR,
-		RUN_OTHER_AUTO
+		RUN_OTHER_AUTO,
+		START_DRIVE_SIDEWAYS
 	}
 
 
@@ -79,6 +81,7 @@ public abstract class Autonomous {
 		updatePreferences();
 		timer = new Timer();
 		visionTimer = new Timer();
+		driveTimer = new Timer();
 	}
 
 	/**
