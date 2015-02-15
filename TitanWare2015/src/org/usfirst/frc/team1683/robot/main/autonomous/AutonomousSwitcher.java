@@ -29,6 +29,8 @@ public class AutonomousSwitcher {
 	}
 	
 	public void run(){
+		autonomous.updatePreferences();
 		autonomous.run();
 	}
+	
 }
