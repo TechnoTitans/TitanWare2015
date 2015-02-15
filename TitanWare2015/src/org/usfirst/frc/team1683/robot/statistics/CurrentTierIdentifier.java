@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.usfirst.frc.team1683.robot.TechnoTitan;
+import org.usfirst.frc.team1683.robot.main.DriverStation;
+
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 public class CurrentTierIdentifier implements Runnable{
 	
-	final private double stDevTierDifference = 2.9;
+	final private double stDevTierDifference = 4;
 	ArrayList<List<Double>> tiers; //each list represents a distribution of currents for each tier
 	
 	private List<Double> currentTier;
@@ -28,7 +31,6 @@ public class CurrentTierIdentifier implements Runnable{
 			tiers.add(new ArrayList<Double>());
 		}
 		idleValue = panel.getCurrent(this.motorChannel);
-		new Thread(this, "Tier Manager").start();
 	}
 	
 	
@@ -47,6 +49,10 @@ public class CurrentTierIdentifier implements Runnable{
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+			}
+			if (TechnoTitan.tierPost){
+				System.out.println("Number Of Totes: "+ currentTierIndex);
+				DriverStation.sendData("Number Of Totes", currentTierIndex);
 			}
 		}
 	}

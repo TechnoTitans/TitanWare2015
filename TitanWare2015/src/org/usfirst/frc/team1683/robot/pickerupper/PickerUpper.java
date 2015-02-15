@@ -63,6 +63,7 @@ public class PickerUpper implements Runnable{
 //		isForward = true;
 //		pistons = new DoubleActionSolenoid(liftSolenoids, pressure);
 		enableSensor = DriverStation.getBoolean("enableSensor");
+		pistons.upright();
 	}
 	/**
 	 * Constructor - two motor lift with encoder
@@ -87,7 +88,7 @@ public class PickerUpper implements Runnable{
 		leftLiftMotor = new MotorGroup("Left Lift Motor", new int[]{leftMotor}, motorType , leftInverseDirection, beltEncoder);
 		rightLiftMotor = new MotorGroup("Right Lift Motor",new int[]{rightMotor}, motorType, rightInverseDirection, beltEncoder);
 		this.photogate = photogate;
-		uprightPickerUpper();
+		pistons.upright();
 	}
 
 	public void liftMode(int joystickNumber) {
@@ -291,7 +292,7 @@ public class PickerUpper implements Runnable{
 		
 		public void freeze(){
 			frontAirSystem.extend();
-			frontAirSystem.extend();
+			backAirSystem.extend();
 		}
 	}
 	

@@ -63,8 +63,8 @@ public class HWR {
 	//Pistons
 	public static final int LEFT_H_PISTON			= PCM.SOLENOID_0;
 	public static final int RIGHT_H_PISTON			= PCM.SOLENOID_1;
-	public static final int LEFT_LIFT_PISTON		= PCM.SOLENOID_2;
-	public static final int RIGHT_LIFT_PISTON		= PCM.SOLENOID_3;
+	public static final int FRONT_LIFT_PISTON		= PCM.SOLENOID_2;
+	public static final int BACK_LIFT_PISTON		= PCM.SOLENOID_3;
 
 	//PickerUpper constants
 	public static final double MOVE_MIN             = 0.0;
@@ -98,8 +98,8 @@ public class HWR {
 	public static final int GO_TO_HOME				= 9;
 	public static final int LIFT_FIRST_TOTE			= 10;
 	public static final int LIFT_SECOND_TOTE		= 11;
-	public static final int UPRIGHT_BELT			= 2;
-	public static final int ANGLE_BELT				= 3;
+	public static final int UPRIGHT_BELT			= 3;
+	public static final int ANGLE_BELT				= 4;
 	public static final int FREEZE_BELT				= 1;
 
 	//Light Ring

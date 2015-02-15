@@ -12,7 +12,6 @@ public class Auto_3 extends Autonomous{
 
 	/**
 	 * Lifts the barrel, and uses the barrel to push the tote into the Auto Zone to get the barrel, tote, and robot in the
-	 * @author komals
 	 */
 	public void run(){
 		switch(presentState){
@@ -26,12 +25,10 @@ public class Auto_3 extends Autonomous{
 		case LIFT_BARREL:
 		{
 			pickerUpper.liftBarrel();
-			synchronized (this) {
-				try {
-					this.wait();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+			try {
+				this.wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
 			nextState = State.DRIVE_SIDEWAYS;
 			break;
@@ -45,7 +42,7 @@ public class Auto_3 extends Autonomous{
 		}
 		case CENTER_TOTE:
 		{
-//			nextState = centerTote(State.DRIVE_FORWARD);
+			//			nextState = centerTote(State.DRIVE_FORWARD);
 			nextState = State.DRIVE_FORWARD;
 			break;
 		}
@@ -58,7 +55,7 @@ public class Auto_3 extends Autonomous{
 		case END_CASE:
 		{
 
-//			hDrive.stop();
+			//			hDrive.stop();
 			nextState = State.END_CASE;
 			break;
 		}

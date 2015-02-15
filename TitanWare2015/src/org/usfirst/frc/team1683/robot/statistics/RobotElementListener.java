@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class RobotElementListener{
 
-	private static int maxNumberOfStDev = 2;
+	private static int maxNumberOfStDev = 4;
 
 	PowerDistributionPanel powerDistBoard;
 	int channel;

@@ -19,7 +19,7 @@ public class RobotStatisticListener {
 	private ArrayList<Double> data;
 	
 	private Logger log;
-	private static int maxNumberOfStDev = 2;
+	private static int maxNumberOfStDev = 3;
 	
 	private double idleValue = 0;
 	

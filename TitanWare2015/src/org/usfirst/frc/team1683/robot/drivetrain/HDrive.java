@@ -54,7 +54,7 @@ public class HDrive extends TankDrive{
 		hBackMotors = new MotorGroup("HBackMotors", new int[] {backMotor}, hMotorType, false, backEncoder);
 		hFrontMotors= new MotorGroup("HFrontMotors", new int[]{frontMotor},hMotorType, true, frontEncoder);
 		this.triggerButton = triggerButton;
-//		isLifted = true;
+		isLifted = true;
 //		pistons = new DoubleActionSolenoid(new int[]{rightPiston, leftPiston}, pressure);
 	}
 	

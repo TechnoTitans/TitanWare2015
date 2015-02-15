@@ -6,11 +6,11 @@ import org.usfirst.frc.team1683.robot.drivetrain.TalonSRX;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.main.autonomous.Autonomous;
 import org.usfirst.frc.team1683.robot.main.autonomous.AutonomousSwitcher;
-import org.usfirst.frc.team1683.robot.main.autonomous.PreferencesList;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
 import org.usfirst.frc.team1683.robot.sensors.Photogate;
 import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
+import org.usfirst.frc.team1683.robot.statistics.CurrentTierIdentifier;
 import org.usfirst.frc.team1683.robot.statistics.PowerDistributionManager;
 import org.usfirst.frc.team1683.robot.test.DriveTester;
 import org.usfirst.frc.team1683.robot.vision.Vision;
@@ -27,6 +27,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 public class TechnoTitan extends IterativeRobot {
     public static boolean debug = false;
     public static final boolean POSTENCODERVALUES = true;
+    public static final boolean tierPost = true;
+
 
     
 	DriveTester driveTester;
@@ -38,6 +40,7 @@ public class TechnoTitan extends IterativeRobot {
 	PressureSensor pressure;
 	Photogate photogate;
 	Vision vision;
+	CurrentTierIdentifier toteNumberIdentifier;
 	
 	
 	/**
@@ -59,10 +62,13 @@ public class TechnoTitan extends IterativeRobot {
         		HWR.LEFT_H_PISTON, HWR.RIGHT_H_PISTON, pressure, 
         		HWR.FRONT_H_MOTOR, HWR.BACK_H_MOTOR, Talon.class, HWR.DEPLOY_H_DRIVE, HWR.driveEncoderWDPP, HWR.hDriveEncoderWDPP,
         		HWR.leftDriveEncoderReverse, HWR.rightDriveEncoderReverse, HWR.backHEncoderReverse, HWR.frontHEncoderReverse);
-        pickerUpper = new PickerUpper(Talon.class, HWR.BELT_INVERSE, new int[]{HWR.LEFT_LIFT_PISTON, HWR.RIGHT_LIFT_PISTON}, new int[]{HWR.BELT_MOTOR}, 
+        pickerUpper = new PickerUpper(Talon.class, HWR.BELT_INVERSE, new int[]{HWR.FRONT_LIFT_PISTON, HWR.BACK_LIFT_PISTON}, new int[]{HWR.BELT_MOTOR}, 
         		HWR.BELT_CHANNEL_A, HWR.BELT_CHANNEL_B, HWR.beltEncoderReverse, HWR.liftEncoderWDPP, 
         		pressure, photogate, drive);
         driveTester = new DriveTester(pickerUpper, drive);
+    	toteNumberIdentifier = new CurrentTierIdentifier(powerDistributionManager.getPowerDistributionPanel(), 4, HWR.BELT_MOTOR);
+		new Thread(toteNumberIdentifier, "Tier Manager").start();
+
     }
 
     public void autonomousInit(){
