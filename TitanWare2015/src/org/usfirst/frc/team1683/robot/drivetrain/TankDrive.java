@@ -71,6 +71,8 @@ public class TankDrive extends DriveTrain{
 		double rightSpeed = rightStick.getRawAxis(DriverStation.YAxis);
 		left.set(leftSpeed);
 		right.set(rightSpeed);
+		DriverStation.sendData("Gyro Direction", gyro.getDirection());
+		DriverStation.sendData("Gyro Displacement", gyro.getAngle());
 	}
 	
 	/**

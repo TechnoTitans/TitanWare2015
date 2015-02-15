@@ -57,7 +57,7 @@ public class PressureSensor implements Sensor {
         {
             SmartDashboard.putBoolean("LowPressureTransducerError", false);
             pressure = PRESSURE_SLOPE*(averageVoltage-MIN_PRESSURE_VOLTS);
-            SmartDashboard.putNumber("Pressure", pressure);
+//            SmartDashboard.putNumber("Pressure", pressure);
            
         }
         return pressure;
