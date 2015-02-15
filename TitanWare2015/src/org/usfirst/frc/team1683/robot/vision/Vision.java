@@ -60,7 +60,7 @@ public class Vision {
 		WIDTH		= new NumberArray();
 		AREA		= new NumberArray();
 		
-//		ring.maxOn();
+		ring.maxOn();
 	} 
 	
 	/**
