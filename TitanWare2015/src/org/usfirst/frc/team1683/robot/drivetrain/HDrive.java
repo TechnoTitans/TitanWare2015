@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1683.robot.drivetrain;
 
+import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.pneumatics.AirSystem;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
@@ -77,6 +78,11 @@ public class HDrive extends TankDrive{
 		else {
 			liftWheels();
 			super.driveMode(rightStick, leftStick);
+		}
+		if (DriverStation.leftStick.getRawButton(HWR.CALIBRATE_DRIVE))
+		{
+			leftEncoder.reset();
+			rightEncoder.reset();
 		}
 	}
 	

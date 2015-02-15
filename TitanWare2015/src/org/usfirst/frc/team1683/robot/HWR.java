@@ -101,6 +101,7 @@ public class HWR {
 	public static final int UPRIGHT_BELT			= 3;
 	public static final int ANGLE_BELT				= 4;
 	public static final int FREEZE_BELT				= 1;
+	public static final int CALIBRATE_DRIVE			= 7;
 
 	//Light Ring
 	public static final int LIGHT_RING				= HWP.PWM_5;
