@@ -46,11 +46,12 @@ public class RobotElementListener{
 				String problem = "\nAbnormal Current Detected On Channel: " + channel + "- Current Was: " + current
 						+ "Mean Current Was: "+ mean + "StDev Current Was: "+ stDev;
 				if (log == null){
-					System.out.println(problem);
 					SmartDashboard.putString(PowerDistributionManager.KEY, problem);
 				}else{
 					log.log(Level.WARNING, problem);
 					SmartDashboard.putString(PowerDistributionManager.KEY, problem);
+				}
+				if (TechnoTitan.debugPowerDistribution){
 					System.out.println(problem);
 				}
 				
@@ -62,7 +63,7 @@ public class RobotElementListener{
 		double current = powerDistBoard.getCurrent(this.channel);
 		if (current > (idleValue+(idleValue * 0.09)) || current< (idleValue-(idleValue * 0.09))){
 			currents.add(current);
-			if (TechnoTitan.debug){
+			if (TechnoTitan.debugPowerDistribution){
 				System.out.println("Channel " + channel + " Current: "+ current );
 			}
 			return true;

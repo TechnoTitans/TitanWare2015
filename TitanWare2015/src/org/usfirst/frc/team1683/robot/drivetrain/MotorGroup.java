@@ -36,7 +36,7 @@ public class MotorGroup implements Runnable{
 				motors.add(new TalonSRX(j, inverseDirection));
 			}
 		}
-		if (TechnoTitan.POSTENCODERVALUES){
+		if (TechnoTitan.postEncoder){
 			new Thread(this, "EncoderPost").start();
 		}
 	}
@@ -61,7 +61,7 @@ public class MotorGroup implements Runnable{
 			}
 		}
 		this.encoder = encoder;
-		if (TechnoTitan.POSTENCODERVALUES){
+		if (TechnoTitan.postEncoder){
 			new Thread(this, "EncoderPost").start();
 		}
 	}
@@ -119,17 +119,11 @@ public class MotorGroup implements Runnable{
 		while (true){
 			Timer.delay(0.25);
 			if (encoder != null){
-				if (TechnoTitan.POSTENCODERVALUES){
-					System.out.println(groupName + encoder.getDisplacement(encoder.getDistancePerPulse()));
-				}
 				DriverStation.sendData(groupName , encoder.getDisplacement(encoder.getDistancePerPulse()));
 			}
 			for(Motor motor: motors){
 				if (motor.hasEncoder()){
 					String name = "Encoder for motor "+ motor.getChannel();
-					if (TechnoTitan.debug){
-						System.out.println(name + motor.getEncoder().getDisplacement(encoder.getDistancePerPulse()));
-					}
 					DriverStation.sendData(name , motor.getEncoder().getDisplacement(encoder.getDistancePerPulse()));
 				}
 			}

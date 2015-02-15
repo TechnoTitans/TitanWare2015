@@ -68,9 +68,7 @@ public class PowerDistributionManager implements Runnable{
             log.info("Power Distribution Manager:");  
 
         } catch (SecurityException e) {  
-            e.printStackTrace();  
         } catch (IOException e) {  
-            e.printStackTrace();  
         }
 	}
 	

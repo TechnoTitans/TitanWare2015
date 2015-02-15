@@ -25,11 +25,11 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  * directory.
  */
 public class TechnoTitan extends IterativeRobot {
-    public static boolean debug = false;
-    public static final boolean POSTENCODERVALUES = true;
-    public static final boolean tierPost = true;
-
-
+    public static final boolean debugPowerDistribution = false;
+    public static final boolean postEncoder = true;
+    public static final boolean debugTierIdentifier = false;
+    public static final boolean debugPressure = true;
+    public static final boolean debugStates = true;
     
 	DriveTester driveTester;
     Gyro gyro;

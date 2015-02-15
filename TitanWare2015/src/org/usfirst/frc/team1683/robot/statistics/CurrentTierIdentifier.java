@@ -50,8 +50,8 @@ public class CurrentTierIdentifier implements Runnable{
 					e.printStackTrace();
 				}
 			}
-			if (TechnoTitan.tierPost){
-				System.out.println("Number Of Totes: "+ currentTierIndex);
+			if (TechnoTitan.debugTierIdentifier){
+//				System.out.println("Number Of Totes: "+ currentTierIndex);
 				DriverStation.sendData("Number Of Totes", currentTierIndex);
 			}
 		}

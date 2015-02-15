@@ -42,12 +42,13 @@ public class RobotStatisticListener {
 						+ "Mean  Was: "+ mean 
 						+ "StDev Was: "+ stDev;
 				if (log == null){
-					System.out.println(problem);
 					SmartDashboard.putString(PowerDistributionManager.KEY, problem);
 				}else{
-					System.out.println(problem);
 					log.log(Level.WARNING, problem);
 					SmartDashboard.putString(PowerDistributionManager.KEY, problem);
+				}
+				if (TechnoTitan.debugPowerDistribution){
+					System.out.println(problem);
 				}
 				
 			}
@@ -57,7 +58,7 @@ public class RobotStatisticListener {
 	public boolean updateValues(double value){
 		if (value > (idleValue+(idleValue * 0.07)) || value< (idleValue-(idleValue * 0.07))){
 			data.add(value);
-			if (TechnoTitan.debug){
+			if (TechnoTitan.debugPowerDistribution){
 				System.out.println(statistic +": " + value);
 			}
 			return true;
