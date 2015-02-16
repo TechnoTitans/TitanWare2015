@@ -28,11 +28,18 @@ public class Auto_1A extends Autonomous{
 		}
 		case DRIVE_FORWARD:
 		{
-			double driveTime = driveDistance/HWR.MEDIUM_SPEED;
+			double speed;
+			if (driveDistance > 0){
+				speed = HWR.MEDIUM_SPEED;
+			}
+			else{
+				speed = -HWR.MEDIUM_SPEED;
+			}
+			double driveTime = Math.abs(driveDistance)/HWR.MEDIUM_SPEED;
 			System.out.println("driveDistance = " + driveDistance);
 			if (driveTimer.get()<driveTime)
 			{
-				hDrive.set(HWR.MEDIUM_SPEED);
+				hDrive.set(speed);
 				nextState = State.DRIVE_FORWARD;
 			}
 			else
