@@ -46,7 +46,8 @@ public abstract class Autonomous {
 		END_CASE,
 		PRINT_ERROR,
 		RUN_OTHER_AUTO,
-		START_DRIVE_SIDEWAYS
+		START_DRIVE_SIDEWAYS,
+		START_DRIVE_FORWARD
 	}
 
 
