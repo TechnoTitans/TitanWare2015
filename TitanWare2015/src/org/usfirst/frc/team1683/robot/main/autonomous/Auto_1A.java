@@ -35,7 +35,6 @@ public class Auto_1A extends Autonomous{
 			else{
 				speed = -HWR.MEDIUM_SPEED;
 			}
-			double driveTime = Math.abs(driveDistance)/HWR.MEDIUM_SPEED;
 //			System.out.println("driveDistance = " + driveDistance);
 			if (driveTimer.get()<driveTime)
 			{
