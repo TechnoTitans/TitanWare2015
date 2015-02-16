@@ -25,10 +25,12 @@ public class Auto_1A extends Autonomous{
 		{
 			driveTimer.start();
 			nextState = State.DRIVE_FORWARD;
+			break;
 		}
 		case DRIVE_FORWARD:
 		{
 			double speed;
+			driveDistance = 143;
 			if (driveDistance > 0){
 				speed = HWR.MEDIUM_SPEED;
 			}
