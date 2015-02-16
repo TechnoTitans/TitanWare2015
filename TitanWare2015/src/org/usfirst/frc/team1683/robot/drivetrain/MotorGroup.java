@@ -142,7 +142,7 @@ public class MotorGroup implements Runnable{
 	 */
 	public void stop() {
 		for (Motor motor: motors){
-			motor.stop();
+			motor.set(0);
 		} 
 	}
 	
