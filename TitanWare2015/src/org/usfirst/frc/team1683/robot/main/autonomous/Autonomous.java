@@ -95,6 +95,7 @@ public abstract class Autonomous {
 		driveTimer = new Timer();
 		leftEncoder = hDrive.leftEncoder;
 		rightEncoder = hDrive.rightEncoder;
+		liftTimer = new Timer();
 	}
 
 	/**
