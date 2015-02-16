@@ -90,7 +90,8 @@ public class TechnoTitan extends IterativeRobot {
     public void teleopPeriodic() {
         drive.driveMode(DriverStation.leftStick, DriverStation.rightStick);
         pickerUpper.liftMode(HWR.AUX_JOYSTICK);
-        
+        DriverStation.sendData("leftStick", DriverStation.leftStick.getRawAxis(DriverStation.YAxis));
+        DriverStation.sendData("rightStick", DriverStation.rightStick.getRawAxis(DriverStation.YAxis));
     }
     
     /**
