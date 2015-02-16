@@ -75,6 +75,7 @@ public class TechnoTitan extends IterativeRobot {
     	autonomous = new AutonomousSwitcher(drive, pickerUpper, vision);
     	Autonomous.errorWarning = true;
     	Autonomous.updatePreferences();
+    	Autonomous.presentState = Autonomous.State.INIT_CASE;
     }
     
     /**
