@@ -36,7 +36,7 @@ public class Auto_1A extends Autonomous{
 				speed = -HWR.MEDIUM_SPEED;
 			}
 			double driveTime = Math.abs(driveDistance)/HWR.MEDIUM_SPEED;
-			System.out.println("driveDistance = " + driveDistance);
+//			System.out.println("driveDistance = " + driveDistance);
 			if (driveTimer.get()<driveTime)
 			{
 				hDrive.setTankDrive(speed);
