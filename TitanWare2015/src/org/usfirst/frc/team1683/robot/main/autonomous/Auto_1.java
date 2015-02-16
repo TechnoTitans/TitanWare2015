@@ -22,7 +22,9 @@ public class Auto_1 extends Autonomous{
 		}
 		case DRIVE_FORWARD:
 		{
-			hDrive.goForward(driveDistance);
+			System.out.println("driveDistance = " + driveDistance);
+//			hDrive.goForward(driveDistance);
+			hDrive.goForward(143);
 			nextState = State.END_CASE;
 			break;
 		}

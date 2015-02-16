@@ -10,6 +10,7 @@ import org.usfirst.frc.team1683.robot.sensors.Photogate;
 import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.PIDController;
 
 
 public class PickerUpper implements Runnable{
@@ -26,6 +27,8 @@ public class PickerUpper implements Runnable{
 	double beltTargetPosition;
 	HDrive hDrive;
 	boolean enableSensor;
+	PIDController liftPID;
+	double P, I, D, F, tolerance;
 
 	/**
 	 * Constructor - one motor lift without encoder
@@ -62,8 +65,45 @@ public class PickerUpper implements Runnable{
 		this.hDrive = hDrive;
 //		isForward = true;
 //		pistons = new DoubleActionSolenoid(liftSolenoids, pressure);
-		enableSensor = DriverStation.getBoolean("enableSensor");
 		pistons.upright();
+	}
+	
+	/**
+	 * Constructor - one motor lift with encoder
+	 * @param motorType
+	 * @param inverseDirection
+	 * @param liftSolenoids
+	 * @param pickerUpperChannels
+	 * @param beltChannelA
+	 * @param beltChannelB
+	 * @param reverseDirection
+	 * @param wdpp
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public PickerUpper(Class motorType, boolean inverseDirection, int[] liftSolenoids, int[] pickerUpperChannels,
+			 int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp, 
+			 PressureSensor pressure, Photogate photogate, HDrive hDrive, int index){
+		P = DriverStation.getDouble("PID Value: P");
+		I = DriverStation.getDouble("PID Value: I");
+		D = DriverStation.getDouble("PID Value: D");
+		F = DriverStation.getDouble("PID Value: F");
+		tolerance = DriverStation.getDouble("PID Tolerance");
+		
+		beltEncoder = new Encoder(beltChannelA, beltChannelB, reverseDirection, wdpp);
+		this.motors = new MotorGroup("Picker Upper", pickerUpperChannels, motorType, inverseDirection, 
+				beltEncoder, P, I, D, F, index);
+		liftPID = motors.getPID();
+		this.pressure = pressure;
+		this.photogate = photogate;
+		pistons = new DualActionPistons(liftSolenoids, pressure);
+		this.hDrive = hDrive;
+//		isForward = true;
+//		pistons = new DoubleActionSolenoid(liftSolenoids, pressure);
+		pistons.upright();
+		
+		enableSensor = DriverStation.getBoolean("enableSensor");
+		
+		
 	}
 	/**
 	 * Constructor - two motor lift with encoder

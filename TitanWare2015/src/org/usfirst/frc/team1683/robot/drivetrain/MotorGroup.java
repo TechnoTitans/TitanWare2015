@@ -7,6 +7,7 @@ import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.TechnoTitan;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Timer;
 
 /**
@@ -19,6 +20,7 @@ public class MotorGroup implements Runnable{
 	Thread currentThread;
 	List<Motor> motors;
 	Encoder encoder;
+	PIDController PIDcontrol;
 	/**
 	 * Constructor
 	 * @param channelNumbers
@@ -65,6 +67,32 @@ public class MotorGroup implements Runnable{
 			new Thread(this, "EncoderPost").start();
 		}
 	}
+	
+	public MotorGroup(String groupName, int[] channelNumbers, Class<Motor> motorType, boolean inverseDirection, 
+			Encoder encoder, double P, double I, double D, double F, int index)
+	{
+		this.groupName = groupName;
+		motors = new ArrayList<Motor>();
+		for (int i = 0; i < channelNumbers.length; i++) {
+			int j = channelNumbers[i];
+			if (motorType.equals(Talon.class)){
+				motors.add(new Talon(j, inverseDirection));
+				if (j==index){
+					PIDcontrol = new PIDController(P, I, D, F, encoder, new Talon(j, inverseDirection));
+				}
+			}else if (motorType.equals(TalonSRX.class)){
+				motors.add(new TalonSRX(j, inverseDirection));
+				if (j==index){
+					PIDcontrol = new PIDController(P, I, D, F, encoder, new TalonSRX(j, inverseDirection));
+				}
+			}
+		}
+		this.encoder = encoder;
+		if (TechnoTitan.postEncoder){
+			new Thread(this, "EncoderPost").start();
+		}
+		
+	}
 
 	/**
 	 * moves the robot a certain distance
@@ -87,7 +115,10 @@ public class MotorGroup implements Runnable{
 	public Thread getCurrentThread(){
 		return currentThread;
 	}
-
+	
+	public PIDController getPID(){
+		return PIDcontrol;
+	}
 	/**
 	 * moves the robot a certain amount of degrees 
 	 * @param degrees
@@ -114,6 +145,7 @@ public class MotorGroup implements Runnable{
 			motor.stop();
 		} 
 	}
+	
 	@Override
 	public void run() {
 		while (true){

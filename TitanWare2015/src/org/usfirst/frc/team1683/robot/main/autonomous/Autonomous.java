@@ -73,6 +73,7 @@ public abstract class Autonomous {
 	protected static Autonomous autonomous;
 
 
+	@SuppressWarnings("static-access")
 	public Autonomous(HDrive drive, PickerUpper pickerUpper, Vision vision){
 		driveTrain = tankDrive;
 		this.hDrive = drive;
@@ -112,11 +113,6 @@ public abstract class Autonomous {
 		robotDistance = DriverStation.getDouble("robotDistance");
 		toteSpaceDistance = DriverStation.getDouble("toteSpaceDistance");
 		enablePrinting = DriverStation.getBoolean("enablePrinting");
-	}
-
-	public static void runAuto(){
-		updatePreferences();
-		autonomous.run();
 	}
 
 	/**

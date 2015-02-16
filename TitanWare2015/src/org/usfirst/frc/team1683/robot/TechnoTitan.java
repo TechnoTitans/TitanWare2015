@@ -74,6 +74,7 @@ public class TechnoTitan extends IterativeRobot {
     public void autonomousInit(){
     	autonomous = new AutonomousSwitcher(drive, pickerUpper, vision);
     	Autonomous.errorWarning = true;
+    	Autonomous.updatePreferences();
     }
     
     /**
