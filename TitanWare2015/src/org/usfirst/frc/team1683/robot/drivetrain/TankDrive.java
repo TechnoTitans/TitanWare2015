@@ -129,12 +129,12 @@ public class TankDrive extends DriveTrain{
 		startAngle = 0;
 	}
 	@Override
+//	MOVED TO HDRIVE-DO NOT USE THIS
 	public void antiDrift() {
 		// TODO Auto-generated method stub
 		double angle=gyro.getAngle();
 		turnAngle(-angle*kp,left,right);
 		Timer.delay(waitTime);
-		
 	}
 	
 	/**

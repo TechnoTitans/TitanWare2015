@@ -135,6 +135,22 @@ public class HDrive extends TankDrive{
 		currentThread = hBackMotors.getCurrentThread();
 	}
 	
+	public void antiDrift(double speed) {
+		double targetAngle;
+		if(isDeployed()) {
+			targetAngle = -90;
+		}
+		else {
+			targetAngle = 0;
+		}
+		double error = targetAngle - gyro.getAngle();
+		double correction = kp*error;
+		left.set(speed+correction);
+		right.set(speed-correction);
+		DriverStation.sendData("LeftSpeed", speed + correction);
+		DriverStation.sendData("RightSpeed", speed - correction);
+	}
+	
 	public Thread getCurrentThread(){
 		return currentThread;
 	}

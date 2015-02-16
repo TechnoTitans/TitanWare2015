@@ -105,7 +105,8 @@ public class TechnoTitan extends IterativeRobot {
     	
     }
     public void testPeriodic() {
-    	driveTester.test();
+    	//driveTester.test();
+    	drive.antiDrift(HWR.MEDIUM_SPEED);
     }
 
     
