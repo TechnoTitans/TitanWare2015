@@ -2,6 +2,7 @@ package org.usfirst.frc.team1683.robot.main.autonomous;
 
 import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
+import org.usfirst.frc.team1683.robot.main.autonomous.Autonomous.State;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
 import org.usfirst.frc.team1683.robot.vision.Vision;
 
@@ -59,17 +60,26 @@ public class Auto_3A extends Autonomous{
 		}
 		case DRIVE_SIDEWAYS:
 		{
-			double sideSpeed = sideDistance/HWR.MEDIUM_SPEED;
-			if (driveTimer.get()<sideSpeed)
+			double hSpeed;
+			if (sideDistance>0){
+				hSpeed = HWR.MEDIUM_SPEED;
+//				hSpeed = sideSpeed;
+			}
+			else{
+				hSpeed = -HWR.MEDIUM_SPEED;
+//				hSpeed = -sideSpeed;
+			}
+			if (driveTimer.get()<sideTime)
 			{
-				hDrive.set(sideSpeed);
+				hDrive.set(hSpeed);
 				nextState = State.DRIVE_SIDEWAYS;
 			}
 			else
 			{
-				hDrive.stop();
+				hDrive.stopSide();
 				driveTimer.stop();
 				driveTimer.reset();
+				visionTimer.reset();
 				nextState = State.CENTER_TOTE;
 			}
 		}
