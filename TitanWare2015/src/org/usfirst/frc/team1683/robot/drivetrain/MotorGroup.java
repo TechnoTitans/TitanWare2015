@@ -178,9 +178,10 @@ public class MotorGroup implements Runnable{
 				speed = HWR.MEDIUM_SPEED;
 			else
 				speed = -HWR.MEDIUM_SPEED;
-			while (Math.abs(encoder.getDistanceMeters()) < distanceInMeters){
+			while (Math.abs(encoder.getDisplacement(encoder.getDistancePerPulse())) < Math.abs(distanceInMeters)){
 				for (Motor motor: motors){
 					motor.set(speed);
+					Timer.delay(0.5);
 				} 
 			}
 			stop();

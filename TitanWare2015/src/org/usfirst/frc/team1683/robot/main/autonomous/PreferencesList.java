@@ -23,10 +23,10 @@ public class PreferencesList{
 		DriverStation.prefBoolean("enableLightSensor", true);
 		
 		//PID Preferences
-		DriverStation.prefDouble("PID Value: P", 0);
-		DriverStation.prefDouble("PID Value: I", 0);
-		DriverStation.prefDouble("PID Value: D", 0);
-		DriverStation.prefDouble("PID Tolerance", 1);
+		DriverStation.prefDouble("PIDValueP", 0);
+		DriverStation.prefDouble("PIDValueI", 0);
+		DriverStation.prefDouble("PIDValueD", 0);
+		DriverStation.prefDouble("PIDTolerance", 1);
 	}
 	
 }
