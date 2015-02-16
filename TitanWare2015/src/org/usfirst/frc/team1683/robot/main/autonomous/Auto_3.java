@@ -20,7 +20,7 @@ public class Auto_3 extends Autonomous{
 		{
 			timer.start();
 			visionTimer.start();
-			nextState = State.LIFT_BARREL;
+			nextState = State.START_LIFT_BARREL;
 			break;
 		}
 		case START_LIFT_BARREL:
