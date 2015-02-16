@@ -135,7 +135,14 @@ public class TankDrive extends DriveTrain{
 		turnAngle(-angle*kp,left,right);
 		Timer.delay(waitTime);
 		
-	}	
+	}
+	
+	/**
+	 * to reset the gyro from outside the drive code
+	 */
+	public void resetGyro() {
+		gyro.reset();
+	}
 	
 	public void setTankDrive(double speed){
 		left.set(speed);

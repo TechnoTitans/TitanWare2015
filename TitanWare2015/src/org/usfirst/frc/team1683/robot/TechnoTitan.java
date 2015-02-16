@@ -68,10 +68,11 @@ public class TechnoTitan extends IterativeRobot {
         driveTester = new DriveTester(pickerUpper, drive);
     	toteNumberIdentifier = new CurrentTierIdentifier(powerDistributionManager.getPowerDistributionPanel(), 4, HWR.BELT_MOTOR);
 		new Thread(toteNumberIdentifier, "Tier Manager").start();
-
+		drive.resetGyro();
     }
 
     public void autonomousInit(){
+    	drive.resetGyro();
     	autonomous = new AutonomousSwitcher(drive, pickerUpper, vision);
     	Autonomous.errorWarning = true;
     	Autonomous.updatePreferences();
@@ -84,6 +85,10 @@ public class TechnoTitan extends IterativeRobot {
     public void autonomousPeriodic() {
     	autonomous.run();
     }
+    
+    public void teleopInit() {
+    	drive.resetGyro();
+    }
 
     /**
      * This function is called periodically during operator control
@@ -91,8 +96,6 @@ public class TechnoTitan extends IterativeRobot {
     public void teleopPeriodic() {
         drive.driveMode(DriverStation.leftStick, DriverStation.rightStick);
         pickerUpper.liftMode(HWR.AUX_JOYSTICK);
-        DriverStation.sendData("leftStick", DriverStation.leftStick.getRawAxis(DriverStation.YAxis));
-        DriverStation.sendData("rightStick", DriverStation.rightStick.getRawAxis(DriverStation.YAxis));
     }
     
     /**
