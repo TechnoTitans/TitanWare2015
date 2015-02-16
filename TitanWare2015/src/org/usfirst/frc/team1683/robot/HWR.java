@@ -22,8 +22,8 @@ public class HWR {
 	public static final int BELT_MOTOR				= HWP.PWM_1;
 
 	//Motor Inverse Directions
-	public static final boolean LEFT_INVERSE		= true;
-	public static final boolean RIGHT_INVERSE		= false;
+	public static final boolean LEFT_INVERSE		= false;
+	public static final boolean RIGHT_INVERSE		= true;
 	public static final boolean BELT_INVERSE		= false;
 	public static final boolean LEFT_H_INVERSE		= false;
 	public static final boolean RIGHT_H_INVERSE		= false;

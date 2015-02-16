@@ -66,7 +66,7 @@ public abstract class Autonomous {
 	protected static double toteSpaceDistance;
 	protected static boolean isToteLifted;
 	protected static boolean enablePrinting;
-	protected static double driveTime;
+	protected static double driveTime = 5;
 	public static boolean errorWarning;
 
 	protected static double visionDistance = 0;
@@ -115,7 +115,7 @@ public abstract class Autonomous {
 		robotDistance = DriverStation.getDouble("robotDistance");
 		toteSpaceDistance = DriverStation.getDouble("toteSpaceDistance");
 		enablePrinting = DriverStation.getBoolean("enablePrinting");
-		driveTime = DriverStation.getDouble("driveTime");
+		//driveTime = DriverStation.getDouble("driveTime");
 	}
 
 	/**
