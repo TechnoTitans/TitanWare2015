@@ -48,7 +48,7 @@ public class TechnoTitan extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-//    	PreferencesList.set();
+    	//PreferencesList.set();
     	vision = new Vision();
         powerDistributionManager = new PowerDistributionManager(HWR.BACK_LEFT_MOTOR,HWR.FRONT_LEFT_MOTOR,HWR.BACK_RIGHT_MOTOR,HWR.FRONT_RIGHT_MOTOR, HWR.BELT_MOTOR );
         powerDistributionManager.start();
