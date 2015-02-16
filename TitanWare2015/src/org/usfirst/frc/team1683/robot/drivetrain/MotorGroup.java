@@ -170,6 +170,7 @@ public class MotorGroup implements Runnable{
 		public MotorMover(double distanceInMeters) {
 			this.distanceInMeters = distanceInMeters;
 		}
+		@SuppressWarnings("deprecation")
 		@Override
 		public void run() {
 			encoder.reset();
