@@ -67,8 +67,9 @@ public class TankDrive extends DriveTrain{
 	 * runs the driving sequence
 	 */
 	public void driveMode(Joystick rightStick, Joystick leftStick) {
-		double leftSpeed = leftStick.getRawAxis(DriverStation.YAxis);
-		double rightSpeed = rightStick.getRawAxis(DriverStation.YAxis);
+		//The negative Y Axis is due to joysticks taking forward as negative
+		double leftSpeed = leftStick.getRawAxis(-DriverStation.YAxis);
+		double rightSpeed = rightStick.getRawAxis(-DriverStation.YAxis);
 		left.set(leftSpeed);
 		right.set(rightSpeed);
 		DriverStation.sendData("Gyro Direction", gyro.getDirection());
