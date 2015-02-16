@@ -136,6 +136,11 @@ public class TankDrive extends DriveTrain{
 		
 	}	
 	
+	public void setTankDrive(double speed){
+		left.set(speed);
+		right.set(speed);
+	}
+	
 	public void stop() {
 		left.stop();
 		right.stop();
