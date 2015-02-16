@@ -69,6 +69,7 @@ public class Auto_3A extends Autonomous{
 			{
 				hDrive.stop();
 				driveTimer.stop();
+				driveTimer.reset();
 				nextState = State.CENTER_TOTE;
 			}
 		}
