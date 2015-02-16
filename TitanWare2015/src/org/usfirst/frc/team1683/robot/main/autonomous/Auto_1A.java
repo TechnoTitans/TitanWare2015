@@ -29,6 +29,7 @@ public class Auto_1A extends Autonomous{
 		}
 		case DRIVE_FORWARD:
 		{
+//			hDrive.setTankDrive(-1);
 			double speed;
 			driveDistance = 143;
 			if (driveDistance > 0){
