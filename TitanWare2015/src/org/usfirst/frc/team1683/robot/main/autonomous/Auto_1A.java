@@ -46,6 +46,8 @@ public class Auto_1A extends Autonomous{
 			else
 			{
 				hDrive.stop();
+				driveTimer.stop();
+				driveTimer.reset();
 				nextState = State.END_CASE;
 			}
 			break;
