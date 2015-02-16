@@ -23,8 +23,7 @@ public class Auto_1 extends Autonomous{
 		}
 		case START_DRIVE_FORWARD:
 		{
-			hDrive.leftEncoder.reset();
-			hDrive.rightEncoder.reset();
+			hDrive.resetTankEncoders();
 			nextState = State.DRIVE_FORWARD;
 			break;
 		}
@@ -33,12 +32,14 @@ public class Auto_1 extends Autonomous{
 			double speed;
 			if (driveDistance>0){
 				speed = HWR.MEDIUM_SPEED;
+//				speed = driveSpeed;
 			}
 			else{
 				speed = -HWR.MEDIUM_SPEED;
+//				speed = -driveSpeed;
 			}
-			if (Math.abs(hDrive.leftEncoder.getDisplacement(hDrive.leftEncoder.getDistancePerPulse()))<Math.abs(driveDistance)&&
-					Math.abs(hDrive.rightEncoder.getDisplacement(hDrive.rightEncoder.getDistancePerPulse()))<Math.abs(driveDistance))
+			if (Math.abs(leftEncoder.getDisplacement(leftEncoder.getDistancePerPulse()))<Math.abs(driveDistance)&&
+					Math.abs(rightEncoder.getDisplacement(rightEncoder.getDistancePerPulse()))<Math.abs(driveDistance))
 			{
 				hDrive.setTankDrive(speed);
 				nextState = State.DRIVE_FORWARD;

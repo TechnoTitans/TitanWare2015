@@ -155,6 +155,16 @@ public class HDrive extends TankDrive{
 		hFrontMotors.set(speed);
 	}
 	
+	public void stopSide(){
+		hBackMotors.stop();
+		hFrontMotors.stop();
+	}
+	
+	public void resetHEncoders(){
+		backEncoder.reset();
+		frontEncoder.reset();
+	}
+	
 	private class DrivePistons{
 		AirSystem frontAirSystem;
 		AirSystem backAirSystem;

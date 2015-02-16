@@ -96,6 +96,7 @@ public class TalonSRX extends CANTalon implements Motor{
 
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public void stop() {
 		super.stopMotor();

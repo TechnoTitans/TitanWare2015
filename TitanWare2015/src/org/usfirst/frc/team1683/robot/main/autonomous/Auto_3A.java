@@ -17,18 +17,38 @@ public class Auto_3A extends Autonomous{
 		{
 			timer.start();
 			visionTimer.start();
+			nextState = State.START_LIFT_BARREL;
+			break;
+		}
+		case START_LIFT_BARREL:
+		{
+			pickerUpper.liftBarrel();
+			liftTimer.start();
 			nextState = State.LIFT_BARREL;
 			break;
 		}
+//		case LIFT_BARREL:
+//		{
+//			pickerUpper.liftBarrel();
+//			try {
+//				this.wait();
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//			nextState = State.START_DRIVE_SIDEWAYS;
+//			break;
+//		}
 		case LIFT_BARREL:
 		{
-			pickerUpper.liftBarrel();
-			try {
-				this.wait();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+//			if (liftTimer.get()<liftTime)
+			if (liftTimer.get()<1.5){
+				nextState = State.LIFT_BARREL;
 			}
-			nextState = State.START_DRIVE_SIDEWAYS;
+			else{
+				nextState = State.START_DRIVE_SIDEWAYS;
+				liftTimer.stop();
+				liftTimer.reset();
+			}
 			break;
 		}
 		case START_DRIVE_SIDEWAYS:
@@ -55,14 +75,38 @@ public class Auto_3A extends Autonomous{
 		case CENTER_TOTE:
 		{
 //			nextState = centerTote(State.DRIVE_FORWARD);
+			nextState = State.START_DRIVE_FORWARD;
+			break;
+		}
+		case START_DRIVE_FORWARD:
+		{
+			driveTimer.start();
 			nextState = State.DRIVE_FORWARD;
 			break;
 		}
 		case DRIVE_FORWARD:
 		{
-			hDrive.goForward(driveDistance);
-			nextState = State.END_CASE;
-			break;
+			double speed;
+			if (driveDistance>0){
+				speed = HWR.MEDIUM_SPEED;
+//				speed = driveSpeed;
+			}
+			else{
+				speed = -HWR.MEDIUM_SPEED;
+//				speed = -driveSpeed;
+			}
+			if (driveTimer.get()<driveTime)
+			{
+				hDrive.setTankDrive(speed);
+				nextState = State.DRIVE_FORWARD;
+			}
+			else
+			{
+				hDrive.stop();
+				driveTimer.stop();
+				driveTimer.reset();
+				nextState = State.END_CASE;
+			}
 		}
 		case END_CASE:
 		{

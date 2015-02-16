@@ -155,6 +155,11 @@ public class TankDrive extends DriveTrain{
 		//placeholder
 	}
 	
+	public void resetTankEncoders(){
+		leftEncoder.reset();
+		rightEncoder.reset();
+	}
+	
 	public void EncoderValues (){
 		DriverStation.sendData("leftEncoder", leftEncoder.get());
 		DriverStation.sendData("rightEncoder", rightEncoder.get());

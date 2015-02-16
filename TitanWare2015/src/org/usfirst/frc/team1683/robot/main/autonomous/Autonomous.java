@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1683.robot.main.autonomous;
 
 import org.usfirst.frc.team1683.robot.drivetrain.DriveTrain;
+import org.usfirst.frc.team1683.robot.drivetrain.Encoder;
 import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
 import org.usfirst.frc.team1683.robot.drivetrain.TankDrive;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
@@ -23,8 +24,11 @@ public abstract class Autonomous {
 	protected static Timer driveTimer;
 	protected static Vision vision;
 	protected static Timer visionTimer;
+	protected static Timer liftTimer;
 	protected static Photogate photogate;
 	protected static PressureSensor pressure;
+	protected static Encoder leftEncoder;
+	protected static Encoder rightEncoder;
 
 	public static enum State {
 		INIT_CASE, 					
@@ -47,7 +51,8 @@ public abstract class Autonomous {
 		PRINT_ERROR,
 		RUN_OTHER_AUTO,
 		START_DRIVE_SIDEWAYS,
-		START_DRIVE_FORWARD
+		START_DRIVE_FORWARD,
+		START_LIFT_BARREL
 	}
 
 
@@ -68,6 +73,9 @@ public abstract class Autonomous {
 	protected static boolean enablePrinting;
 	protected static double driveTime = 5;
 	public static boolean errorWarning;
+	protected static double liftTime;
+	protected static double driveSpeed;
+	protected static double sideSpeed;
 
 	protected static double visionDistance = 0;
 	protected static final double VISION_TIMEOUT = 3;
@@ -85,6 +93,8 @@ public abstract class Autonomous {
 		timer = new Timer();
 		visionTimer = new Timer();
 		driveTimer = new Timer();
+		leftEncoder = hDrive.leftEncoder;
+		rightEncoder = hDrive.rightEncoder;
 	}
 
 	/**
@@ -116,6 +126,8 @@ public abstract class Autonomous {
 		toteSpaceDistance = DriverStation.getDouble("toteSpaceDistance");
 		enablePrinting = DriverStation.getBoolean("enablePrinting");
 		//driveTime = DriverStation.getDouble("driveTime");
+		liftTime = DriverStation.getDouble("liftTime");
+		
 	}
 
 	/**
