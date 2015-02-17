@@ -145,10 +145,10 @@ public class HDrive extends TankDrive{
 		}
 		double error = targetAngle - gyro.getAngle();
 		double correction = kp*error;
-		left.set(speed+correction);
-		right.set(speed-correction);
-		DriverStation.sendData("LeftSpeed", speed + correction);
-		DriverStation.sendData("RightSpeed", speed - correction);
+		left.set(limitSpeed(speed+correction));
+		right.set(limitSpeed(speed-correction));
+		DriverStation.sendData("LeftSpeed", limitSpeed(speed + correction));
+		DriverStation.sendData("RightSpeed", limitSpeed(speed - correction));
 	}
 	
 	public Thread getCurrentThread(){
@@ -179,6 +179,18 @@ public class HDrive extends TankDrive{
 	public void resetHEncoders(){
 		backEncoder.reset();
 		frontEncoder.reset();
+	}
+	
+	public double limitSpeed(double speed){
+		if (speed>1.0){
+			return 1.0;
+		}
+		else if (speed<-1.0){
+			return -1.0;
+		}
+		else{
+			return speed;
+		}
 	}
 	
 	private class DrivePistons{
