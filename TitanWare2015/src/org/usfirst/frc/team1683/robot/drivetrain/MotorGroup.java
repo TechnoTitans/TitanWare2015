@@ -108,6 +108,7 @@ public class MotorGroup implements Runnable{
 		if (encoder != null){
 			MotorMover mover = new MotorMover(distanceInInches * 0.0254);
 			currentThread = new Thread(mover);
+			currentThread.setPriority(Thread.MAX_PRIORITY);
 			currentThread.start();
 		}
 	}
