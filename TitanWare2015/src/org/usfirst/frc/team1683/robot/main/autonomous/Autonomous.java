@@ -128,8 +128,8 @@ public abstract class Autonomous {
 		toteSpaceDistance = DriverStation.getDouble("toteSpaceDistance");
 		enablePrinting = DriverStation.getBoolean("enablePrinting");
 		//driveTime = DriverStation.getDouble("driveTime");
-		liftTime = DriverStation.getDouble("liftTime");
-		sideTime = DriverStation.getDouble("sideTime");
+//		liftTime = DriverStation.getDouble("liftTime");
+//		sideTime = DriverStation.getDouble("sideTime");
 	}
 
 	/**
@@ -155,15 +155,15 @@ public abstract class Autonomous {
 		visionDistance += centerDistance;
 		if (visionTimer.get() <= VISION_TIMEOUT) {
 			if (vision.isCentered() == -1) {
-				driveTrain.goSideways(centerDistance);
+				hDrive.goSideways(centerDistance);
 				return State.CENTER_TOTE;
 			}
 			else if (vision.isCentered() == 1) {
-				driveTrain.goSideways(centerDistance);
+				hDrive.goSideways(centerDistance);
 				return State.CENTER_TOTE;
 			}
 			else {
-				driveTrain.stop();
+				hDrive.stop();
 				return next;
 			}
 		}

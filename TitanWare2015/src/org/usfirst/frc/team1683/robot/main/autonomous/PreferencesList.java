@@ -11,8 +11,8 @@ public class PreferencesList{
 		
 		//Autonomous Preferences
 		DriverStation.prefInt("autonomousMode", 1);
-		DriverStation.prefDouble("driveDistance", 2);
-		DriverStation.prefDouble("sideDistance", 2);
+		DriverStation.prefDouble("driveDistance", 143);
+		DriverStation.prefDouble("sideDistance", 24);
 		DriverStation.prefDouble("liftDistance", 2);
 		DriverStation.prefDouble("adjustDistance", 2);
 		DriverStation.prefDouble("backDistance", 2);
@@ -20,6 +20,7 @@ public class PreferencesList{
 		DriverStation.prefDouble("toteSpaceDistance", 2);
 		DriverStation.prefBoolean("enablePrinting", true);
 		DriverStation.prefDouble("driveTime", 5);
+		DriverStation.prefDouble("sideTime", 5);
 		
 		DriverStation.prefBoolean("enableLightSensor", true);
 		
