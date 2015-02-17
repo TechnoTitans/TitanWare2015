@@ -135,20 +135,20 @@ public class HDrive extends TankDrive{
 		currentThread = hBackMotors.getCurrentThread();
 	}
 	
-	public void antiDrift(double speed) {
+	
+	public double getAntiDriftAngle(){
 		double targetAngle;
-		if(isDeployed()) {
+		if(isDeployed()){
 			targetAngle = -90;
 		}
-		else {
+		else{
 			targetAngle = 0;
 		}
-		double error = targetAngle - gyro.getAngle();
-		double correction = kp*error;
-		left.set(limitSpeed(speed+correction));
-		right.set(limitSpeed(speed-correction));
-		DriverStation.sendData("LeftSpeed", limitSpeed(speed + correction));
-		DriverStation.sendData("RightSpeed", limitSpeed(speed - correction));
+		return targetAngle;
+	}
+	
+	public void antiDrift(double speed){
+		super.antiDrift(speed, getAntiDriftAngle());
 	}
 	
 	public Thread getCurrentThread(){
@@ -167,6 +167,7 @@ public class HDrive extends TankDrive{
 	}
 	
 	public void set(double speed){
+		deployWheels();
 		hBackMotors.set(speed);
 		hFrontMotors.set(speed);
 	}
@@ -179,18 +180,6 @@ public class HDrive extends TankDrive{
 	public void resetHEncoders(){
 		backEncoder.reset();
 		frontEncoder.reset();
-	}
-	
-	public double limitSpeed(double speed){
-		if (speed>1.0){
-			return 1.0;
-		}
-		else if (speed<-1.0){
-			return -1.0;
-		}
-		else{
-			return speed;
-		}
 	}
 	
 	private class DrivePistons{

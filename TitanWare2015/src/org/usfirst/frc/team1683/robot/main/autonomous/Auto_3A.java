@@ -2,14 +2,12 @@ package org.usfirst.frc.team1683.robot.main.autonomous;
 
 import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
-import org.usfirst.frc.team1683.robot.main.autonomous.Autonomous.State;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
 import org.usfirst.frc.team1683.robot.vision.Vision;
 
 public class Auto_3A extends Autonomous{
 	public Auto_3A(HDrive drive, PickerUpper pickerUpper, Vision vision) {
 		super(drive, pickerUpper, vision);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public void run(){
@@ -78,6 +76,7 @@ public class Auto_3A extends Autonomous{
 			else
 			{
 				hDrive.stopSide();
+				hDrive.liftWheels();
 				driveTimer.stop();
 				driveTimer.reset();
 				visionTimer.reset();

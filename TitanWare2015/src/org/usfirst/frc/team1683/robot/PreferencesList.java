@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1683.robot.main.autonomous;
+package org.usfirst.frc.team1683.robot;
 
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 
@@ -29,6 +29,9 @@ public class PreferencesList{
 		DriverStation.prefDouble("PIDValueI", 0);
 		DriverStation.prefDouble("PIDValueD", 0);
 		DriverStation.prefDouble("PIDTolerance", 1);
+		
+		//Gyro Value
+		DriverStation.prefDouble("kp", 0.03);
 	}
 	
 }

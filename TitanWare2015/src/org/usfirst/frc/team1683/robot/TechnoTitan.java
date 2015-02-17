@@ -103,10 +103,10 @@ public class TechnoTitan extends IterativeRobot {
      */
     public void testInit(){
     	drive.resetGyro();
+    	drive.deployWheels();
     }
     public void testPeriodic() {
     	//driveTester.test();
-    	drive.deployWheels();
     	drive.antiDrift(HWR.MEDIUM_SPEED);
     }
 

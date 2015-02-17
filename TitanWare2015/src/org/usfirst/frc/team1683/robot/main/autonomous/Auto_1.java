@@ -41,6 +41,7 @@ public class Auto_1 extends Autonomous{
 			if (Math.abs(leftEncoder.getDisplacement(leftEncoder.getDistancePerPulse()))<Math.abs(driveDistance)&&
 					Math.abs(rightEncoder.getDisplacement(rightEncoder.getDistancePerPulse()))<Math.abs(driveDistance))
 			{
+//				hDrive.antiDrift(speed);
 				hDrive.setTankDrive(speed);
 				nextState = State.DRIVE_FORWARD;
 			}

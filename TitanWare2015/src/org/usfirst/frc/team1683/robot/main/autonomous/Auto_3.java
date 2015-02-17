@@ -80,6 +80,7 @@ public class Auto_3 extends Autonomous{
 			else
 			{
 				hDrive.stopSide();
+				hDrive.liftWheels();
 				visionTimer.reset();
 				nextState = State.CENTER_TOTE;
 			}

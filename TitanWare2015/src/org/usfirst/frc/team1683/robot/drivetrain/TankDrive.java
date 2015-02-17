@@ -4,7 +4,6 @@ import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Timer;
 /**
  * 
  * @author Animesh Koratana & Seung-Seok
@@ -19,7 +18,7 @@ public class TankDrive extends DriveTrain{
 	Gyro gyro;
 	Thread currentThread;
 
-	static final double	 kp=0.03;
+	public static double kp = 0.03;
 	double waitTime=0.2;
 	double startAngle;
 	/**
@@ -37,6 +36,7 @@ public class TankDrive extends DriveTrain{
 		right = new MotorGroup("Right Drive",rightMotorInputs, motorType, rightInverse);
 		gyro = new Gyro(gyroChannel);
 		startAngle = gyro.getAngle();
+//		kp = DriverStation.getDouble("kp");
 	}
 	/**
 	 * Constructor
@@ -128,13 +128,26 @@ public class TankDrive extends DriveTrain{
 		turnAngle(startAngle,left,right);
 		startAngle = 0;
 	}
-	@Override
-//	MOVED TO HDRIVE-DO NOT USE THIS
-	public void antiDrift() {
-		// TODO Auto-generated method stub
-		double angle=gyro.getAngle();
-		turnAngle(-angle*kp,left,right);
-		Timer.delay(waitTime);
+	
+	public void antiDrift(double speed, double targetAngle) {
+		double error = targetAngle - gyro.getAngle();
+		double correction = kp*error/2.0;
+		left.set(limitSpeed(speed+correction));
+		right.set(limitSpeed(speed-correction));
+		DriverStation.sendData("LeftSpeed", limitSpeed(speed + correction));
+		DriverStation.sendData("RightSpeed", limitSpeed(speed - correction));
+	}
+	
+	public double limitSpeed(double speed){
+		if (speed>1.0){
+			return 1.0;
+		}
+		else if (speed<-1.0){
+			return -1.0;
+		}
+		else{
+			return speed;
+		}
 	}
 	
 	/**
