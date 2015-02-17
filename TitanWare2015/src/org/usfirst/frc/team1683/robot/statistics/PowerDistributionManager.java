@@ -51,6 +51,7 @@ public class PowerDistributionManager implements Runnable{
 	
 	public void start(){
 		Thread thread = new Thread(this, "Power Distribution Manager");
+		thread.setPriority(Thread.MIN_PRIORITY);
 		thread.start();
 	}
 	

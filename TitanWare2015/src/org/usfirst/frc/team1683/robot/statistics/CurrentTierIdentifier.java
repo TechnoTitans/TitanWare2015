@@ -33,6 +33,11 @@ public class CurrentTierIdentifier implements Runnable{
 		idleValue = panel.getCurrent(this.motorChannel);
 	}
 	
+	public void start(){
+		Thread thread = new Thread(this, "Tier Identifier");
+		thread.setPriority(Thread.MIN_PRIORITY);
+		thread.start();
+	}
 	
 	@Override
 	public void run() {
