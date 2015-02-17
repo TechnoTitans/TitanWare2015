@@ -15,7 +15,7 @@ public class TankDrive extends DriveTrain{
 	public MotorGroup right;
 	public Encoder leftEncoder;
 	public Encoder rightEncoder;
-	Gyro gyro;
+	public Gyro gyro;
 	Thread currentThread;
 
 	public static double kp = 0.03;
@@ -36,6 +36,7 @@ public class TankDrive extends DriveTrain{
 		right = new MotorGroup("Right Drive",rightMotorInputs, motorType, rightInverse);
 		gyro = new Gyro(gyroChannel);
 		startAngle = gyro.getAngle();
+		gyro.setPost(true);
 //		kp = DriverStation.getDouble("kp");
 	}
 	/**

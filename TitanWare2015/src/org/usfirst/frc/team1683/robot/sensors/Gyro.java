@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1683.robot.sensors;
 
+import org.usfirst.frc.team1683.robot.main.DriverStation;
+
 import edu.wpi.first.wpilibj.AnalogInput;
 
 /**
@@ -14,6 +16,7 @@ public class Gyro extends edu.wpi.first.wpilibj.Gyro implements Sensor {
 	public final static double driftRate = 0.3333;
 	public final static double HDRIVE_THRESHOLD=5;
     AnalogInput channel;
+    private boolean post = false;
 	
     /**
      * Constructor
@@ -40,6 +43,10 @@ public class Gyro extends edu.wpi.first.wpilibj.Gyro implements Sensor {
 		super.setSensitivity(SENSITIVITY);
 	}
 	
+	public void setPost(boolean post){
+		this.post= post;
+	}
+	
 	/**
 	 * Gets the voltage of the Gyro.
 	 * @return The voltage of the Gyro.
@@ -58,15 +65,20 @@ public class Gyro extends edu.wpi.first.wpilibj.Gyro implements Sensor {
 	 * @return The direction the robot is facing in degrees (0-360)
 	 */
 	public double getDirection(){
+		double angle;
 		if (super.getAngle() > 0){
-			return super.getAngle() % 360;
+			angle = super.getAngle() % 360;
 		}
 		else if (super.getAngle() < 0){
-			return 360 - Math.abs(super.getAngle() % 360);
+			angle = 360 - Math.abs(super.getAngle() % 360);
 		}
 		else {
-			return super.getAngle();
+			angle = super.getAngle();
 		}
+		if (post){
+			DriverStation.sendData("Gyro", angle);
+		}
+		return angle;
 	}
 		
 	/**
