@@ -24,22 +24,28 @@ public class Auto_1T extends Autonomous implements Runnable {
 			hDrive.goForward(driveDistance);
 			Thread leftThread = hDrive.left.getCurrentThread();
 			Thread rightThread = hDrive.right.getCurrentThread();
-			synchronized (leftThread){
-				try{
-					leftThread.wait();
-				}
-				catch(InterruptedException e){
-					e.printStackTrace();
-				}
+			try {
+				leftThread.join();
+				rightThread.join();
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
 			}
-			synchronized (rightThread){
-				try{
-					rightThread.wait();
-				}
-				catch(InterruptedException e){
-					e.printStackTrace();
-				}
-			}
+//			synchronized (leftThread){
+//				try{
+//					leftThread.wait();
+//				}
+//				catch(InterruptedException e){
+//					e.printStackTrace();
+//				}
+//			}
+//			synchronized (rightThread){
+//				try{
+//					rightThread.wait();
+//				}
+//				catch(InterruptedException e){
+//					e.printStackTrace();
+//				}
+//			}
 			nextState = State.END_CASE;
 			break;
 		}
