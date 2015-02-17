@@ -83,6 +83,7 @@ public class Auto_3A extends Autonomous{
 				visionTimer.reset();
 				nextState = State.CENTER_TOTE;
 			}
+			break;
 		}
 		case CENTER_TOTE:
 		{
@@ -120,6 +121,7 @@ public class Auto_3A extends Autonomous{
 				driveTimer.reset();
 				nextState = State.END_CASE;
 			}
+			break;
 		}
 		case END_CASE:
 		{
