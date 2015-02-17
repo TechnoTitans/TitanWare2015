@@ -102,10 +102,11 @@ public class TechnoTitan extends IterativeRobot {
      * This function is called periodically during test mode
      */
     public void testInit(){
-    	
+    	drive.resetGyro();
     }
     public void testPeriodic() {
     	//driveTester.test();
+    	drive.deployWheels();
     	drive.antiDrift(HWR.MEDIUM_SPEED);
     }
 

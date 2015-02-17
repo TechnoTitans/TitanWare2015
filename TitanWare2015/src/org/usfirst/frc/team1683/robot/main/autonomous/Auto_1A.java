@@ -41,6 +41,7 @@ public class Auto_1A extends Autonomous{
 			if (driveTimer.get()<driveTime)
 			{
 				hDrive.setTankDrive(speed);
+				//hDrive.antiDrift(speed);
 				nextState = State.DRIVE_FORWARD;
 			}
 			else
