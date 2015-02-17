@@ -152,12 +152,14 @@ public class HDrive extends TankDrive{
 	}
 	
 	public void antiDrift(double speed, MotorGroup front, MotorGroup back){
-		double error = getAntiDriftAngle() - gyro.getAngle();
+		double error = 0 - gyro.getAngle();
 		double correction = kp*error/2.0;
 		front.set(limitSpeed(speed+correction));
 		back.set(limitSpeed(speed-correction));
-		DriverStation.sendData("FrontSpeed", limitSpeed(speed + correction));
-		DriverStation.sendData("BackSpeed", limitSpeed(speed - correction));
+		DriverStation.sendData("Gyro Value", gyro.getAngle());
+		DriverStation.sendData("Correction", correction);	
+		DriverStation.sendData("FrontSpeed", limitSpeed(speed - correction));
+		DriverStation.sendData("BackSpeed", limitSpeed(speed + correction));
 	}
 	
 	public MotorGroup getFrontHMotor(){
