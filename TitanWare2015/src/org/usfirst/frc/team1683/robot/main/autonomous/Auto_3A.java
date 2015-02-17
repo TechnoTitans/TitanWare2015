@@ -39,8 +39,8 @@ public class Auto_3A extends Autonomous{
 //		}
 		case LIFT_BARREL:
 		{
-			if (liftTimer.get()<liftTime){
-//			if (liftTimer.get()<1.5){
+//			if (liftTimer.get()<liftTime){
+			if (liftTimer.get()<1.5){
 				nextState = State.LIFT_BARREL;
 			}
 			else{
