@@ -10,7 +10,7 @@ public class PreferencesList{
 		DriverStation.prefDouble("bearing", 90);
 		
 		//Autonomous Preferences
-		DriverStation.prefInt("autonomousMode", 1);
+		DriverStation.prefInt("autonomousMode", 11);
 		DriverStation.prefDouble("driveDistance", 143);
 		DriverStation.prefDouble("sideDistance", 24);
 		DriverStation.prefDouble("liftDistance", 2);
@@ -19,8 +19,8 @@ public class PreferencesList{
 		DriverStation.prefDouble("robotDistance", 2);
 		DriverStation.prefDouble("toteSpaceDistance", 2);
 		DriverStation.prefBoolean("enablePrinting", true);
-		DriverStation.prefDouble("driveTime", 5);
-		DriverStation.prefDouble("sideTime", 5);
+		DriverStation.prefDouble("driveTime", 7);
+		DriverStation.prefDouble("sideTime", 3);
 		
 		DriverStation.prefBoolean("enableLightSensor", true);
 		

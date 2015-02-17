@@ -173,7 +173,7 @@ public class MotorGroup implements Runnable{
 		@SuppressWarnings("deprecation")
 		@Override
 		public void run() {
-			synchronized(this){
+			//synchronized(this){
 			encoder.reset();
 			double speed;
 			if (distanceInMeters>0)
@@ -189,7 +189,7 @@ public class MotorGroup implements Runnable{
 			stop();
 			encoder.reset();
 			currentThread.notifyAll();
-			}
+			//}
 			currentThread.destroy();
 		}
 

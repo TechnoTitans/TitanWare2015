@@ -30,7 +30,7 @@ public class Auto_1A extends Autonomous{
 		case DRIVE_FORWARD:
 		{
 			double speed;
-			driveDistance = 143;
+//			driveDistance = 143;
 			if (driveDistance > 0){
 				speed = HWR.MEDIUM_SPEED;
 			}

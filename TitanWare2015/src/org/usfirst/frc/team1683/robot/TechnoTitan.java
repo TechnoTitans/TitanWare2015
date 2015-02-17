@@ -77,7 +77,7 @@ public class TechnoTitan extends IterativeRobot {
     	Autonomous.errorWarning = true;
     	Autonomous.updatePreferences();
     	Autonomous.presentState = Autonomous.State.INIT_CASE;
-    	pickerUpper.uprightPickerUpper();
+    	pickerUpper.getPistons().upright();
     }
     
     /**

@@ -39,8 +39,8 @@ public class Auto_3A extends Autonomous{
 //		}
 		case LIFT_BARREL:
 		{
-//			if (liftTimer.get()<liftTime)
-			if (liftTimer.get()<1.5){
+			if (liftTimer.get()<liftTime){
+//			if (liftTimer.get()<1.5){
 				nextState = State.LIFT_BARREL;
 			}
 			else{
@@ -59,7 +59,7 @@ public class Auto_3A extends Autonomous{
 		case DRIVE_SIDEWAYS:
 		{
 			double hSpeed;
-			sideDistance = 24;
+//			sideDistance = -24;
 			if (sideDistance>0){
 				hSpeed = HWR.MEDIUM_SPEED;
 //				hSpeed = sideSpeed;
@@ -77,6 +77,7 @@ public class Auto_3A extends Autonomous{
 			{
 				hDrive.stopSide();
 				hDrive.liftWheels();
+				timer.delay(0.5);
 				driveTimer.stop();
 				driveTimer.reset();
 				visionTimer.reset();

@@ -170,6 +170,10 @@ public class PickerUpper implements Runnable{
 			pistons.freeze();
 		}
 	}
+	
+	public DualActionPistons getPistons() {
+		return pistons;
+	}
 
 
 	/**
@@ -291,7 +295,7 @@ public class PickerUpper implements Runnable{
 		return HWR.SLOPE*beltEncoder.getDisplacement(beltEncoder.getDistancePerPulse())+b;
 	}
 	
-	private class DualActionPistons{
+	public class DualActionPistons{
 		AirSystem frontAirSystem;
 		AirSystem backAirSystem;
 		public DualActionPistons(int[] pistons, PressureSensor pressure) { //front piston, back Piston

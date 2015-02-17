@@ -127,9 +127,9 @@ public abstract class Autonomous {
 		robotDistance = DriverStation.getDouble("robotDistance");
 		toteSpaceDistance = DriverStation.getDouble("toteSpaceDistance");
 		enablePrinting = DriverStation.getBoolean("enablePrinting");
-		//driveTime = DriverStation.getDouble("driveTime");
-//		liftTime = DriverStation.getDouble("liftTime");
-//		sideTime = DriverStation.getDouble("sideTime");
+		driveTime = DriverStation.getDouble("driveTime");
+		liftTime = DriverStation.getDouble("liftTime");
+		sideTime = DriverStation.getDouble("sideTime");
 	}
 
 	/**
