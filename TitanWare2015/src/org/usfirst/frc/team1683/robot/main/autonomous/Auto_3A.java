@@ -71,6 +71,7 @@ public class Auto_3A extends Autonomous{
 			if (driveTimer.get()<sideTime)
 			{
 				hDrive.set(hSpeed);
+//				hDrive.antiDrift(hSpeed, hDrive.getFrontHMotor(), hDrive.getBackHMotor());
 				nextState = State.DRIVE_SIDEWAYS;
 			}
 			else
