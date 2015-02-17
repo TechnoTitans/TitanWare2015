@@ -61,6 +61,7 @@ public class Auto_3A extends Autonomous{
 		case DRIVE_SIDEWAYS:
 		{
 			double hSpeed;
+			sideDistance = 24;
 			if (sideDistance>0){
 				hSpeed = HWR.MEDIUM_SPEED;
 //				hSpeed = sideSpeed;
@@ -98,6 +99,7 @@ public class Auto_3A extends Autonomous{
 		case DRIVE_FORWARD:
 		{
 			double speed;
+			driveDistance = 143;
 			if (driveDistance>0){
 				speed = HWR.MEDIUM_SPEED;
 //				speed = driveSpeed;
