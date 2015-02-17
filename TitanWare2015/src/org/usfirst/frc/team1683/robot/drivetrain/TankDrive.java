@@ -36,7 +36,7 @@ public class TankDrive extends DriveTrain{
 		right = new MotorGroup("Right Drive",rightMotorInputs, motorType, rightInverse);
 		gyro = new Gyro(gyroChannel);
 		startAngle = gyro.getAngle();
-//		kp = DriverStation.getDouble("kp");
+		kp = DriverStation.getDouble("kp");
 	}
 	/**
 	 * Constructor
