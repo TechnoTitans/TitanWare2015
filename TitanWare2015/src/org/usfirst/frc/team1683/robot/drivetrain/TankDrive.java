@@ -36,12 +36,8 @@ public class TankDrive extends DriveTrain{
 		right = new MotorGroup("Right Drive",rightMotorInputs, motorType, rightInverse);
 		gyro = new Gyro(gyroChannel);
 		startAngle = gyro.getAngle();
-<<<<<<< HEAD
 		gyro.setPost(true);
-//		kp = DriverStation.getDouble("kp");
-=======
 		kp = DriverStation.getDouble("kp");
->>>>>>> FETCH_HEAD
 	}
 	/**
 	 * Constructor
@@ -139,6 +135,8 @@ public class TankDrive extends DriveTrain{
 		double correction = kp*error/2.0;
 		left.set(limitSpeed(speed+correction));
 		right.set(limitSpeed(speed-correction));
+		DriverStation.sendData("Gyro Value", gyro.getAngle());
+		DriverStation.sendData("Correction", correction);	
 		DriverStation.sendData("LeftSpeed", limitSpeed(speed + correction));
 		DriverStation.sendData("RightSpeed", limitSpeed(speed - correction));
 	}
