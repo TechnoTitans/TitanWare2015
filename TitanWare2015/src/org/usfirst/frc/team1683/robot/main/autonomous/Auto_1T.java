@@ -16,7 +16,7 @@ public class Auto_1T extends Autonomous implements Runnable {
 		case INIT_CASE:
 		{
 			timer.start();
-			nextState = State.START_DRIVE_FORWARD;
+			nextState = State.DRIVE_FORWARD;
 			break;
 		}
 		case DRIVE_FORWARD:
