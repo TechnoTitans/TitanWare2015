@@ -13,4 +13,5 @@ public interface Motor {
 	public boolean hasEncoder();
 	public Encoder getEncoder();
 	public int getChannel();
+	public void enableBrakeMode(boolean enable);
 }

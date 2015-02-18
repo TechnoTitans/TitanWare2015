@@ -38,17 +38,17 @@ public class HWR {
 	public static final int LEFT_CHANNEL_B			= HWP.DIO_5;
 	public static final int RIGHT_CHANNEL_A			= HWP.DIO_2;
 	public static final int RIGHT_CHANNEL_B			= HWP.DIO_3;
-	public static final int FRONT_CHANNEL_A			= 10;
+	public static final int FRONT_CHANNEL_A			= HWP.DIO_6;
 	public static final int FRONT_CHANNEL_B			= HWP.DIO_7;
 	public static final int BACK_CHANNEL_A			= HWP.DIO_8;
-	public static final int BACK_CHANNEL_B			= HWP.DIO_9;
-	public static final int PHOTOGATE 				= HWP.DIO_6;
+	public static final int BACK_CHANNEL_B			= 10;
+	public static final int PHOTOGATE 				= HWP.DIO_9;
 
 
 	//Encoder Wheel Distance Per Pulse
 	public static final double driveEncoderWDPP 			= 18.85/2040;
 	public static final double liftEncoderWDPP 				= 14.25/757.75;
-	public static final double hDriveEncoderWDPP			= 1.0;
+	public static final double hDriveEncoderWDPP			= (85.0*0.0254)/25.99;
 	
 	//Encoder Reverse Directions
 	public static final boolean leftDriveEncoderReverse 	= true;
@@ -108,6 +108,6 @@ public class HWR {
 	
 	//Motor Constants
 	public static final double LOW_SPEED			= 0.25;
-	public static final double MEDIUM_SPEED			= 0.50;
+	public static final double MEDIUM_SPEED			= 0.40;
 	public static final double HIGH_SPEED			= 1.0;
 }

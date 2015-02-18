@@ -29,6 +29,7 @@ public class PickerUpper implements Runnable{
 	boolean enableSensor;
 	PIDController liftPID;
 	double P, I, D, F, tolerance;
+	Thread currentThread;
 
 	/**
 	 * Constructor - one motor lift without encoder
@@ -201,7 +202,13 @@ public class PickerUpper implements Runnable{
 	}
 	
 	public void goToZero(){
-		new Thread(this).start();
+		currentThread = new Thread(this);
+		currentThread.setPriority(Thread.MAX_PRIORITY);
+		currentThread.start();
+	}
+	
+	public Thread getCurrentThread(){
+		return currentThread;
 	}
 
 
@@ -229,6 +236,7 @@ public class PickerUpper implements Runnable{
 	{
 		double changeInBeltPosition = changeInHeight/HWR.SLOPE;
 		motors.moveDistanceInches(changeInBeltPosition);
+		currentThread = motors.getCurrentThread();
 	}
 	
 	public void liftToHeight(double targetHeight){
@@ -239,6 +247,7 @@ public class PickerUpper implements Runnable{
 		double beltMove = beltTargetPosition - beltEncoder.getDisplacement(HWR.liftEncoderWDPP);
 		double relativeDistanceToMove = beltMove - (beltEncoder.getDistance());
 		motors.moveDistanceInches(relativeDistanceToMove);
+		currentThread = motors.getCurrentThread();
 		DriverStation.sendData("Belt Move", relativeDistanceToMove);
 	}
 	

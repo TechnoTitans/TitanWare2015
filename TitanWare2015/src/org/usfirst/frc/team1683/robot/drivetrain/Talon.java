@@ -109,5 +109,10 @@ public class Talon extends edu.wpi.first.wpilibj.Talon implements Motor{
 	public Encoder getEncoder() {
 		return encoder;
 	}
+	@Override
+	public void enableBrakeMode(boolean enable) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

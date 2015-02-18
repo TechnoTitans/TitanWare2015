@@ -50,9 +50,10 @@ public class HDrive extends TankDrive{
 				motorType, gyroChannel, leftChannelA, leftChannelB, rightChannelA, rightChannelB, 
 				driveWDPP, leftReverseDirection, rightReverseDirection);
 		pistons = new DrivePistons(new int[]{rightPiston, leftPiston}, pressure);
-		backEncoder = new Encoder(backChannelA, backChannelB, backReverseDirection, HdriveWDPP);
+//		backEncoder = new Encoder(backChannelA, backChannelB, backReverseDirection, HdriveWDPP);
 		frontEncoder = new Encoder(frontChannelA, frontChannelB, frontReverseDirection, HdriveWDPP);
-		hBackMotors = new MotorGroup("HBackMotors", new int[] {backMotor}, hMotorType, false, backEncoder);
+		backEncoder = frontEncoder;
+		hBackMotors = new MotorGroup("HBackMotors", new int[] {backMotor}, hMotorType, false, frontEncoder); //WE ARE PASSING IN THE FRONT ENCODER TWICE JUST THIS TIME FIX WHEN ANTHER ENCODER IS ADDED
 		hFrontMotors= new MotorGroup("HFrontMotors", new int[]{frontMotor},hMotorType, true, frontEncoder);
 		this.triggerButton = triggerButton;
 		isLifted = true;
@@ -182,7 +183,7 @@ public class HDrive extends TankDrive{
 		deployWheels();
 		hBackMotors.moveDistanceInches(distanceInInches);
 		hFrontMotors.moveDistanceInches(distanceInInches);
-		currentThread = hBackMotors.getCurrentThread();
+		currentThread = hFrontMotors.getCurrentThread();
 	}
 	
 	public void set(double speed){

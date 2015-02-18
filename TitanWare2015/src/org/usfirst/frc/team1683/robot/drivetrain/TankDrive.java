@@ -70,6 +70,8 @@ public class TankDrive extends DriveTrain{
 	 */
 	public void driveMode(Joystick rightStick, Joystick leftStick) {
 		//The negative Y Axis is due to joysticks taking forward as negative
+		left.enableBrakeMode(false);
+		right.enableBrakeMode(false);
 		double leftSpeed = -leftStick.getRawAxis(DriverStation.YAxis);
 		double rightSpeed = -rightStick.getRawAxis(DriverStation.YAxis);
 		left.set(leftSpeed);
@@ -167,6 +169,8 @@ public class TankDrive extends DriveTrain{
 	}
 	
 	public void stop() {
+		left.enableBrakeMode(true);
+		right.enableBrakeMode(true);
 		left.stop();
 		right.stop();
 	}

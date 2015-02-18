@@ -117,6 +117,14 @@ public class MotorGroup implements Runnable{
 		}
 	}
 	
+	public void enableBrakeMode(boolean enable){
+		if (TalonSRX.class.equals(motors.get(0).getClass())){
+			for (Motor motor: motors){
+				motor.enableBrakeMode(enable);
+			}
+		}
+	}
+	
 	public Thread getCurrentThread(){
 		return currentThread;
 	}
@@ -147,6 +155,7 @@ public class MotorGroup implements Runnable{
 	 */
 	public void stop() {
 		for (Motor motor: motors){
+			motor.enableBrakeMode(true);
 			motor.set(0);
 		} 
 	}
