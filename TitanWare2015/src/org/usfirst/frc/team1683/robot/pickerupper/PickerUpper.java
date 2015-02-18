@@ -237,8 +237,9 @@ public class PickerUpper implements Runnable{
 		beltTargetPosition = (targetHeight-b)/HWR.SLOPE;
 		DriverStation.sendData("Belt Target Position", beltTargetPosition);
 		double beltMove = beltTargetPosition - beltEncoder.getDisplacement(HWR.liftEncoderWDPP);
-		motors.moveDistanceInches(beltMove);
-		DriverStation.sendData("Belt Move", beltMove);
+		double relativeDistanceToMove = beltMove - (beltEncoder.getDistance());
+		motors.moveDistanceInches(relativeDistanceToMove);
+		DriverStation.sendData("Belt Move", relativeDistanceToMove);
 	}
 	
 	/*

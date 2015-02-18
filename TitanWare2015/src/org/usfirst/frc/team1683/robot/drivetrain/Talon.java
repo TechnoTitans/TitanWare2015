@@ -45,7 +45,7 @@ public class Talon extends edu.wpi.first.wpilibj.Talon implements Motor{
 			thread.start();
 		}
 	}
-	
+
 	public void moveDistanceInches(double distanceInInches){
 		double distanceInMeters = distanceInInches * .0254;
 		moveDistance(distanceInMeters);
@@ -88,8 +88,8 @@ public class Talon extends edu.wpi.first.wpilibj.Talon implements Motor{
 			else
 				speed = -mediumSpeed;
 			while (Math.abs(encoder.getDistanceMeters()) < distanceInMeters){
-					talon.set(speed);
-				}
+				talon.set(speed);
+			}
 			talon.stopMotor();
 			encoder.reset();
 		}
@@ -99,7 +99,7 @@ public class Talon extends edu.wpi.first.wpilibj.Talon implements Motor{
 	@Override
 	public void stop() {
 		this.stop();
-		
+
 	}
 	@Override
 	public boolean hasEncoder() {

@@ -30,13 +30,13 @@ public class Encoder extends edu.wpi.first.wpilibj.Encoder{
         return super.getDistance(); 
     }
     /**
-     * Gets displacement from encoder in inches.
+     * Gets displacement from encoder in meters.
      * @param DISTANCE_PER_PULSE 
-     * @return displacement in inches.
+     * @return displacement in meters.
      */
     public double getDisplacement(double DISTANCE_PER_PULSE) {
     	this.setDistancePerPulse(DISTANCE_PER_PULSE);
-    	return super.getDistance();
+    	return getDistanceMeters();
     }
     /**
      * Gets distance from encoder in terms of feet

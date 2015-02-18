@@ -21,6 +21,7 @@ public class MotorGroup implements Runnable{
 	List<Motor> motors;
 	Encoder encoder;
 	PIDController PIDcontrol;
+	MotorMover mover;
 	/**
 	 * Constructor
 	 * @param channelNumbers
@@ -38,6 +39,7 @@ public class MotorGroup implements Runnable{
 				motors.add(new TalonSRX(j, inverseDirection));
 			}
 		}
+		mover = new MotorMover();
 		if (TechnoTitan.postEncoder){
 			new Thread(this, "EncoderPost").start();
 		}
@@ -63,6 +65,7 @@ public class MotorGroup implements Runnable{
 			}
 		}
 		this.encoder = encoder;
+		mover = new MotorMover();
 		if (TechnoTitan.postEncoder){
 			new Thread(this, "EncoderPost").start();
 		}
@@ -91,6 +94,7 @@ public class MotorGroup implements Runnable{
 		if (TechnoTitan.postEncoder){
 			new Thread(this, "EncoderPost").start();
 		}
+		mover = new MotorMover();
 		
 	}
 
@@ -106,7 +110,7 @@ public class MotorGroup implements Runnable{
 
 	public void moveDistanceInches(double distanceInInches){
 		if (encoder != null){
-			MotorMover mover = new MotorMover(distanceInInches * 0.0254);
+			mover.setDistanceInMeters(distanceInInches * 0.0254);
 			currentThread = new Thread(mover);
 			currentThread.setPriority(Thread.MAX_PRIORITY);
 			currentThread.start();
@@ -167,30 +171,36 @@ public class MotorGroup implements Runnable{
 	public class MotorMover implements Runnable{
 
 		double distanceInMeters;
+		double targetLocation;
+		double initialLocation;
+		double home = 0.0;
 
-		public MotorMover(double distanceInMeters) {
-			this.distanceInMeters = distanceInMeters;
+		public MotorMover() {
+			
 		}
+		
+		public void setDistanceInMeters(double distanceInMeters){
+			this.distanceInMeters = distanceInMeters;
+			initialLocation = encoder.getDistanceMeters();
+			this.targetLocation = initialLocation + distanceInMeters;
+		}
+		
 		@SuppressWarnings("deprecation")
 		@Override
 		public void run() {
-			//synchronized(this){
-			encoder.reset();
 			double speed;
-			if (distanceInMeters>0)
+			if (targetLocation > initialLocation)
 				speed = HWR.MEDIUM_SPEED;
 			else
 				speed = -HWR.MEDIUM_SPEED;
-			while (Math.abs(encoder.getDisplacement(encoder.getDistancePerPulse())) < Math.abs(distanceInMeters)){
+			while (Math.abs(Math.abs(initialLocation) - Math.abs(encoder.getDisplacement(encoder.getDistancePerPulse())))
+					< Math.abs(distanceInMeters)){
 				for (Motor motor: motors){
 					motor.set(speed);
-					Timer.delay(0.5);
 				} 
 			}
 			stop();
-			encoder.reset();
 			currentThread.notifyAll();
-			//}
 			currentThread.destroy();
 		}
 
