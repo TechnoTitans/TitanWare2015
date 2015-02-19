@@ -5,6 +5,8 @@ import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
 import org.usfirst.frc.team1683.robot.vision.Vision;
 
+import edu.wpi.first.wpilibj.Timer;
+
 public class Auto_3A extends Autonomous{
 	public Auto_3A(HDrive drive, PickerUpper pickerUpper, Vision vision) {
 		super(drive, pickerUpper, vision);
@@ -79,7 +81,7 @@ public class Auto_3A extends Autonomous{
 			{
 				hDrive.stopSide();
 				hDrive.liftWheels();
-				timer.delay(0.5);
+				Timer.delay(0.5);
 				driveTimer.stop();
 				driveTimer.reset();
 				visionTimer.reset();

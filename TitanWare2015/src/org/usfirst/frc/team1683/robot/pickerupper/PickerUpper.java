@@ -315,11 +315,9 @@ public class PickerUpper implements Runnable{
 			isForward = false;
 		}
 		
-		@SuppressWarnings("unused")
 		public AirSystem getFrontAirSystem(){
 			return frontAirSystem;
 		}
-		@SuppressWarnings("unused")
 		public AirSystem getBackAirSystem(){
 			return backAirSystem;
 		}
