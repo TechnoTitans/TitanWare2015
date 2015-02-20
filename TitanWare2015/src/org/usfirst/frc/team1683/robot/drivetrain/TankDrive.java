@@ -95,6 +95,7 @@ public class TankDrive extends DriveTrain{
 	 * @param distanceInInches
 	 */
 	public void goForward(double distanceInInches){
+		resetTankEncoders();
 		left.moveDistanceInches(distanceInInches);
 		right.moveDistanceInches(distanceInInches);
 		currentThread = right.getCurrentThread();

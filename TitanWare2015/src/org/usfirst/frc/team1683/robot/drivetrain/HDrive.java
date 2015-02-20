@@ -181,6 +181,7 @@ public class HDrive extends TankDrive{
 	public void moveSideways(double distanceInInches)
 	{
 		deployWheels();
+		resetHEncoders();
 		hBackMotors.moveDistanceInches(distanceInInches);
 		hFrontMotors.moveDistanceInches(distanceInInches);
 		currentThread = hFrontMotors.getCurrentThread();

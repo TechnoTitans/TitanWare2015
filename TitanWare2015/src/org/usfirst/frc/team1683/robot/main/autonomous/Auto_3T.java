@@ -64,7 +64,6 @@ public class Auto_3T extends Autonomous{
 				hDrive.left.getCurrentThread().join();
 				hDrive.right.getCurrentThread().join();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			nextState = State.END_CASE;

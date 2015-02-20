@@ -20,23 +20,20 @@ public class Auto_4 extends Autonomous{
 		case INIT_CASE:
 		{
 			pickerUpper.goToZero();
-			nextState = State.ADJUST_FORWARD;
-			break;
-		}
-		case ADJUST_FORWARD:
-		{
-			hDrive.goForward(adjustDistance);
+			waitForThread(pickerUpper.getCurrentThread());
 			nextState = State.CENTER_TOTE;
 			break;
 		}
 		case CENTER_TOTE:
 		{
-			nextState = centerTote(State.DROP_TOTE);
+//			nextState = centerTote(State.DROP_TOTE);
+			nextState = State.DROP_TOTE;
 			break;
 		}
 		case DROP_TOTE:
 		{
 			pickerUpper.drop();
+			waitForThread(pickerUpper.getCurrentThread());
 			if (liftCount<2)
 				nextState = State.LIFT_TOTE;
 			else
@@ -45,29 +42,28 @@ public class Auto_4 extends Autonomous{
 		}
 		case LIFT_TOTE:
 		{
-			if (liftCount<1)
+			if (liftCount<1){
 				pickerUpper.liftFirstTote();
-			else
+			}
+			else{
 				pickerUpper.liftSecondTote();
+			}
+			waitForThread(pickerUpper.getCurrentThread());
 			liftCount++;
-			nextState = State.ADJUST_BACKWARD;
-			break;
-		}
-		case ADJUST_BACKWARD:
-		{
-			hDrive.goForward(-adjustDistance);
 			nextState = State.DRIVE_SIDEWAYS;
 			break;
 		}
 		case DRIVE_SIDEWAYS:
 		{
 			hDrive.moveSideways(sideDistance);
+			waitForThread(hDrive.getBackHMotor().getCurrentThread(), hDrive.getFrontHMotor().getCurrentThread());
 			nextState = State.ADJUST_FORWARD;
 			break;
 		}
 		case DRIVE_FORWARD:
 		{
 			hDrive.goForward(driveDistance);
+			waitForThread(hDrive.left.getCurrentThread(), hDrive.right.getCurrentThread());
 			nextState = State.END_CASE;
 			break;
 		}
