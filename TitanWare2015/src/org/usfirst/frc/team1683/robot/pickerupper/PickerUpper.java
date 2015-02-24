@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PIDController;
 
 
-public class PickerUpper implements Runnable{
+public class PickerUpper{
 	MotorGroup motors;
 	DualActionPistons pistons;
 	MotorGroup leftLiftMotor;
@@ -27,9 +27,8 @@ public class PickerUpper implements Runnable{
 	double beltTargetPosition;
 	HDrive hDrive;
 	boolean enableSensor;
-	PIDController liftPID;
-	double P, I, D, F, tolerance;
 	Thread currentThread;
+	PIDController controller;
 
 	/**
 	 * Constructor - one motor lift without encoder
@@ -83,17 +82,10 @@ public class PickerUpper implements Runnable{
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public PickerUpper(Class motorType, boolean inverseDirection, int[] liftSolenoids, int[] pickerUpperChannels,
 			 int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp, 
-			 PressureSensor pressure, Photogate photogate, HDrive hDrive, int index){
-		P = DriverStation.getDouble("PID Value: P");
-		I = DriverStation.getDouble("PID Value: I");
-		D = DriverStation.getDouble("PID Value: D");
-		F = DriverStation.getDouble("PID Value: F");
-		tolerance = DriverStation.getDouble("PID Tolerance");
-		
+			 PressureSensor pressure, Photogate photogate, HDrive hDrive, int index){		
 		beltEncoder = new Encoder(beltChannelA, beltChannelB, reverseDirection, wdpp);
 		this.motors = new MotorGroup("Picker Upper", pickerUpperChannels, motorType, inverseDirection, 
-				beltEncoder, P, I, D, F, index);
-		liftPID = motors.getPID();
+				beltEncoder);
 		this.pressure = pressure;
 		this.photogate = photogate;
 		pistons = new DualActionPistons(liftSolenoids, pressure);
@@ -102,9 +94,7 @@ public class PickerUpper implements Runnable{
 //		pistons = new DoubleActionSolenoid(liftSolenoids, pressure);
 		pistons.upright();
 		
-		enableSensor = DriverStation.getBoolean("enableSensor");
-		
-		
+		enableSensor = DriverStation.getBoolean("enableSensor");	
 	}
 	/**
 	 * Constructor - two motor lift with encoder
@@ -175,6 +165,14 @@ public class PickerUpper implements Runnable{
 	public DualActionPistons getPistons() {
 		return pistons;
 	}
+	
+	public void enablePID(){
+		double p = DriverStation.getDouble("PID P");
+		double i = DriverStation.getDouble("PID I");
+		double d = DriverStation.getDouble("PID D");
+
+		motors.enablePIDController(p, i, d, motors.getEncoder());
+	}
 
 	/**
 	 * Uprights pickerUpper
@@ -216,9 +214,10 @@ public class PickerUpper implements Runnable{
 	}
 	
 	public void goToZero(){
-		currentThread = new Thread(this);
-		currentThread.setPriority(Thread.MAX_PRIORITY);
-		currentThread.start();
+//		currentThread = new Thread(this);
+//		currentThread.setPriority(Thread.MAX_PRIORITY);
+//		currentThread.start();
+		liftToHeight(0);
 	}
 	
 	public Thread getCurrentThread(){
@@ -226,21 +225,21 @@ public class PickerUpper implements Runnable{
 	}
 
 
-	/**
-	 * Goes To Position
-	 */
-	@Override
-	public void run(){
-		while(beltEncoder.getDistance() > 0) {
-			motors.set(-AUTO_LIFT_SPEED);
-		}
-		while (beltEncoder.getDistance()<0){
-			motors.set(AUTO_LIFT_SPEED);
-		}
-//		while (!photogate.get()){
+//	/**
+//	 * Goes To Position
+//	 */
+//	@Override
+//	public void run(){
+//		while(beltEncoder.getDistance() > 0) {
 //			motors.set(-AUTO_LIFT_SPEED);
 //		}
-	}
+//		while (beltEncoder.getDistance()<0){
+//			motors.set(AUTO_LIFT_SPEED);
+//		}
+////		while (!photogate.get()){
+////			motors.set(-AUTO_LIFT_SPEED);
+////		}
+//	}
 	
 	/**
 	 * 

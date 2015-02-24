@@ -110,4 +110,6 @@ public class HWR {
 	public static final double LOW_SPEED			= 0.25;
 	public static final double MEDIUM_SPEED			= 0.40;
 	public static final double HIGH_SPEED			= 1.0;
+	
+	public static final double PID_PERCENT_TOLERANCE= 5;
 }
