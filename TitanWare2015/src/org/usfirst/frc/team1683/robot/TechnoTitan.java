@@ -89,6 +89,7 @@ public class TechnoTitan extends IterativeRobot {
     
     public void teleopInit() {
     	drive.resetGyro();
+    	pickerUpper.uprightPickerUpper();
     }
 
     /**

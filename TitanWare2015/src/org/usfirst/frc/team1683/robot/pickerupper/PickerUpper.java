@@ -162,13 +162,13 @@ public class PickerUpper implements Runnable{
 			calibrateToZero();
 		}
 		if (DriverStation.antiBounce(joystickNumber, HWR.UPRIGHT_BELT)){
-			pistons.upright();
+			uprightPickerUpper();
 		}
 		if (DriverStation.antiBounce(joystickNumber, HWR.ANGLE_BELT)){
-			pistons.angle();
+			anglePickerUpper();
 		}
 		if (DriverStation.antiBounce(joystickNumber, HWR.FREEZE_BELT)){
-			pistons.freeze();
+			freezePickerUpper();
 		}
 	}
 	
@@ -176,25 +176,39 @@ public class PickerUpper implements Runnable{
 		return pistons;
 	}
 
-
+	/**
+	 * Uprights pickerUpper
+	 */
+	public void uprightPickerUpper() {
+		pistons.upright();
+	}
+	
 	/**
 	 * Lifts the pickerupper device into the straight position
 	 */
-	public void uprightPickerUpper() {
+	public void uprightPickerUpperToggle() {
 		if (!isForward){
 			pistons.changeState();
 			isForward = true;
 		}
 	}
 
+	public void anglePickerUpper() {
+		pistons.angle();
+	}
+	
 	/**
 	 * Brings back the pickerupper device into an angle
 	 */
-	public void angledPickerUpper() {
+	public void angledPickerUpperToggle() {
 		if (isForward){
 			pistons.changeState();
 			isForward = false;
 		}
+	}
+	
+	public void freezePickerUpper() {
+		pistons.freeze();
 	}
 	
 	public void calibrateToZero(){
@@ -334,17 +348,17 @@ public class PickerUpper implements Runnable{
 		
 		public void upright(){
 			frontAirSystem.retract();
-			backAirSystem.extend();
+			backAirSystem.retract();
 		}
 		
 		public void angle(){
 			frontAirSystem.extend();
-			backAirSystem.retract();
+			backAirSystem.extend();
 		}
 		
 		public void freeze(){
 			frontAirSystem.extend();
-			backAirSystem.extend();
+			backAirSystem.retract();
 		}
 	}
 	
