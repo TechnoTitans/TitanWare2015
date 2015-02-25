@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1683.robot.pneumatics;
 
+import org.usfirst.frc.team1683.robot.TechnoTitan;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Direction;
@@ -10,7 +12,7 @@ import edu.wpi.first.wpilibj.Relay.Value;
  * @author Sreyas Mirthipati
  *
  */
-public class OldCompressor {
+public class OldCompressor implements Runnable {
 	DigitalInput pressureSwitch;
 	Relay compressor;
 
@@ -23,13 +25,16 @@ public class OldCompressor {
 		compressor = new Relay(compChannel, Direction.kForward);
 	}
 
-	/**To be called periodically to check for correct pressure
-	 *  and control compressor as needed
+	/**Constantly checks the pressure and runs compressor if the robot is enabled
+	 *Requires a boolean in the main class to change state when the robot is enabled
+	 *and disabled.
 	 */
-	public void pressurize() {
-		if(pressureSwitch.get() == false)
-			compressor.set(Value.kOn);
-		else
-			compressor.set(Value.kOff);
+	public void run() {
+		while(true) {
+			if(pressureSwitch.get() == false && TechnoTitan.isRobotDisabled == false)
+				compressor.set(Value.kOn);
+			else
+				compressor.set(Value.kOff);
+		}
 	}
 }

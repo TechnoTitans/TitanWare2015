@@ -2,7 +2,6 @@ package org.usfirst.frc.team1683.robot.pneumatics;
 
 import java.util.ArrayList;
 
-import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 
 import edu.wpi.first.wpilibj.Solenoid;
@@ -17,7 +16,6 @@ public class AirSystem {
 	final static boolean EXTENDED = true;
 	final static boolean RETRACTED = false;
 
-	static OldCompressor compressor = new OldCompressor(HWR.PRESSURE_SWITCH,HWR.COMPRESSOR_RELAY);
 	int PcmNum;
 	ArrayList<Solenoid> solenoids = new ArrayList<Solenoid>();
 	PressureSensor pressure;
@@ -105,13 +103,6 @@ public class AirSystem {
 			}
 		}
 		return count;
-	}
-
-	/**
-	 * @return the compressor
-	 */
-	public OldCompressor getCompressor() {
-		return compressor;
 	}
 
 	/**
