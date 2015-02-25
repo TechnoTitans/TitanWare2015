@@ -131,7 +131,4 @@ public class TechnoTitan extends IterativeRobot {
 	public void disabledInit() {
 		isRobotDisabled = true;
 	}
-
-
-
 }
