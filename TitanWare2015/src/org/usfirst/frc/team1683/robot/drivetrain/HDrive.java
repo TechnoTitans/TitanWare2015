@@ -3,11 +3,9 @@ package org.usfirst.frc.team1683.robot.drivetrain;
 import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.pneumatics.AirSystem;
-import org.usfirst.frc.team1683.robot.pneumatics.OldCompressor;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
 import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Joystick;
 
 public class HDrive extends TankDrive{

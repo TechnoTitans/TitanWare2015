@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Solenoid;
 
 /**Class to represent any particular system of solenoids acting in unison.

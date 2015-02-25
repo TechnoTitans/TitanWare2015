@@ -10,7 +10,6 @@ import org.usfirst.frc.team1683.robot.pneumatics.OldCompressor;
 import org.usfirst.frc.team1683.robot.sensors.Photogate;
 import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PIDController;
 
 
@@ -319,6 +318,11 @@ public class PickerUpper{
 		return HWR.SLOPE*beltEncoder.getDisplacement(beltEncoder.getDistancePerPulse())+b;
 	}
 	
+	/**This method was created so we can get the OldCompressor and call the "pressurize"
+	 * method periodically in teleopPeriodic of the TechnoTitan class.
+	 * @author Sreyas Mirthipati
+	 * @return the compressor from the AirSystem
+	 */
 	public OldCompressor getCompressor() {
 		return pistons.getFrontAirSystem().getCompressor();
 	}

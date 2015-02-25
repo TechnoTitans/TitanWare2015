@@ -5,6 +5,11 @@ import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Direction;
 import edu.wpi.first.wpilibj.Relay.Value;
 
+/**This class is to be used instead of the built in Compressor class whenever we want
+ * to use a Spike relay to control the compressor over the PCM closed loop method.
+ * @author Sreyas Mirthipati
+ *
+ */
 public class OldCompressor {
 	DigitalInput pressureSwitch;
 	Relay compressor;

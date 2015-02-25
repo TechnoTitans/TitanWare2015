@@ -7,13 +7,11 @@ import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.main.autonomous.Autonomous;
 import org.usfirst.frc.team1683.robot.main.autonomous.AutonomousSwitcher;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
-import org.usfirst.frc.team1683.robot.pneumatics.AirSystem;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
 import org.usfirst.frc.team1683.robot.sensors.Photogate;
 import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 import org.usfirst.frc.team1683.robot.statistics.CurrentTierIdentifier;
 import org.usfirst.frc.team1683.robot.statistics.PowerDistributionManager;
-import org.usfirst.frc.team1683.robot.test.AirSystemTester;
 import org.usfirst.frc.team1683.robot.test.DriveTester;
 import org.usfirst.frc.team1683.robot.vision.Vision;
 
@@ -87,6 +85,7 @@ public class TechnoTitan extends IterativeRobot {
      */
     public void autonomousPeriodic() {
     	autonomous.run();
+    	//TODO add pressurize method call to go periodically-see TeleopPeriodic
     }
     
     public void teleopInit() {
@@ -100,6 +99,8 @@ public class TechnoTitan extends IterativeRobot {
     public void teleopPeriodic() {
         drive.driveMode(DriverStation.leftStick, DriverStation.rightStick);
         pickerUpper.liftMode(HWR.AUX_JOYSTICK);
+        
+        //needed to check the pressure each time cycle runs
         pickerUpper.getCompressor().pressurize();
     }
     
