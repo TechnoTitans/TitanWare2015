@@ -42,7 +42,7 @@ public class HWR {
 	public static final int FRONT_CHANNEL_B			= HWP.DIO_7;
 	public static final int BACK_CHANNEL_A			= HWP.DIO_8;
 	public static final int BACK_CHANNEL_B			= 10;
-	public static final int PHOTOGATE 				= HWP.DIO_9;
+	public static final int PHOTOGATE 				= 11;
 
 
 	//Encoder Wheel Distance Per Pulse
@@ -59,6 +59,8 @@ public class HWR {
 
 	//Pneumatics
 	public static final int PRESSURE_SENSOR 		= HWP.ANALOG_0;
+	public static final int PRESSURE_SWITCH			= HWP.DIO_9;
+	public static final int COMPRESSOR_RELAY		= HWP.RELAY_0;
 
 	//Pistons
 	public static final int LEFT_H_PISTON			= PCM.SOLENOID_0;

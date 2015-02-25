@@ -3,6 +3,7 @@ package org.usfirst.frc.team1683.robot.drivetrain;
 import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.pneumatics.AirSystem;
+import org.usfirst.frc.team1683.robot.pneumatics.OldCompressor;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
 import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 
@@ -207,9 +208,8 @@ public class HDrive extends TankDrive{
 		AirSystem frontAirSystem;
 		AirSystem backAirSystem;
 		public DrivePistons(int[] pistons, PressureSensor pressure) { //front piston, back Piston
-			Compressor compressor = new Compressor();
-			frontAirSystem = new AirSystem(compressor, new int[]{pistons[0]}, pressure);
-			backAirSystem = new AirSystem(compressor, new int[]{pistons[1]}, pressure);
+			frontAirSystem = new AirSystem(new int[]{pistons[0]}, pressure);
+			backAirSystem = new AirSystem(new int[]{pistons[1]}, pressure);
 			isLifted = false;
 		}
 		

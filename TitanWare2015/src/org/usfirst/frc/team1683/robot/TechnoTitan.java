@@ -7,11 +7,13 @@ import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.main.autonomous.Autonomous;
 import org.usfirst.frc.team1683.robot.main.autonomous.AutonomousSwitcher;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
+import org.usfirst.frc.team1683.robot.pneumatics.AirSystem;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
 import org.usfirst.frc.team1683.robot.sensors.Photogate;
 import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 import org.usfirst.frc.team1683.robot.statistics.CurrentTierIdentifier;
 import org.usfirst.frc.team1683.robot.statistics.PowerDistributionManager;
+import org.usfirst.frc.team1683.robot.test.AirSystemTester;
 import org.usfirst.frc.team1683.robot.test.DriveTester;
 import org.usfirst.frc.team1683.robot.vision.Vision;
 
@@ -98,6 +100,7 @@ public class TechnoTitan extends IterativeRobot {
     public void teleopPeriodic() {
         drive.driveMode(DriverStation.leftStick, DriverStation.rightStick);
         pickerUpper.liftMode(HWR.AUX_JOYSTICK);
+        pickerUpper.getCompressor().pressurize();
     }
     
     /**
@@ -106,10 +109,12 @@ public class TechnoTitan extends IterativeRobot {
     public void testInit(){
     	drive.resetGyro();
     	drive.deployWheels();
+    	//air = new AirSystem(new int[]{3}, pressure);
     }
     public void testPeriodic() {
     	//driveTester.test();
-    	drive.antiDrift(HWR.MEDIUM_SPEED);
+    	//drive.antiDrift(HWR.MEDIUM_SPEED);
+    	//air.getCompressor().pressurize();
     }
 
     

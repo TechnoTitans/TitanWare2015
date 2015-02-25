@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1683.robot.pneumatics;
 
+import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -14,9 +15,8 @@ public class DoubleActionSolenoid {
 	 * @param initState - initial state of controlling boolean value
 	 */
 	public DoubleActionSolenoid(int[] pistons, PressureSensor pressure) { //front piston, back Piston
-		Compressor compressor = new Compressor();
-		frontAirSystem = new AirSystem(compressor, new int[]{pistons[0]}, pressure);
-		backAirSystem = new AirSystem(compressor, new int[]{pistons[1]}, pressure);
+		frontAirSystem = new AirSystem(new int[]{pistons[0]}, pressure);
+		backAirSystem = new AirSystem(new int[]{pistons[1]}, pressure);
 	}
 	
 	/**
