@@ -51,6 +51,7 @@ public class TechnoTitan extends IterativeRobot {
 	 */
 	public void robotInit() {
 		//PreferencesList.set();
+		isRobotDisabled = true;
 		vision = new Vision();
 		powerDistributionManager = new PowerDistributionManager(HWR.BACK_LEFT_MOTOR,HWR.FRONT_LEFT_MOTOR,HWR.BACK_RIGHT_MOTOR,HWR.FRONT_RIGHT_MOTOR, HWR.BELT_MOTOR );
 		powerDistributionManager.start();
@@ -71,36 +72,31 @@ public class TechnoTitan extends IterativeRobot {
 		toteNumberIdentifier = new CurrentTierIdentifier(powerDistributionManager.getPowerDistributionPanel(), 4, HWR.BELT_MOTOR);
 		new Thread(toteNumberIdentifier, "Tier Manager").start();
 		drive.resetGyro();
-		isRobotDisabled = true;
 		compressor = new OldCompressor(HWR.PRESSURE_SWITCH, HWR.COMPRESSOR_RELAY);
 		new Thread(compressor, "Pressure Manager").start();
 	}
 
 	public void autonomousInit(){
+		isRobotDisabled = false;
 		drive.resetGyro();
 		autonomous = new AutonomousSwitcher(drive, pickerUpper, vision);
 		Autonomous.errorWarning = true;
 		Autonomous.updatePreferences();
 		Autonomous.presentState = Autonomous.State.INIT_CASE;
 		pickerUpper.getPistons().upright();
-		synchronized(this) {
-			isRobotDisabled = false;
-		}
 	}
 
 	/**
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
-		isRobotDisabled = false;
 		autonomous.run();
-		//TODO add pressurize method call to go periodically-see TeleopPeriodic
 	}
 
 	public void teleopInit() {
+		isRobotDisabled = false;
 		drive.resetGyro();
 		pickerUpper.uprightPickerUpper();
-		isRobotDisabled = false;
 	}
 
 	/**
@@ -109,25 +105,28 @@ public class TechnoTitan extends IterativeRobot {
 	public void teleopPeriodic() {
 		drive.driveMode(DriverStation.leftStick, DriverStation.rightStick);
 		pickerUpper.liftMode(HWR.AUX_JOYSTICK);
-		isRobotDisabled = false;
 	}
 
+	public void testInit(){
+		isRobotDisabled = false;
+		drive.resetGyro();
+		drive.deployWheels();
+		//air = new AirSystem(new int[]{3}, pressure);
+	}
+	
 	/**
 	 * This function is called periodically during test mode
 	 */
-	public void testInit(){
-		drive.resetGyro();
-		drive.deployWheels();
-		isRobotDisabled = false;
-		//air = new AirSystem(new int[]{3}, pressure);
-	}
 	public void testPeriodic() {
-		isRobotDisabled = false;
 		//driveTester.test();
 		//drive.antiDrift(HWR.MEDIUM_SPEED);
 		//air.getCompressor().pressurize();
 	}
 
+	/**
+	 * This function is called only one time after the robot
+	 * is disabled.
+	 */
 	public void disabledInit() {
 		isRobotDisabled = true;
 	}
