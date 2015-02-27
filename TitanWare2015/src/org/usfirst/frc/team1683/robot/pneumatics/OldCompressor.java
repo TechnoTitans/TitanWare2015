@@ -31,10 +31,13 @@ public class OldCompressor implements Runnable {
 	 */
 	public void run() {
 		while(true) {
-			if(pressureSwitch.get() == false && TechnoTitan.isRobotDisabled == false)
-				compressor.set(Value.kOn);
-			else
-				compressor.set(Value.kOff);
+			while(TechnoTitan.isRobotDisabled){
+				if(pressureSwitch.get() == false){
+					compressor.set(Value.kOn);
+				}else{
+					compressor.set(Value.kOff);
+				}
+			}
 		}
 	}
 }
