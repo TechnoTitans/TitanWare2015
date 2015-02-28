@@ -10,28 +10,30 @@ public class PreferencesList{
 		DriverStation.prefDouble("bearing", 90);
 		
 		//Autonomous Preferences
-		DriverStation.prefInt("autonomousMode", 11);
-		DriverStation.prefDouble("driveDistance", 143);
-		DriverStation.prefDouble("sideDistance", 24);
+		DriverStation.prefInt("autonomousMode", 12);
+		DriverStation.prefDouble("driveDistance", 140); //inches
+		DriverStation.prefDouble("sideDistance", -80); //inches
 		DriverStation.prefDouble("liftDistance", 2);
 		DriverStation.prefDouble("adjustDistance", 2);
 		DriverStation.prefDouble("backDistance", 2);
 		DriverStation.prefDouble("robotDistance", 2);
 		DriverStation.prefDouble("toteSpaceDistance", 2);
 		DriverStation.prefBoolean("enablePrinting", true);
-		DriverStation.prefDouble("driveTime", 7);
-		DriverStation.prefDouble("sideTime", 3);
+		DriverStation.prefDouble("driveTime", 1.75); //sec
+		DriverStation.prefDouble("sideTime", 2); //sec
 		
 		DriverStation.prefBoolean("enableLightSensor", true);
 		
 		//PID Preferences
+		DriverStation.prefBoolean("EnablePID", false);
 		DriverStation.prefDouble("PIDValueP", 0);
 		DriverStation.prefDouble("PIDValueI", 0);
 		DriverStation.prefDouble("PIDValueD", 0);
-		DriverStation.prefDouble("PIDTolerance", 1);
+		DriverStation.prefDouble("PIDTolerance", 5);
 		
 		//Gyro Value
-		DriverStation.prefDouble("kp", 0.03);
+		DriverStation.prefDouble("kpside", -0.05);
+		DriverStation.prefDouble("kpforward", 0.03);
 	}
 	
 }

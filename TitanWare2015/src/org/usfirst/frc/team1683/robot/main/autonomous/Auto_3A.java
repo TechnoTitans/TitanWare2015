@@ -73,8 +73,8 @@ public class Auto_3A extends Autonomous{
 			}
 			if (driveTimer.get()<sideTime)
 			{
-//				hDrive.set(hSpeed);
-				hDrive.antiDrift(hSpeed, hDrive.getFrontHMotor(), hDrive.getBackHMotor());
+//				hDrive.antiDrift(hSpeed, hDrive.getFrontHMotor(), hDrive.getBackHMotor());
+				hDrive.set(hSpeed);
 				nextState = State.DRIVE_SIDEWAYS;
 			}
 			else
@@ -115,8 +115,8 @@ public class Auto_3A extends Autonomous{
 			}
 			if (driveTimer.get()<driveTime)
 			{
-//				hDrive.setTankDrive(speed);
-				hDrive.antiDrift(speed);
+				hDrive.setTankDrive(speed);
+//				hDrive.antiDrift(speed);
 				nextState = State.DRIVE_FORWARD;
 			}
 			else

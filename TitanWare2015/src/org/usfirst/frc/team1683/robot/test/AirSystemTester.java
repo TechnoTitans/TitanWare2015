@@ -4,7 +4,6 @@ import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.pneumatics.AirSystem;
 import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Joystick;
 
 /**
@@ -23,7 +22,7 @@ public class AirSystemTester implements Tester{
 	 * @param button - the button assignment for test firing (default on aux joystick)
 	 */
 	public AirSystemTester(int[] solenoids, int button , PressureSensor pressure) {
-		air = new AirSystem(new Compressor(),solenoids, pressure);
+		air = new AirSystem(solenoids, pressure);
 		stick = new Joystick(HWR.AUX_JOYSTICK);
 		buttonAssignment = button;
 		air.retract();
@@ -35,7 +34,7 @@ public class AirSystemTester implements Tester{
 	 * @param button - the button assignment for test firing (default on aux joystick)
 	 */
 	public AirSystemTester(int PcmNum, int[] solenoids, int button) {
-		air = new AirSystem(new Compressor(), PcmNum, solenoids);
+		air = new AirSystem(PcmNum, solenoids);
 		stick = new Joystick(HWR.AUX_JOYSTICK);
 		buttonAssignment = button;
 		air.retract();
@@ -47,7 +46,7 @@ public class AirSystemTester implements Tester{
 	 * @param button - the button assignment for test firing
 	 */
 	public AirSystemTester(int[] solenoids, int stickNum, int button , PressureSensor pressure) {
-		air = new AirSystem(new Compressor(),solenoids, pressure);
+		air = new AirSystem(solenoids, pressure);
 		stick = new Joystick(stickNum);
 		buttonAssignment = button;
 		air.retract();

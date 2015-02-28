@@ -20,8 +20,11 @@ public class MotorGroup implements Runnable{
 	Thread currentThread;
 	List<Motor> motors;
 	Encoder encoder;
-	PIDController PIDcontrol;
+	List<PIDController> pidControllers;
 	MotorMover mover;
+	boolean useAntidrift;
+	Antidrift antidrift;
+	
 	/**
 	 * Constructor
 	 * @param channelNumbers
@@ -29,6 +32,7 @@ public class MotorGroup implements Runnable{
 	 * @param inverseDirection
 	 */
 	public MotorGroup(String groupName, int[] channelNumbers, Class<Motor> motorType, boolean inverseDirection)  {
+		useAntidrift = false;
 		this.groupName = groupName;
 		motors = new ArrayList<Motor>();
 		for (int i = 0; i < channelNumbers.length; i++) {
@@ -39,10 +43,11 @@ public class MotorGroup implements Runnable{
 				motors.add(new TalonSRX(j, inverseDirection));
 			}
 		}
-		mover = new MotorMover();
+		mover = new MotorMover(this);
 		if (TechnoTitan.postEncoder){
 			new Thread(this, "EncoderPost").start();
 		}
+		pidControllers = null;
 	}
 	/**
 	 * Constructor
@@ -52,8 +57,8 @@ public class MotorGroup implements Runnable{
 	 * @param encoder
 	 */
 
-	public MotorGroup(String groupName, int[] channelNumbers, Class<Motor> motorType, boolean inverseDirection, Encoder encoder)
-	{
+	public MotorGroup(String groupName, int[] channelNumbers, Class<Motor> motorType, boolean inverseDirection, Encoder encoder){
+		useAntidrift = false;
 		this.groupName = groupName;
 		motors = new ArrayList<Motor>();
 		for (int i = 0; i < channelNumbers.length; i++) {
@@ -65,37 +70,20 @@ public class MotorGroup implements Runnable{
 			}
 		}
 		this.encoder = encoder;
-		mover = new MotorMover();
+		mover = new MotorMover(this);
 		if (TechnoTitan.postEncoder){
 			new Thread(this, "EncoderPost").start();
 		}
+		pidControllers = null;
 	}
 	
-	public MotorGroup(String groupName, int[] channelNumbers, Class<Motor> motorType, boolean inverseDirection, 
-			Encoder encoder, double P, double I, double D, double F, int index)
-	{
-		this.groupName = groupName;
-		motors = new ArrayList<Motor>();
-		for (int i = 0; i < channelNumbers.length; i++) {
-			int j = channelNumbers[i];
-			if (motorType.equals(Talon.class)){
-				motors.add(new Talon(j, inverseDirection));
-				if (j==index){
-					PIDcontrol = new PIDController(P, I, D, F, encoder, new Talon(j, inverseDirection));
-				}
-			}else if (motorType.equals(TalonSRX.class)){
-				motors.add(new TalonSRX(j, inverseDirection));
-				if (j==index){
-					PIDcontrol = new PIDController(P, I, D, F, encoder, new TalonSRX(j, inverseDirection));
-				}
-			}
+	public void enableAntiDrift(boolean enable, Antidrift antidrift){
+		if (enable){
+			this.useAntidrift = true;
+			this.antidrift = antidrift;
+		}else{
+			this.useAntidrift = false;
 		}
-		this.encoder = encoder;
-		if (TechnoTitan.postEncoder){
-			new Thread(this, "EncoderPost").start();
-		}
-		mover = new MotorMover();
-		
 	}
 
 	/**
@@ -106,6 +94,20 @@ public class MotorGroup implements Runnable{
 		for (Motor motor: motors){
 			motor.moveDistance(distanceInMeters);
 		}
+	}
+	
+	public void enablePIDController(double p, double i, double d, double tolerance, Encoder encoder){
+		pidControllers = new ArrayList<PIDController>();
+		for (int index = 0; index < motors.size(); index++){
+			PIDController pidControl = new PIDController(p, i, d, encoder, motors.get(index));
+			pidControl.setOutputRange(0, 1);
+			pidControl.setPercentTolerance(tolerance);
+			pidControllers.add(pidControl);
+		}
+	}
+	
+	public Encoder getEncoder(){
+		return this.encoder;
 	}
 
 	public void moveDistanceInches(double distanceInInches){
@@ -129,9 +131,6 @@ public class MotorGroup implements Runnable{
 		return currentThread;
 	}
 	
-	public PIDController getPID(){
-		return PIDcontrol;
-	}
 	/**
 	 * moves the robot a certain amount of degrees 
 	 * @param degrees
@@ -150,6 +149,7 @@ public class MotorGroup implements Runnable{
 			motor.set(speed);
 		} 
 	}
+	
 	/**
 	 * stops the motor
 	 */
@@ -178,15 +178,17 @@ public class MotorGroup implements Runnable{
 	}
 
 	public class MotorMover implements Runnable{
-
+		
 		double distanceInMeters;
 		double targetLocation;
 		double initialLocation;
 		double home = 0.0;
-
-		public MotorMover() {
-			
+		MotorGroup group;
+		
+		public MotorMover(MotorGroup group) {
+			this.group = group;
 		}
+
 		
 		public void setDistanceInMeters(double distanceInMeters){
 			this.distanceInMeters = distanceInMeters;
@@ -197,22 +199,66 @@ public class MotorGroup implements Runnable{
 		@SuppressWarnings("deprecation")
 		@Override
 		public void run() {
-			double speed;
-			if (targetLocation > initialLocation)
-				speed = HWR.MEDIUM_SPEED;
-			else
-				speed = -HWR.MEDIUM_SPEED;
-			while (Math.abs(Math.abs(initialLocation) - Math.abs(encoder.getDisplacement(encoder.getDistancePerPulse())))
-					< Math.abs(distanceInMeters)){
-				for (Motor motor: motors){
-					motor.set(speed);
-				} 
+			double baseSpeed;
+			if (pidControllers == null){
+				if (targetLocation > initialLocation){
+					baseSpeed = HWR.MEDIUM_SPEED;
+				}else{
+					baseSpeed = -HWR.MEDIUM_SPEED;
+				}
+				while (Math.abs(Math.abs(initialLocation) - Math.abs(encoder.getDisplacement(encoder.getDistancePerPulse())))
+						< Math.abs(distanceInMeters)){
+					double speed = baseSpeed;
+					for (Motor motor: motors){
+						if (useAntidrift){
+							speed = antidrift.antiDrift(baseSpeed, group);
+							motor.set(speed);
+						}else{
+							motor.set(speed);
+						}
+					} 
+				}
+			}else{
+				for (PIDController pidControl : pidControllers){
+					pidControl.enable();
+					pidControl.setSetpoint(targetLocation);
+				}
+				while (!pidControllers.get(0).onTarget()){
+					Thread.yield();
+				}
+				for (PIDController pidControl : pidControllers){
+					pidControl.disable();
+				}
 			}
 			stop();
 			currentThread.notifyAll();
 			currentThread.destroy();
 		}
+	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((groupName == null) ? 0 : groupName.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MotorGroup other = (MotorGroup) obj;
+		if (groupName == null) {
+			if (other.groupName != null)
+				return false;
+		} else if (!groupName.equals(other.groupName))
+			return false;
+		return true;
 	}
 
 }

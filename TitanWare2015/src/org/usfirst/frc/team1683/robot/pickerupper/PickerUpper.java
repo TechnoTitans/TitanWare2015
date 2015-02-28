@@ -9,11 +9,10 @@ import org.usfirst.frc.team1683.robot.pneumatics.AirSystem;
 import org.usfirst.frc.team1683.robot.sensors.Photogate;
 import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PIDController;
 
 
-public class PickerUpper implements Runnable{
+public class PickerUpper{
 	MotorGroup motors;
 	DualActionPistons pistons;
 	MotorGroup leftLiftMotor;
@@ -27,9 +26,8 @@ public class PickerUpper implements Runnable{
 	double beltTargetPosition;
 	HDrive hDrive;
 	boolean enableSensor;
-	PIDController liftPID;
-	double P, I, D, F, tolerance;
 	Thread currentThread;
+	PIDController controller;
 
 	/**
 	 * Constructor - one motor lift without encoder
@@ -83,17 +81,10 @@ public class PickerUpper implements Runnable{
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public PickerUpper(Class motorType, boolean inverseDirection, int[] liftSolenoids, int[] pickerUpperChannels,
 			 int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp, 
-			 PressureSensor pressure, Photogate photogate, HDrive hDrive, int index){
-		P = DriverStation.getDouble("PID Value: P");
-		I = DriverStation.getDouble("PID Value: I");
-		D = DriverStation.getDouble("PID Value: D");
-		F = DriverStation.getDouble("PID Value: F");
-		tolerance = DriverStation.getDouble("PID Tolerance");
-		
+			 PressureSensor pressure, Photogate photogate, HDrive hDrive, int index){		
 		beltEncoder = new Encoder(beltChannelA, beltChannelB, reverseDirection, wdpp);
 		this.motors = new MotorGroup("Picker Upper", pickerUpperChannels, motorType, inverseDirection, 
-				beltEncoder, P, I, D, F, index);
-		liftPID = motors.getPID();
+				beltEncoder);
 		this.pressure = pressure;
 		this.photogate = photogate;
 		pistons = new DualActionPistons(liftSolenoids, pressure);
@@ -102,9 +93,7 @@ public class PickerUpper implements Runnable{
 //		pistons = new DoubleActionSolenoid(liftSolenoids, pressure);
 		pistons.upright();
 		
-		enableSensor = DriverStation.getBoolean("enableSensor");
-		
-		
+		enableSensor = DriverStation.getBoolean("enableSensor");	
 	}
 	/**
 	 * Constructor - two motor lift with encoder
@@ -130,6 +119,9 @@ public class PickerUpper implements Runnable{
 		rightLiftMotor = new MotorGroup("Right Lift Motor",new int[]{rightMotor}, motorType, rightInverseDirection, beltEncoder);
 		this.photogate = photogate;
 		pistons.upright();
+		if (DriverStation.getBoolean("EnablePID")){
+			enablePID();
+		}
 	}
 
 	public void liftMode(int joystickNumber) {
@@ -162,39 +154,62 @@ public class PickerUpper implements Runnable{
 			calibrateToZero();
 		}
 		if (DriverStation.antiBounce(joystickNumber, HWR.UPRIGHT_BELT)){
-			pistons.upright();
+			uprightPickerUpper();
 		}
 		if (DriverStation.antiBounce(joystickNumber, HWR.ANGLE_BELT)){
-			pistons.angle();
+			anglePickerUpper();
 		}
 		if (DriverStation.antiBounce(joystickNumber, HWR.FREEZE_BELT)){
-			pistons.freeze();
+			freezePickerUpper();
 		}
 	}
 	
 	public DualActionPistons getPistons() {
 		return pistons;
 	}
+	
+	public void enablePID(){
+		double p = DriverStation.getDouble("PIDValueP");
+		double i = DriverStation.getDouble("PIDValueI");
+		double d = DriverStation.getDouble("PIDValueD");
+		double tolerance = DriverStation.getDouble("PIDTolerance");
 
+		motors.enablePIDController(p, i, d,tolerance, motors.getEncoder());
+	}
 
+	/**
+	 * Uprights pickerUpper
+	 */
+	public void uprightPickerUpper() {
+		pistons.upright();
+	}
+	
 	/**
 	 * Lifts the pickerupper device into the straight position
 	 */
-	public void uprightPickerUpper() {
+	public void uprightPickerUpperToggle() {
 		if (!isForward){
 			pistons.changeState();
 			isForward = true;
 		}
 	}
 
+	public void anglePickerUpper() {
+		pistons.angle();
+	}
+	
 	/**
 	 * Brings back the pickerupper device into an angle
 	 */
-	public void angledPickerUpper() {
+	public void angledPickerUpperToggle() {
 		if (isForward){
 			pistons.changeState();
 			isForward = false;
 		}
+	}
+	
+	public void freezePickerUpper() {
+		pistons.freeze();
 	}
 	
 	public void calibrateToZero(){
@@ -202,9 +217,10 @@ public class PickerUpper implements Runnable{
 	}
 	
 	public void goToZero(){
-		currentThread = new Thread(this);
-		currentThread.setPriority(Thread.MAX_PRIORITY);
-		currentThread.start();
+//		currentThread = new Thread(this);
+//		currentThread.setPriority(Thread.MAX_PRIORITY);
+//		currentThread.start();
+		liftToHeight(0);
 	}
 	
 	public Thread getCurrentThread(){
@@ -212,21 +228,21 @@ public class PickerUpper implements Runnable{
 	}
 
 
-	/**
-	 * Goes To Position
-	 */
-	@Override
-	public void run(){
-		while(beltEncoder.getDistance() > 0) {
-			motors.set(-AUTO_LIFT_SPEED);
-		}
-		while (beltEncoder.getDistance()<0){
-			motors.set(AUTO_LIFT_SPEED);
-		}
-//		while (!photogate.get()){
+//	/**
+//	 * Goes To Position
+//	 */
+//	@Override
+//	public void run(){
+//		while(beltEncoder.getDistance() > 0) {
 //			motors.set(-AUTO_LIFT_SPEED);
 //		}
-	}
+//		while (beltEncoder.getDistance()<0){
+//			motors.set(AUTO_LIFT_SPEED);
+//		}
+////		while (!photogate.get()){
+////			motors.set(-AUTO_LIFT_SPEED);
+////		}
+//	}
 	
 	/**
 	 * 
@@ -305,13 +321,13 @@ public class PickerUpper implements Runnable{
 		return HWR.SLOPE*beltEncoder.getDisplacement(beltEncoder.getDistancePerPulse())+b;
 	}
 	
+
 	public class DualActionPistons{
 		AirSystem frontAirSystem;
 		AirSystem backAirSystem;
 		public DualActionPistons(int[] pistons, PressureSensor pressure) { //front piston, back Piston
-			Compressor compressor = new Compressor();
-			frontAirSystem = new AirSystem(compressor, new int[]{pistons[0]}, pressure);
-			backAirSystem = new AirSystem(compressor, new int[]{pistons[1]}, pressure);
+			frontAirSystem = new AirSystem(new int[]{pistons[0]}, pressure);
+			backAirSystem = new AirSystem(new int[]{pistons[1]}, pressure);
 			isForward = false;
 		}
 		
@@ -334,17 +350,17 @@ public class PickerUpper implements Runnable{
 		
 		public void upright(){
 			frontAirSystem.retract();
-			backAirSystem.extend();
+			backAirSystem.retract();
 		}
 		
 		public void angle(){
 			frontAirSystem.extend();
-			backAirSystem.retract();
+			backAirSystem.extend();
 		}
 		
 		public void freeze(){
 			frontAirSystem.extend();
-			backAirSystem.extend();
+			backAirSystem.retract();
 		}
 	}
 	
