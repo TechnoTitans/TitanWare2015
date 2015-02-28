@@ -15,9 +15,9 @@ public class AntiDriftTest implements Tester{
 	@Override
 	public void test() {
 		if (DriverStation.antiBounce(HWR.LEFT_JOYSTICK, 10)){
-			drive.goForward(200);
+			drive.goForward(10000);
 		}else if(DriverStation.antiBounce(HWR.LEFT_JOYSTICK, 6)){
-			drive.moveSideways(50);
+			drive.moveSideways(1000);
 		}		
 	}
 

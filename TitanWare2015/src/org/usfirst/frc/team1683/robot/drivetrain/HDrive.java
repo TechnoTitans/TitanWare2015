@@ -3,7 +3,6 @@ package org.usfirst.frc.team1683.robot.drivetrain;
 import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.pneumatics.AirSystem;
-import org.usfirst.frc.team1683.robot.sensors.Gyro;
 import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -59,7 +58,7 @@ public class HDrive extends TankDrive{
 		hFrontMotors= new MotorGroup("HFrontMotors", new int[]{frontMotor},hMotorType, frontInverse, frontEncoder);
 		this.triggerButton = triggerButton;
 		isLifted = true;
-		sidewaysAntiDrift = new Antidrift(hFrontMotors, hBackMotors, gyro, DriverStation.getDouble("kpside"));
+		sidewaysAntiDrift = new Antidrift(hBackMotors, hFrontMotors, gyro, DriverStation.getDouble("kpside"));
 		hBackMotors.enableAntiDrift(true, sidewaysAntiDrift);
 		hFrontMotors.enableAntiDrift(true, sidewaysAntiDrift);
 //		pistons = new DoubleActionSolenoid(new int[]{rightPiston, leftPiston}, pressure);

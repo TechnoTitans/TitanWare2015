@@ -199,18 +199,19 @@ public class MotorGroup implements Runnable{
 		@SuppressWarnings("deprecation")
 		@Override
 		public void run() {
-			double speed;
+			double baseSpeed;
 			if (pidControllers == null){
 				if (targetLocation > initialLocation){
-					speed = HWR.MEDIUM_SPEED;
+					baseSpeed = HWR.MEDIUM_SPEED;
 				}else{
-					speed = -HWR.MEDIUM_SPEED;
+					baseSpeed = -HWR.MEDIUM_SPEED;
 				}
 				while (Math.abs(Math.abs(initialLocation) - Math.abs(encoder.getDisplacement(encoder.getDistancePerPulse())))
 						< Math.abs(distanceInMeters)){
+					double speed = baseSpeed;
 					for (Motor motor: motors){
 						if (useAntidrift){
-							speed = antidrift.antiDrift(speed, group);
+							speed = antidrift.antiDrift(baseSpeed, group);
 							motor.set(speed);
 						}else{
 							motor.set(speed);
@@ -233,38 +234,31 @@ public class MotorGroup implements Runnable{
 			currentThread.notifyAll();
 			currentThread.destroy();
 		}
-		
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result
-					+ ((groupName == null) ? 0 : groupName.hashCode());
-			result = prime * result + ((motors == null) ? 0 : motors.hashCode());
-			return result;
-		}
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			MotorGroup other = (MotorGroup) obj;
-			if (groupName == null) {
-				if (other.groupName != null)
-					return false;
-			} else if (!groupName.equals(other.groupName))
-				return false;
-			if (motors == null) {
-				if (other.motors != null)
-					return false;
-			} else if (!motors.equals(other.motors))
-				return false;
-			return true;
-		}
+	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((groupName == null) ? 0 : groupName.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MotorGroup other = (MotorGroup) obj;
+		if (groupName == null) {
+			if (other.groupName != null)
+				return false;
+		} else if (!groupName.equals(other.groupName))
+			return false;
+		return true;
 	}
 
 }

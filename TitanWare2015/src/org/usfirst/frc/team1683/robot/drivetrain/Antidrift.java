@@ -22,6 +22,7 @@ public class Antidrift {
 	public double antiDrift(double speed, MotorGroup yourself){
 		double error = antidriftangle - gyro.getAngle();
 		double correction = kp*error/2.0;
+		sendValues(correction, speed+correction, speed-correction);
 		if (left.equals(yourself)){
 			double leftSpeed = limitSpeed(speed+correction);
 			return leftSpeed;
@@ -31,6 +32,7 @@ public class Antidrift {
 		}else{
 			return speed;
 		}
+		
 	}
 	
 	public static double limitSpeed(double speed){

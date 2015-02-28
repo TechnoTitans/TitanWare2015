@@ -19,7 +19,7 @@ public class TankDrive extends DriveTrain{
 	Thread currentThread;
 	protected Antidrift forwardAntiDrift;
 
-	public static double kp = 0.03;
+	public double kp = 0.03;
 	double waitTime=0.2;
 	double startAngle;
 	/**
@@ -69,6 +69,8 @@ public class TankDrive extends DriveTrain{
 		startAngle = gyro.getAngle();
 		kp = DriverStation.getDouble("kpforward");
 		forwardAntiDrift = new Antidrift(left, right, gyro, kp);
+		left.enableAntiDrift(true, forwardAntiDrift);
+		right.enableAntiDrift(true, forwardAntiDrift);
 	}
 	/**
 	 * runs the driving sequence

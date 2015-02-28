@@ -14,7 +14,6 @@ import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 import org.usfirst.frc.team1683.robot.statistics.CurrentTierIdentifier;
 import org.usfirst.frc.team1683.robot.statistics.PowerDistributionManager;
 import org.usfirst.frc.team1683.robot.test.AntiDriftTest;
-import org.usfirst.frc.team1683.robot.test.DriveTester;
 import org.usfirst.frc.team1683.robot.vision.Vision;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -52,7 +51,7 @@ public class TechnoTitan extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-//		PreferencesList.set();
+		PreferencesList.set();
 		compressor = new OldCompressor(HWR.PRESSURE_SWITCH, HWR.COMPRESSOR_RELAY, this);
 		compressor.start();
 		vision = new Vision();

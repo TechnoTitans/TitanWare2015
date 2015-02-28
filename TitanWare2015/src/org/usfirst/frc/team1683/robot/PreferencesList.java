@@ -10,9 +10,9 @@ public class PreferencesList{
 		DriverStation.prefDouble("bearing", 90);
 		
 		//Autonomous Preferences
-		DriverStation.prefInt("autonomousMode", 11);
-		DriverStation.prefDouble("driveDistance", 143); //inches
-		DriverStation.prefDouble("sideDistance", 24); //inches
+		DriverStation.prefInt("autonomousMode", 12);
+		DriverStation.prefDouble("driveDistance", 140); //inches
+		DriverStation.prefDouble("sideDistance", -80); //inches
 		DriverStation.prefDouble("liftDistance", 2);
 		DriverStation.prefDouble("adjustDistance", 2);
 		DriverStation.prefDouble("backDistance", 2);
@@ -32,7 +32,7 @@ public class PreferencesList{
 		DriverStation.prefDouble("PIDTolerance", 5);
 		
 		//Gyro Value
-		DriverStation.prefDouble("kpside", 0.15);
+		DriverStation.prefDouble("kpside", -0.05);
 		DriverStation.prefDouble("kpforward", 0.03);
 	}
 	
