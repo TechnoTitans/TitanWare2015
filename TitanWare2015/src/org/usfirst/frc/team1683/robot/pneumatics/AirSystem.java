@@ -2,9 +2,9 @@ package org.usfirst.frc.team1683.robot.pneumatics;
 
 import java.util.ArrayList;
 
+import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Solenoid;
 
 /**Class to represent any particular system of solenoids acting in unison.
@@ -17,7 +17,7 @@ public class AirSystem {
 	final static boolean EXTENDED = true;
 	final static boolean RETRACTED = false;
 
-	Compressor compressor;
+	static OldCompressor compressor = new OldCompressor(HWR.PRESSURE_SWITCH,HWR.COMPRESSOR_RELAY);
 	int PcmNum;
 	ArrayList<Solenoid> solenoids = new ArrayList<Solenoid>();
 	PressureSensor pressure;
@@ -26,9 +26,8 @@ public class AirSystem {
 	 * @param compressor - the compressor for the air system, usually one per robot.
 	 * @param solenoid - an int array of all the solenoid channels of an AirSystem.
 	 */
-	public AirSystem(Compressor compressor, int[] solenoid , PressureSensor pressure) {
+	public AirSystem(int[] solenoid , PressureSensor pressure) {
 		this.pressure = pressure;
-		this.compressor = compressor;
 		for (int i = 0; i < solenoid.length; i++) {
 			int channel = solenoid[i];
 			solenoids.add(new Solenoid(channel));
@@ -40,8 +39,7 @@ public class AirSystem {
 	 * @param PcmNum - the PCM ID that the AirSystem is connected to.
 	 * @param solenoid - an int array of all the solenoid channels of an AirSystem.
 	 */
-	public AirSystem(Compressor compressor, int PcmNum, int[] solenoid ){
-		this.compressor = compressor;
+	public AirSystem(int PcmNum, int[] solenoid ){
 		this.PcmNum = PcmNum;
 		for (int i = 0; i < solenoid.length; i++) {
 			int channel = solenoid[i];
@@ -79,19 +77,19 @@ public class AirSystem {
 	/**Get the current being used by the compressor.
 	 * @return current consumed in amps for the compressor
 	 */
-	public float getCurrent(){
-		return compressor.getCompressorCurrent();
-	}
+//	public float getCurrent(){
+//		return compressor.getCompressorCurrent();
+//	}
 	
 	/**Prints various messages to NetConsole regarding the status of the AirSystem
 	 * 
 	 */
 	public void printDiags(){
 		//Problems-System.out.println("Compressor disconnected: " + compressor.getCompressorNotConnectedFault());
-		System.out.println("Compressor current is too high: " +
-							compressor.getCompressorCurrentTooHighFault());
+//		System.out.println("Compressor current is too high: " +
+//							compressor.getCompressorCurrentTooHighFault());
 		System.out.println("Solenoids blacklisted: " + countBlacklistedSolenoids());
-		System.out.println("Compressor current: " + getCurrent() + "Amps");
+//		System.out.println("Compressor current: " + getCurrent() + "Amps");
 		System.out.println("Pressure: " + pressure.getPressure());
 	}
 	
@@ -112,7 +110,7 @@ public class AirSystem {
 	/**
 	 * @return the compressor
 	 */
-	public Compressor getCompressor() {
+	public OldCompressor getCompressor() {
 		return compressor;
 	}
 

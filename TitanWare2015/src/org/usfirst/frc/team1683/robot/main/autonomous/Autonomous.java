@@ -143,6 +143,23 @@ public abstract class Autonomous {
 			errorWarning = false;
 		}
 	}
+	
+	public static void waitForThread(Thread thread){
+		try{
+			thread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void waitForThread(Thread thread1, Thread thread2){
+		try{
+			thread1.join();
+			thread2.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * @author David Luo

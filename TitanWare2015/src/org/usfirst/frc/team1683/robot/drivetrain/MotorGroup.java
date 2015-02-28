@@ -20,7 +20,7 @@ public class MotorGroup implements Runnable{
 	Thread currentThread;
 	List<Motor> motors;
 	Encoder encoder;
-	PIDController PIDcontrol;
+	List<PIDController> pidControllers;
 	MotorMover mover;
 	/**
 	 * Constructor
@@ -43,6 +43,7 @@ public class MotorGroup implements Runnable{
 		if (TechnoTitan.postEncoder){
 			new Thread(this, "EncoderPost").start();
 		}
+		pidControllers = null;
 	}
 	/**
 	 * Constructor
@@ -52,8 +53,7 @@ public class MotorGroup implements Runnable{
 	 * @param encoder
 	 */
 
-	public MotorGroup(String groupName, int[] channelNumbers, Class<Motor> motorType, boolean inverseDirection, Encoder encoder)
-	{
+	public MotorGroup(String groupName, int[] channelNumbers, Class<Motor> motorType, boolean inverseDirection, Encoder encoder){
 		this.groupName = groupName;
 		motors = new ArrayList<Motor>();
 		for (int i = 0; i < channelNumbers.length; i++) {
@@ -69,33 +69,7 @@ public class MotorGroup implements Runnable{
 		if (TechnoTitan.postEncoder){
 			new Thread(this, "EncoderPost").start();
 		}
-	}
-	
-	public MotorGroup(String groupName, int[] channelNumbers, Class<Motor> motorType, boolean inverseDirection, 
-			Encoder encoder, double P, double I, double D, double F, int index)
-	{
-		this.groupName = groupName;
-		motors = new ArrayList<Motor>();
-		for (int i = 0; i < channelNumbers.length; i++) {
-			int j = channelNumbers[i];
-			if (motorType.equals(Talon.class)){
-				motors.add(new Talon(j, inverseDirection));
-				if (j==index){
-					PIDcontrol = new PIDController(P, I, D, F, encoder, new Talon(j, inverseDirection));
-				}
-			}else if (motorType.equals(TalonSRX.class)){
-				motors.add(new TalonSRX(j, inverseDirection));
-				if (j==index){
-					PIDcontrol = new PIDController(P, I, D, F, encoder, new TalonSRX(j, inverseDirection));
-				}
-			}
-		}
-		this.encoder = encoder;
-		if (TechnoTitan.postEncoder){
-			new Thread(this, "EncoderPost").start();
-		}
-		mover = new MotorMover();
-		
+		pidControllers = null;
 	}
 
 	/**
@@ -106,6 +80,20 @@ public class MotorGroup implements Runnable{
 		for (Motor motor: motors){
 			motor.moveDistance(distanceInMeters);
 		}
+	}
+	
+	public void enablePIDController(double p, double i, double d, Encoder encoder){
+		pidControllers = new ArrayList<PIDController>();
+		for (int index = 0; index < motors.size(); index++){
+			PIDController pidControl = new PIDController(p, i, d, encoder, motors.get(index));
+			pidControl.setOutputRange(0, 1);
+			pidControl.setPercentTolerance(HWR.PID_PERCENT_TOLERANCE);
+			pidControllers.add(pidControl);
+		}
+	}
+	
+	public Encoder getEncoder(){
+		return this.encoder;
 	}
 
 	public void moveDistanceInches(double distanceInInches){
@@ -129,9 +117,6 @@ public class MotorGroup implements Runnable{
 		return currentThread;
 	}
 	
-	public PIDController getPID(){
-		return PIDcontrol;
-	}
 	/**
 	 * moves the robot a certain amount of degrees 
 	 * @param degrees
@@ -184,9 +169,6 @@ public class MotorGroup implements Runnable{
 		double initialLocation;
 		double home = 0.0;
 
-		public MotorMover() {
-			
-		}
 		
 		public void setDistanceInMeters(double distanceInMeters){
 			this.distanceInMeters = distanceInMeters;
@@ -198,15 +180,29 @@ public class MotorGroup implements Runnable{
 		@Override
 		public void run() {
 			double speed;
-			if (targetLocation > initialLocation)
-				speed = HWR.MEDIUM_SPEED;
-			else
-				speed = -HWR.MEDIUM_SPEED;
-			while (Math.abs(Math.abs(initialLocation) - Math.abs(encoder.getDisplacement(encoder.getDistancePerPulse())))
-					< Math.abs(distanceInMeters)){
-				for (Motor motor: motors){
-					motor.set(speed);
-				} 
+			if (pidControllers == null){
+				if (targetLocation > initialLocation){
+					speed = HWR.MEDIUM_SPEED;
+				}else{
+					speed = -HWR.MEDIUM_SPEED;
+				}
+				while (Math.abs(Math.abs(initialLocation) - Math.abs(encoder.getDisplacement(encoder.getDistancePerPulse())))
+						< Math.abs(distanceInMeters)){
+					for (Motor motor: motors){
+						motor.set(speed);
+					} 
+				}
+			}else{
+				for (PIDController pidControl : pidControllers){
+					pidControl.enable();
+					pidControl.setSetpoint(targetLocation);
+				}
+				while (!pidControllers.get(0).onTarget()){
+					Thread.yield();
+				}
+				for (PIDController pidControl : pidControllers){
+					pidControl.disable();
+				}
 			}
 			stop();
 			currentThread.notifyAll();

@@ -42,12 +42,12 @@ public class HWR {
 	public static final int FRONT_CHANNEL_B			= HWP.DIO_7;
 	public static final int BACK_CHANNEL_A			= HWP.DIO_8;
 	public static final int BACK_CHANNEL_B			= 10;
-	public static final int PHOTOGATE 				= HWP.DIO_9;
+	public static final int PHOTOGATE 				= 11;
 
 
 	//Encoder Wheel Distance Per Pulse
 	public static final double driveEncoderWDPP 			= 18.85/2040;
-	public static final double liftEncoderWDPP 				= 14.25/757.75;
+	public static final double liftEncoderWDPP 				= (14.25/757.75)*(28.0/30.0);
 	public static final double hDriveEncoderWDPP			= (85.0*0.0254)/25.99;
 	
 	//Encoder Reverse Directions
@@ -59,6 +59,8 @@ public class HWR {
 
 	//Pneumatics
 	public static final int PRESSURE_SENSOR 		= HWP.ANALOG_0;
+	public static final int PRESSURE_SWITCH			= HWP.DIO_9;
+	public static final int COMPRESSOR_RELAY		= HWP.RELAY_0;
 
 	//Pistons
 	public static final int LEFT_H_PISTON			= PCM.SOLENOID_0;
@@ -110,4 +112,6 @@ public class HWR {
 	public static final double LOW_SPEED			= 0.25;
 	public static final double MEDIUM_SPEED			= 0.40;
 	public static final double HIGH_SPEED			= 1.0;
+	
+	public static final double PID_PERCENT_TOLERANCE= 5;
 }

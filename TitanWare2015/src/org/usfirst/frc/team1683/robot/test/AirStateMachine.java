@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.Preferences;
 
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.pneumatics.AirSystem;
+import org.usfirst.frc.team1683.robot.pneumatics.OldCompressor;
 import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -32,7 +33,7 @@ public class AirStateMachine {
 	int nextState;
 	
 	public AirStateMachine(int[] solenoids, int button, PressureSensor pressure) {
-		air = new AirSystem(new Compressor(),solenoids, pressure);
+		air = new AirSystem(solenoids, pressure);
 		stick = new Joystick(HWR.AUX_JOYSTICK);
 		buttonAssignment = button;
 		air.retract();
@@ -45,7 +46,7 @@ public class AirStateMachine {
 	}
 	
 	public AirStateMachine(int[] solenoids, int stickNum, int button, PressureSensor pressure) {
-		air = new AirSystem(new Compressor(),solenoids, pressure);
+		air = new AirSystem(solenoids, pressure);
 		stick = new Joystick(stickNum);
 		buttonAssignment = button;
 		air.retract();

@@ -1,10 +1,13 @@
 package org.usfirst.frc.team1683.robot.drivetrain;
+
+import edu.wpi.first.wpilibj.PIDOutput;
+
 /**
  * 
  * @author Animesh Koratana
  *
  */
-public interface Motor {
+public interface Motor extends PIDOutput{
 	public void moveDistance(double distanceInMeters); //in meters
 	public void moveDistanceInches(double distanceInInches);
 	public void set(double speed);

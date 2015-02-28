@@ -85,10 +85,12 @@ public class TechnoTitan extends IterativeRobot {
      */
     public void autonomousPeriodic() {
     	autonomous.run();
+    	//TODO add pressurize method call to go periodically-see TeleopPeriodic
     }
     
     public void teleopInit() {
     	drive.resetGyro();
+    	pickerUpper.uprightPickerUpper();
     }
 
     /**
@@ -97,6 +99,9 @@ public class TechnoTitan extends IterativeRobot {
     public void teleopPeriodic() {
         drive.driveMode(DriverStation.leftStick, DriverStation.rightStick);
         pickerUpper.liftMode(HWR.AUX_JOYSTICK);
+        
+        //needed to check the pressure each time cycle runs
+        pickerUpper.getCompressor().pressurize();
     }
     
     /**
@@ -105,10 +110,12 @@ public class TechnoTitan extends IterativeRobot {
     public void testInit(){
     	drive.resetGyro();
     	drive.deployWheels();
+    	//air = new AirSystem(new int[]{3}, pressure);
     }
     public void testPeriodic() {
     	//driveTester.test();
-    	drive.antiDrift(HWR.MEDIUM_SPEED);
+    	//drive.antiDrift(HWR.MEDIUM_SPEED);
+    	//air.getCompressor().pressurize();
     }
 
     
