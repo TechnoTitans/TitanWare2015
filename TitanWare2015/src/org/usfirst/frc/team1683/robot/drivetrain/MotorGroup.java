@@ -22,6 +22,9 @@ public class MotorGroup implements Runnable{
 	Encoder encoder;
 	List<PIDController> pidControllers;
 	MotorMover mover;
+	boolean useAntidrift;
+	Antidrift antidrift;
+	
 	/**
 	 * Constructor
 	 * @param channelNumbers
@@ -29,6 +32,7 @@ public class MotorGroup implements Runnable{
 	 * @param inverseDirection
 	 */
 	public MotorGroup(String groupName, int[] channelNumbers, Class<Motor> motorType, boolean inverseDirection)  {
+		useAntidrift = false;
 		this.groupName = groupName;
 		motors = new ArrayList<Motor>();
 		for (int i = 0; i < channelNumbers.length; i++) {
@@ -39,7 +43,7 @@ public class MotorGroup implements Runnable{
 				motors.add(new TalonSRX(j, inverseDirection));
 			}
 		}
-		mover = new MotorMover();
+		mover = new MotorMover(this);
 		if (TechnoTitan.postEncoder){
 			new Thread(this, "EncoderPost").start();
 		}
@@ -54,6 +58,7 @@ public class MotorGroup implements Runnable{
 	 */
 
 	public MotorGroup(String groupName, int[] channelNumbers, Class<Motor> motorType, boolean inverseDirection, Encoder encoder){
+		useAntidrift = false;
 		this.groupName = groupName;
 		motors = new ArrayList<Motor>();
 		for (int i = 0; i < channelNumbers.length; i++) {
@@ -65,11 +70,20 @@ public class MotorGroup implements Runnable{
 			}
 		}
 		this.encoder = encoder;
-		mover = new MotorMover();
+		mover = new MotorMover(this);
 		if (TechnoTitan.postEncoder){
 			new Thread(this, "EncoderPost").start();
 		}
 		pidControllers = null;
+	}
+	
+	public void enableAntiDrift(boolean enable, Antidrift antidrift){
+		if (enable){
+			this.useAntidrift = true;
+			this.antidrift = antidrift;
+		}else{
+			this.useAntidrift = false;
+		}
 	}
 
 	/**
@@ -82,12 +96,12 @@ public class MotorGroup implements Runnable{
 		}
 	}
 	
-	public void enablePIDController(double p, double i, double d, Encoder encoder){
+	public void enablePIDController(double p, double i, double d, double tolerance, Encoder encoder){
 		pidControllers = new ArrayList<PIDController>();
 		for (int index = 0; index < motors.size(); index++){
 			PIDController pidControl = new PIDController(p, i, d, encoder, motors.get(index));
 			pidControl.setOutputRange(0, 1);
-			pidControl.setPercentTolerance(HWR.PID_PERCENT_TOLERANCE);
+			pidControl.setPercentTolerance(tolerance);
 			pidControllers.add(pidControl);
 		}
 	}
@@ -135,6 +149,7 @@ public class MotorGroup implements Runnable{
 			motor.set(speed);
 		} 
 	}
+	
 	/**
 	 * stops the motor
 	 */
@@ -163,11 +178,16 @@ public class MotorGroup implements Runnable{
 	}
 
 	public class MotorMover implements Runnable{
-
+		
 		double distanceInMeters;
 		double targetLocation;
 		double initialLocation;
 		double home = 0.0;
+		MotorGroup group;
+		
+		public MotorMover(MotorGroup group) {
+			this.group = group;
+		}
 
 		
 		public void setDistanceInMeters(double distanceInMeters){
@@ -189,7 +209,12 @@ public class MotorGroup implements Runnable{
 				while (Math.abs(Math.abs(initialLocation) - Math.abs(encoder.getDisplacement(encoder.getDistancePerPulse())))
 						< Math.abs(distanceInMeters)){
 					for (Motor motor: motors){
-						motor.set(speed);
+						if (useAntidrift){
+							speed = antidrift.antiDrift(speed, group);
+							motor.set(speed);
+						}else{
+							motor.set(speed);
+						}
 					} 
 				}
 			}else{
@@ -207,6 +232,37 @@ public class MotorGroup implements Runnable{
 			stop();
 			currentThread.notifyAll();
 			currentThread.destroy();
+		}
+		
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result
+					+ ((groupName == null) ? 0 : groupName.hashCode());
+			result = prime * result + ((motors == null) ? 0 : motors.hashCode());
+			return result;
+		}
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			MotorGroup other = (MotorGroup) obj;
+			if (groupName == null) {
+				if (other.groupName != null)
+					return false;
+			} else if (!groupName.equals(other.groupName))
+				return false;
+			if (motors == null) {
+				if (other.motors != null)
+					return false;
+			} else if (!motors.equals(other.motors))
+				return false;
+			return true;
 		}
 
 	}

@@ -13,6 +13,7 @@ import org.usfirst.frc.team1683.robot.sensors.Photogate;
 import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 import org.usfirst.frc.team1683.robot.statistics.CurrentTierIdentifier;
 import org.usfirst.frc.team1683.robot.statistics.PowerDistributionManager;
+import org.usfirst.frc.team1683.robot.test.AntiDriftTest;
 import org.usfirst.frc.team1683.robot.test.DriveTester;
 import org.usfirst.frc.team1683.robot.vision.Vision;
 
@@ -31,9 +32,7 @@ public class TechnoTitan extends IterativeRobot {
 	public static final boolean debugTierIdentifier = false;
 	public static final boolean debugPressure = true;
 	public static final boolean debugStates = true;
-	public static boolean isRobotDisabled;
 
-	DriveTester driveTester;
 	Gyro gyro;
 	PickerUpper pickerUpper;
 	AutonomousSwitcher autonomous;
@@ -44,14 +43,18 @@ public class TechnoTitan extends IterativeRobot {
 	Vision vision;
 	CurrentTierIdentifier toteNumberIdentifier;
 	OldCompressor compressor;
+	
+	AntiDriftTest antiDriftTest;
+	
 
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		//PreferencesList.set();
-		isRobotDisabled = true;
+//		PreferencesList.set();
+		compressor = new OldCompressor(HWR.PRESSURE_SWITCH, HWR.COMPRESSOR_RELAY, this);
+		compressor.start();
 		vision = new Vision();
 		powerDistributionManager = new PowerDistributionManager(HWR.BACK_LEFT_MOTOR,HWR.FRONT_LEFT_MOTOR,HWR.BACK_RIGHT_MOTOR,HWR.FRONT_RIGHT_MOTOR, HWR.BELT_MOTOR );
 		powerDistributionManager.start();
@@ -64,20 +67,17 @@ public class TechnoTitan extends IterativeRobot {
 				HWR.BACK_CHANNEL_A, HWR.BACK_CHANNEL_B, HWR.FRONT_CHANNEL_A, HWR.FRONT_CHANNEL_B,
 				HWR.LEFT_H_PISTON, HWR.RIGHT_H_PISTON, pressure, 
 				HWR.FRONT_H_MOTOR, HWR.BACK_H_MOTOR, Talon.class, HWR.DEPLOY_H_DRIVE, HWR.driveEncoderWDPP, HWR.hDriveEncoderWDPP,
-				HWR.leftDriveEncoderReverse, HWR.rightDriveEncoderReverse, HWR.backHEncoderReverse, HWR.frontHEncoderReverse);
+				HWR.leftDriveEncoderReverse, HWR.rightDriveEncoderReverse, HWR.backHEncoderReverse, HWR.frontHEncoderReverse,
+				HWR.BACK_H_INVERSE, HWR.FRONT_H_INVERSE);
 		pickerUpper = new PickerUpper(Talon.class, HWR.BELT_INVERSE, new int[]{HWR.FRONT_LIFT_PISTON, HWR.BACK_LIFT_PISTON}, new int[]{HWR.BELT_MOTOR}, 
 				HWR.BELT_CHANNEL_A, HWR.BELT_CHANNEL_B, HWR.beltEncoderReverse, HWR.liftEncoderWDPP, 
 				pressure, photogate, drive);
-		driveTester = new DriveTester(pickerUpper, drive);
 		toteNumberIdentifier = new CurrentTierIdentifier(powerDistributionManager.getPowerDistributionPanel(), 4, HWR.BELT_MOTOR);
 		new Thread(toteNumberIdentifier, "Tier Manager").start();
 		drive.resetGyro();
-		compressor = new OldCompressor(HWR.PRESSURE_SWITCH, HWR.COMPRESSOR_RELAY);
-		new Thread(compressor, "Pressure Manager").start();
 	}
 
 	public void autonomousInit(){
-		isRobotDisabled = false;
 		drive.resetGyro();
 		autonomous = new AutonomousSwitcher(drive, pickerUpper, vision);
 		Autonomous.errorWarning = true;
@@ -94,7 +94,6 @@ public class TechnoTitan extends IterativeRobot {
 	}
 
 	public void teleopInit() {
-		isRobotDisabled = false;
 		drive.resetGyro();
 		pickerUpper.uprightPickerUpper();
 	}
@@ -105,12 +104,13 @@ public class TechnoTitan extends IterativeRobot {
 	public void teleopPeriodic() {
 		drive.driveMode(DriverStation.leftStick, DriverStation.rightStick);
 		pickerUpper.liftMode(HWR.AUX_JOYSTICK);
+		DriverStation.sendData("Photogate", photogate.get());
 	}
 
 	public void testInit(){
-		isRobotDisabled = false;
 		drive.resetGyro();
 		drive.deployWheels();
+		antiDriftTest = new AntiDriftTest(drive);
 		//air = new AirSystem(new int[]{3}, pressure);
 	}
 	
@@ -118,9 +118,7 @@ public class TechnoTitan extends IterativeRobot {
 	 * This function is called periodically during test mode
 	 */
 	public void testPeriodic() {
-		//driveTester.test();
-		//drive.antiDrift(HWR.MEDIUM_SPEED);
-		//air.getCompressor().pressurize();
+		antiDriftTest.test();
 	}
 
 	/**
@@ -128,6 +126,6 @@ public class TechnoTitan extends IterativeRobot {
 	 * is disabled.
 	 */
 	public void disabledInit() {
-		isRobotDisabled = true;
+		
 	}
 }

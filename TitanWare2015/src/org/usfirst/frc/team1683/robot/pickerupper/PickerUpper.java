@@ -119,6 +119,9 @@ public class PickerUpper{
 		rightLiftMotor = new MotorGroup("Right Lift Motor",new int[]{rightMotor}, motorType, rightInverseDirection, beltEncoder);
 		this.photogate = photogate;
 		pistons.upright();
+		if (DriverStation.getBoolean("EnablePID")){
+			enablePID();
+		}
 	}
 
 	public void liftMode(int joystickNumber) {
@@ -166,11 +169,12 @@ public class PickerUpper{
 	}
 	
 	public void enablePID(){
-		double p = DriverStation.getDouble("PID P");
-		double i = DriverStation.getDouble("PID I");
-		double d = DriverStation.getDouble("PID D");
+		double p = DriverStation.getDouble("PIDValueP");
+		double i = DriverStation.getDouble("PIDValueI");
+		double d = DriverStation.getDouble("PIDValueD");
+		double tolerance = DriverStation.getDouble("PIDTolerance");
 
-		motors.enablePIDController(p, i, d, motors.getEncoder());
+		motors.enablePIDController(p, i, d,tolerance, motors.getEncoder());
 	}
 
 	/**

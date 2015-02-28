@@ -17,6 +17,7 @@ public class TankDrive extends DriveTrain{
 	public Encoder rightEncoder;
 	public Gyro gyro;
 	Thread currentThread;
+	protected Antidrift forwardAntiDrift;
 
 	public static double kp = 0.03;
 	double waitTime=0.2;
@@ -37,7 +38,10 @@ public class TankDrive extends DriveTrain{
 		gyro = new Gyro(gyroChannel);
 		startAngle = gyro.getAngle();
 		gyro.setPost(true);
-		kp = DriverStation.getDouble("kp");
+		kp = DriverStation.getDouble("kpforward");
+		forwardAntiDrift = new Antidrift(left, right, gyro, kp);
+		left.enableAntiDrift(true, forwardAntiDrift);
+		right.enableAntiDrift(true, forwardAntiDrift);
 	}
 	/**
 	 * Constructor
@@ -63,7 +67,8 @@ public class TankDrive extends DriveTrain{
 		right = new MotorGroup("Right Drive",rightMotorInputs, motorType, rightInverse, rightEncoder);
 		gyro = new Gyro(gyroChannel);
 		startAngle = gyro.getAngle();
-		kp = DriverStation.getDouble("kp");
+		kp = DriverStation.getDouble("kpforward");
+		forwardAntiDrift = new Antidrift(left, right, gyro, kp);
 	}
 	/**
 	 * runs the driving sequence
@@ -132,29 +137,6 @@ public class TankDrive extends DriveTrain{
 		gyro.reset();
 		turnAngle(startAngle,left,right);
 		startAngle = 0;
-	}
-	
-	public void antiDrift(double speed, double targetAngle) {
-		double error = targetAngle - gyro.getAngle();
-		double correction = kp*error/2.0;
-		left.set(limitSpeed(speed+correction));
-		right.set(limitSpeed(speed-correction));
-		DriverStation.sendData("Gyro Value", gyro.getAngle());
-		DriverStation.sendData("Correction", correction);	
-		DriverStation.sendData("LeftSpeed", limitSpeed(speed + correction));
-		DriverStation.sendData("RightSpeed", limitSpeed(speed - correction));
-	}
-	
-	public double limitSpeed(double speed){
-		if (speed>1.0){
-			return 1.0;
-		}
-		else if (speed<-1.0){
-			return -1.0;
-		}
-		else{
-			return speed;
-		}
 	}
 	
 	/**

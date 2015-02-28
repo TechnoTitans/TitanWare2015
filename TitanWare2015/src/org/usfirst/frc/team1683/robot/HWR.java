@@ -25,8 +25,8 @@ public class HWR {
 	public static final boolean LEFT_INVERSE		= false;
 	public static final boolean RIGHT_INVERSE		= true;
 	public static final boolean BELT_INVERSE		= false;
-	public static final boolean LEFT_H_INVERSE		= false;
-	public static final boolean RIGHT_H_INVERSE		= false;
+	public static final boolean FRONT_H_INVERSE		= false;
+	public static final boolean BACK_H_INVERSE		= true;
 
 	// Gyro MUST BE 0 OR 1
 	public static final int GYRO					= HWP.ANALOG_1;
@@ -40,9 +40,9 @@ public class HWR {
 	public static final int RIGHT_CHANNEL_B			= HWP.DIO_3;
 	public static final int FRONT_CHANNEL_A			= HWP.DIO_6;
 	public static final int FRONT_CHANNEL_B			= HWP.DIO_7;
-	public static final int BACK_CHANNEL_A			= HWP.DIO_8;
+	public static final int BACK_CHANNEL_A			= 11;
 	public static final int BACK_CHANNEL_B			= 10;
-	public static final int PHOTOGATE 				= 11;
+	public static final int PHOTOGATE 				= HWP.DIO_9;
 
 
 	//Encoder Wheel Distance Per Pulse
@@ -59,7 +59,7 @@ public class HWR {
 
 	//Pneumatics
 	public static final int PRESSURE_SENSOR 		= HWP.ANALOG_0;
-	public static final int PRESSURE_SWITCH			= HWP.DIO_9;
+	public static final int PRESSURE_SWITCH			= HWP.DIO_8;
 	public static final int COMPRESSOR_RELAY		= HWP.RELAY_0;
 
 	//Pistons
@@ -113,5 +113,4 @@ public class HWR {
 	public static final double MEDIUM_SPEED			= 0.40;
 	public static final double HIGH_SPEED			= 1.0;
 	
-	public static final double PID_PERCENT_TOLERANCE= 5;
 }
