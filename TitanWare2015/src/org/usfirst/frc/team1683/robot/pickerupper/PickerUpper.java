@@ -6,7 +6,6 @@ import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
 import org.usfirst.frc.team1683.robot.drivetrain.MotorGroup;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.pneumatics.AirSystem;
-import org.usfirst.frc.team1683.robot.pneumatics.OldCompressor;
 import org.usfirst.frc.team1683.robot.sensors.Photogate;
 import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 
@@ -120,6 +119,9 @@ public class PickerUpper{
 		rightLiftMotor = new MotorGroup("Right Lift Motor",new int[]{rightMotor}, motorType, rightInverseDirection, beltEncoder);
 		this.photogate = photogate;
 		pistons.upright();
+		if (DriverStation.getBoolean("EnablePID")){
+			enablePID();
+		}
 	}
 
 	public void liftMode(int joystickNumber) {
@@ -167,11 +169,12 @@ public class PickerUpper{
 	}
 	
 	public void enablePID(){
-		double p = DriverStation.getDouble("PID P");
-		double i = DriverStation.getDouble("PID I");
-		double d = DriverStation.getDouble("PID D");
+		double p = DriverStation.getDouble("PIDValueP");
+		double i = DriverStation.getDouble("PIDValueI");
+		double d = DriverStation.getDouble("PIDValueD");
+		double tolerance = DriverStation.getDouble("PIDTolerance");
 
-		motors.enablePIDController(p, i, d, motors.getEncoder());
+		motors.enablePIDController(p, i, d,tolerance, motors.getEncoder());
 	}
 
 	/**
@@ -318,15 +321,7 @@ public class PickerUpper{
 		return HWR.SLOPE*beltEncoder.getDisplacement(beltEncoder.getDistancePerPulse())+b;
 	}
 	
-	/**This method was created so we can get the OldCompressor and call the "pressurize"
-	 * method periodically in teleopPeriodic of the TechnoTitan class.
-	 * @author Sreyas Mirthipati
-	 * @return the compressor from the AirSystem
-	 */
-	public OldCompressor getCompressor() {
-		return pistons.getFrontAirSystem().getCompressor();
-	}
-	
+
 	public class DualActionPistons{
 		AirSystem frontAirSystem;
 		AirSystem backAirSystem;

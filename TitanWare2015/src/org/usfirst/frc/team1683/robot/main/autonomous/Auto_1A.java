@@ -40,8 +40,8 @@ public class Auto_1A extends Autonomous{
 //			System.out.println("driveDistance = " + driveDistance);
 			if (driveTimer.get()<driveTime)
 			{
-//				hDrive.setTankDrive(speed);
-				hDrive.antiDrift(speed);
+				hDrive.setTankDrive(speed);
+//				hDrive.antiDrift(speed);
 				nextState = State.DRIVE_FORWARD;
 			}
 			else

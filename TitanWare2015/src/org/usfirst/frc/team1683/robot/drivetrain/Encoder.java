@@ -34,6 +34,7 @@ public class Encoder extends edu.wpi.first.wpilibj.Encoder{
      * @param DISTANCE_PER_PULSE 
      * @return displacement in meters.
      */
+    
     public double getDisplacement(double DISTANCE_PER_PULSE) {
     	this.setDistancePerPulse(DISTANCE_PER_PULSE);
     	return getDistanceMeters();

@@ -3,7 +3,6 @@ package org.usfirst.frc.team1683.robot.drivetrain;
 import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.pneumatics.AirSystem;
-import org.usfirst.frc.team1683.robot.sensors.Gyro;
 import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -16,6 +15,8 @@ public class HDrive extends TankDrive{
 	boolean isLifted;
 	Encoder backEncoder;
 	Encoder frontEncoder;
+	Antidrift sidewaysAntiDrift;
+	
 	/**
 	 * Constructor
 	 * @param leftMotorInputs - left side of drive train
@@ -43,19 +44,23 @@ public class HDrive extends TankDrive{
 			int frontChannelA, int frontChannelB,
 			int rightPiston, int leftPiston, PressureSensor pressure,
 			int frontMotor, int backMotor, Class hMotorType, 
-			int triggerButton, double driveWDPP, double HdriveWDPP, boolean leftReverseDirection, boolean rightReverseDirection,
-			boolean backReverseDirection, boolean frontReverseDirection) {
+			int triggerButton, double driveWDPP, double HdriveWDPP, boolean leftEncoderReverseDirection, boolean rightEncoderReverseDirection,
+			boolean backEncoderReverseDirection, boolean frontEncoderReverseDirection,
+			boolean backInverse, boolean frontInverse) {
 		super(leftMotorInputs, leftInverse, rightMotorInputs, rightInverse, 
 				motorType, gyroChannel, leftChannelA, leftChannelB, rightChannelA, rightChannelB, 
-				driveWDPP, leftReverseDirection, rightReverseDirection);
+				driveWDPP, leftEncoderReverseDirection, rightEncoderReverseDirection);
 		pistons = new DrivePistons(new int[]{rightPiston, leftPiston}, pressure);
-//		backEncoder = new Encoder(backChannelA, backChannelB, backReverseDirection, HdriveWDPP);
-		frontEncoder = new Encoder(frontChannelA, frontChannelB, frontReverseDirection, HdriveWDPP);
-		backEncoder = frontEncoder;
-		hBackMotors = new MotorGroup("HBackMotors", new int[] {backMotor}, hMotorType, false, frontEncoder); //WE ARE PASSING IN THE FRONT ENCODER TWICE JUST THIS TIME FIX WHEN ANTHER ENCODER IS ADDED
-		hFrontMotors= new MotorGroup("HFrontMotors", new int[]{frontMotor},hMotorType, true, frontEncoder);
+		frontEncoder = new Encoder(frontChannelA, frontChannelB, frontEncoderReverseDirection, HdriveWDPP);
+//		backEncoder = new Encoder(backChannelA, backChannelB, backEncoderReverseDirection, HdriveWDPP);
+		backEncoder = frontEncoder; //WE ARE PASSING IN THE FRONT ENCODER TWICE JUST THIS TIME FIX WHEN ANTHER ENCODER IS ADDED
+		hBackMotors = new MotorGroup("HBackMotors", new int[] {backMotor}, hMotorType, backInverse, backEncoder); 
+		hFrontMotors= new MotorGroup("HFrontMotors", new int[]{frontMotor},hMotorType, frontInverse, frontEncoder);
 		this.triggerButton = triggerButton;
 		isLifted = true;
+		sidewaysAntiDrift = new Antidrift(hBackMotors, hFrontMotors, gyro, DriverStation.getDouble("kpside"));
+		hBackMotors.enableAntiDrift(true, sidewaysAntiDrift);
+		hFrontMotors.enableAntiDrift(true, sidewaysAntiDrift);
 //		pistons = new DoubleActionSolenoid(new int[]{rightPiston, leftPiston}, pressure);
 	}
 	
@@ -93,9 +98,9 @@ public class HDrive extends TankDrive{
 		if (isLifted){
 			angleBeforeDeploy=super.gyro.getAngle();
 			pistons.changeState();
-			if(Math.abs(gyro.getAngle()-angleBeforeDeploy)>Gyro.HDRIVE_THRESHOLD){
-				super.turnAngle(angleBeforeDeploy, hBackMotors, hFrontMotors);
-			}
+//			if(Math.abs(gyro.getAngle()-angleBeforeDeploy)>Gyro.HDRIVE_THRESHOLD){
+//				super.turnAngle(angleBeforeDeploy, hBackMotors, hFrontMotors);
+//			}
 		}
 		isLifted = false;
 	}
@@ -107,9 +112,9 @@ public class HDrive extends TankDrive{
 		if (!isLifted){
 			angleBeforeDeploy=super.gyro.getAngle();
 			pistons.changeState();
-			if(Math.abs(gyro.getAngle()-angleBeforeDeploy)>Gyro.HDRIVE_THRESHOLD){
-				super.turnAngle(angleBeforeDeploy, hBackMotors, hFrontMotors);
-			}
+//			if(Math.abs(gyro.getAngle()-angleBeforeDeploy)>Gyro.HDRIVE_THRESHOLD){
+//				super.turnAngle(angleBeforeDeploy, hBackMotors, hFrontMotors);
+//			}
 		}
 		isLifted = true;
 	}
@@ -133,33 +138,6 @@ public class HDrive extends TankDrive{
 		hBackMotors.moveDistance(distance);
 		hFrontMotors.moveDistance(distance);
 		currentThread = hBackMotors.getCurrentThread();
-	}
-	
-	
-	public double getAntiDriftAngle(){
-		double targetAngle;
-		if(isDeployed()){
-			targetAngle = -90;
-		}
-		else{
-			targetAngle = 0;
-		}
-		return targetAngle;
-	}
-	
-	public void antiDrift(double speed){
-		super.antiDrift(speed, getAntiDriftAngle());
-	}
-	
-	public void antiDrift(double speed, MotorGroup front, MotorGroup back){
-		double error = 0 - gyro.getAngle();
-		double correction = kp*error/2.0;
-		front.set(limitSpeed(speed+correction));
-		back.set(limitSpeed(speed-correction));
-		DriverStation.sendData("Gyro Value", gyro.getAngle());
-		DriverStation.sendData("Correction", correction);	
-		DriverStation.sendData("FrontSpeed", limitSpeed(speed - correction));
-		DriverStation.sendData("BackSpeed", limitSpeed(speed + correction));
 	}
 	
 	public MotorGroup getFrontHMotor(){
