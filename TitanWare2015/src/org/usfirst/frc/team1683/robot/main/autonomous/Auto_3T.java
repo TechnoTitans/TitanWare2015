@@ -95,7 +95,7 @@ public class Auto_3T extends Autonomous{
 		}
 		case END_CASE:
 		{
-			hDrive.stop();
+			hDrive.stop(false);
 			nextState = State.END_CASE;
 			break;
 		}

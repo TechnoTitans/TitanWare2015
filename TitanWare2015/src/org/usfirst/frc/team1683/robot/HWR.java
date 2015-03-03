@@ -28,9 +28,11 @@ public class HWR {
 	public static final boolean FRONT_H_INVERSE		= false;
 	public static final boolean BACK_H_INVERSE		= true;
 
+	public static final int PICKERUPPER_ACCEL		= HWP.ANALOG_3;
+	
 	// Gyro MUST BE 0 OR 1
 	public static final int GYRO					= HWP.ANALOG_1;
-
+	
 	//Encoders
 	public static final int BELT_CHANNEL_A          = HWP.DIO_0; //actual port is 0
 	public static final int BELT_CHANNEL_B          = HWP.DIO_1; //actual port is 1
@@ -112,5 +114,8 @@ public class HWR {
 	public static final double LOW_SPEED			= 0.25;
 	public static final double MEDIUM_SPEED			= 0.40;
 	public static final double HIGH_SPEED			= 1.0;
+	
+	public static final double HDRIVE_SPEED			= 0.8;
+
 	
 }

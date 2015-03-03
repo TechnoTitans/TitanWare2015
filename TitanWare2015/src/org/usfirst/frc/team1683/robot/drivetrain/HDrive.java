@@ -6,6 +6,7 @@ import org.usfirst.frc.team1683.robot.pneumatics.AirSystem;
 import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
 
 public class HDrive extends TankDrive{
 	MotorGroup hBackMotors,hFrontMotors;
@@ -59,8 +60,10 @@ public class HDrive extends TankDrive{
 		this.triggerButton = triggerButton;
 		isLifted = true;
 		sidewaysAntiDrift = new Antidrift(hBackMotors, hFrontMotors, gyro, DriverStation.getDouble("kpside"));
-		hBackMotors.enableAntiDrift(true, sidewaysAntiDrift);
-		hFrontMotors.enableAntiDrift(true, sidewaysAntiDrift);
+//		hBackMotors.enableAntiDrift(true, sidewaysAntiDrift);
+//		hFrontMotors.enableAntiDrift(true, sidewaysAntiDrift);
+		hBackMotors.setBaseSpeed(HWR.HDRIVE_SPEED);
+		hFrontMotors.setBaseSpeed(HWR.HDRIVE_SPEED);
 //		pistons = new DoubleActionSolenoid(new int[]{rightPiston, leftPiston}, pressure);
 	}
 	
@@ -134,7 +137,8 @@ public class HDrive extends TankDrive{
 	public void goSideways(double distance)
 	{
 //		if(!isDeployed())
-			deployWheels();
+		deployWheels();
+		Timer.delay(0.5);
 		hBackMotors.moveDistance(distance);
 		hFrontMotors.moveDistance(distance);
 		currentThread = hBackMotors.getCurrentThread();

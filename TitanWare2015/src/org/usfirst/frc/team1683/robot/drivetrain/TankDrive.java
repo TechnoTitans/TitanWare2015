@@ -159,6 +159,12 @@ public class TankDrive extends DriveTrain{
 		left.stop();
 		right.stop();
 	}
+	public void stop(boolean brakeMode){
+		left.enableBrakeMode(brakeMode);
+		right.enableBrakeMode(brakeMode);
+		left.stop();
+		right.stop();
+	}
 	
 	public void goSideways(double distance) {
 		//placeholder

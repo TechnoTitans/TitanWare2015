@@ -12,7 +12,7 @@ public class PreferencesList{
 		//Autonomous Preferences
 		DriverStation.prefInt("autonomousMode", 12);
 		DriverStation.prefDouble("driveDistance", 140); //inches
-		DriverStation.prefDouble("sideDistance", -80); //inches
+		DriverStation.prefDouble("sideDistance", -85); //inches
 		DriverStation.prefDouble("liftDistance", 2);
 		DriverStation.prefDouble("adjustDistance", 2);
 		DriverStation.prefDouble("backDistance", 2);
