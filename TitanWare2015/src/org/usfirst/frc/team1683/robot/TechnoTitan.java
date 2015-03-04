@@ -64,7 +64,7 @@ public class TechnoTitan extends IterativeRobot {
 				TalonSRX.class, HWR.GYRO, 
 				HWR.LEFT_CHANNEL_A, HWR.LEFT_CHANNEL_B, HWR.RIGHT_CHANNEL_A, HWR.RIGHT_CHANNEL_B,
 				HWR.BACK_CHANNEL_A, HWR.BACK_CHANNEL_B, HWR.FRONT_CHANNEL_A, HWR.FRONT_CHANNEL_B,
-				HWR.LEFT_H_PISTON, HWR.RIGHT_H_PISTON, pressure, 
+				HWR.BACK_H_PISTON, HWR.FRONT_H_PISTON, pressure, 
 				HWR.FRONT_H_MOTOR, HWR.BACK_H_MOTOR, Talon.class, HWR.DEPLOY_H_DRIVE, HWR.driveEncoderWDPP, HWR.hDriveEncoderWDPP,
 				HWR.leftDriveEncoderReverse, HWR.rightDriveEncoderReverse, HWR.backHEncoderReverse, HWR.frontHEncoderReverse,
 				HWR.BACK_H_INVERSE, HWR.FRONT_H_INVERSE);

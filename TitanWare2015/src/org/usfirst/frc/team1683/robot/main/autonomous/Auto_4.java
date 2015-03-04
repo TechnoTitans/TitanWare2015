@@ -19,15 +19,7 @@ public class Auto_4 extends Autonomous{
 		{
 		case INIT_CASE:
 		{
-			pickerUpper.goToZero();
-			waitForThread(pickerUpper.getCurrentThread());
-			nextState = State.CENTER_TOTE;
-			break;
-		}
-		case CENTER_TOTE:
-		{
-//			nextState = centerTote(State.DROP_TOTE);
-			nextState = State.DROP_TOTE;
+			nextState = State.LIFT_TOTE;
 			break;
 		}
 		case DROP_TOTE:

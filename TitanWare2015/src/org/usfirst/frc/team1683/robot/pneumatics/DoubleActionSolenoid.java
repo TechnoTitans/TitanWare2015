@@ -3,8 +3,8 @@ package org.usfirst.frc.team1683.robot.pneumatics;
 import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 
 public class DoubleActionSolenoid {
-	AirSystem frontAirSystem;
-	AirSystem backAirSystem;
+	AirSystem controlAirSystem;
+	AirSystem followingAirSystem;
 	
 	/**
 	 * @param pistons
@@ -12,8 +12,8 @@ public class DoubleActionSolenoid {
 	 * @param initState - initial state of controlling boolean value
 	 */
 	public DoubleActionSolenoid(int[] pistons, PressureSensor pressure) { //front piston, back Piston
-		frontAirSystem = new AirSystem(new int[]{pistons[0]}, pressure);
-		backAirSystem = new AirSystem(new int[]{pistons[1]}, pressure);
+		controlAirSystem = new AirSystem(new int[]{pistons[0]}, pressure);
+		followingAirSystem = new AirSystem(new int[]{pistons[1]}, pressure);
 	}
 	
 	/**
@@ -21,8 +21,8 @@ public class DoubleActionSolenoid {
 	 * returns the front air system of dual action pistons
 	 * @return frontAirSystem
 	 */
-	public AirSystem getFrontAirSystem(){
-		return frontAirSystem;
+	public AirSystem getControlAirSystem(){
+		return controlAirSystem;
 	}
 	
 	/**
@@ -30,8 +30,8 @@ public class DoubleActionSolenoid {
 	 * returns the back air system of dual action pistons
 	 * @return backAirSystem
 	 */
-	public AirSystem getBackAirSystem(){
-		return backAirSystem;
+	public AirSystem getFollowingAirSystem(){
+		return followingAirSystem;
 	}
 	
 	/**
@@ -39,12 +39,26 @@ public class DoubleActionSolenoid {
 	 * switches between the two useful states of the dual action solenoids
 	 */
 	public void changeState(){
-		if (frontAirSystem.isExtended()){
-			frontAirSystem.retract();
-			backAirSystem.extend();
+		if (controlAirSystem.isExtended()){
+			controlAirSystem.retract();
+			followingAirSystem.extend();
 		}else{
-			frontAirSystem.extend();
-			backAirSystem.retract();
+			controlAirSystem.extend();
+			followingAirSystem.retract();
 		}
+	}
+	
+	public void extend(){
+		controlAirSystem.extend();
+		followingAirSystem.retract();
+	}
+	
+	public void retract(){
+		controlAirSystem.retract();
+		followingAirSystem.extend();
+	}
+	
+	public boolean isExtended(){
+		return controlAirSystem.isExtended();
 	}
 }

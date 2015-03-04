@@ -65,8 +65,8 @@ public class HWR {
 	public static final int COMPRESSOR_RELAY		= HWP.RELAY_0;
 
 	//Pistons
-	public static final int LEFT_H_PISTON			= PCM.SOLENOID_0;
-	public static final int RIGHT_H_PISTON			= PCM.SOLENOID_1;
+	public static final int BACK_H_PISTON			= PCM.SOLENOID_0; //must rename to back and front
+	public static final int FRONT_H_PISTON			= PCM.SOLENOID_1;
 	public static final int FRONT_LIFT_PISTON		= PCM.SOLENOID_2;
 	public static final int BACK_LIFT_PISTON		= PCM.SOLENOID_3;
 

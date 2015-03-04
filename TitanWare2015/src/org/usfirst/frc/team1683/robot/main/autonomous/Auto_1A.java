@@ -29,19 +29,10 @@ public class Auto_1A extends Autonomous{
 		}
 		case DRIVE_FORWARD:
 		{
-			double speed;
-//			driveDistance = 143;
-			if (driveDistance > 0){
-				speed = HWR.MEDIUM_SPEED;
-			}
-			else{
-				speed = -HWR.MEDIUM_SPEED;
-			}
-//			System.out.println("driveDistance = " + driveDistance);
+			double speed = setSpeed(HWR.MEDIUM_SPEED, driveDistance);
 			if (driveTimer.get()<driveTime)
 			{
 				hDrive.setTankDrive(speed);
-//				hDrive.antiDrift(speed);
 				nextState = State.DRIVE_FORWARD;
 			}
 			else

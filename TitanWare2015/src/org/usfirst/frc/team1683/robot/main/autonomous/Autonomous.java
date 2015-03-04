@@ -160,33 +160,13 @@ public abstract class Autonomous {
 			e.printStackTrace();
 		}
 	}
-
-	/**
-	 * @author David Luo
-	 * Attempts to center the robot in front of the closest tote.
-	 * @param next The state to be executed after CENTER_TOTE.
-	 * @return The next state to be executed (keep trying to center or skip).
-	 */
-	public static State centerTote(State next) {
-		double centerDistance = vision.centerOffset()/240;
-		visionDistance += centerDistance;
-		if (visionTimer.get() <= VISION_TIMEOUT) {
-			if (vision.isCentered() == -1) {
-				hDrive.goSideways(centerDistance);
-				return State.CENTER_TOTE;
-			}
-			else if (vision.isCentered() == 1) {
-				hDrive.goSideways(centerDistance);
-				return State.CENTER_TOTE;
-			}
-			else {
-				hDrive.stop();
-				return next;
-			}
+	
+	public double setSpeed(double baseSpeed, double distance){
+		if (distance>0){
+			return baseSpeed;
 		}
-		else {
-			//			driveTrain.goSideways(visionDistance);
-			return next;
+		else{
+			return -baseSpeed;
 		}
 	}
 

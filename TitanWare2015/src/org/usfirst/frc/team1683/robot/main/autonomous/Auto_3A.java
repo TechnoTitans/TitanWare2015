@@ -18,38 +18,14 @@ public class Auto_3A extends Autonomous{
 		{
 			timer.start();
 			visionTimer.start();
-			nextState = State.START_LIFT_BARREL;
-			break;
-		}
-		case START_LIFT_BARREL:
-		{
-			pickerUpper.liftBarrel();
-			liftTimer.start();
 			nextState = State.LIFT_BARREL;
 			break;
 		}
-//		case LIFT_BARREL:
-//		{
-//			pickerUpper.liftBarrel();
-//			try {
-//				this.wait();
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
-//			nextState = State.START_DRIVE_SIDEWAYS;
-//			break;
-//		}
 		case LIFT_BARREL:
 		{
-//			if (liftTimer.get()<liftTime){
-			if (liftTimer.get()<1.5){
-				nextState = State.LIFT_BARREL;
-			}
-			else{
-				nextState = State.START_DRIVE_SIDEWAYS;
-				liftTimer.stop();
-				liftTimer.reset();
-			}
+			pickerUpper.liftBarrel();
+			waitForThread(pickerUpper.getCurrentThread());
+			nextState = State.START_DRIVE_SIDEWAYS;
 			break;
 		}
 		case START_DRIVE_SIDEWAYS:
@@ -61,19 +37,9 @@ public class Auto_3A extends Autonomous{
 		}
 		case DRIVE_SIDEWAYS:
 		{
-			double hSpeed;
-//			sideDistance = -24;
-			if (sideDistance>0){
-				hSpeed = HWR.MEDIUM_SPEED;
-//				hSpeed = sideSpeed;
-			}
-			else{
-				hSpeed = -HWR.MEDIUM_SPEED;
-//				hSpeed = -sideSpeed;
-			}
+			double hSpeed = setSpeed(sideSpeed, sideDistance);
 			if (driveTimer.get()<sideTime)
 			{
-//				hDrive.antiDrift(hSpeed, hDrive.getFrontHMotor(), hDrive.getBackHMotor());
 				hDrive.set(hSpeed);
 				nextState = State.DRIVE_SIDEWAYS;
 			}
@@ -85,14 +51,8 @@ public class Auto_3A extends Autonomous{
 				driveTimer.stop();
 				driveTimer.reset();
 				visionTimer.reset();
-				nextState = State.CENTER_TOTE;
+				nextState = State.START_DRIVE_FORWARD;
 			}
-			break;
-		}
-		case CENTER_TOTE:
-		{
-//			nextState = centerTote(State.DRIVE_FORWARD);
-			nextState = State.START_DRIVE_FORWARD;
 			break;
 		}
 		case START_DRIVE_FORWARD:
@@ -103,16 +63,7 @@ public class Auto_3A extends Autonomous{
 		}
 		case DRIVE_FORWARD:
 		{
-			double speed;
-			driveDistance = 143;
-			if (driveDistance>0){
-				speed = HWR.MEDIUM_SPEED;
-//				speed = driveSpeed;
-			}
-			else{
-				speed = -HWR.MEDIUM_SPEED;
-//				speed = -driveSpeed;
-			}
+			double speed = setSpeed(HWR.MEDIUM_SPEED, driveDistance);
 			if (driveTimer.get()<driveTime)
 			{
 				hDrive.setTankDrive(speed);
@@ -130,8 +81,7 @@ public class Auto_3A extends Autonomous{
 		}
 		case END_CASE:
 		{
-
-//			hDrive.stop();
+			hDrive.stop();
 			nextState = State.END_CASE;
 			break;
 		}
