@@ -41,7 +41,6 @@ public abstract class Autonomous {
 		DROP_TOTE,		
 		LIFT_POSITION,		
 		IS_TOTE_LIFTED,	
-		CENTER_TOTE,
 		ADJUST_FORWARD,
 		ADJUST_BACKWARD,
 		TURN,
@@ -55,7 +54,8 @@ public abstract class Autonomous {
 		START_LIFT_BARREL
 	}
 
-
+	public static boolean errorWarning;
+	
 	public static State presentState = State.INIT_CASE;
 	public static State nextState;
 	public static int driveCount = 0;
@@ -72,7 +72,6 @@ public abstract class Autonomous {
 	protected static boolean isToteLifted;
 	protected static boolean enablePrinting;
 	protected static double driveTime = 5;
-	public static boolean errorWarning;
 	protected static double liftTime;
 	protected static double driveSpeed;
 	protected static double sideSpeed;
@@ -82,7 +81,6 @@ public abstract class Autonomous {
 	protected static final double VISION_TIMEOUT = 3;
 
 	protected static Autonomous autonomous;
-
 
 	@SuppressWarnings("static-access")
 	public Autonomous(HDrive drive, PickerUpper pickerUpper, Vision vision){
