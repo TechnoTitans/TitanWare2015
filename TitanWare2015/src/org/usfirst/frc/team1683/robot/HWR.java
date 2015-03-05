@@ -93,6 +93,7 @@ public class HWR {
 	public static final double FOURTH_TOTE_HEIGHT   = TRIPLE_TOTE_HEIGHT - HOOK_INCREMENTS;
 	public static final double BARREL_HEIGHT		= 60.0;
 	public static final double BARREL_CLEAR_HEIGHT	= 37.0;
+	public static final double DROP_HEIGHT			= 12.0;
 
 	//Buttons
 	public static final int DEPLOY_H_DRIVE			= 1;

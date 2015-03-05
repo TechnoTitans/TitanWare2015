@@ -28,6 +28,7 @@ public class Auto_4 extends Autonomous{
 		{
 			pickerUpper.drop();
 			waitForThread(pickerUpper.getCurrentThread());
+		    adjustTote();
 			if (liftCount<2)
 				nextState = State.LIFT_TOTE;
 			else

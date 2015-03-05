@@ -300,7 +300,7 @@ public class PickerUpper{
 	}
 	
 	public void drop(){
-		goToZero();
+		liftToHeight(HWR.DROP_HEIGHT+getHeightFromHDrive());
 	}
 	
 	public void setToZero(){

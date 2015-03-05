@@ -173,9 +173,18 @@ public abstract class Autonomous {
 	}
 	
 	public static void delay() {
-		
 		Timer.delay(secondDelay);
-		
+	}
+	
+	public static void adjustTote() {
+		pickerUpper.drop();
+		waitForThread(pickerUpper.getCurrentThread());
+		hDrive.goForward(-backDistance);
+		waitForThread(hDrive.left.getCurrentThread(),hDrive.right.getCurrentThread());
+		pickerUpper.goToZero();
+		waitForThread(pickerUpper.getCurrentThread());
+		hDrive.goForward(backDistance);
+		waitForThread(hDrive.left.getCurrentThread(),hDrive.right.getCurrentThread());
 	}
 
 	public abstract void run();
