@@ -292,8 +292,8 @@ public class PickerUpper{
 		liftToHeight(HWR.TRIPLE_TOTE_HEIGHT+getHeightFromHDrive());
 	}
 	
-	public void liftFourthTote(){
-		liftToHeight(HWR.FOURTH_TOTE_HEIGHT+getHeightFromHDrive());
+	public void liftToClearBarrel(){
+		liftToHeight(HWR.BARREL_CLEAR_HEIGHT+getHeightFromHDrive());
 	}
 	
 	public void liftBarrel(){
@@ -301,7 +301,7 @@ public class PickerUpper{
 	}
 	
 	public void drop(){
-		goToZero();
+		liftToHeight(HWR.DROP_HEIGHT+getHeightFromHDrive());
 	}
 	
 	public void setToZero(){

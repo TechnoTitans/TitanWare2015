@@ -65,8 +65,8 @@ public class HWR {
 	public static final int COMPRESSOR_RELAY		= HWP.RELAY_0;
 
 	//Pistons
-	public static final int LEFT_H_PISTON			= PCM.SOLENOID_0;
-	public static final int RIGHT_H_PISTON			= PCM.SOLENOID_1;
+	public static final int BACK_H_PISTON			= PCM.SOLENOID_0;
+	public static final int FRONT_H_PISTON			= PCM.SOLENOID_1;
 	public static final int FRONT_LIFT_PISTON		= PCM.SOLENOID_2;
 	public static final int BACK_LIFT_PISTON		= PCM.SOLENOID_3;
 
@@ -94,6 +94,8 @@ public class HWR {
 	public static final double TRIPLE_TOTE_HEIGHT	= DOUBLE_TOTE_HEIGHT - HOOK_INCREMENTS;
 	public static final double FOURTH_TOTE_HEIGHT   = TRIPLE_TOTE_HEIGHT - HOOK_INCREMENTS;
 	public static final double BARREL_HEIGHT		= 60.0;
+	public static final double BARREL_CLEAR_HEIGHT	= 37.0;
+	public static final double DROP_HEIGHT			= 12.0;
 
 	//Buttons
 	public static final int DEPLOY_H_DRIVE			= 1;

@@ -1,62 +1,43 @@
 package org.usfirst.frc.team1683.robot.main.autonomous;
 
 import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
+import org.usfirst.frc.team1683.robot.main.autonomous.Autonomous.State;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
 import org.usfirst.frc.team1683.robot.vision.Vision;
 
-public class Auto_4 extends Autonomous{
-	public Auto_4(HDrive drive, PickerUpper pickerUpper, Vision vision) {
+public class Auto_6 extends Autonomous{
+	public Auto_6(HDrive drive, PickerUpper pickerUpper, Vision vision) {
 		super(drive, pickerUpper, vision);
-		// TODO Auto-generated constructor stub
 	}
-
-	/**
-	 * Picks up all the totes and drives all of them into the Auto Zone and the robot into the Auto Zone
-	 * @author Sneha
-	 */
 	public void run(){
-		switch(presentState)
-		{
+		switch(presentState){
 		case INIT_CASE:
 		{
-			pickerUpper.goToZero();
-			waitForThread(pickerUpper.getCurrentThread());
+			delay();
+			timer.start();
 			nextState = State.LIFT_TOTE;
-			break;
-		}
-		case DROP_TOTE:
-		{
-			pickerUpper.drop();
-			waitForThread(pickerUpper.getCurrentThread());
-		    adjustTote();
-			if (liftCount<2)
-				nextState = State.LIFT_TOTE;
-			else
-				nextState = State.DRIVE_FORWARD;
 			break;
 		}
 		case LIFT_TOTE:
 		{
-			if (liftCount<1){
-				pickerUpper.liftFirstTote();
-			}
-			else{
-				pickerUpper.liftSecondTote();
-			}
+			pickerUpper.liftFirstTote();
 			waitForThread(pickerUpper.getCurrentThread());
-			liftCount++;
 			nextState = State.DRIVE_SIDEWAYS;
 			break;
 		}
 		case DRIVE_SIDEWAYS:
 		{
+			hDrive.resetHEncoders();
 			hDrive.moveSideways(sideDistance);
-			waitForThread(hDrive.getBackHMotor().getCurrentThread(), hDrive.getFrontHMotor().getCurrentThread());
-			nextState = State.DROP_TOTE;
+			waitForThread(hDrive.getBackHMotor().getCurrentThread(),
+					hDrive.getFrontHMotor().getCurrentThread());
+			hDrive.liftWheels();
+			nextState = State.DRIVE_FORWARD;
 			break;
 		}
 		case DRIVE_FORWARD:
 		{
+			hDrive.resetTankEncoders();
 			hDrive.goForward(driveDistance);
 			waitForThread(hDrive.left.getCurrentThread(), hDrive.right.getCurrentThread());
 			nextState = State.END_CASE;
@@ -64,6 +45,7 @@ public class Auto_4 extends Autonomous{
 		}
 		case END_CASE:
 		{
+			hDrive.stop();
 			nextState = State.END_CASE;
 			break;
 		}

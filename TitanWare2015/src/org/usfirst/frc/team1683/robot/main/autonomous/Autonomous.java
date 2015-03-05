@@ -41,7 +41,6 @@ public abstract class Autonomous {
 		DROP_TOTE,		
 		LIFT_POSITION,		
 		IS_TOTE_LIFTED,	
-		CENTER_TOTE,
 		ADJUST_FORWARD,
 		ADJUST_BACKWARD,
 		TURN,
@@ -77,6 +76,7 @@ public abstract class Autonomous {
 	protected static double driveSpeed;
 	protected static double sideSpeed;
 	protected static double sideTime = 5;
+	protected static double secondDelay;
 
 	protected static double visionDistance = 0;
 	protected static final double VISION_TIMEOUT = 3;
@@ -97,6 +97,7 @@ public abstract class Autonomous {
 		leftEncoder = hDrive.leftEncoder;
 		rightEncoder = hDrive.rightEncoder;
 		liftTimer = new Timer();
+		
 	}
 
 	/**
@@ -130,6 +131,7 @@ public abstract class Autonomous {
 		driveTime = DriverStation.getDouble("driveTime");
 		liftTime = DriverStation.getDouble("liftTime");
 		sideTime = DriverStation.getDouble("sideTime");
+		secondDelay = DriverStation.getDouble("secondDelay");
 	}
 
 	/**
@@ -160,34 +162,29 @@ public abstract class Autonomous {
 			e.printStackTrace();
 		}
 	}
-
-	/**
-	 * @author David Luo
-	 * Attempts to center the robot in front of the closest tote.
-	 * @param next The state to be executed after CENTER_TOTE.
-	 * @return The next state to be executed (keep trying to center or skip).
-	 */
-	public static State centerTote(State next) {
-		double centerDistance = vision.centerOffset()/240;
-		visionDistance += centerDistance;
-		if (visionTimer.get() <= VISION_TIMEOUT) {
-			if (vision.isCentered() == -1) {
-				hDrive.goSideways(centerDistance);
-				return State.CENTER_TOTE;
-			}
-			else if (vision.isCentered() == 1) {
-				hDrive.goSideways(centerDistance);
-				return State.CENTER_TOTE;
-			}
-			else {
-				hDrive.stop();
-				return next;
-			}
+	
+	public static double setSpeed(double baseSpeed, double distance){
+		if (distance>0){
+			return baseSpeed;
 		}
-		else {
-			//			driveTrain.goSideways(visionDistance);
-			return next;
+		else{
+			return -baseSpeed;
 		}
+	}
+	
+	public static void delay() {
+		Timer.delay(secondDelay);
+	}
+	
+	public static void adjustTote() {
+		pickerUpper.drop();
+		waitForThread(pickerUpper.getCurrentThread());
+		hDrive.goForward(-backDistance);
+		waitForThread(hDrive.left.getCurrentThread(),hDrive.right.getCurrentThread());
+		pickerUpper.goToZero();
+		waitForThread(pickerUpper.getCurrentThread());
+		hDrive.goForward(backDistance);
+		waitForThread(hDrive.left.getCurrentThread(),hDrive.right.getCurrentThread());
 	}
 
 	public abstract void run();

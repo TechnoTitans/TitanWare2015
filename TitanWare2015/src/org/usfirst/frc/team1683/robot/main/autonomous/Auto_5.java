@@ -1,35 +1,27 @@
 package org.usfirst.frc.team1683.robot.main.autonomous;
 
 import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
+import org.usfirst.frc.team1683.robot.main.autonomous.Autonomous.State;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
 import org.usfirst.frc.team1683.robot.vision.Vision;
 
-public class Auto_1 extends Autonomous implements Runnable {
-
-	public Auto_1(HDrive drive, PickerUpper pickerUpper, Vision vision) {
-		super(drive, pickerUpper, vision);
-	}
-
-	@Override
+//Do no harm autonomous
+public class Auto_5 extends Autonomous{
+	 public Auto_5 (HDrive drive, PickerUpper pickerUpper, Vision vision){
+		 super (drive, pickerUpper, vision);
+	 }
+	
 	public void run() {
 		switch(presentState){
 		case INIT_CASE:
 		{
-			timer.start();
-			nextState = State.DRIVE_FORWARD;
-			break;
-		}
-		case DRIVE_FORWARD:
-		{
-			hDrive.goForward(driveDistance);
-			waitForThread(hDrive.left.getCurrentThread(), hDrive.right.getCurrentThread());
+			delay();
 			nextState = State.END_CASE;
-			break;
+		    break;
 		}
 		case END_CASE:
 		{
-			hDrive.stop();			
-			nextState = State.END_CASE;
+		   nextState = State.END_CASE;
 			break;
 		}
 		default:
@@ -41,5 +33,8 @@ public class Auto_1 extends Autonomous implements Runnable {
 		}
 		printState();
 		presentState = nextState;
+		
+		
 	}
+
 }

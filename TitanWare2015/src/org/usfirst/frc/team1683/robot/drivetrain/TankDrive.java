@@ -40,8 +40,7 @@ public class TankDrive extends DriveTrain{
 		gyro.setPost(true);
 		kp = DriverStation.getDouble("kpforward");
 		forwardAntiDrift = new Antidrift(left, right, gyro, kp);
-		left.enableAntiDrift(true, forwardAntiDrift);
-		right.enableAntiDrift(true, forwardAntiDrift);
+		enableForwardAntiDrift(true);
 	}
 	/**
 	 * Constructor
@@ -60,8 +59,8 @@ public class TankDrive extends DriveTrain{
 	public TankDrive(int[] leftMotorInputs,boolean leftInverse, int[] rightMotorInputs, boolean rightInverse, 
 			Class motorType, int gyroChannel, int leftChannelA, int leftChannelB, 
 			int rightChannelA, int rightChannelB, double wheelDistancePerPulse,
-			boolean leftReversesDirection, boolean rightReverseDirection) {
-		leftEncoder = new Encoder(leftChannelA, leftChannelB, leftReversesDirection, wheelDistancePerPulse);
+			boolean leftReverseDirection, boolean rightReverseDirection) {
+		leftEncoder = new Encoder(leftChannelA, leftChannelB, leftReverseDirection, wheelDistancePerPulse);
 		rightEncoder = new Encoder(rightChannelA, rightChannelB, rightReverseDirection, wheelDistancePerPulse);
 		left = new MotorGroup("Left Drive",leftMotorInputs, motorType, leftInverse, leftEncoder);
 		right = new MotorGroup("Right Drive",rightMotorInputs, motorType, rightInverse, rightEncoder);
@@ -107,39 +106,6 @@ public class TankDrive extends DriveTrain{
 		right.moveDistanceInches(distanceInInches);
 		currentThread = right.getCurrentThread();
 	}
-	/**
-	 * turns the robot for a certain angle
-	 */
-	@Override
-	public void turnAngle(double bearing, MotorGroup left, MotorGroup right) {
-		gyro.add(startAngle);
-		gyro.reset();
-		if (bearing >= 0 && bearing <= 180){
-			while(gyro.getAngle()<bearing){
-				left.set(LOW_SPEED);
-				right.set(-LOW_SPEED);
-			}
-			left.stop();
-			right.stop();
-		}else if (bearing>180 && bearing<360){
-			while(gyro.getAngle()<bearing){
-				left.set(-LOW_SPEED);
-				right.set(LOW_SPEED);
-			}
-			left.stop();
-			right.stop();
-		}
-	}
-	/**
-	 * turns the robot back to its original position
-	 */
-	@Override
-	public void setBackToOriginalPos() {
-		startAngle = gyro.add(startAngle)%360;
-		gyro.reset();
-		turnAngle(startAngle,left,right);
-		startAngle = 0;
-	}
 	
 	/**
 	 * to reset the gyro from outside the drive code
@@ -182,5 +148,10 @@ public class TankDrive extends DriveTrain{
 	public void EncoderValues (){
 		DriverStation.sendData("leftEncoder", leftEncoder.get());
 		DriverStation.sendData("rightEncoder", rightEncoder.get());
+	}
+	
+	public void enableForwardAntiDrift(boolean enable){
+		left.enableAntiDrift(enable, forwardAntiDrift);
+		right.enableAntiDrift(enable, forwardAntiDrift);
 	}
 }
