@@ -45,13 +45,8 @@ public class Auto_2 extends Autonomous{
 		case DRIVE_SIDEWAYS:
 		{
 			hDrive.moveSideways(sideDistance);			
-			nextState = State.CENTER_TOTE;
+			nextState = State.DRIVE_FORWARD;
 			visionTimer.reset();
-			break;
-		}
-		case CENTER_TOTE:
-		{
-			nextState = centerTote(State.DRIVE_FORWARD);
 			break;
 		}
 		case END_CASE:
