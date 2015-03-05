@@ -12,8 +12,6 @@ public abstract class DriveTrain{
 	
 	public abstract void goStraight(double distance);
 	public abstract void goForward(double distance);
-	public abstract void turnAngle(double bearing,MotorGroup left, MotorGroup right);
-	public abstract void setBackToOriginalPos();
 	public abstract void driveMode(Joystick leftStick, Joystick rightStick);
 //	public abstract double[] antiDrift(double speed, double targetAngle);
 	public abstract void stop();
