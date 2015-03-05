@@ -76,6 +76,7 @@ public abstract class Autonomous {
 	protected static double driveSpeed;
 	protected static double sideSpeed;
 	protected static double sideTime = 5;
+	protected static double secondDelay;
 
 	protected static double visionDistance = 0;
 	protected static final double VISION_TIMEOUT = 3;
@@ -96,6 +97,7 @@ public abstract class Autonomous {
 		leftEncoder = hDrive.leftEncoder;
 		rightEncoder = hDrive.rightEncoder;
 		liftTimer = new Timer();
+		
 	}
 
 	/**
@@ -129,6 +131,7 @@ public abstract class Autonomous {
 		driveTime = DriverStation.getDouble("driveTime");
 		liftTime = DriverStation.getDouble("liftTime");
 		sideTime = DriverStation.getDouble("sideTime");
+		secondDelay = DriverStation.getDouble("secondDelay");
 	}
 
 	/**
@@ -167,6 +170,12 @@ public abstract class Autonomous {
 		else{
 			return -baseSpeed;
 		}
+	}
+	
+	public static void delay() {
+		
+		Timer.delay(secondDelay);
+		
 	}
 
 	public abstract void run();
