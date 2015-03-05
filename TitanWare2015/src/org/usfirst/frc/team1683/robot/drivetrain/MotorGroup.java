@@ -77,6 +77,10 @@ public class MotorGroup implements Runnable{
 		pidControllers = null;
 	}
 	
+	public void setBaseSpeed(double speed){
+		mover.setBaseSpeed(speed);
+	}
+	
 	public void enableAntiDrift(boolean enable, Antidrift antidrift){
 		if (enable){
 			this.useAntidrift = true;
@@ -179,6 +183,7 @@ public class MotorGroup implements Runnable{
 
 	public class MotorMover implements Runnable{
 		
+		double baseSpeed;
 		double distanceInMeters;
 		double targetLocation;
 		double initialLocation;
@@ -186,6 +191,7 @@ public class MotorGroup implements Runnable{
 		MotorGroup group;
 		
 		public MotorMover(MotorGroup group) {
+			baseSpeed = HWR.MEDIUM_SPEED;
 			this.group = group;
 		}
 
@@ -196,15 +202,16 @@ public class MotorGroup implements Runnable{
 			this.targetLocation = initialLocation + distanceInMeters;
 		}
 		
+		public void setBaseSpeed(double speed){
+			this.baseSpeed = speed;
+		}
+		
 		@SuppressWarnings("deprecation")
 		@Override
 		public void run() {
-			double baseSpeed;
 			if (pidControllers == null){
-				if (targetLocation > initialLocation){
-					baseSpeed = HWR.MEDIUM_SPEED;
-				}else{
-					baseSpeed = -HWR.MEDIUM_SPEED;
+				if (targetLocation <= initialLocation){
+					baseSpeed = -baseSpeed;
 				}
 				while (Math.abs(Math.abs(initialLocation) - Math.abs(encoder.getDisplacement(encoder.getDistancePerPulse())))
 						< Math.abs(distanceInMeters)){

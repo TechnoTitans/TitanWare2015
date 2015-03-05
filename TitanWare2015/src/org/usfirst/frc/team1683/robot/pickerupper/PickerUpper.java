@@ -5,16 +5,17 @@ import org.usfirst.frc.team1683.robot.drivetrain.Encoder;
 import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
 import org.usfirst.frc.team1683.robot.drivetrain.MotorGroup;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
-import org.usfirst.frc.team1683.robot.pneumatics.AirSystem;
+import org.usfirst.frc.team1683.robot.sensors.Gyro;
 import org.usfirst.frc.team1683.robot.sensors.Photogate;
 import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 
 import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.RobotBase;
 
 
 public class PickerUpper{
 	MotorGroup motors;
-	DualActionPistons pistons;
+	PickerUpperPneumatics pistons;
 	MotorGroup leftLiftMotor;
 	MotorGroup rightLiftMotor;
 	public Encoder beltEncoder;
@@ -54,13 +55,13 @@ public class PickerUpper{
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public PickerUpper(Class motorType, boolean inverseDirection, int[] liftSolenoids, int[] pickerUpperChannels,
 			 int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp, 
-			 PressureSensor pressure, Photogate photogate, HDrive hDrive){
+			 PressureSensor pressure, Photogate photogate, HDrive hDrive, Gyro gyro, RobotBase base){
 		beltEncoder = new Encoder(beltChannelA, beltChannelB, reverseDirection, wdpp);
 		this.motors = new MotorGroup("Picker Upper", pickerUpperChannels, motorType, inverseDirection, 
 				beltEncoder);
 		this.pressure = pressure;
 		this.photogate = photogate;
-		pistons = new DualActionPistons(liftSolenoids, pressure);
+		pistons = new PickerUpperPneumatics(base, gyro , liftSolenoids, pressure);
 		this.hDrive = hDrive;
 //		isForward = true;
 //		pistons = new DoubleActionSolenoid(liftSolenoids, pressure);
@@ -81,13 +82,13 @@ public class PickerUpper{
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public PickerUpper(Class motorType, boolean inverseDirection, int[] liftSolenoids, int[] pickerUpperChannels,
 			 int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp, 
-			 PressureSensor pressure, Photogate photogate, HDrive hDrive, int index){		
+			 PressureSensor pressure, Photogate photogate, HDrive hDrive, int index, Gyro gyro, RobotBase base){		
 		beltEncoder = new Encoder(beltChannelA, beltChannelB, reverseDirection, wdpp);
 		this.motors = new MotorGroup("Picker Upper", pickerUpperChannels, motorType, inverseDirection, 
 				beltEncoder);
 		this.pressure = pressure;
 		this.photogate = photogate;
-		pistons = new DualActionPistons(liftSolenoids, pressure);
+		pistons = new PickerUpperPneumatics(base, gyro, liftSolenoids, pressure);
 		this.hDrive = hDrive;
 //		isForward = true;
 //		pistons = new DoubleActionSolenoid(liftSolenoids, pressure);
@@ -111,10 +112,10 @@ public class PickerUpper{
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public PickerUpper(Class motorType, boolean leftInverseDirection, boolean rightInverseDirection,
 			 int[] liftSolenoids, int leftMotor, int rightMotor,
-			 int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp, Photogate photogate, PressureSensor pressure){
+			 int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp, Photogate photogate, PressureSensor pressure, Gyro gyro, RobotBase base){
 		this.pressure = pressure;
 		beltEncoder = new Encoder(beltChannelA, beltChannelB, reverseDirection, wdpp);
-		pistons = new DualActionPistons(liftSolenoids, pressure);
+		pistons = new PickerUpperPneumatics(base, gyro, liftSolenoids, pressure);
 		leftLiftMotor = new MotorGroup("Left Lift Motor", new int[]{leftMotor}, motorType , leftInverseDirection, beltEncoder);
 		rightLiftMotor = new MotorGroup("Right Lift Motor",new int[]{rightMotor}, motorType, rightInverseDirection, beltEncoder);
 		this.photogate = photogate;
@@ -164,7 +165,7 @@ public class PickerUpper{
 		}
 	}
 	
-	public DualActionPistons getPistons() {
+	public PickerUpperPneumatics getPistons() {
 		return pistons;
 	}
 	
@@ -320,49 +321,4 @@ public class PickerUpper{
 		double b = getHeightFromHDrive() + HWR.ROBOT_HEIGHT + HWR.DISTANCE_TO_INDEX*HWR.SLOPE;
 		return HWR.SLOPE*beltEncoder.getDisplacement(beltEncoder.getDistancePerPulse())+b;
 	}
-	
-
-	public class DualActionPistons{
-		AirSystem frontAirSystem;
-		AirSystem backAirSystem;
-		public DualActionPistons(int[] pistons, PressureSensor pressure) { //front piston, back Piston
-			frontAirSystem = new AirSystem(new int[]{pistons[0]}, pressure);
-			backAirSystem = new AirSystem(new int[]{pistons[1]}, pressure);
-			isForward = false;
-		}
-		
-		public AirSystem getFrontAirSystem(){
-			return frontAirSystem;
-		}
-		public AirSystem getBackAirSystem(){
-			return backAirSystem;
-		}
-		
-		public void changeState(){
-			if (frontAirSystem.isExtended()){
-				frontAirSystem.retract();
-				backAirSystem.extend();
-			}else{
-				frontAirSystem.extend();
-				backAirSystem.retract();
-			}
-		}
-		
-		public void upright(){
-			frontAirSystem.retract();
-			backAirSystem.retract();
-		}
-		
-		public void angle(){
-			frontAirSystem.extend();
-			backAirSystem.extend();
-		}
-		
-		public void freeze(){
-			frontAirSystem.extend();
-			backAirSystem.retract();
-		}
-	}
-	
-	
 }
