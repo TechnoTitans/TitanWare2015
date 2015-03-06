@@ -17,6 +17,7 @@ public class Auto_1A extends Autonomous{
 		switch(presentState){
 		case INIT_CASE:
 		{
+			delay();
 			timer.start();
 			nextState = State.START_DRIVE_FORWARD;
 			break;
