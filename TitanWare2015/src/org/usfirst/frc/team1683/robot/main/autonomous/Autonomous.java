@@ -62,6 +62,8 @@ public abstract class Autonomous {
 	public static int isToteLiftedCount = 0;
 	protected static double driveDistance;
 	protected static double sideDistance;
+	protected static double coopDistance;
+	protected static double stepDistance;
 	protected static double liftDistance; 
 	protected static double adjustDistance;
 	protected static double dropDistance;
@@ -134,6 +136,8 @@ public abstract class Autonomous {
 		sideTime = DriverStation.getDouble("sideTime");
 		secondDelay = DriverStation.getDouble("secondDelay");
 		backToAutoDistance = DriverStation.getDouble("backToAutoDistance");
+		coopDistance = DriverStation.getDouble("coopDistance");
+		stepDistance = DriverStation.getDouble("stepDistance");
 	}
 
 	/**
