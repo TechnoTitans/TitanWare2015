@@ -7,21 +7,17 @@ import org.usfirst.frc.team1683.robot.drivetrain.MotorGroup;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
 import org.usfirst.frc.team1683.robot.sensors.Photogate;
-import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
-
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.RobotBase;
 
 
 public class PickerUpper{
-	MotorGroup motors;
-	PickerUpperPneumatics pistons;
+	MotorGroup beltMotors;
 	MotorGroup leftLiftMotor;
 	MotorGroup rightLiftMotor;
 	public Encoder beltEncoder;
 	int liftButton;
 	final double AUTO_LIFT_SPEED = 0.5;
-	PressureSensor pressure;
 	boolean isForward;
 	Photogate photogate;
 	double beltTargetPosition;
@@ -29,6 +25,7 @@ public class PickerUpper{
 	boolean enableSensor;
 	Thread currentThread;
 	PIDController controller;
+	TiltScrew tilter;
 
 	/**
 	 * Constructor - one motor lift without encoder
@@ -38,7 +35,33 @@ public class PickerUpper{
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public PickerUpper(int[] pickerUpperChannels, Class motorType, boolean inverseDirection){
-		this.motors = new MotorGroup("Picker Upper", pickerUpperChannels, motorType, inverseDirection);
+		this.beltMotors = new MotorGroup("Picker Upper", pickerUpperChannels, motorType, inverseDirection);
+	}
+	
+	/**
+	 * Constructor - one motor lift with encoder
+	 * @param motorType
+	 * @param inverseBeltDirection
+	 * @param liftSolenoids
+	 * @param pickerUpperChannels
+	 * @param beltChannelA
+	 * @param beltChannelB
+	 * @param reverseDirection
+	 * @param wdpp
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public PickerUpper(Class motorType, boolean inverseBeltDirection, int[] pickerUpperChannels,
+			 int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp, Photogate photogate,
+			 int tiltMotor, boolean inverseTiltDirection, HDrive hDrive, Gyro gyro, RobotBase base){
+		beltEncoder = new Encoder(beltChannelA, beltChannelB, reverseDirection, wdpp);
+		this.beltMotors = new MotorGroup("Picker Upper", pickerUpperChannels, motorType, inverseBeltDirection, 
+				beltEncoder);
+		this.photogate = photogate;
+		tilter = new TiltScrew(tiltMotor, inverseTiltDirection);
+		this.hDrive = hDrive;
+//		isForward = true;
+//		pistons = new DoubleActionSolenoid(liftSolenoids, pressure);
+		tilter.tiltUpright();
 	}
 	
 	/**
@@ -53,46 +76,18 @@ public class PickerUpper{
 	 * @param wdpp
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public PickerUpper(Class motorType, boolean inverseDirection, int[] liftSolenoids, int[] pickerUpperChannels,
-			 int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp, 
-			 PressureSensor pressure, Photogate photogate, HDrive hDrive, Gyro gyro, RobotBase base){
+	public PickerUpper(Class motorType, boolean inverseDirection, int[] pickerUpperChannels,
+			 int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp, Photogate photogate,
+			 int tiltMotor, boolean inverseTiltDirection, HDrive hDrive, int index, Gyro gyro, RobotBase base){		
 		beltEncoder = new Encoder(beltChannelA, beltChannelB, reverseDirection, wdpp);
-		this.motors = new MotorGroup("Picker Upper", pickerUpperChannels, motorType, inverseDirection, 
+		this.beltMotors = new MotorGroup("Picker Upper", pickerUpperChannels, motorType, inverseDirection, 
 				beltEncoder);
-		this.pressure = pressure;
 		this.photogate = photogate;
-		pistons = new PickerUpperPneumatics(base, gyro , liftSolenoids, pressure);
+		tilter = new TiltScrew(tiltMotor, inverseTiltDirection);
 		this.hDrive = hDrive;
 //		isForward = true;
 //		pistons = new DoubleActionSolenoid(liftSolenoids, pressure);
-		pistons.upright();
-	}
-	
-	/**
-	 * Constructor - one motor lift with encoder
-	 * @param motorType
-	 * @param inverseDirection
-	 * @param liftSolenoids
-	 * @param pickerUpperChannels
-	 * @param beltChannelA
-	 * @param beltChannelB
-	 * @param reverseDirection
-	 * @param wdpp
-	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public PickerUpper(Class motorType, boolean inverseDirection, int[] liftSolenoids, int[] pickerUpperChannels,
-			 int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp, 
-			 PressureSensor pressure, Photogate photogate, HDrive hDrive, int index, Gyro gyro, RobotBase base){		
-		beltEncoder = new Encoder(beltChannelA, beltChannelB, reverseDirection, wdpp);
-		this.motors = new MotorGroup("Picker Upper", pickerUpperChannels, motorType, inverseDirection, 
-				beltEncoder);
-		this.pressure = pressure;
-		this.photogate = photogate;
-		pistons = new PickerUpperPneumatics(base, gyro, liftSolenoids, pressure);
-		this.hDrive = hDrive;
-//		isForward = true;
-//		pistons = new DoubleActionSolenoid(liftSolenoids, pressure);
-		pistons.upright();
+		tilter.tiltUpright();
 		
 		enableSensor = DriverStation.getBoolean("enableSensor");	
 	}
@@ -111,29 +106,33 @@ public class PickerUpper{
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public PickerUpper(Class motorType, boolean leftInverseDirection, boolean rightInverseDirection,
-			 int[] liftSolenoids, int leftMotor, int rightMotor,
-			 int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp, Photogate photogate, PressureSensor pressure, Gyro gyro, RobotBase base){
-		this.pressure = pressure;
+			 int leftMotor, int rightMotor,int beltChannelA, int beltChannelB, boolean reverseDirection,
+			 int tiltMotor, boolean inverseTiltDirection, double wdpp, Photogate photogate, Gyro gyro, RobotBase base){
 		beltEncoder = new Encoder(beltChannelA, beltChannelB, reverseDirection, wdpp);
-		pistons = new PickerUpperPneumatics(base, gyro, liftSolenoids, pressure);
+		tilter = new TiltScrew(tiltMotor, inverseTiltDirection);
 		leftLiftMotor = new MotorGroup("Left Lift Motor", new int[]{leftMotor}, motorType , leftInverseDirection, beltEncoder);
 		rightLiftMotor = new MotorGroup("Right Lift Motor",new int[]{rightMotor}, motorType, rightInverseDirection, beltEncoder);
 		this.photogate = photogate;
-		pistons.upright();
+		tilter.tiltUpright();
 		if (DriverStation.getBoolean("EnablePID")){
 			enablePID();
 		}
 	}
 
 	public void liftMode(int joystickNumber) {
-		motors.set(DriverStation.auxStick.getRawAxis(DriverStation.YAxis));
 		/*if (DriverStation.antiBounce(joystickNumber, HWR.TOGGLE_BELT_PISTON)) {
 			if (isForward){
 				angledPickerUpper();
-			}else{
+	 		}else{
 				uprightPickerUpper();
 			}
 		}*/
+		if (DriverStation.auxStick.getRawButton(HWR.TILT_BELT)) {
+			tilter.getTiltMotor().set(DriverStation.auxStick.getRawAxis(DriverStation.YAxis));
+		}
+		else {
+			beltMotors.set(DriverStation.auxStick.getRawAxis(DriverStation.YAxis));
+		}
 		if (DriverStation.antiBounce(joystickNumber, HWR.CALIBRATE_BELT)){
 			calibrateToZero();
 		}
@@ -147,71 +146,65 @@ public class PickerUpper{
 			liftSecondTote();
 		}
 		if (DriverStation.antiBounce(joystickNumber, 8)){
-			motors.moveDistanceInches(12);
+			beltMotors.moveDistanceInches(12);
 		}
 		if (beltEncoder.getDistance()>HWR.MOVE_MAX)
-			motors.moveDistance(HWR.MOVE_MAX-beltEncoder.getDistance());
+			beltMotors.moveDistance(HWR.MOVE_MAX-beltEncoder.getDistance());
 		if (enableSensor&&photogate.get()){
 			calibrateToZero();
 		}
-		if (DriverStation.antiBounce(joystickNumber, HWR.UPRIGHT_BELT)){
-			uprightPickerUpper();
-		}
-		if (DriverStation.antiBounce(joystickNumber, HWR.ANGLE_BELT)){
-			anglePickerUpper();
-		}
-		if (DriverStation.antiBounce(joystickNumber, HWR.FREEZE_BELT)){
-			freezePickerUpper();
-		}
+//		if (DriverStation.antiBounce(joystickNumber, HWR.FREEZE_BELT)){
+//			freezePickerUpper();
+//		}
 	}
 	
-	public PickerUpperPneumatics getPistons() {
-		return pistons;
-	}
-	
+
 	public void enablePID(){
 		double p = DriverStation.getDouble("PIDValueP");
 		double i = DriverStation.getDouble("PIDValueI");
 		double d = DriverStation.getDouble("PIDValueD");
 		double tolerance = DriverStation.getDouble("PIDTolerance");
 
-		motors.enablePIDController(p, i, d,tolerance, motors.getEncoder());
+		beltMotors.enablePIDController(p, i, d,tolerance, beltMotors.getEncoder());
 	}
 
 	/**
-	 * Uprights pickerUpper
+	 * Fully uprights the PickerUpper
 	 */
 	public void uprightPickerUpper() {
-		pistons.upright();
+		tilter.tiltUpright();
 	}
 	
-	/**
-	 * Lifts the pickerupper device into the straight position
-	 */
-	public void uprightPickerUpperToggle() {
-		if (!isForward){
-			pistons.changeState();
-			isForward = true;
-		}
-	}
+//	/**
+//	 * Lifts the pickerupper device into the straight position
+//	 */
+//	public void uprightPickerUpperToggle() {
+//		if (!isForward){
+//			pistons.changeState();
+//			isForward = true;
+//		}
+//	}
 
-	public void anglePickerUpper() {
-		pistons.angle();
-	}
-	
 	/**
-	 * Brings back the pickerupper device into an angle
+	 * fully angles the PickerUpper
 	 */
-	public void angledPickerUpperToggle() {
-		if (isForward){
-			pistons.changeState();
-			isForward = false;
-		}
+	public void anglePickerUpper() {
+		tilter.tiltBackward();
 	}
 	
-	public void freezePickerUpper() {
-		pistons.freeze();
-	}
+//	/**
+//	 * Brings back the pickerupper device into an angle
+//	 */
+//	public void angledPickerUpperToggle() {
+//		if (isForward){
+//			pistons.changeState();
+//			isForward = false;
+//		}
+//	}
+	
+//	public void freezePickerUpper() {
+//		pistons.freeze();
+//	}
 	
 	public void calibrateToZero(){
 		beltEncoder.reset();
@@ -227,7 +220,10 @@ public class PickerUpper{
 	public Thread getCurrentThread(){
 		return currentThread;
 	}
-
+	
+	public TiltScrew getTilter() {
+		return tilter;
+	}
 
 //	/**
 //	 * Goes To Position
@@ -252,8 +248,8 @@ public class PickerUpper{
 	public void liftHeight(double changeInHeight)
 	{
 		double changeInBeltPosition = changeInHeight/HWR.SLOPE;
-		motors.moveDistanceInches(changeInBeltPosition);
-		currentThread = motors.getCurrentThread();
+		beltMotors.moveDistanceInches(changeInBeltPosition);
+		currentThread = beltMotors.getCurrentThread();
 	}
 	
 	public void liftToHeight(double targetHeight){
@@ -263,8 +259,8 @@ public class PickerUpper{
 		DriverStation.sendData("Belt Target Position", beltTargetPosition);
 		double beltMove = beltTargetPosition - beltEncoder.getDisplacement(HWR.liftEncoderWDPP);
 		double relativeDistanceToMove = beltMove - (beltEncoder.getDistance());
-		motors.moveDistanceInches(relativeDistanceToMove);
-		currentThread = motors.getCurrentThread();
+		beltMotors.moveDistanceInches(relativeDistanceToMove);
+		currentThread = beltMotors.getCurrentThread();
 		DriverStation.sendData("Belt Move", relativeDistanceToMove);
 	}
 	
@@ -306,7 +302,7 @@ public class PickerUpper{
 	
 	public void setToZero(){
 		while (!photogate.get()){
-			motors.set(-AUTO_LIFT_SPEED);
+			beltMotors.set(-AUTO_LIFT_SPEED);
 		}
 	}
 	

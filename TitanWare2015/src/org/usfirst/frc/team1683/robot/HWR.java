@@ -18,13 +18,15 @@ public class HWR {
 	public static final int BACK_H_MOTOR			= HWP.PWM_3;
 	public static final int FRONT_H_MOTOR			= HWP.PWM_2;
 
-	//Motors for Belt
+	//Motors for PickerUpper
 	public static final int BELT_MOTOR				= HWP.PWM_1;
+	public static final int TILT_MOTOR				= HWP.CAN_5;
 
 	//Motor Inverse Directions
 	public static final boolean LEFT_INVERSE		= false;
 	public static final boolean RIGHT_INVERSE		= true;
 	public static final boolean BELT_INVERSE		= false;
+	public static final boolean TILT_INVERSE		= false;
 	public static final boolean FRONT_H_INVERSE		= false;
 	public static final boolean BACK_H_INVERSE		= true;
 
@@ -99,14 +101,12 @@ public class HWR {
 
 	//Buttons
 	public static final int DEPLOY_H_DRIVE			= 1;
-	public static final int TOGGLE_BELT_PISTON		= 1;
+	//public static final int TOGGLE_BELT_PISTON		= 1;
 	public static final int CALIBRATE_BELT			= 7;
 	public static final int GO_TO_HOME				= 9;
 	public static final int LIFT_FIRST_TOTE			= 10;
 	public static final int LIFT_SECOND_TOTE		= 11;
-	public static final int UPRIGHT_BELT			= 3;
-	public static final int ANGLE_BELT				= 4;
-	public static final int FREEZE_BELT				= 1;
+	public static final int TILT_BELT				= 1;
 	public static final int CALIBRATE_DRIVE			= 7;
 
 	//Light Ring

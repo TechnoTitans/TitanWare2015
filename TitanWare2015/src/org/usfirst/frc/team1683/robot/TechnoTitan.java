@@ -68,9 +68,9 @@ public class TechnoTitan extends IterativeRobot {
 				HWR.FRONT_H_MOTOR, HWR.BACK_H_MOTOR, Talon.class, HWR.DEPLOY_H_DRIVE, HWR.driveEncoderWDPP, HWR.hDriveEncoderWDPP,
 				HWR.leftDriveEncoderReverse, HWR.rightDriveEncoderReverse, HWR.backHEncoderReverse, HWR.frontHEncoderReverse,
 				HWR.BACK_H_INVERSE, HWR.FRONT_H_INVERSE);
-		pickerUpper = new PickerUpper(Talon.class, HWR.BELT_INVERSE, new int[]{HWR.FRONT_LIFT_PISTON, HWR.BACK_LIFT_PISTON}, new int[]{HWR.BELT_MOTOR}, 
-				HWR.BELT_CHANNEL_A, HWR.BELT_CHANNEL_B, HWR.beltEncoderReverse, HWR.liftEncoderWDPP, 
-				pressure, photogate, drive, null /*this is the gyro*/, this);
+		pickerUpper = new PickerUpper(Talon.class, HWR.BELT_INVERSE, new int[]{HWR.BELT_MOTOR}, 
+				HWR.BELT_CHANNEL_A, HWR.BELT_CHANNEL_B, HWR.beltEncoderReverse, HWR.liftEncoderWDPP, photogate,
+				HWR.TILT_MOTOR,HWR.TILT_INVERSE, drive, null /*this is the gyro*/, this);
 		toteNumberIdentifier = new CurrentTierIdentifier(powerDistributionManager.getPowerDistributionPanel(), 4, HWR.BELT_MOTOR);
 		new Thread(toteNumberIdentifier, "Tier Manager").start();
 		drive.resetGyro();
@@ -82,7 +82,7 @@ public class TechnoTitan extends IterativeRobot {
 		Autonomous.errorWarning = true;
 		Autonomous.updatePreferences();
 		Autonomous.presentState = Autonomous.State.INIT_CASE;
-		pickerUpper.getPistons().upright();
+		pickerUpper.getTilter().tiltUpright();
 	}
 
 	/**
