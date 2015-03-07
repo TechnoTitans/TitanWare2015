@@ -122,6 +122,9 @@ public class TechnoTitan extends IterativeRobot {
 		DriverStation.sendData("LeftDialAxis", DriverStation.leftStick.getRawAxis(DriverStation.dialAxis));
 		DriverStation.sendData("RightDialAxis", DriverStation.rightStick.getRawAxis(DriverStation.dialAxis));
 		DriverStation.sendData("AuxDialAxis", DriverStation.auxStick.getRawAxis(DriverStation.dialAxis));
+		DriverStation.sendData("LeftDialScaled", DriverStation.scaledRollerOutput(DriverStation.leftStick, 1, 10));
+		DriverStation.sendData("RightDialScaled", DriverStation.scaledRollerOutput(DriverStation.rightStick, 0, 1));
+		DriverStation.sendData("AuxDialScaled", DriverStation.scaledRollerOutput(DriverStation.auxStick, 50, 100));
 	}
 
 	public void testInit(){
