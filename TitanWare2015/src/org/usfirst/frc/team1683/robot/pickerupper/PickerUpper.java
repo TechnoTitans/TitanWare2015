@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.RobotBase;
 
 
 public class PickerUpper{
-	MotorGroup motors;
+	MotorGroup beltMotors;
 	MotorGroup leftLiftMotor;
 	MotorGroup rightLiftMotor;
 	public Encoder beltEncoder;
@@ -35,7 +35,7 @@ public class PickerUpper{
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public PickerUpper(int[] pickerUpperChannels, Class motorType, boolean inverseDirection){
-		this.motors = new MotorGroup("Picker Upper", pickerUpperChannels, motorType, inverseDirection);
+		this.beltMotors = new MotorGroup("Picker Upper", pickerUpperChannels, motorType, inverseDirection);
 	}
 	
 	/**
@@ -54,7 +54,7 @@ public class PickerUpper{
 			 int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp, Photogate photogate,
 			 int tiltMotor, boolean inverseTiltDirection, HDrive hDrive, Gyro gyro, RobotBase base){
 		beltEncoder = new Encoder(beltChannelA, beltChannelB, reverseDirection, wdpp);
-		this.motors = new MotorGroup("Picker Upper", pickerUpperChannels, motorType, inverseBeltDirection, 
+		this.beltMotors = new MotorGroup("Picker Upper", pickerUpperChannels, motorType, inverseBeltDirection, 
 				beltEncoder);
 		this.photogate = photogate;
 		tilter = new TiltScrew(tiltMotor, inverseTiltDirection);
@@ -80,7 +80,7 @@ public class PickerUpper{
 			 int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp, Photogate photogate,
 			 int tiltMotor, boolean inverseTiltDirection, HDrive hDrive, int index, Gyro gyro, RobotBase base){		
 		beltEncoder = new Encoder(beltChannelA, beltChannelB, reverseDirection, wdpp);
-		this.motors = new MotorGroup("Picker Upper", pickerUpperChannels, motorType, inverseDirection, 
+		this.beltMotors = new MotorGroup("Picker Upper", pickerUpperChannels, motorType, inverseDirection, 
 				beltEncoder);
 		this.photogate = photogate;
 		tilter = new TiltScrew(tiltMotor, inverseTiltDirection);
@@ -128,11 +128,10 @@ public class PickerUpper{
 			}
 		}*/
 		if (DriverStation.auxStick.getRawButton(HWR.TILT_BELT)) {
-			motors.stop();
 			tilter.getTiltMotor().set(DriverStation.auxStick.getRawAxis(DriverStation.YAxis));
 		}
 		else {
-			motors.set(DriverStation.auxStick.getRawAxis(DriverStation.YAxis));
+			beltMotors.set(DriverStation.auxStick.getRawAxis(DriverStation.YAxis));
 		}
 		if (DriverStation.antiBounce(joystickNumber, HWR.CALIBRATE_BELT)){
 			calibrateToZero();
@@ -147,10 +146,10 @@ public class PickerUpper{
 			liftSecondTote();
 		}
 		if (DriverStation.antiBounce(joystickNumber, 8)){
-			motors.moveDistanceInches(12);
+			beltMotors.moveDistanceInches(12);
 		}
 		if (beltEncoder.getDistance()>HWR.MOVE_MAX)
-			motors.moveDistance(HWR.MOVE_MAX-beltEncoder.getDistance());
+			beltMotors.moveDistance(HWR.MOVE_MAX-beltEncoder.getDistance());
 		if (enableSensor&&photogate.get()){
 			calibrateToZero();
 		}
@@ -166,7 +165,7 @@ public class PickerUpper{
 		double d = DriverStation.getDouble("PIDValueD");
 		double tolerance = DriverStation.getDouble("PIDTolerance");
 
-		motors.enablePIDController(p, i, d,tolerance, motors.getEncoder());
+		beltMotors.enablePIDController(p, i, d,tolerance, beltMotors.getEncoder());
 	}
 
 	/**
@@ -249,8 +248,8 @@ public class PickerUpper{
 	public void liftHeight(double changeInHeight)
 	{
 		double changeInBeltPosition = changeInHeight/HWR.SLOPE;
-		motors.moveDistanceInches(changeInBeltPosition);
-		currentThread = motors.getCurrentThread();
+		beltMotors.moveDistanceInches(changeInBeltPosition);
+		currentThread = beltMotors.getCurrentThread();
 	}
 	
 	public void liftToHeight(double targetHeight){
@@ -260,8 +259,8 @@ public class PickerUpper{
 		DriverStation.sendData("Belt Target Position", beltTargetPosition);
 		double beltMove = beltTargetPosition - beltEncoder.getDisplacement(HWR.liftEncoderWDPP);
 		double relativeDistanceToMove = beltMove - (beltEncoder.getDistance());
-		motors.moveDistanceInches(relativeDistanceToMove);
-		currentThread = motors.getCurrentThread();
+		beltMotors.moveDistanceInches(relativeDistanceToMove);
+		currentThread = beltMotors.getCurrentThread();
 		DriverStation.sendData("Belt Move", relativeDistanceToMove);
 	}
 	
@@ -303,7 +302,7 @@ public class PickerUpper{
 	
 	public void setToZero(){
 		while (!photogate.get()){
-			motors.set(-AUTO_LIFT_SPEED);
+			beltMotors.set(-AUTO_LIFT_SPEED);
 		}
 	}
 	
