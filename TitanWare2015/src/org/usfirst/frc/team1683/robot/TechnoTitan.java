@@ -43,7 +43,7 @@ public class TechnoTitan extends IterativeRobot {
 	Vision vision;
 	CurrentTierIdentifier toteNumberIdentifier;
 	OldCompressor compressor;
-	DigitalInput test;
+	DigitalInput test0;
 	DigitalInput test1;
 	DigitalInput test2;
 	
@@ -78,7 +78,7 @@ public class TechnoTitan extends IterativeRobot {
 		toteNumberIdentifier = new CurrentTierIdentifier(powerDistributionManager.getPowerDistributionPanel(), 4, HWR.BELT_MOTOR);
 		new Thread(toteNumberIdentifier, "Tier Manager").start();
 		drive.resetGyro();
-		test = new DigitalInput(HWP.DIO_10);
+		test0 = new DigitalInput(HWP.DIO_10);
 		test1 = new DigitalInput(HWP.DIO_11);
 		test2 = new DigitalInput(HWP.DIO_12);
 	}
@@ -113,9 +113,12 @@ public class TechnoTitan extends IterativeRobot {
 		DriverStation.sendData("Photogate", photogate.get());
 		
 		//Testing - should be removed later
-		DriverStation.sendData("DIOtest", test.get());
+		DriverStation.sendData("DIOtest", test0.get());
 		DriverStation.sendData("DIOtest1", test1.get());
 		DriverStation.sendData("DIOtest2", test2.get());
+		DriverStation.sendData("DIOchannel",test0.getChannel());
+		DriverStation.sendData("DIOchannel1",test1.getChannel());
+		DriverStation.sendData("DIOchannel2",test2.getChannel());
 		DriverStation.sendData("LeftDialAxis", DriverStation.leftStick.getRawAxis(DriverStation.dialAxis));
 		DriverStation.sendData("RightDialAxis", DriverStation.rightStick.getRawAxis(DriverStation.dialAxis));
 		DriverStation.sendData("AuxDialAxis", DriverStation.auxStick.getRawAxis(DriverStation.dialAxis));
@@ -133,7 +136,6 @@ public class TechnoTitan extends IterativeRobot {
 	 */
 	public void testPeriodic() {
 		antiDriftTest.test();
-		DriverStation.sendData("DIOtest", test.get());
 	}
 
 	/**
