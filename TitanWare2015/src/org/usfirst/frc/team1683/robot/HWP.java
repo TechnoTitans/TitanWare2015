@@ -49,5 +49,10 @@ public class HWP {
 	public static final int DIO_7 = 7;
 	public static final int DIO_8 = 8;
 	public static final int DIO_9 = 9;
+	//MXP Expansion port
+	public static final int DIO_10 = 10;
+	public static final int DIO_11 = 11;
+	public static final int DIO_12 = 12;
+	
 	
 }

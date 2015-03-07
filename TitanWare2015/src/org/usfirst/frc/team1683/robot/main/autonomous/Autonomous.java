@@ -77,6 +77,8 @@ public abstract class Autonomous {
 	protected static double sideSpeed;
 	protected static double sideTime = 5;
 	protected static double secondDelay;
+	protected static double coopDistance;
+	protected static double stepDistance;
 
 	protected static double visionDistance = 0;
 	protected static final double VISION_TIMEOUT = 3;
@@ -121,6 +123,8 @@ public abstract class Autonomous {
 	public static void updatePreferences(){
 		//Preferences from the SmartDashboard
 		driveDistance = DriverStation.getDouble("driveDistance");
+		coopDistance = DriverStation.getDouble("co-opDistance");
+		stepDistance = DriverStation.getDouble("stepDistance");
 		sideDistance = DriverStation.getDouble("sideDistance");
 		liftDistance = DriverStation.getDouble("liftDistance");
 		adjustDistance = DriverStation.getDouble("adjustDistance");
@@ -132,6 +136,7 @@ public abstract class Autonomous {
 		liftTime = DriverStation.getDouble("liftTime");
 		sideTime = DriverStation.getDouble("sideTime");
 		secondDelay = DriverStation.getDouble("secondDelay");
+		
 	}
 
 	/**

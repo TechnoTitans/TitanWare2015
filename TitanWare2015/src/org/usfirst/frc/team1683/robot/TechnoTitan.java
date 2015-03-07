@@ -16,6 +16,7 @@ import org.usfirst.frc.team1683.robot.statistics.PowerDistributionManager;
 import org.usfirst.frc.team1683.robot.test.AntiDriftTest;
 import org.usfirst.frc.team1683.robot.vision.Vision;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 /**
@@ -42,6 +43,7 @@ public class TechnoTitan extends IterativeRobot {
 	Vision vision;
 	CurrentTierIdentifier toteNumberIdentifier;
 	OldCompressor compressor;
+	DigitalInput test;
 	
 	AntiDriftTest antiDriftTest;
 	
@@ -74,6 +76,7 @@ public class TechnoTitan extends IterativeRobot {
 		toteNumberIdentifier = new CurrentTierIdentifier(powerDistributionManager.getPowerDistributionPanel(), 4, HWR.BELT_MOTOR);
 		new Thread(toteNumberIdentifier, "Tier Manager").start();
 		drive.resetGyro();
+		test = new DigitalInput(HWP.DIO_10);
 	}
 
 	public void autonomousInit(){
@@ -118,6 +121,7 @@ public class TechnoTitan extends IterativeRobot {
 	 */
 	public void testPeriodic() {
 		antiDriftTest.test();
+		DriverStation.sendData("DIOtest", test.get());
 	}
 
 	/**
