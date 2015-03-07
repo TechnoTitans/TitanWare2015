@@ -111,6 +111,8 @@ public class TechnoTitan extends IterativeRobot {
 		drive.driveMode(DriverStation.leftStick, DriverStation.rightStick);
 		pickerUpper.liftMode(HWR.AUX_JOYSTICK);
 		DriverStation.sendData("Photogate", photogate.get());
+		
+		//Testing - should be removed later
 		DriverStation.sendData("DIOtest", test.get());
 		DriverStation.sendData("DIOtest1", test1.get());
 		DriverStation.sendData("DIOtest2", test2.get());
