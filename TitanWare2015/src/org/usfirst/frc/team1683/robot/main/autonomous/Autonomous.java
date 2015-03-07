@@ -68,6 +68,7 @@ public abstract class Autonomous {
 	protected static double backDistance;
 	protected static double robotDistance;
 	protected static double toteSpaceDistance;
+	protected static double backToAutoDistance;
 	protected static boolean isToteLifted;
 	protected static boolean enablePrinting;
 	protected static double driveTime = 5;
@@ -132,6 +133,7 @@ public abstract class Autonomous {
 		liftTime = DriverStation.getDouble("liftTime");
 		sideTime = DriverStation.getDouble("sideTime");
 		secondDelay = DriverStation.getDouble("secondDelay");
+		backToAutoDistance = DriverStation.getDouble("backToAutoDistance");
 	}
 
 	/**

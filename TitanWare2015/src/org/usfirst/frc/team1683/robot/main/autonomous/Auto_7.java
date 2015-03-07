@@ -1,7 +1,6 @@
 package org.usfirst.frc.team1683.robot.main.autonomous;
 
 import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
-import org.usfirst.frc.team1683.robot.main.autonomous.Autonomous.State;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
 import org.usfirst.frc.team1683.robot.vision.Vision;
 
@@ -10,6 +9,9 @@ public class Auto_7 extends Autonomous {
 		super(drive, pickerUpper, vision);
 	}
 
+	/**
+	 * one tote coop
+	 */
 	public void run(){
 		switch(presentState)
 		{
@@ -44,7 +46,7 @@ public class Auto_7 extends Autonomous {
 		}
 		case DRIVE_BACKWARD:
 		{
-			hDrive.goForward(-backDistance);
+			hDrive.goForward(-backToAutoDistance);
 			waitForThread(hDrive.left.getCurrentThread(), hDrive.right.getCurrentThread());
 			nextState = State.END_CASE;
 			break;
