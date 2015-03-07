@@ -70,7 +70,7 @@ public class TechnoTitan extends IterativeRobot {
 				HWR.BACK_H_INVERSE, HWR.FRONT_H_INVERSE);
 		pickerUpper = new PickerUpper(Talon.class, HWR.BELT_INVERSE, new int[]{HWR.BELT_MOTOR}, 
 				HWR.BELT_CHANNEL_A, HWR.BELT_CHANNEL_B, HWR.beltEncoderReverse, HWR.liftEncoderWDPP, photogate,
-				HWR.TILT_MOTOR,HWR.TILT_INVERSE, drive, null /*this is the gyro*/, this);
+				TalonSRX.class, HWR.TILT_MOTOR,HWR.TILT_INVERSE, drive, null /*this is the gyro*/, this);
 		toteNumberIdentifier = new CurrentTierIdentifier(powerDistributionManager.getPowerDistributionPanel(), 4, HWR.BELT_MOTOR);
 		new Thread(toteNumberIdentifier, "Tier Manager").start();
 		drive.resetGyro();
@@ -94,7 +94,7 @@ public class TechnoTitan extends IterativeRobot {
 
 	public void teleopInit() {
 		drive.resetGyro();
-		pickerUpper.uprightPickerUpper();
+		pickerUpper.getTilter().tiltUpright();
 	}
 
 	/**
