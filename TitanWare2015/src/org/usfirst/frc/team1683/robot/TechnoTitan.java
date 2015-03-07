@@ -44,6 +44,8 @@ public class TechnoTitan extends IterativeRobot {
 	CurrentTierIdentifier toteNumberIdentifier;
 	OldCompressor compressor;
 	DigitalInput test;
+	DigitalInput test1;
+	DigitalInput test2;
 	
 	AntiDriftTest antiDriftTest;
 	
@@ -77,6 +79,8 @@ public class TechnoTitan extends IterativeRobot {
 		new Thread(toteNumberIdentifier, "Tier Manager").start();
 		drive.resetGyro();
 		test = new DigitalInput(HWP.DIO_10);
+		test1 = new DigitalInput(HWP.DIO_11);
+		test2 = new DigitalInput(HWP.DIO_12);
 	}
 
 	public void autonomousInit(){
@@ -107,6 +111,12 @@ public class TechnoTitan extends IterativeRobot {
 		drive.driveMode(DriverStation.leftStick, DriverStation.rightStick);
 		pickerUpper.liftMode(HWR.AUX_JOYSTICK);
 		DriverStation.sendData("Photogate", photogate.get());
+		DriverStation.sendData("DIOtest", test.get());
+		DriverStation.sendData("DIOtest1", test1.get());
+		DriverStation.sendData("DIOtest2", test2.get());
+		DriverStation.sendData("LeftDialAxis", DriverStation.leftStick.getRawAxis(DriverStation.dialAxis));
+		DriverStation.sendData("RightDialAxis", DriverStation.rightStick.getRawAxis(DriverStation.dialAxis));
+		DriverStation.sendData("AuxDialAxis", DriverStation.auxStick.getRawAxis(DriverStation.dialAxis));
 	}
 
 	public void testInit(){
