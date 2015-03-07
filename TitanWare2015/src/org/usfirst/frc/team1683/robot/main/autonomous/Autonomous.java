@@ -65,16 +65,12 @@ public abstract class Autonomous {
 	protected static double coopDistance;
 	protected static double stepDistance;
 	protected static double liftDistance; 
-	protected static double adjustDistance;
-	protected static double dropDistance;
 	protected static double backDistance;
-	protected static double robotDistance;
-	protected static double toteSpaceDistance;
 	protected static double backToAutoDistance;
 	protected static boolean isToteLifted;
 	protected static boolean enablePrinting;
 	protected static double driveTime = 5;
-	public static boolean errorWarning;
+	protected static boolean errorWarning;
 	protected static double liftTime;
 	protected static double driveSpeed;
 	protected static double sideSpeed;
@@ -100,7 +96,13 @@ public abstract class Autonomous {
 		leftEncoder = hDrive.leftEncoder;
 		rightEncoder = hDrive.rightEncoder;
 		liftTimer = new Timer();
-		
+	}
+	
+	/**
+	 * 
+	 */
+	public static void setErrorWarning(boolean desiredCondition){
+		errorWarning = desiredCondition;
 	}
 
 	/**
@@ -126,10 +128,7 @@ public abstract class Autonomous {
 		driveDistance = DriverStation.getDouble("driveDistance");
 		sideDistance = DriverStation.getDouble("sideDistance");
 		liftDistance = DriverStation.getDouble("liftDistance");
-		adjustDistance = DriverStation.getDouble("adjustDistance");
 		backDistance = DriverStation.getDouble("backDistance");
-		robotDistance = DriverStation.getDouble("robotDistance");
-		toteSpaceDistance = DriverStation.getDouble("toteSpaceDistance");
 		enablePrinting = DriverStation.getBoolean("enablePrinting");
 		driveTime = DriverStation.getDouble("driveTime");
 		liftTime = DriverStation.getDouble("liftTime");
