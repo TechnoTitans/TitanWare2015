@@ -19,6 +19,14 @@ public class DriverStation {
 
 	public static boolean[][] lasts = new boolean[3][11];
 	
+	public static double scaleTo0To1(Joystick joy){
+		return 0.5*joy.getRawAxis(dialAxis)+0.5;
+	}
+	
+	public static double scaledRollerOutput(Joystick joy, double min, double max){
+		double slope = max-min;
+		return slope*scaleTo0To1(joy)+min;
+	}
 	
 	public static int getStickNum(Joystick joystick){
 		if (joystick.equals(leftStick))
