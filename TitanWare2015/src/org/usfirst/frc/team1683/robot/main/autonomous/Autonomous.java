@@ -82,7 +82,6 @@ public abstract class Autonomous {
 
 	protected static Autonomous autonomous;
 
-
 	@SuppressWarnings("static-access")
 	public Autonomous(HDrive drive, PickerUpper pickerUpper, Vision vision){
 		driveTrain = tankDrive;
