@@ -116,7 +116,6 @@ public class TalonSRX extends CANTalon implements Motor{
 	@Override
 	public void enableBrakeMode(boolean enable) {
 		super.enableBrakeMode(enable);
-		
 	}
 	
 

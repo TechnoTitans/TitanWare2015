@@ -9,6 +9,7 @@ public class TiltScrew {
 	MotorGroup tiltMotor;
 	private static final double speed = HWR.MEDIUM_SPEED;
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public TiltScrew(int motorPort, Class motorType, boolean inverseDirection) {
 		tiltMotor = new MotorGroup("TiltMotor", new int[]{motorPort}, motorType, inverseDirection);
 		tiltMotor.enableBrakeMode(true);
