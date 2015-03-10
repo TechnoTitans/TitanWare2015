@@ -20,4 +20,5 @@ public interface Motor extends PIDOutput{
 	public void enableLimitSwitch(boolean enableFwd, boolean enableBack);
 	public boolean isFwdLimitSwitchClosed();
 	public boolean isRevLimitSwitchClosed();
+	public double getSetPoint();
 }

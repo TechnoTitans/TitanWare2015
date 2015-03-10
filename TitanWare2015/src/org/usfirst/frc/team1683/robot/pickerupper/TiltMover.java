@@ -18,11 +18,18 @@ public class TiltMover implements Runnable{
 		
 		if(tilter.getTiltMotor().getMotor(0).isFwdLimitSwitchClosed())
 			tilter.setState(PickupState.VERTICAL);
-		else if(!tilter.getTiltMotor().getMotor(0).isRevLimitSwitchClosed()&&
-				!tilter.getTiltMotor().getMotor(0).isFwdLimitSwitchClosed())
-			tilter.setState(PickupState.FROZEN);
-		else
+		else if(tilter.getTiltMotor().getMotor(0).isRevLimitSwitchClosed())
 			tilter.setState(PickupState.ANGLED);
+		else if((!tilter.getTiltMotor().getMotor(0).isRevLimitSwitchClosed()&&
+				!tilter.getTiltMotor().getMotor(0).isFwdLimitSwitchClosed())&&
+				(tilter.getTiltMotor().getMotor(0).getSetPoint() > 0))
+			tilter.setState(PickupState.MOVING_FWD);
+		else if((!tilter.getTiltMotor().getMotor(0).isRevLimitSwitchClosed()&&
+				!tilter.getTiltMotor().getMotor(0).isFwdLimitSwitchClosed())&&
+				(tilter.getTiltMotor().getMotor(0).getSetPoint() < 0))
+			tilter.setState(PickupState.MOVING_REV);
+		else if (tilter.getTiltMotor().getMotor(0).getSetPoint() == 0)
+			tilter.setState(PickupState.FROZEN);
 		
 		DriverStation.sendData("PickerUpper Status", tilter.getState().toString());
 	}

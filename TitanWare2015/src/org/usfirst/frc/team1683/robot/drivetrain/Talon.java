@@ -129,5 +129,10 @@ public class Talon extends edu.wpi.first.wpilibj.Talon implements Motor{
 		// TODO Auto-generated method stub
 		return false;
 	}
+	@Override
+	public double getSetPoint() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 }
