@@ -26,6 +26,7 @@ public class PickerUpper{
 	Thread currentThread;
 	PIDController controller;
 	TiltScrew tilter;
+	TiltMover mover;
 
 	/**
 	 * Constructor - one motor lift without encoder
@@ -58,6 +59,8 @@ public class PickerUpper{
 				beltEncoder);
 		this.photogate = photogate;
 		tilter = new TiltScrew(tiltMotor, tiltMotorType, inverseTiltDirection);
+		mover = new TiltMover(tilter, base);
+		mover.start();
 		this.hDrive = hDrive;
 //		isForward = true;
 //		pistons = new DoubleActionSolenoid(liftSolenoids, pressure);
@@ -124,15 +127,7 @@ public class PickerUpper{
 				uprightPickerUpper();
 			}
 		}*/
-		if (DriverStation.auxStick.getRawButton(HWR.TILT_BELT)) {
-			beltMotors.stop();
-			double speed = DriverStation.auxStick.getRawAxis(DriverStation.YAxis);
-			tilter.getTiltMotor().set(speed);
-		}
-		else {
-			tilter.getTiltMotor().stop();
-			beltMotors.set(DriverStation.auxStick.getRawAxis(DriverStation.YAxis));
-		}
+		beltMotors.set(DriverStation.auxStick.getRawAxis(DriverStation.YAxis));
 		
 		if (DriverStation.antiBounce(joystickNumber, HWR.CALIBRATE_BELT)){
 			calibrateToZero();

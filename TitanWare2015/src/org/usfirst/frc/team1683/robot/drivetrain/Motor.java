@@ -19,4 +19,5 @@ public interface Motor extends PIDOutput{
 	public void enableBrakeMode(boolean enable);
 	public void enableLimitSwitch(boolean enableFwd, boolean enableBack);
 	public boolean isFwdLimitSwitchClosed();
+	public boolean isRevLimitSwitchClosed();
 }

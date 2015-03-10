@@ -124,5 +124,10 @@ public class Talon extends edu.wpi.first.wpilibj.Talon implements Motor{
 		// TODO Auto-generated method stub
 		return false;
 	}
+	@Override
+	public boolean isRevLimitSwitchClosed() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }
