@@ -106,8 +106,8 @@ public class HWR {
 	public static final int GO_TO_HOME				= 9;
 	public static final int LIFT_FIRST_TOTE			= 10;
 	public static final int LIFT_SECOND_TOTE		= 11;
-	public static final int FORWARD_TILT			= 112341234;
-	public static final int BACKWARD_TILT			= 12341234;
+	public static final int FORWARD_TILT			= 6;
+	public static final int BACKWARD_TILT			= 4;
 	public static final int CALIBRATE_DRIVE			= 7;
 
 	//Light Ring
