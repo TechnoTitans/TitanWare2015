@@ -47,7 +47,6 @@ public class TiltMover implements Runnable{
 			while(base.isOperatorControl()) {
 				double tiltSpeed = DriverStation.scaleTo0To1(DriverStation.auxStick);
 				TiltScrew.speed = tiltSpeed;
-				DriverStation.sendData("tiltSpeed", tiltSpeed);
 				
 				if(DriverStation.auxStick.getRawButton(HWR.FORWARD_TILT)) {
 					tilter.getTiltMotor().set(TiltScrew.speed);

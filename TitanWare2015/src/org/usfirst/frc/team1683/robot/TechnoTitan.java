@@ -74,6 +74,7 @@ public class TechnoTitan extends IterativeRobot {
 		toteNumberIdentifier = new CurrentTierIdentifier(powerDistributionManager.getPowerDistributionPanel(), 4, HWR.BELT_MOTOR);
 		new Thread(toteNumberIdentifier, "Tier Manager").start();
 		drive.resetGyro();
+		System.out.println("TiltSpeed: " + DriverStation.scaleTo0To1(DriverStation.auxStick));
 	}
 
 	public void autonomousInit(){
