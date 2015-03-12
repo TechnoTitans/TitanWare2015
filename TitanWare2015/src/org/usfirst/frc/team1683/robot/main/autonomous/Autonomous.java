@@ -136,6 +136,7 @@ public abstract class Autonomous {
 		backToAutoDistance = DriverStation.getDouble("backToAutoDistance");
 		coopDistance = DriverStation.getDouble("coopDistance");
 		stepDistance = DriverStation.getDouble("stepDistance");
+
 	}
 
 	/**

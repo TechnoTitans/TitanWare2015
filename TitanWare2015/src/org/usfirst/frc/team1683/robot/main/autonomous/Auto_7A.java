@@ -1,18 +1,18 @@
 package org.usfirst.frc.team1683.robot.main.autonomous;
 
 import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
+import org.usfirst.frc.team1683.robot.main.autonomous.Autonomous.State;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
 import org.usfirst.frc.team1683.robot.vision.Vision;
 
-public class Auto_7 extends Autonomous {
-	public Auto_7 (HDrive drive, PickerUpper pickerUpper, Vision vision){
+public class Auto_7A extends Autonomous {
+
+	public Auto_7A (HDrive drive, PickerUpper pickerUpper, Vision vision){
 		super(drive, pickerUpper, vision);
 	}
 
-	/**
-	 * one tote coop
-	 */
 	public void run(){
+		boolean forward = false;
 		switch(presentState)
 		{
 		case INIT_CASE:
@@ -32,23 +32,26 @@ public class Auto_7 extends Autonomous {
 		case DRIVE_FORWARD:
 		{
 			hDrive.resetTankEncoders();
-			hDrive.goForward(coopDistance);
-			waitForThread(hDrive.left.getCurrentThread(), hDrive.right.getCurrentThread());
-			nextState = State.DROP_TOTE;
+			if (forward == false){			
+				hDrive.goForward(driveDistance);
+				waitForThread(hDrive.left.getCurrentThread(), hDrive.right.getCurrentThread());			
+				nextState = State.DRIVE_SIDEWAYS;
+			}
+			else{
+				hDrive.goForward(coopDistance - driveDistance);
+				waitForThread(hDrive.left.getCurrentThread(), hDrive.right.getCurrentThread());
+				nextState = State.END_CASE;
+			}
 			break;
+
 		}
-		case DROP_TOTE:
+		case DRIVE_SIDEWAYS:
 		{
-			pickerUpper.drop();
-			waitForThread(pickerUpper.getCurrentThread());
-			nextState = State.DRIVE_BACKWARD;
-			break;
-		}
-		case DRIVE_BACKWARD:
-		{
-			hDrive.goForward(-backToAutoDistance);
+			forward = true;
+			hDrive.resetHEncoders();
+			hDrive.moveSideways(sideDistance);
 			waitForThread(hDrive.left.getCurrentThread(), hDrive.right.getCurrentThread());
-			nextState = State.END_CASE;
+			nextState = State.DRIVE_FORWARD;
 			break;
 		}
 		case END_CASE:
@@ -67,8 +70,6 @@ public class Auto_7 extends Autonomous {
 		printState();
 		presentState = nextState;
 	}
-
-
 
 
 }
