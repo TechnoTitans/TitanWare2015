@@ -98,6 +98,8 @@ public class HWR {
 	public static final double BARREL_HEIGHT		= 60.0;
 	public static final double BARREL_CLEAR_HEIGHT	= 37.0;
 	public static final double DROP_HEIGHT			= 12.0;
+	public static final int PICKERUPPER_BELT_LENGTH	= 100; //in inches
+
 
 	//Buttons
 	public static final int DEPLOY_H_DRIVE			= 1;
@@ -119,6 +121,8 @@ public class HWR {
 	public static final double HIGH_SPEED			= 1.0;
 	
 	public static final double HDRIVE_SPEED			= 0.8;
+	
+	
 
 	
 }

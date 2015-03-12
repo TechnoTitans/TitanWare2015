@@ -246,8 +246,7 @@ public class PickerUpper{
 	 * 
 	 * @param changeInHeight - measured in inches
 	 */
-	public void liftHeight(double changeInHeight)
-	{
+	public void liftHeight(double changeInHeight){
 		double changeInBeltPosition = changeInHeight/HWR.SLOPE;
 		beltMotors.moveDistanceInches(changeInBeltPosition);
 		currentThread = beltMotors.getCurrentThread();
@@ -258,8 +257,8 @@ public class PickerUpper{
 		double b = HWR.B1 +getHeightFromHDrive();
 		beltTargetPosition = (targetHeight-b)/HWR.SLOPE;
 		DriverStation.sendData("Belt Target Position", beltTargetPosition);
-		double beltMove = beltTargetPosition - beltEncoder.getDisplacement(HWR.liftEncoderWDPP);
-		double relativeDistanceToMove = beltMove - (beltEncoder.getDistance());
+		double beltMove = beltTargetPosition - beltEncoder.getDistance();
+		double relativeDistanceToMove = beltMove - (beltEncoder.getDistance() /*% HWR.PICKERUPPER_BELT_LENGTH*/);
 		beltMotors.moveDistanceInches(relativeDistanceToMove);
 		currentThread = beltMotors.getCurrentThread();
 		DriverStation.sendData("Belt Move", relativeDistanceToMove);
