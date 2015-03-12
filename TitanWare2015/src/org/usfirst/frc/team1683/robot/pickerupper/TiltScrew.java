@@ -7,7 +7,7 @@ import org.usfirst.frc.team1683.robot.drivetrain.MotorGroup;
 public class TiltScrew {
 	private MotorGroup tiltMotor;
 	private PickupState state;
-	protected static final double speed = HWR.MEDIUM_SPEED;
+	protected static double speed = HWR.MEDIUM_SPEED;
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public TiltScrew(int motorPort, Class motorType, boolean inverseDirection) {

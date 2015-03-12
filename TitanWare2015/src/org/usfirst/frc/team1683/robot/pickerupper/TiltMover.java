@@ -55,6 +55,7 @@ public class TiltMover implements Runnable{
 					tilter.getTiltMotor().stop();
 				}
 				stateChecker();
+				TiltScrew.speed = DriverStation.auxStick.getRawAxis(DriverStation.dialAxis);
 			}
 			while(base.isAutonomous()) {
 				System.out.println("AUTO MODE YAYAYAYYAYAY!!");
