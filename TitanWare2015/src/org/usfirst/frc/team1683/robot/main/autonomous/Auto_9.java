@@ -5,9 +5,9 @@ import org.usfirst.frc.team1683.robot.main.autonomous.Autonomous.State;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
 import org.usfirst.frc.team1683.robot.vision.Vision;
 
-public class Auto_7A extends Autonomous {
+public class Auto_9 extends Autonomous {
 
-	public Auto_7A (HDrive drive, PickerUpper pickerUpper, Vision vision){
+	public Auto_9 (HDrive drive, PickerUpper pickerUpper, Vision vision){
 		super(drive, pickerUpper, vision);
 	}
 
