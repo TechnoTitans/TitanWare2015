@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.CANTalon;
 public class TalonSRX extends CANTalon implements Motor{
 
 	boolean hasEncoder;
-	boolean reverseDirection;
 	Encoder encoder;
 
 	double lowSpeed;
@@ -23,8 +22,7 @@ public class TalonSRX extends CANTalon implements Motor{
 	 */
 	public TalonSRX(int channel, boolean reverseDirection) {
 		super(channel);
-		this.reverseDirection = reverseDirection;
-		this.hasEncoder = false;
+		super.reverseOutput(reverseDirection);
 	}
 	/**
 	 * Constructor
@@ -38,7 +36,7 @@ public class TalonSRX extends CANTalon implements Motor{
 		super.changeControlMode(ControlMode.Current);
 		this.encoder = new Encoder(aChannel, bChannel, reverseDirection, wheelDistancePerPulse);
 		this.hasEncoder = true;
-		this.reverseDirection = reverseDirection;
+		super.reverseOutput(reverseDirection);
 	}
 	/**
 	 * moves the robot a certain distance
@@ -59,11 +57,7 @@ public class TalonSRX extends CANTalon implements Motor{
 	 */
 	@Override
 	public void set(double speed){
-		if (reverseDirection){
-			super.set(-speed);
-		}else{
-			super.set(speed);
-		}
+		super.set(speed);
 	}
 	/**
 	 * moves the robot a certain amount of degrees
