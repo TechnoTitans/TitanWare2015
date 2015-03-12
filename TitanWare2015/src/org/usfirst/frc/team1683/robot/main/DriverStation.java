@@ -30,6 +30,11 @@ public class DriverStation {
 		else
 			return 10;
 	}
+	
+	public static double scaleTo0To1(Joystick joy){
+		return 0.5*joy.getRawAxis(dialAxis)+0.5;
+	}
+	
 	/**
      * Sends the value to SmartDashboard 
      * @param key Value name

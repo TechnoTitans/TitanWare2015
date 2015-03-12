@@ -45,6 +45,7 @@ public class TiltMover implements Runnable{
 		while(true) {
 			stateChecker();
 			while(base.isOperatorControl()) {
+				TiltScrew.speed = DriverStation.scaleTo0To1(DriverStation.auxStick);
 				if(DriverStation.auxStick.getRawButton(HWR.FORWARD_TILT)) {
 					tilter.getTiltMotor().set(TiltScrew.speed);
 				}
@@ -55,7 +56,6 @@ public class TiltMover implements Runnable{
 					tilter.getTiltMotor().stop();
 				}
 				stateChecker();
-				TiltScrew.speed = DriverStation.auxStick.getRawAxis(DriverStation.dialAxis);
 			}
 			while(base.isAutonomous()) {
 				System.out.println("AUTO MODE YAYAYAYYAYAY!!");
