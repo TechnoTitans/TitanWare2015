@@ -84,6 +84,8 @@ public class TechnoTitan extends IterativeRobot {
 		test0 = new DigitalInput(HWP.DIO_10);
 		test1 = new DigitalInput(HWP.DIO_11);
 		test2 = new DigitalInput(HWP.DIO_12);
+		timer = new Timer();
+		gyroTest = new GyroTest(drive.getGyro(), timer);
 	}
 
 	public void autonomousInit(){
@@ -114,6 +116,7 @@ public class TechnoTitan extends IterativeRobot {
 		drive.driveMode(DriverStation.leftStick, DriverStation.rightStick);
 		pickerUpper.liftMode(HWR.AUX_JOYSTICK);
 		DriverStation.sendData("Photogate", photogate.get());
+		gyroTest.test();
 		
 		//Testing - should be removed later
 		DriverStation.sendData("DIOtest", test0.get());
@@ -135,15 +138,14 @@ public class TechnoTitan extends IterativeRobot {
 		//drive.deployWheels();
 		//antiDriftTest = new AntiDriftTest(drive);
 		//air = new AirSystem(new int[]{3}, pressure);
-		timer = new Timer();
-		gyroTest = new GyroTest(gyro, timer);
+
 	}
 	
 	/**
 	 * This function is called periodically during test mode
 	 */
 	public void testPeriodic() {
-		gyroTest.test();
+		
 		//antiDriftTest.test();
 	}
 

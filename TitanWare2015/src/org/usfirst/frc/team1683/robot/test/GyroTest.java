@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.Timer;
 public class GyroTest implements Tester{
     Gyro gyro;
     Timer timer;
-    double sensitivity=0.008;
+    double sensitivity=0.00656693;
     double bestSensitivity;
     final int npoints =10;
     final double driftTime=10;
