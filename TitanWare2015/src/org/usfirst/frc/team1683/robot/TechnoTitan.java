@@ -14,6 +14,7 @@ import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 import org.usfirst.frc.team1683.robot.statistics.CurrentTierIdentifier;
 import org.usfirst.frc.team1683.robot.statistics.PowerDistributionManager;
 import org.usfirst.frc.team1683.robot.test.AntiDriftTest;
+import org.usfirst.frc.team1683.robot.test.DriveTester;
 import org.usfirst.frc.team1683.robot.vision.Vision;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -42,6 +43,7 @@ public class TechnoTitan extends IterativeRobot {
 	Vision vision;
 	CurrentTierIdentifier toteNumberIdentifier;
 	OldCompressor compressor;
+	DriveTester driveTest;
 	
 	AntiDriftTest antiDriftTest;
 	

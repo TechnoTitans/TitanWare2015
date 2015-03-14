@@ -32,6 +32,8 @@ public class TiltMover implements Runnable{
 			tilter.setState(PickupState.FROZEN);
 		
 		DriverStation.sendData("PickerUpper Status", tilter.getState().toString());
+		DriverStation.sendData("Forward LimitSwitch: ", tilter.getTiltMotor().getMotor(0).isFwdLimitSwitchClosed());
+		DriverStation.sendData("Back LimitSwitch: ", tilter.getTiltMotor().getMotor(0).isRevLimitSwitchClosed());
 	}
 	
 	public void start() {
@@ -46,10 +48,10 @@ public class TiltMover implements Runnable{
 			stateChecker();
 			while(base.isOperatorControl()) {
 				if(DriverStation.auxStick.getRawButton(HWR.FORWARD_TILT)) {
-					tilter.getTiltMotor().set(TiltScrew.speed);
+					tilter.getTiltMotor().set(-TiltScrew.speed);
 				}
 				else if(DriverStation.auxStick.getRawButton(HWR.BACKWARD_TILT)) {
-					tilter.getTiltMotor().set(-TiltScrew.speed);
+					tilter.getTiltMotor().set(TiltScrew.speed);
 				}
 				else {
 					tilter.getTiltMotor().stop();

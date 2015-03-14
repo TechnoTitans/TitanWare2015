@@ -26,7 +26,7 @@ public class HWR {
 	public static final boolean LEFT_INVERSE		= false;
 	public static final boolean RIGHT_INVERSE		= true;
 	public static final boolean BELT_INVERSE		= false;
-	public static final boolean TILT_INVERSE		= true;
+	public static final boolean TILT_INVERSE		= false;
 	public static final boolean FRONT_H_INVERSE		= false;
 	public static final boolean BACK_H_INVERSE		= true;
 
@@ -120,7 +120,7 @@ public class HWR {
 	public static final double LOW_SPEED			= 0.25;
 	public static final double MEDIUM_SPEED			= 0.40;
 	public static final double HIGH_SPEED			= 1.0;
-	public static final double TILTSCREW_SPEED		= 0.203125;
+	public static final double TILTSCREW_SPEED		= 0.303125;
 
 	
 	public static final double HDRIVE_SPEED			= 0.8;

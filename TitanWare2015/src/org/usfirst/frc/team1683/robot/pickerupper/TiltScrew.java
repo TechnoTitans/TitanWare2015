@@ -21,7 +21,7 @@ public class TiltScrew {
 	 */
 	public void tiltUpright() {
 		if(!tiltMotor.getMotor(0).isFwdLimitSwitchClosed()) {
-			tiltMotor.set(speed);
+			tiltMotor.set(-speed);
 		}
 		else {
 			tiltMotor.stop();
@@ -33,7 +33,7 @@ public class TiltScrew {
 	 */
 	public void tiltBackward() {
 		if(!tiltMotor.getMotor(0).isRevLimitSwitchClosed()) {
-			tiltMotor.set(-speed);
+			tiltMotor.set(speed);
 		}
 		else {
 			tiltMotor.stop();
