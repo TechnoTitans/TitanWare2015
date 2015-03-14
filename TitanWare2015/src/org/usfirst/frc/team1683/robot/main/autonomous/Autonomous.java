@@ -178,6 +178,10 @@ public abstract class Autonomous {
 	}
 	
 	public static void delay() {
+		if (secondDelay>15.0)
+		{
+			secondDelay = 15.0;
+		}
 		Timer.delay(secondDelay);
 	}
 	
