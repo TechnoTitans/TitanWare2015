@@ -14,10 +14,12 @@ import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 import org.usfirst.frc.team1683.robot.statistics.CurrentTierIdentifier;
 import org.usfirst.frc.team1683.robot.statistics.PowerDistributionManager;
 import org.usfirst.frc.team1683.robot.test.AntiDriftTest;
+import org.usfirst.frc.team1683.robot.test.GyroTest;
 import org.usfirst.frc.team1683.robot.vision.Vision;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -46,8 +48,9 @@ public class TechnoTitan extends IterativeRobot {
 	DigitalInput test0;
 	DigitalInput test1;
 	DigitalInput test2;
-	
+	GyroTest gyroTest;
 	AntiDriftTest antiDriftTest;
+	Timer timer;
 	
 
 	/**
@@ -128,17 +131,20 @@ public class TechnoTitan extends IterativeRobot {
 	}
 
 	public void testInit(){
-		drive.resetGyro();
-		drive.deployWheels();
-		antiDriftTest = new AntiDriftTest(drive);
+		//drive.resetGyro();
+		//drive.deployWheels();
+		//antiDriftTest = new AntiDriftTest(drive);
 		//air = new AirSystem(new int[]{3}, pressure);
+		timer = new Timer();
+		gyroTest = new GyroTest(gyro, timer);
 	}
 	
 	/**
 	 * This function is called periodically during test mode
 	 */
 	public void testPeriodic() {
-		antiDriftTest.test();
+		gyroTest.test();
+		//antiDriftTest.test();
 	}
 
 	/**
