@@ -53,7 +53,7 @@ public class TechnoTitan extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		PreferencesList.set();
+//		PreferencesList.set();
 		compressor = new OldCompressor(HWR.PRESSURE_SWITCH, HWR.COMPRESSOR_RELAY, this);
 		compressor.start();
 		vision = new Vision();
