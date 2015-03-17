@@ -154,4 +154,12 @@ public class TankDrive extends DriveTrain{
 		left.enableAntiDrift(enable, forwardAntiDrift);
 		right.enableAntiDrift(enable, forwardAntiDrift);
 	}
+	
+	public Encoder getLeftEncoder(){
+		return left.encoder;
+	}
+	
+	public Encoder getRightEncoder(){
+		return right.encoder;
+	}
 }

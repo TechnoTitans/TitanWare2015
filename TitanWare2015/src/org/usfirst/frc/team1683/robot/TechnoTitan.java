@@ -53,7 +53,7 @@ public class TechnoTitan extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		PreferencesList.set();
+//		PreferencesList.set();
 		compressor = new OldCompressor(HWR.PRESSURE_SWITCH, HWR.COMPRESSOR_RELAY, this);
 		compressor.start();
 		vision = new Vision();
@@ -107,6 +107,9 @@ public class TechnoTitan extends IterativeRobot {
 		drive.driveMode(DriverStation.leftStick, DriverStation.rightStick);
 		pickerUpper.liftMode(HWR.AUX_JOYSTICK);
 		DriverStation.sendData("Photogate", photogate.get());
+		
+		DriverStation.sendData("leftEncoderCount", drive.getLeftEncoder().get());
+		DriverStation.sendData("rightEncoderCount", drive.getRightEncoder().get());
 	}
 
 	public void testInit(){
