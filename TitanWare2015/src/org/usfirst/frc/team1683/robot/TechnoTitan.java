@@ -116,7 +116,6 @@ public class TechnoTitan extends IterativeRobot {
 		drive.resetGyro();
 		drive.deployWheels();
 		antiDriftTest = new AntiDriftTest(drive);
-		//air = new AirSystem(new int[]{3}, pressure);
 	}
 	
 	/**
