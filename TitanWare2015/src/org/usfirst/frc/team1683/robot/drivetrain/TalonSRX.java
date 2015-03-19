@@ -39,7 +39,6 @@ public class TalonSRX extends CANTalon implements Motor{
 		this.encoder = new Encoder(aChannel, bChannel, reverseDirection, wheelDistancePerPulse);
 		this.hasEncoder = true;
 		this.reverseDirection = reverseDirection;
-//		super.reverseOutput(reverseDirection);
 	}
 	/**
 	 * moves the robot a certain distance
@@ -62,8 +61,7 @@ public class TalonSRX extends CANTalon implements Motor{
 	public void set(double speed){
 		if (reverseDirection){
 			super.set(-speed);
-		}
-		else{
+		}else{
 			super.set(speed);
 		}
 	}

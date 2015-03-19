@@ -38,7 +38,7 @@ public class PickerUpper{
 	public PickerUpper(int[] pickerUpperChannels, Class motorType, boolean inverseDirection){
 		this.beltMotors = new MotorGroup("Picker Upper", pickerUpperChannels, motorType, inverseDirection);
 	}
-	
+
 	/**
 	 * Constructor - one motor lift with encoder
 	 * @param motorType
@@ -52,8 +52,8 @@ public class PickerUpper{
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public PickerUpper(Class beltMotorType, boolean inverseBeltDirection, int[] pickerUpperChannels,
-			 int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp, Photogate photogate,
-			 Class tiltMotorType, int tiltMotor, boolean inverseTiltDirection, HDrive hDrive, Gyro gyro, RobotBase base){
+			int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp, Photogate photogate,
+			Class tiltMotorType, int tiltMotor, boolean inverseTiltDirection, HDrive hDrive, Gyro gyro, RobotBase base){
 		beltEncoder = new Encoder(beltChannelA, beltChannelB, reverseDirection, wdpp);
 		this.beltMotors = new MotorGroup("Picker Upper", pickerUpperChannels, beltMotorType, inverseBeltDirection, 
 				beltEncoder);
@@ -62,10 +62,10 @@ public class PickerUpper{
 		mover = new TiltMover(tilter, base);
 		mover.start();
 		this.hDrive = hDrive;
-//		isForward = true;
-//		pistons = new DoubleActionSolenoid(liftSolenoids, pressure);
+		//		isForward = true;
+		//		pistons = new DoubleActionSolenoid(liftSolenoids, pressure);
 	}
-	
+
 	/**
 	 * Constructor - one motor lift with encoder
 	 * @param motorType
@@ -79,17 +79,17 @@ public class PickerUpper{
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public PickerUpper(Class beltMotorType, boolean inverseDirection, int[] pickerUpperChannels,
-			 int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp, Photogate photogate,
-			 Class tiltMotorType, int tiltMotor, boolean inverseTiltDirection, HDrive hDrive, int index, Gyro gyro, RobotBase base){		
+			int beltChannelA, int beltChannelB, boolean reverseDirection, double wdpp, Photogate photogate,
+			Class tiltMotorType, int tiltMotor, boolean inverseTiltDirection, HDrive hDrive, int index, Gyro gyro, RobotBase base){		
 		beltEncoder = new Encoder(beltChannelA, beltChannelB, reverseDirection, wdpp);
 		this.beltMotors = new MotorGroup("Picker Upper", pickerUpperChannels, beltMotorType, inverseDirection, 
 				beltEncoder);
 		this.photogate = photogate;
 		tilter = new TiltScrew(tiltMotor, tiltMotorType, inverseTiltDirection);
 		this.hDrive = hDrive;
-//		isForward = true;
-//		pistons = new DoubleActionSolenoid(liftSolenoids, pressure);
-		
+		//		isForward = true;
+		//		pistons = new DoubleActionSolenoid(liftSolenoids, pressure);
+
 		enableSensor = DriverStation.getBoolean("enableSensor");	
 	}
 	/**
@@ -107,8 +107,8 @@ public class PickerUpper{
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public PickerUpper(Class beltMotorType, boolean leftInverseDirection, boolean rightInverseDirection,
-			 int leftMotor, int rightMotor,int beltChannelA, int beltChannelB, boolean reverseDirection,
-			 Class tiltMotorType, int tiltMotor, boolean inverseTiltDirection, double wdpp, Photogate photogate, Gyro gyro, RobotBase base){
+			int leftMotor, int rightMotor,int beltChannelA, int beltChannelB, boolean reverseDirection,
+			Class tiltMotorType, int tiltMotor, boolean inverseTiltDirection, double wdpp, Photogate photogate, Gyro gyro, RobotBase base){
 		beltEncoder = new Encoder(beltChannelA, beltChannelB, reverseDirection, wdpp);
 		tilter = new TiltScrew(tiltMotor, tiltMotorType, inverseTiltDirection);
 		leftLiftMotor = new MotorGroup("Left Lift Motor", new int[]{leftMotor}, beltMotorType , leftInverseDirection, beltEncoder);
@@ -128,37 +128,37 @@ public class PickerUpper{
 			}
 		}*/
 		beltMotors.set(DriverStation.auxStick.getRawAxis(DriverStation.YAxis));
-		
+
 		if (DriverStation.antiBounce(joystickNumber, HWR.CALIBRATE_BELT)){
 			calibrateToZero();
 		}
-		
+
 		if (DriverStation.antiBounce(joystickNumber, HWR.GO_TO_HOME)){
 			goToZero();
 		}
-		
+
 		if (DriverStation.antiBounce(joystickNumber, HWR.LIFT_FIRST_TOTE)){
 			liftFirstTote();
 		}
-		
+
 		if (DriverStation.antiBounce(joystickNumber, HWR.LIFT_SECOND_TOTE)){
 			liftSecondTote();
 		}
-		
+
 		if (DriverStation.antiBounce(joystickNumber, 8)){
 			beltMotors.moveDistanceInches(12);
 		}
-		
+
 		if (beltEncoder.getDistance()>HWR.MOVE_MAX)
 			beltMotors.moveDistance(HWR.MOVE_MAX-beltEncoder.getDistance());
 		if (enableSensor&&photogate.get()){
 			calibrateToZero();
 		}
-//		if (DriverStation.antiBounce(joystickNumber, HWR.FREEZE_BELT)){
-//			freezePickerUpper();
-//		}
+		//		if (DriverStation.antiBounce(joystickNumber, HWR.FREEZE_BELT)){
+		//			freezePickerUpper();
+		//		}
 	}
-	
+
 
 	public void enablePID(){
 		double p = DriverStation.getDouble("PIDValueP");
@@ -175,16 +175,16 @@ public class PickerUpper{
 	public void uprightPickerUpper() {
 		tilter.tiltUpright();
 	}
-	
-//	/**
-//	 * Lifts the pickerupper device into the straight position
-//	 */
-//	public void uprightPickerUpperToggle() {
-//		if (!isForward){
-//			pistons.changeState();
-//			isForward = true;
-//		}
-//	}
+
+	//	/**
+	//	 * Lifts the pickerupper device into the straight position
+	//	 */
+	//	public void uprightPickerUpperToggle() {
+	//		if (!isForward){
+	//			pistons.changeState();
+	//			isForward = true;
+	//		}
+	//	}
 
 	/**
 	 * fully angles the PickerUpper
@@ -192,56 +192,56 @@ public class PickerUpper{
 	public void anglePickerUpper() {
 		tilter.tiltBackward();
 	}
-	
-//	/**
-//	 * Brings back the pickerupper device into an angle
-//	 */
-//	public void angledPickerUpperToggle() {
-//		if (isForward){
-//			pistons.changeState();
-//			isForward = false;
-//		}
-//	}
-	
-//	public void freezePickerUpper() {
-//		pistons.freeze();
-//	}
-	
+
+	//	/**
+	//	 * Brings back the pickerupper device into an angle
+	//	 */
+	//	public void angledPickerUpperToggle() {
+	//		if (isForward){
+	//			pistons.changeState();
+	//			isForward = false;
+	//		}
+	//	}
+
+	//	public void freezePickerUpper() {
+	//		pistons.freeze();
+	//	}
+
 	public void calibrateToZero(){
 		beltEncoder.reset();
 	}
-	
+
 	public void goToZero(){
-//		currentThread = new Thread(this);
-//		currentThread.setPriority(Thread.MAX_PRIORITY);
-//		currentThread.start();
+		//		currentThread = new Thread(this);
+		//		currentThread.setPriority(Thread.MAX_PRIORITY);
+		//		currentThread.start();
 		liftToHeight(0);
 	}
-	
+
 	public Thread getCurrentThread(){
 		return currentThread;
 	}
-	
+
 	public TiltScrew getTilter() {
 		return tilter;
 	}
 
-//	/**
-//	 * Goes To Position
-//	 */
-//	@Override
-//	public void run(){
-//		while(beltEncoder.getDistance() > 0) {
-//			motors.set(-AUTO_LIFT_SPEED);
-//		}
-//		while (beltEncoder.getDistance()<0){
-//			motors.set(AUTO_LIFT_SPEED);
-//		}
-////		while (!photogate.get()){
-////			motors.set(-AUTO_LIFT_SPEED);
-////		}
-//	}
-	
+	//	/**
+	//	 * Goes To Position
+	//	 */
+	//	@Override
+	//	public void run(){
+	//		while(beltEncoder.getDistance() > 0) {
+	//			motors.set(-AUTO_LIFT_SPEED);
+	//		}
+	//		while (beltEncoder.getDistance()<0){
+	//			motors.set(AUTO_LIFT_SPEED);
+	//		}
+	////		while (!photogate.get()){
+	////			motors.set(-AUTO_LIFT_SPEED);
+	////		}
+	//	}
+
 	/**
 	 * 
 	 * @param changeInHeight - measured in inches
@@ -251,7 +251,7 @@ public class PickerUpper{
 		beltMotors.moveDistanceInches(changeInBeltPosition);
 		currentThread = beltMotors.getCurrentThread();
 	}
-	
+
 	public void liftToHeight(double targetHeight){
 		DriverStation.sendData("Target Height", targetHeight);
 		double b = HWR.B1 +getHeightFromHDrive();
@@ -263,7 +263,7 @@ public class PickerUpper{
 		currentThread = beltMotors.getCurrentThread();
 		DriverStation.sendData("Belt Move", relativeDistanceToMove);
 	}
-	
+
 	/*
 	public void liftToHeight(double targetHeight){
 		DriverStation.sendData("targetHeight", targetHeight);
@@ -274,45 +274,45 @@ public class PickerUpper{
 		DriverStation.sendData("changeInBeltPosition", changeInBeltPosition);
 		motors.moveDistanceInches(changeInBeltPosition);
 	}
-	*/
-	
+	 */
+
 	public void liftFirstTote(){
 		liftToHeight(HWR.SINGLE_TOTE_HEIGHT+getHeightFromHDrive());
 	}
-	
+
 	public void liftSecondTote(){
 		liftToHeight(HWR.DOUBLE_TOTE_HEIGHT+getHeightFromHDrive());
 	}
-	
+
 	public void liftThirdTote(){
 		liftToHeight(HWR.TRIPLE_TOTE_HEIGHT+getHeightFromHDrive());
 	}
-	
+
 	public void liftToClearBarrel(){
 		liftToHeight(HWR.BARREL_CLEAR_HEIGHT+getHeightFromHDrive());
 	}
-	
+
 	public void liftBarrel(){
 		liftToHeight(HWR.BARREL_HEIGHT+getHeightFromHDrive());
 	}
-	
+
 	public void drop(){
 		liftToHeight(HWR.DROP_HEIGHT+getHeightFromHDrive());
 	}
-	
+
 	public void setToZero(){
 		while (!photogate.get()){
 			beltMotors.set(-AUTO_LIFT_SPEED);
 		}
 	}
-	
+
 	public double getHeightFromHDrive(){
 		if (hDrive.isDeployed())
 			return HWR.H_DRIVE_HEIGHT;
 		else
 			return 0;
 	}
-	
+
 	public double getCurrentHeight(){
 		double b = getHeightFromHDrive() + HWR.ROBOT_HEIGHT + HWR.DISTANCE_TO_INDEX*HWR.SLOPE;
 		return HWR.SLOPE*beltEncoder.getDisplacement(beltEncoder.getDistancePerPulse())+b;

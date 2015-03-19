@@ -26,7 +26,7 @@ public class HWR {
 	public static final boolean LEFT_INVERSE		= false;
 	public static final boolean RIGHT_INVERSE		= true;
 	public static final boolean BELT_INVERSE		= false;
-	public static final boolean TILT_INVERSE		= true;
+	public static final boolean TILT_INVERSE		= false;
 	public static final boolean FRONT_H_INVERSE		= false;
 	public static final boolean BACK_H_INVERSE		= true;
 
