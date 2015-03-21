@@ -20,7 +20,17 @@ public class AutonomousSwitcher {
 			autonomous = new Auto_3(hDrive, pickerUpper, vision);
 		else if (autonomousMode == 4)
 			autonomous = new Auto_4(hDrive, pickerUpper, vision);
-		
+		else if (autonomousMode == 5)
+			autonomous = new Auto_5(hDrive, pickerUpper, vision);
+		else if (autonomousMode == 6)
+			autonomous = new Auto_6(hDrive, pickerUpper, vision);
+		else if (autonomousMode == 7)
+			autonomous = new Auto_7(hDrive, pickerUpper, vision);
+		else if (autonomousMode == 8)
+			autonomous = new Auto_8(hDrive, pickerUpper, vision);
+		else if (autonomousMode == 9)
+			autonomous = new Auto_9(hDrive, pickerUpper, vision);
+
 		else if (autonomousMode == 11)
 			autonomous = new Auto_1A(hDrive, pickerUpper, vision);
 		else if (autonomousMode == 13)
