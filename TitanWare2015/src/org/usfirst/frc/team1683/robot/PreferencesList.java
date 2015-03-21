@@ -21,6 +21,9 @@ public class PreferencesList{
 		DriverStation.prefBoolean("enablePrinting", true);
 		DriverStation.prefDouble("driveTime", 1.75); //sec
 		DriverStation.prefDouble("sideTime", 2); //sec
+		DriverStation.prefDouble("coopDistance",123);
+		DriverStation.prefDouble("stepDistance", 12.3);
+		DriverStation.prefDouble("secondDelay", 5); //sec
 		
 		DriverStation.prefBoolean("enableLightSensor", true);
 		

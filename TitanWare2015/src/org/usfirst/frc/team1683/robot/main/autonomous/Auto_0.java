@@ -17,6 +17,7 @@ public class Auto_0 extends Autonomous{
 		switch(presentState){
 		case INIT_CASE:
 		{
+			delay();
 			nextState = State.PRINT_ERROR;
 			break;
 		}

@@ -19,6 +19,7 @@ public class Auto_4 extends Autonomous{
 		{
 		case INIT_CASE:
 		{
+			delay();
 			pickerUpper.goToZero();
 			waitForThread(pickerUpper.getCurrentThread());
 			nextState = State.LIFT_TOTE;

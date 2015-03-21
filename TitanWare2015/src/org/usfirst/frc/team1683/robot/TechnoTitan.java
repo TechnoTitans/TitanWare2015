@@ -82,7 +82,7 @@ public class TechnoTitan extends IterativeRobot {
 	public void autonomousInit(){
 		drive.resetGyro();
 		autonomous = new AutonomousSwitcher(drive, pickerUpper, vision);
-		Autonomous.errorWarning = true;
+		Autonomous.setErrorWarning(true);
 		Autonomous.updatePreferences();
 		Autonomous.presentState = Autonomous.State.INIT_CASE;
 		pickerUpper.getTilter().tiltUpright();

@@ -62,27 +62,25 @@ public abstract class Autonomous {
 	public static int isToteLiftedCount = 0;
 	protected static double driveDistance;
 	protected static double sideDistance;
+	protected static double coopDistance;
+	protected static double stepDistance;
 	protected static double liftDistance; 
-	protected static double adjustDistance;
-	protected static double dropDistance;
 	protected static double backDistance;
-	protected static double robotDistance;
-	protected static double toteSpaceDistance;
+	protected static double backToAutoDistance;
 	protected static boolean isToteLifted;
 	protected static boolean enablePrinting;
 	protected static double driveTime = 5;
-	public static boolean errorWarning;
+	protected static boolean errorWarning;
 	protected static double liftTime;
 	protected static double driveSpeed;
 	protected static double sideSpeed;
 	protected static double sideTime = 5;
-	protected static double secondDelay;
+	protected static double secondDelay = 5;
 
 	protected static double visionDistance = 0;
 	protected static final double VISION_TIMEOUT = 3;
 
 	protected static Autonomous autonomous;
-
 
 	@SuppressWarnings("static-access")
 	public Autonomous(HDrive drive, PickerUpper pickerUpper, Vision vision){
@@ -97,7 +95,13 @@ public abstract class Autonomous {
 		leftEncoder = hDrive.leftEncoder;
 		rightEncoder = hDrive.rightEncoder;
 		liftTimer = new Timer();
-		
+	}
+	
+	/**
+	 * 
+	 */
+	public static void setErrorWarning(boolean desiredCondition){
+		errorWarning = desiredCondition;
 	}
 
 	/**
@@ -123,15 +127,16 @@ public abstract class Autonomous {
 		driveDistance = DriverStation.getDouble("driveDistance");
 		sideDistance = DriverStation.getDouble("sideDistance");
 		liftDistance = DriverStation.getDouble("liftDistance");
-		adjustDistance = DriverStation.getDouble("adjustDistance");
 		backDistance = DriverStation.getDouble("backDistance");
-		robotDistance = DriverStation.getDouble("robotDistance");
-		toteSpaceDistance = DriverStation.getDouble("toteSpaceDistance");
 		enablePrinting = DriverStation.getBoolean("enablePrinting");
 		driveTime = DriverStation.getDouble("driveTime");
 		liftTime = DriverStation.getDouble("liftTime");
 		sideTime = DriverStation.getDouble("sideTime");
 		secondDelay = DriverStation.getDouble("secondDelay");
+		backToAutoDistance = DriverStation.getDouble("backToAutoDistance");
+		coopDistance = DriverStation.getDouble("coopDistance");
+		stepDistance = DriverStation.getDouble("stepDistance");
+
 	}
 
 	/**
@@ -173,6 +178,10 @@ public abstract class Autonomous {
 	}
 	
 	public static void delay() {
+		if (secondDelay>15.0)
+		{
+			secondDelay = 15.0;
+		}
 		Timer.delay(secondDelay);
 	}
 	
