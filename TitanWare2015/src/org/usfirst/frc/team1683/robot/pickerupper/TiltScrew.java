@@ -14,7 +14,7 @@ public class TiltScrew implements Runnable{
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public TiltScrew(int motorPort, Class motorType, boolean inverseDirection) {
 		tiltMotor = new MotorGroup("TiltMotor", new int[]{motorPort}, motorType, inverseDirection);
-		tiltMotor.enableBrakeMode(true);
+		tiltMotor.enableBrakeMode(false);
 		tiltMotor.enableLimitSwitch(true, true);
 		targetState = null;
 	}
