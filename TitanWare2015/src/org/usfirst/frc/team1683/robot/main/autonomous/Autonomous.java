@@ -51,7 +51,8 @@ public abstract class Autonomous {
 		RUN_OTHER_AUTO,
 		START_DRIVE_SIDEWAYS,
 		START_DRIVE_FORWARD,
-		START_LIFT_BARREL
+		START_LIFT_BARREL,
+		TILT_BACK
 	}
 
 

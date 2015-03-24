@@ -22,11 +22,11 @@ public class TiltMover implements Runnable{
 			tilter.setState(PickupState.ANGLED);
 		else if((!tilter.getTiltMotor().getMotor(0).isRevLimitSwitchClosed()&&
 				!tilter.getTiltMotor().getMotor(0).isFwdLimitSwitchClosed())&&
-				(tilter.getTiltMotor().getMotor(0).getSetPoint() > 0))
+				(tilter.getTiltMotor().getMotor(0).getSetPoint() < 0))
 			tilter.setState(PickupState.MOVING_FWD);
 		else if((!tilter.getTiltMotor().getMotor(0).isRevLimitSwitchClosed()&&
 				!tilter.getTiltMotor().getMotor(0).isFwdLimitSwitchClosed())&&
-				(tilter.getTiltMotor().getMotor(0).getSetPoint() < 0))
+				(tilter.getTiltMotor().getMotor(0).getSetPoint() > 0))
 			tilter.setState(PickupState.MOVING_REV);
 		else if (tilter.getTiltMotor().getMotor(0).getSetPoint() == 0)
 			tilter.setState(PickupState.FROZEN);

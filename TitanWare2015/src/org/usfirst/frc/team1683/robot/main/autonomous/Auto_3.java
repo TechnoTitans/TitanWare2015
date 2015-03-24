@@ -32,6 +32,10 @@ public class Auto_3 extends Autonomous{
 			nextState = State.DRIVE_SIDEWAYS;
 			break;
 		}
+		case TILT_BACK:
+		{
+			
+		}
 		case DRIVE_SIDEWAYS:
 		{
 			hDrive.resetHEncoders();
