@@ -76,7 +76,7 @@ public abstract class Autonomous {
 	protected static double driveSpeed;
 	protected static double sideSpeed;
 	protected static double sideTime = 5;
-	protected static double secondDelay = 5;
+	protected static double secondDelay = 0;
 
 	protected static double visionDistance = 0;
 	protected static final double VISION_TIMEOUT = 3;
