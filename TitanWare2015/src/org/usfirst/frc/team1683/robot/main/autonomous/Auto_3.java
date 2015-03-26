@@ -29,12 +29,14 @@ public class Auto_3 extends Autonomous{
 			pickerUpper.liftToClearBarrel();
 			waitForThread(pickerUpper.getCurrentThread());
 			pickerUpper.liftBarrel();
-			nextState = State.DRIVE_SIDEWAYS;
+			nextState = State.TILT_BACK;
 			break;
 		}
 		case TILT_BACK:
 		{
-			
+			pickerUpper.getTilter().tiltBackward(tilterTime);
+			nextState = State.DRIVE_SIDEWAYS;
+			break;
 		}
 		case DRIVE_SIDEWAYS:
 		{

@@ -3,13 +3,16 @@ package org.usfirst.frc.team1683.robot.pickerupper;
 import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.drivetrain.MotorGroup;
 
+import edu.wpi.first.wpilibj.Timer;
+
 
 public class TiltScrew implements Runnable{
 	private MotorGroup tiltMotor;
 	private PickupState state;
 	private PickupState targetState;
 	protected static double speed = HWR.TILTSCREW_SPEED;
-	Thread currentThread; 
+	Thread currentThread;
+	Timer tiltTimer;
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public TiltScrew(int motorPort, Class motorType, boolean inverseDirection) {
@@ -17,11 +20,13 @@ public class TiltScrew implements Runnable{
 		tiltMotor.enableBrakeMode(false);
 		tiltMotor.enableLimitSwitch(true, true);
 		targetState = null;
+		tiltTimer = new Timer();
 	}
 
 	/**
-	 * Drives the motor forwards until front limit switch is closed
+	 * THREADED-Drives the motor forwards until front limit switch is closed
 	 */
+	@Deprecated
 	public void tiltUpright() {
 		targetState = PickupState.VERTICAL;
 		currentThread = new Thread(this, "Upright Picker Upper");
@@ -29,16 +34,43 @@ public class TiltScrew implements Runnable{
 	}
 
 	/**
-	 * Drives the motor backwards until rear limit switch is closed
+	 * THREADED-Drives the motor backwards until rear limit switch is closed
 	 */
+	@Deprecated
 	public void tiltBackward() {
 		targetState = PickupState.ANGLED;
 		currentThread = new Thread(this, "Backward Picker Upper");
 		currentThread.start();
 	}
 	
-	
+	/**
+	 * Drives the motor backwards until the time set is met
+	 * @param time
+	 */
+	public void tiltBackward(double time) {
+		tiltTimer.start();
+		while (tiltTimer.get()<time){
+			tiltMotor.set(speed);
+		}
+		tiltMotor.stop();
+		tiltTimer.stop();
+		tiltTimer.reset();
+	}
 
+	/**
+	 * Drives the motor forwards until the time set is met
+	 * @param time
+	 */
+	public void tiltForward(double time) {
+		tiltTimer.start();
+		while (tiltTimer.get()<time){
+			tiltMotor.set(-speed);
+		}
+		tiltMotor.stop();
+		tiltTimer.stop();
+		tiltTimer.reset();
+	}
+	
 	/**
 	 * @return the tilt MotorGroup
 	 */
