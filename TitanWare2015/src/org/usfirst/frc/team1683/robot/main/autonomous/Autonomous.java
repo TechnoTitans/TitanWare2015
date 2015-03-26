@@ -14,7 +14,7 @@ import org.usfirst.frc.team1683.robot.vision.Vision;
 import edu.wpi.first.wpilibj.Timer;
 
 public abstract class Autonomous {
-
+	
 	protected static TankDrive tankDrive;
 	protected static PickerUpper pickerUpper;
 	protected static HDrive hDrive;
