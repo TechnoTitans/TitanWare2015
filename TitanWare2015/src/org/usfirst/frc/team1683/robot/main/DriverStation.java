@@ -38,6 +38,7 @@ public class DriverStation {
 		else
 			return 10;
 	}
+	
 	/**
      * Sends the value to SmartDashboard 
      * @param key Value name

@@ -59,5 +59,8 @@ public class Encoder extends edu.wpi.first.wpilibj.Encoder{
     	return wheelDistancePerPulse;
     }
     
+    public double getCount(){
+    	return super.get();
+    }
        
 }

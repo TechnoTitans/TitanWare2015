@@ -4,55 +4,37 @@ import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
 import org.usfirst.frc.team1683.robot.vision.Vision;
 
-import edu.wpi.first.wpilibj.Timer;
-
-public class Auto_3 extends Autonomous{
-	public Auto_3(HDrive drive, PickerUpper pickerUpper, Vision vision) {
+public class Auto_7 extends Autonomous {
+	public Auto_7 (HDrive drive, PickerUpper pickerUpper, Vision vision){
 		super(drive, pickerUpper, vision);
 	}
 
 	/**
-	 * Lifts the barrel, and uses the barrel to push the tote into the Auto Zone to get the barrel, tote, and robot in the
+	 * one tote coop
 	 */
 	public void run(){
-		switch(presentState){
+		switch(presentState)
+		{
 		case INIT_CASE:
 		{
 			delay();
 			timer.start();
-			visionTimer.start();
-			nextState = State.LIFT_BARREL;
+			nextState = State.LIFT_TOTE;
 			break;
 		}
-		case LIFT_BARREL:
+		case LIFT_TOTE:
 		{
-			pickerUpper.liftToClearBarrel();
+			pickerUpper.liftFirstTote();
 			waitForThread(pickerUpper.getCurrentThread());
-			pickerUpper.liftBarrel();
-			nextState = State.DRIVE_SIDEWAYS;
-			break;
-		}
-		case TILT_BACK:
-		{
-			
-		}
-		case DRIVE_SIDEWAYS:
-		{
-			hDrive.resetHEncoders();
-			hDrive.moveSideways(sideDistance);
-			waitForThread(hDrive.getBackHMotor().getCurrentThread(),
-					hDrive.getFrontHMotor().getCurrentThread());
-			hDrive.liftWheels();
 			nextState = State.DRIVE_FORWARD;
-			Timer.delay(0.5);
 			break;
 		}
 		case DRIVE_FORWARD:
 		{
 			hDrive.resetTankEncoders();
-			hDrive.goForward(driveDistance);
+			hDrive.goForward(coopDistance);
 			waitForThread(hDrive.left.getCurrentThread(), hDrive.right.getCurrentThread());
-			nextState = State.END_CASE;
+			nextState = State.DROP_TOTE;
 			break;
 		}
 		case DROP_TOTE:
@@ -64,7 +46,7 @@ public class Auto_3 extends Autonomous{
 		}
 		case DRIVE_BACKWARD:
 		{
-			hDrive.goForward(-backDistance);
+			hDrive.goForward(-backToAutoDistance);
 			waitForThread(hDrive.left.getCurrentThread(), hDrive.right.getCurrentThread());
 			nextState = State.END_CASE;
 			break;
@@ -84,7 +66,9 @@ public class Auto_3 extends Autonomous{
 		}
 		printState();
 		presentState = nextState;
-
 	}
+
+
+
 
 }

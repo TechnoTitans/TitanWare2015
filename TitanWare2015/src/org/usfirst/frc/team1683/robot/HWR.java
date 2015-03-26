@@ -18,15 +18,18 @@ public class HWR {
 	public static final int BACK_H_MOTOR			= HWP.PWM_3;
 	public static final int FRONT_H_MOTOR			= HWP.PWM_2;
 
-	//Motors for Belt
+	//Motors for PickerUpper
 	public static final int BELT_MOTOR				= HWP.PWM_1;
+	public static final int TILT_MOTOR				= HWP.CAN_5;
 
 	//Motor Inverse Directions
 	public static final boolean LEFT_INVERSE		= false;
 	public static final boolean RIGHT_INVERSE		= true;
 	public static final boolean BELT_INVERSE		= false;
+	public static final boolean TILT_INVERSE		= false;
 	public static final boolean FRONT_H_INVERSE		= false;
 	public static final boolean BACK_H_INVERSE		= true;
+
 
 	public static final int PICKERUPPER_ACCEL		= HWP.ANALOG_3;
 	
@@ -89,24 +92,25 @@ public class HWR {
 	public static final double HOOK_INCREMENTS		= 13.0;
 	
 	//heights for PickerUpper
-	public static final double SINGLE_TOTE_HEIGHT	= 60.0;
+	public static final double SINGLE_TOTE_HEIGHT	= 13.0;
 	public static final double DOUBLE_TOTE_HEIGHT	= SINGLE_TOTE_HEIGHT - HOOK_INCREMENTS;
 	public static final double TRIPLE_TOTE_HEIGHT	= DOUBLE_TOTE_HEIGHT - HOOK_INCREMENTS;
 	public static final double FOURTH_TOTE_HEIGHT   = TRIPLE_TOTE_HEIGHT - HOOK_INCREMENTS;
 	public static final double BARREL_HEIGHT		= 60.0;
 	public static final double BARREL_CLEAR_HEIGHT	= 37.0;
 	public static final double DROP_HEIGHT			= 12.0;
+	public static final int PICKERUPPER_BELT_LENGTH	= 100; //in inches
+
 
 	//Buttons
 	public static final int DEPLOY_H_DRIVE			= 1;
-	public static final int TOGGLE_BELT_PISTON		= 1;
+	//public static final int TOGGLE_BELT_PISTON		= 1;
 	public static final int CALIBRATE_BELT			= 7;
 	public static final int GO_TO_HOME				= 9;
 	public static final int LIFT_FIRST_TOTE			= 10;
 	public static final int LIFT_SECOND_TOTE		= 11;
-	public static final int UPRIGHT_BELT			= 3;
-	public static final int ANGLE_BELT				= 4;
-	public static final int FREEZE_BELT				= 1;
+	public static final int FORWARD_TILT			= 6;
+	public static final int BACKWARD_TILT			= 4;
 	public static final int CALIBRATE_DRIVE			= 7;
 
 	//Light Ring
@@ -116,8 +120,12 @@ public class HWR {
 	public static final double LOW_SPEED			= 0.25;
 	public static final double MEDIUM_SPEED			= 0.40;
 	public static final double HIGH_SPEED			= 1.0;
+	public static final double TILTSCREW_SPEED		= 0.603125;
+
 	
 	public static final double HDRIVE_SPEED			= 0.8;
+	
+	
 
 	
 }

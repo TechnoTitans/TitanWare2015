@@ -15,6 +15,7 @@ public class Auto_3A extends Autonomous{
 		switch(presentState){
 		case INIT_CASE:
 		{
+			delay();
 			timer.start();
 			visionTimer.start();
 			nextState = State.START_LIFT_BARREL;

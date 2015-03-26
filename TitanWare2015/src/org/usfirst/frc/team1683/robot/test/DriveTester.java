@@ -4,6 +4,7 @@ import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.drivetrain.DriveTrain;
 import org.usfirst.frc.team1683.robot.drivetrain.Encoder;
 import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
+import org.usfirst.frc.team1683.robot.drivetrain.TalonSRX;
 import org.usfirst.frc.team1683.robot.drivetrain.TankDrive;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
@@ -20,6 +21,7 @@ public class DriveTester implements Tester{
 	Encoder beltEncoder;
 	Preferences prefs;
 	PickerUpper pickerUpper;
+	TalonSRX talon1;
 	
 //	DriverStation.prefDouble("distance", 1);
 //	DriverStation.prefDouble("bearing", 90);
@@ -33,6 +35,11 @@ public class DriveTester implements Tester{
 		bearing = 180;
 		beltEncoder = pickerUpper.beltEncoder;
 	}
+	
+	public DriveTester(int channel){
+		 talon1 = new TalonSRX(channel, false);
+	}
+	
 	
 	public double averageDistance(){
 		return ((tankDrive.leftEncoder.getDistanceMeters()

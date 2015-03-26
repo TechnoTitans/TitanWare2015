@@ -15,6 +15,7 @@ public class Auto_1 extends Autonomous implements Runnable {
 		switch(presentState){
 		case INIT_CASE:
 		{
+			delay();
 			timer.start();
 			nextState = State.DRIVE_FORWARD;
 			break;

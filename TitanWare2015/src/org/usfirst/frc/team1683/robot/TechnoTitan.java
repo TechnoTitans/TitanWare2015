@@ -14,7 +14,7 @@ import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 import org.usfirst.frc.team1683.robot.statistics.CurrentTierIdentifier;
 import org.usfirst.frc.team1683.robot.statistics.PowerDistributionManager;
 import org.usfirst.frc.team1683.robot.test.AntiDriftTest;
-import org.usfirst.frc.team1683.robot.test.GyroTest;
+import org.usfirst.frc.team1683.robot.test.DriveTester;
 import org.usfirst.frc.team1683.robot.vision.Vision;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -45,12 +45,9 @@ public class TechnoTitan extends IterativeRobot {
 	Vision vision;
 	CurrentTierIdentifier toteNumberIdentifier;
 	OldCompressor compressor;
-	DigitalInput test0;
-	DigitalInput test1;
-	DigitalInput test2;
-	GyroTest gyroTest;
+	DriveTester driveTest;
+	
 	AntiDriftTest antiDriftTest;
-	Timer timer;
 	
 
 	/**
@@ -58,7 +55,7 @@ public class TechnoTitan extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		PreferencesList.set();
+//		PreferencesList.set();
 		compressor = new OldCompressor(HWR.PRESSURE_SWITCH, HWR.COMPRESSOR_RELAY, this);
 		compressor.start();
 		vision = new Vision();
@@ -75,26 +72,22 @@ public class TechnoTitan extends IterativeRobot {
 				HWR.FRONT_H_MOTOR, HWR.BACK_H_MOTOR, Talon.class, HWR.DEPLOY_H_DRIVE, HWR.driveEncoderWDPP, HWR.hDriveEncoderWDPP,
 				HWR.leftDriveEncoderReverse, HWR.rightDriveEncoderReverse, HWR.backHEncoderReverse, HWR.frontHEncoderReverse,
 				HWR.BACK_H_INVERSE, HWR.FRONT_H_INVERSE);
-		pickerUpper = new PickerUpper(Talon.class, HWR.BELT_INVERSE, new int[]{HWR.FRONT_LIFT_PISTON, HWR.BACK_LIFT_PISTON}, new int[]{HWR.BELT_MOTOR}, 
-				HWR.BELT_CHANNEL_A, HWR.BELT_CHANNEL_B, HWR.beltEncoderReverse, HWR.liftEncoderWDPP, 
-				pressure, photogate, drive, null /*this is the gyro*/, this);
+		pickerUpper = new PickerUpper(Talon.class, HWR.BELT_INVERSE, new int[]{HWR.BELT_MOTOR}, 
+				HWR.BELT_CHANNEL_A, HWR.BELT_CHANNEL_B, HWR.beltEncoderReverse, HWR.liftEncoderWDPP, photogate,
+				TalonSRX.class, HWR.TILT_MOTOR,HWR.TILT_INVERSE, drive, null /*this is the gyro*/, this);
 		toteNumberIdentifier = new CurrentTierIdentifier(powerDistributionManager.getPowerDistributionPanel(), 4, HWR.BELT_MOTOR);
 		new Thread(toteNumberIdentifier, "Tier Manager").start();
 		drive.resetGyro();
-		test0 = new DigitalInput(HWP.DIO_10);
-		test1 = new DigitalInput(HWP.DIO_11);
-		test2 = new DigitalInput(HWP.DIO_12);
-		timer = new Timer();
-		gyroTest = new GyroTest(drive.getGyro(), timer);
+		System.out.println("TiltSpeed: " + DriverStation.scaleTo0To1(DriverStation.auxStick));
 	}
 
 	public void autonomousInit(){
 		drive.resetGyro();
 		autonomous = new AutonomousSwitcher(drive, pickerUpper, vision);
-		Autonomous.errorWarning = true;
+		Autonomous.setErrorWarning(true);
 		Autonomous.updatePreferences();
 		Autonomous.presentState = Autonomous.State.INIT_CASE;
-		pickerUpper.getPistons().upright();
+//		pickerUpper.getTilter().tiltUpright();
 	}
 
 	/**
@@ -106,7 +99,7 @@ public class TechnoTitan extends IterativeRobot {
 
 	public void teleopInit() {
 		drive.resetGyro();
-		pickerUpper.uprightPickerUpper();
+//		pickerUpper.getTilter().tiltUpright();
 	}
 
 	/**
@@ -116,21 +109,9 @@ public class TechnoTitan extends IterativeRobot {
 		drive.driveMode(DriverStation.leftStick, DriverStation.rightStick);
 		pickerUpper.liftMode(HWR.AUX_JOYSTICK);
 		DriverStation.sendData("Photogate", photogate.get());
-		gyroTest.test();
 		
-		//Testing - should be removed later
-		DriverStation.sendData("DIOtest", test0.get());
-		DriverStation.sendData("DIOtest1", test1.get());
-		DriverStation.sendData("DIOtest2", test2.get());
-		DriverStation.sendData("DIOchannel",test0.getChannel());
-		DriverStation.sendData("DIOchannel1",test1.getChannel());
-		DriverStation.sendData("DIOchannel2",test2.getChannel());
-		DriverStation.sendData("LeftDialAxis", DriverStation.leftStick.getRawAxis(DriverStation.dialAxis));
-		DriverStation.sendData("RightDialAxis", DriverStation.rightStick.getRawAxis(DriverStation.dialAxis));
-		DriverStation.sendData("AuxDialAxis", DriverStation.auxStick.getRawAxis(DriverStation.dialAxis));
-		DriverStation.sendData("LeftDialScaled", DriverStation.scaledRollerOutput(DriverStation.leftStick, 1, 10));
-		DriverStation.sendData("RightDialScaled", DriverStation.scaledRollerOutput(DriverStation.rightStick, 0, 1));
-		DriverStation.sendData("AuxDialScaled", DriverStation.scaledRollerOutput(DriverStation.auxStick, 50, 100));
+		DriverStation.sendData("leftEncoderCount", drive.getLeftEncoder().get());
+		DriverStation.sendData("rightEncoderCount", drive.getRightEncoder().get());
 	}
 
 	public void testInit(){
@@ -139,13 +120,15 @@ public class TechnoTitan extends IterativeRobot {
 		//antiDriftTest = new AntiDriftTest(drive);
 		//air = new AirSystem(new int[]{3}, pressure);
 
+		drive.resetGyro();
+		drive.deployWheels();
+		antiDriftTest = new AntiDriftTest(drive);
 	}
 	
 	/**
 	 * This function is called periodically during test mode
 	 */
 	public void testPeriodic() {
-		
 		//antiDriftTest.test();
 	}
 

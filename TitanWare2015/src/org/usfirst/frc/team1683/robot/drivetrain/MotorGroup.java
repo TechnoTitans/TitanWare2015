@@ -131,6 +131,18 @@ public class MotorGroup implements Runnable{
 		}
 	}
 	
+	public void enableLimitSwitch(boolean enableFwd, boolean enableBack){
+		if (TalonSRX.class.equals(motors.get(0).getClass())){
+			for (Motor motor: motors){
+				motor.enableLimitSwitch(enableFwd, enableBack);
+			}
+		}
+	}
+	
+	public Motor getMotor(int motorNum) {
+		return motors.get(motorNum);
+	}
+	
 	public Thread getCurrentThread(){
 		return currentThread;
 	}

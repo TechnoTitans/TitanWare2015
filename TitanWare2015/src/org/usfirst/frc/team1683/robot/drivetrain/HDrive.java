@@ -6,7 +6,6 @@ import org.usfirst.frc.team1683.robot.pneumatics.DoubleActionSolenoid;
 import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Timer;
 
 public class HDrive extends TankDrive{
 	MotorGroup hBackMotors,hFrontMotors;
