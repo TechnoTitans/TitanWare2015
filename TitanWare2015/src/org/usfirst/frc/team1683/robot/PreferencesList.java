@@ -24,6 +24,7 @@ public class PreferencesList{
 		DriverStation.prefDouble("coopDistance",123);
 		DriverStation.prefDouble("stepDistance", 12.3);
 		DriverStation.prefDouble("secondDelay", 0); //sec
+		DriverStation.prefDouble("tilterTime", 0); //sec
 		
 		DriverStation.prefBoolean("enableLightSensor", true);
 		

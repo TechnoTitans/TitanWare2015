@@ -77,6 +77,7 @@ public abstract class Autonomous {
 	protected static double sideSpeed;
 	protected static double sideTime = 5;
 	protected static double secondDelay = 0;
+	protected static double tilterTime;
 
 	protected static double visionDistance = 0;
 	protected static final double VISION_TIMEOUT = 3;
@@ -136,6 +137,7 @@ public abstract class Autonomous {
 		liftTime = DriverStation.getDouble("liftTime");
 		sideTime = DriverStation.getDouble("sideTime");
 		secondDelay = DriverStation.getDouble("secondDelay");
+		tilterTime = DriverStation.getDouble("tilterTime");
 
 		backToAutoDistance = DriverStation.getDouble("backToAutoDistance");
 		coopDistance = DriverStation.getDouble("coopDistance");
