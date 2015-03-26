@@ -60,7 +60,6 @@ public class TiltMover implements Runnable{
 			}
 			while(base.isAutonomous()) {
 				System.out.println("AUTO MODE YAYAYAYYAYAY!!");
-				stateChecker();
 			}
 
 		}

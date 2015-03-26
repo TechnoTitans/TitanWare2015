@@ -93,6 +93,7 @@ public class TiltScrew implements Runnable{
 	@Override
 	public void run() {
 		while (targetState != state){
+			
 			if (targetState == PickupState.ANGLED){
 				tiltMotor.set(speed);
 			}else if (targetState == PickupState.VERTICAL){
