@@ -16,6 +16,8 @@ public class AutonomousSwitcher {
 			autonomous = new Auto_1(hDrive, pickerUpper, vision);
 		else if (autonomousMode == 2)
 			autonomous = new Auto_2(hDrive, pickerUpper, vision);
+		else if (autonomousMode == 22)
+			autonomous = new Auto_2D(hDrive, pickerUpper, vision);
 		else if (autonomousMode == 3)
 			autonomous = new Auto_3(hDrive, pickerUpper, vision);
 		else if (autonomousMode == 4)

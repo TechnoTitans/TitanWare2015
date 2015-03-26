@@ -182,6 +182,7 @@ public class MotorGroup implements Runnable{
 			Timer.delay(0.25);
 			if (encoder != null){
 				DriverStation.sendData(groupName , encoder.getDisplacement(encoder.getDistancePerPulse()));
+				DriverStation.sendData(groupName + " Raw", encoder.getRaw());
 			}
 			for(Motor motor: motors){
 				if (motor.hasEncoder()){

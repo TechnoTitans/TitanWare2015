@@ -26,6 +26,7 @@ public class Auto_3 extends Autonomous{
 		}
 		case LIFT_BARREL:
 		{
+			pickerUpper.beltEncoder.reset();
 			pickerUpper.liftToClearBarrel();
 			waitForThread(pickerUpper.getCurrentThread());
 			pickerUpper.liftBarrel();

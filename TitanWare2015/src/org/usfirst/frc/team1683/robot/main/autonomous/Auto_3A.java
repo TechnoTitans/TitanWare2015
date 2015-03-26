@@ -23,6 +23,7 @@ public class Auto_3A extends Autonomous{
 		}
 		case START_LIFT_BARREL:
 		{
+			pickerUpper.beltEncoder.reset();
 			pickerUpper.liftBarrel();
 			liftTimer.start();
 			nextState = State.LIFT_BARREL;

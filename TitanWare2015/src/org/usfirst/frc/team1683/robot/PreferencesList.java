@@ -10,8 +10,8 @@ public class PreferencesList{
 		DriverStation.prefDouble("bearing", 90);
 		
 		//Autonomous Preferences
-		DriverStation.prefInt("autonomousMode", 12);
-		DriverStation.prefDouble("driveDistance", 140); //inches
+		DriverStation.prefInt("autonomousMode", 1);
+		DriverStation.prefDouble("driveDistance", 135); //inches
 		DriverStation.prefDouble("sideDistance", -85); //inches
 		DriverStation.prefDouble("liftDistance", 2);
 		DriverStation.prefDouble("adjustDistance", 2);
@@ -21,7 +21,7 @@ public class PreferencesList{
 		DriverStation.prefBoolean("enablePrinting", true);
 		DriverStation.prefDouble("driveTime", 1.75); //sec
 		DriverStation.prefDouble("sideTime", 2); //sec
-		DriverStation.prefDouble("coopDistance",123);
+		DriverStation.prefDouble("coopDistance",276);
 		DriverStation.prefDouble("stepDistance", 12.3);
 		DriverStation.prefDouble("secondDelay", 0); //sec
 		DriverStation.prefDouble("tilterTime", 0); //sec

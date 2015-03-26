@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1683.robot.main.autonomous;
 
 import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
+import org.usfirst.frc.team1683.robot.main.autonomous.Autonomous.State;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
 import org.usfirst.frc.team1683.robot.vision.Vision;
 
@@ -12,7 +13,7 @@ public class Auto_2 extends Autonomous{
 
 	/**
 	 * @author Seung-Seok Lee
-	 * Pushes all three totes into the Auto Zone
+	 * Lifts recycling bin and drives forward
 	 */
 	public void run(){
 		switch(presentState){
@@ -21,37 +22,28 @@ public class Auto_2 extends Autonomous{
 			delay();
 			timer.start();
 			visionTimer.start();
+			nextState = State.LIFT_BARREL;
+			break;
+		}
+		case LIFT_BARREL:
+		{
+			pickerUpper.beltEncoder.reset();
+			pickerUpper.liftBarrel();
+			waitForThread(pickerUpper.getCurrentThread());
 			nextState = State.DRIVE_FORWARD;
 			break;
 		}
 		case DRIVE_FORWARD:
 		{
-			driveCount++;
+			hDrive.resetTankEncoders();
 			hDrive.goForward(driveDistance);
-			if (driveCount<3){
-				nextState = State.DRIVE_BACKWARD;
-				break;
-			}
-			else{
-				nextState = State.END_CASE;
-				break;
-			}
-		}
-		case DRIVE_BACKWARD:
-		{
-			hDrive.goForward(-driveDistance);
-			nextState = State.DRIVE_SIDEWAYS;
-			break;
-		}
-		case DRIVE_SIDEWAYS:
-		{
-			hDrive.moveSideways(sideDistance);			
-			nextState = State.DRIVE_FORWARD;
-			visionTimer.reset();
+			waitForThread(hDrive.left.getCurrentThread(), hDrive.right.getCurrentThread());
+			nextState = State.END_CASE;
 			break;
 		}
 		case END_CASE:
 		{
+			hDrive.stop();
 			nextState = State.END_CASE;
 			break;
 		}
