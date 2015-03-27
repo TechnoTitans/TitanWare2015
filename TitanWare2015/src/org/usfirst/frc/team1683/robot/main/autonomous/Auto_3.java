@@ -59,7 +59,7 @@ public class Auto_3 extends Autonomous{
 			nextState = State.END_CASE;
 			break;
 		}
-		case DROP_TOTE:
+		case DROP:
 		{
 			pickerUpper.beltEncoder.reset();
 			pickerUpper.getMotorGroup().moveDistanceInches(HWR.DROP_BARREL_HEIGHT);

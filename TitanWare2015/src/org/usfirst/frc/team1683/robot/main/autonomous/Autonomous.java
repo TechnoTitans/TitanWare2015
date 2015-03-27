@@ -38,7 +38,7 @@ public abstract class Autonomous {
 		LIFT_BARREL,           
 		LIFT_TOTE,	
 		ADJUST_TOTE,		
-		DROP_TOTE,		
+		DROP,		
 		LIFT_POSITION,		
 		IS_TOTE_LIFTED,	
 		ADJUST_FORWARD,
@@ -191,7 +191,7 @@ public abstract class Autonomous {
 	}
 	
 	public static void adjustTote() {
-		pickerUpper.drop();
+		pickerUpper.dropTote();
 		waitForThread(pickerUpper.getCurrentThread());
 		hDrive.goForward(-backDistance);
 		waitForThread(hDrive.left.getCurrentThread(),hDrive.right.getCurrentThread());

@@ -25,9 +25,9 @@ public class Auto_4 extends Autonomous{
 			nextState = State.LIFT_TOTE;
 			break;
 		}
-		case DROP_TOTE:
+		case DROP:
 		{
-			pickerUpper.drop();
+			pickerUpper.dropTote();
 			waitForThread(pickerUpper.getCurrentThread());
 		    adjustTote();
 			if (liftCount<2)
@@ -53,7 +53,7 @@ public class Auto_4 extends Autonomous{
 		{
 			hDrive.moveSideways(sideDistance);
 			waitForThread(hDrive.getBackHMotor().getCurrentThread(), hDrive.getFrontHMotor().getCurrentThread());
-			nextState = State.DROP_TOTE;
+			nextState = State.DROP;
 			break;
 		}
 		case DRIVE_FORWARD:

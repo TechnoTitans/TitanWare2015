@@ -54,12 +54,12 @@ public class Auto_8 extends Autonomous{
 					hDrive.goForward(stepDistance);
 				}
 				waitForThread(hDrive.left.getCurrentThread(), hDrive.right.getCurrentThread());
-				nextState = State.DROP_TOTE;
+				nextState = State.DROP;
 				break;
 			}
-			case DROP_TOTE:
+			case DROP:
 			{
-				pickerUpper.drop();
+				pickerUpper.dropTote();
 				waitForThread(pickerUpper.getCurrentThread());
 			    adjustTote();
 				nextState = State.LIFT_TOTE;

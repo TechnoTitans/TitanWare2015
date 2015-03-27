@@ -39,10 +39,10 @@ public class Auto_2D extends Autonomous{
 			hDrive.resetTankEncoders();
 			hDrive.goForward(driveDistance);
 			waitForThread(hDrive.left.getCurrentThread(), hDrive.right.getCurrentThread());
-			nextState = State.DROP_TOTE;
+			nextState = State.DROP;
 			break;
 		}
-		case DROP_TOTE:
+		case DROP:
 		{
 			pickerUpper.beltEncoder.reset();
 			pickerUpper.getMotorGroup().moveDistanceInches(HWR.DROP_BARREL_HEIGHT);

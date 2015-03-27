@@ -303,8 +303,12 @@ public class PickerUpper{
 		liftToHeight(HWR.BARREL_HEIGHT+getHeightFromHDrive());
 	}
 
-	public void drop(){
-		liftToHeight(HWR.DROP_HEIGHT+getHeightFromHDrive());
+	public void dropBarrel(){
+		liftHeight(HWR.DROP_BARREL_HEIGHT);
+	}
+	
+	public void dropTote(){
+		liftHeight(HWR.DROP_TOTE_HEIGHT);
 	}
 
 	public void setToZero(){
