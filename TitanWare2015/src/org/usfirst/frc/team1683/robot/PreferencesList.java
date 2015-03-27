@@ -25,6 +25,7 @@ public class PreferencesList{
 		DriverStation.prefDouble("stepDistance", 12.3);
 		DriverStation.prefDouble("secondDelay", 0); //sec
 		DriverStation.prefDouble("tilterTime", 0); //sec
+		DriverStation.prefDouble("sideSpeed", HWR.HDRIVE_SPEED);
 		
 		DriverStation.prefBoolean("enableLightSensor", true);
 		

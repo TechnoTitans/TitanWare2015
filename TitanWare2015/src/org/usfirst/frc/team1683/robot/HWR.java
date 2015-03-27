@@ -92,14 +92,14 @@ public class HWR {
 	public static final double HOOK_INCREMENTS		= 13.0;
 	
 	//heights for PickerUpper
-	public static final double SINGLE_TOTE_HEIGHT	= 13.0;
+	public static final double SINGLE_TOTE_HEIGHT	= 30.0;
 	public static final double DOUBLE_TOTE_HEIGHT	= SINGLE_TOTE_HEIGHT - HOOK_INCREMENTS;
 	public static final double TRIPLE_TOTE_HEIGHT	= DOUBLE_TOTE_HEIGHT - HOOK_INCREMENTS;
 	public static final double FOURTH_TOTE_HEIGHT   = TRIPLE_TOTE_HEIGHT - HOOK_INCREMENTS;
 	public static final double BARREL_HEIGHT		= 65.0;
 	public static final double DROP_BARREL_HEIGHT	= -45.0;
 	public static final double BARREL_CLEAR_HEIGHT	= 37.0;
-	public static final double DROP_TOTE_HEIGHT			= 12.0;
+	public static final double DROP_TOTE_HEIGHT		= 12.0;
 	public static final int PICKERUPPER_BELT_LENGTH	= 100; //in inches
 
 
@@ -113,6 +113,8 @@ public class HWR {
 	public static final int FORWARD_TILT			= 6;
 	public static final int BACKWARD_TILT			= 4;
 	public static final int CALIBRATE_DRIVE			= 7;
+	public static final int EXPAND_BINGRABBER		= 5;
+	public static final int CONTRACT_BINGRABBER		= 3;
 
 	//Light Ring
 	public static final int LIGHT_RING				= HWP.PWM_5;

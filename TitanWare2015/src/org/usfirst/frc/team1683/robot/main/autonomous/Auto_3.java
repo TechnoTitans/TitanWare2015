@@ -43,7 +43,7 @@ public class Auto_3 extends Autonomous{
 		case DRIVE_SIDEWAYS:
 		{
 			hDrive.resetHEncoders();
-			hDrive.moveSideways(sideDistance);
+			hDrive.moveSideways(sideDistance, sideSpeed);
 			waitForThread(hDrive.getBackHMotor().getCurrentThread(),
 					hDrive.getFrontHMotor().getCurrentThread());
 			hDrive.liftWheels();

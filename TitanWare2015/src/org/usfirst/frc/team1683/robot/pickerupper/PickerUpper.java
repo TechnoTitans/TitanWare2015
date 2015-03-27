@@ -1,7 +1,5 @@
 package org.usfirst.frc.team1683.robot.pickerupper;
 
-import javax.swing.text.rtf.RTFEditorKit;
-
 import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.drivetrain.Encoder;
 import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
@@ -284,15 +282,15 @@ public class PickerUpper{
 	 */
 
 	public void liftFirstTote(){
-		liftToHeight(HWR.SINGLE_TOTE_HEIGHT+getHeightFromHDrive());
+		liftHeight(HWR.SINGLE_TOTE_HEIGHT+getHeightFromHDrive());
 	}
 
 	public void liftSecondTote(){
-		liftToHeight(HWR.DOUBLE_TOTE_HEIGHT+getHeightFromHDrive());
+		liftHeight(HWR.DOUBLE_TOTE_HEIGHT+getHeightFromHDrive());
 	}
 
 	public void liftThirdTote(){
-		liftToHeight(HWR.TRIPLE_TOTE_HEIGHT+getHeightFromHDrive());
+		liftHeight(HWR.TRIPLE_TOTE_HEIGHT+getHeightFromHDrive());
 	}
 
 	public void liftToClearBarrel(){

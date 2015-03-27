@@ -144,6 +144,17 @@ public class HDrive extends TankDrive{
 		currentThread = hFrontMotors.getCurrentThread();
 	}
 	
+	public void moveSideways(double distanceInInches, double speed)
+	{
+		hBackMotors.setBaseSpeed(speed);
+		hFrontMotors.setBaseSpeed(speed);
+		deployWheels();
+		resetHEncoders();
+		hBackMotors.moveDistanceInches(distanceInInches);
+		hFrontMotors.moveDistanceInches(distanceInInches);
+		currentThread = hFrontMotors.getCurrentThread();
+	}
+	
 	public void set(double speed){
 		deployWheels();
 		hBackMotors.set(speed);
