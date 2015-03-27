@@ -97,6 +97,7 @@ public class HWR {
 	public static final double TRIPLE_TOTE_HEIGHT	= DOUBLE_TOTE_HEIGHT - HOOK_INCREMENTS;
 	public static final double FOURTH_TOTE_HEIGHT   = TRIPLE_TOTE_HEIGHT - HOOK_INCREMENTS;
 	public static final double BARREL_HEIGHT		= 65.0;
+	public static final double DROP_BARREL_HEIGHT	= -45.0;
 	public static final double BARREL_CLEAR_HEIGHT	= 37.0;
 	public static final double DROP_HEIGHT			= 12.0;
 	public static final int PICKERUPPER_BELT_LENGTH	= 100; //in inches

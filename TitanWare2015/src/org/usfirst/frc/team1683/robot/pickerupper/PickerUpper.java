@@ -1,5 +1,7 @@
 package org.usfirst.frc.team1683.robot.pickerupper;
 
+import javax.swing.text.rtf.RTFEditorKit;
+
 import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.drivetrain.Encoder;
 import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
@@ -7,6 +9,7 @@ import org.usfirst.frc.team1683.robot.drivetrain.MotorGroup;
 import org.usfirst.frc.team1683.robot.main.DriverStation;
 import org.usfirst.frc.team1683.robot.sensors.Gyro;
 import org.usfirst.frc.team1683.robot.sensors.Photogate;
+
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.RobotBase;
 
@@ -157,6 +160,10 @@ public class PickerUpper{
 		//		if (DriverStation.antiBounce(joystickNumber, HWR.FREEZE_BELT)){
 		//			freezePickerUpper();
 		//		}
+	}
+	
+	public MotorGroup getMotorGroup(){
+		return beltMotors;
 	}
 
 

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1683.robot.main.autonomous;
 
+import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
 import org.usfirst.frc.team1683.robot.vision.Vision;
@@ -39,8 +40,9 @@ public class Auto_7 extends Autonomous {
 		}
 		case DROP_TOTE:
 		{
-			pickerUpper.drop();
-			waitForThread(pickerUpper.getCurrentThread());
+			pickerUpper.beltEncoder.reset();
+			pickerUpper.getMotorGroup().moveDistanceInches(HWR.DROP_BARREL_HEIGHT);
+			waitForThread(pickerUpper.getMotorGroup().getCurrentThread());
 			nextState = State.DRIVE_BACKWARD;
 			break;
 		}
