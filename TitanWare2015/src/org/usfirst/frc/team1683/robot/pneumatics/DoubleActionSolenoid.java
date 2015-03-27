@@ -8,6 +8,7 @@ public class DoubleActionSolenoid {
 	boolean inverse;
 	
 	/**
+	 * Default Constructor
 	 * @param pistons
 	 * @param pressure - PressureSensor
 	 * @param initState - initial state of controlling boolean value
@@ -18,6 +19,12 @@ public class DoubleActionSolenoid {
 		inverse = false;
 	}
 	
+	/**
+	 * Constructor to use when inverting function is needed
+	 * @param pistons array of pistons
+	 * @param pressure not used here, required for AirSystem
+	 * @param inverse set default to false, set to true to invert functions
+	 */
 	public DoubleActionSolenoid(int[] pistons, PressureSensor pressure, boolean inverse) { //front piston, back Piston
 		if (inverse){
 			controlAirSystem = new AirSystem(new int[]{pistons[1]}, pressure);

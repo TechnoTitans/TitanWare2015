@@ -12,10 +12,15 @@ import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
  */
 public class BinGrabber {
 	DoubleActionSolenoid binGrabber;
-	boolean inverse;
+
+	/**
+	 * Default Constructor
+	 * @param ports the ports of the solenoids
+	 * @param inverse set to false by default, set to true to invert function
+	 * @param pressure needed for DoubleActionSolenoid, not used here
+	 */
 	public BinGrabber(int[] ports, boolean inverse, PressureSensor pressure) {
-		binGrabber = new DoubleActionSolenoid(ports, pressure);
-		this.inverse = inverse;
+		binGrabber = new DoubleActionSolenoid(ports, pressure, inverse);
 	}
 	
 	/**

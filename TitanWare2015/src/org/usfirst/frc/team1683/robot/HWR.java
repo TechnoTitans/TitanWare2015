@@ -33,6 +33,11 @@ public class HWR {
 
 	public static final int PICKERUPPER_ACCEL		= HWP.ANALOG_3;
 	
+	//BinGrabber Constants
+	public static final boolean BINGRABBER_INVERSE	= false;
+	public static final int	BINGRABBER_A			= PCM.SOLENOID_2;
+	public static final int BINGRABBER_B			= PCM.SOLENOID_3;
+	
 	// Gyro MUST BE 0 OR 1
 	public static final int GYRO					= HWP.ANALOG_1;
 	

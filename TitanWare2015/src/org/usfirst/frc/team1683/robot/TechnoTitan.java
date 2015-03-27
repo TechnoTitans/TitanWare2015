@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1683.robot;
 
+import org.usfirst.frc.team1683.robot.binGrabber.BinGrabber;
 import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
 import org.usfirst.frc.team1683.robot.drivetrain.Talon;
 import org.usfirst.frc.team1683.robot.drivetrain.TalonSRX;
@@ -44,6 +45,7 @@ public class TechnoTitan extends IterativeRobot {
 	CurrentTierIdentifier toteNumberIdentifier;
 	OldCompressor compressor;
 	DriveTester driveTest;
+	BinGrabber binGrabber;
 	
 	AntiDriftTest antiDriftTest;
 	
@@ -73,6 +75,8 @@ public class TechnoTitan extends IterativeRobot {
 		pickerUpper = new PickerUpper(Talon.class, HWR.BELT_INVERSE, new int[]{HWR.BELT_MOTOR}, 
 				HWR.BELT_CHANNEL_A, HWR.BELT_CHANNEL_B, HWR.beltEncoderReverse, HWR.liftEncoderWDPP, photogate,
 				TalonSRX.class, HWR.TILT_MOTOR,HWR.TILT_INVERSE, drive, null /*this is the gyro*/, this);
+		binGrabber = new BinGrabber(new int[]{HWR.BINGRABBER_A,HWR.BINGRABBER_B},
+				HWR.BINGRABBER_INVERSE, pressure);
 		toteNumberIdentifier = new CurrentTierIdentifier(powerDistributionManager.getPowerDistributionPanel(), 4, HWR.BELT_MOTOR);
 		new Thread(toteNumberIdentifier, "Tier Manager").start();
 		drive.resetGyro();
