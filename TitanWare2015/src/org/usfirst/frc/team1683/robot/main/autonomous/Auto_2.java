@@ -30,6 +30,12 @@ public class Auto_2 extends Autonomous{
 			pickerUpper.beltEncoder.reset();
 			pickerUpper.liftBarrel();
 			waitForThread(pickerUpper.getCurrentThread());
+			nextState = State.TILT_BACK;
+			break;
+		}
+		case TILT_BACK:
+		{
+			pickerUpper.getTilter().tiltBackward(tilterTime);
 			nextState = State.DRIVE_FORWARD;
 			break;
 		}
