@@ -29,7 +29,8 @@ public class Auto_1 extends Autonomous implements Runnable {
 		}
 		case END_CASE:
 		{
-			hDrive.stop();			
+			hDrive.stop();
+			//destroyThreads(new Thread[] {hDrive.left.getCurrentThread(),hDrive.right.getCurrentThread()});
 			nextState = State.END_CASE;
 			break;
 		}

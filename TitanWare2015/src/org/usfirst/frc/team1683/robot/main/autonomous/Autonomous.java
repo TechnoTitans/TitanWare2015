@@ -175,6 +175,24 @@ public abstract class Autonomous {
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * Should be run in END_CASE of all auto modes to ensure leftover
+	 * threads are not running in Teleop mode
+	 * @author Sreyas Mirthipati
+	 * @param threads an array of all the threads to be destroyed
+	 */
+	@SuppressWarnings("deprecation")
+	public static void destroyThreads(Thread[] threads) {
+		for(int i = 0;i < threads.length; i++) {
+			try {
+				threads[i].destroy();
+			}
+			catch(ThreadDeath e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	
 	public static double setSpeed(double baseSpeed, double distance){
 		if (distance>0){
