@@ -16,6 +16,7 @@ public class Gyro extends edu.wpi.first.wpilibj.Gyro implements Sensor {
 	public final static double driftRate = 0.3333;
 	public final static double HDRIVE_THRESHOLD=5;
     AnalogInput channel;
+    //decides whether to put onto DriverStation or not
     private boolean post = false;
 	
     /**

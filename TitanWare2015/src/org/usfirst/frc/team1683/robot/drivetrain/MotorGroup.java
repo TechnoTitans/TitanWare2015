@@ -131,6 +131,18 @@ public class MotorGroup implements Runnable{
 		}
 	}
 	
+	public void enableLimitSwitch(boolean enableFwd, boolean enableBack){
+		if (TalonSRX.class.equals(motors.get(0).getClass())){
+			for (Motor motor: motors){
+				motor.enableLimitSwitch(enableFwd, enableBack);
+			}
+		}
+	}
+	
+	public Motor getMotor(int motorNum) {
+		return motors.get(motorNum);
+	}
+	
 	public Thread getCurrentThread(){
 		return currentThread;
 	}
@@ -170,6 +182,7 @@ public class MotorGroup implements Runnable{
 			Timer.delay(0.25);
 			if (encoder != null){
 				DriverStation.sendData(groupName , encoder.getDisplacement(encoder.getDistancePerPulse()));
+				DriverStation.sendData(groupName + " Raw", encoder.getRaw());
 			}
 			for(Motor motor: motors){
 				if (motor.hasEncoder()){
@@ -214,7 +227,7 @@ public class MotorGroup implements Runnable{
 					baseSpeed = -baseSpeed;
 				}
 				while (Math.abs(Math.abs(initialLocation) - Math.abs(encoder.getDisplacement(encoder.getDistancePerPulse())))
-						< Math.abs(distanceInMeters)){
+						< Math.abs(distanceInMeters) && !TechnoTitan.isOperator){
 					double speed = baseSpeed;
 					for (Motor motor: motors){
 						if (useAntidrift){

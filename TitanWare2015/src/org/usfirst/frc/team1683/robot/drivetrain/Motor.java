@@ -17,4 +17,8 @@ public interface Motor extends PIDOutput{
 	public Encoder getEncoder();
 	public int getChannel();
 	public void enableBrakeMode(boolean enable);
+	public void enableLimitSwitch(boolean enableFwd, boolean enableBack);
+	public boolean isFwdLimitSwitchClosed();
+	public boolean isRevLimitSwitchClosed();
+	public double getSetPoint();
 }

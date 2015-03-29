@@ -18,17 +18,25 @@ public class HWR {
 	public static final int BACK_H_MOTOR			= HWP.PWM_3;
 	public static final int FRONT_H_MOTOR			= HWP.PWM_2;
 
-	//Motors for Belt
+	//Motors for PickerUpper
 	public static final int BELT_MOTOR				= HWP.PWM_1;
+	public static final int TILT_MOTOR				= HWP.CAN_5;
 
 	//Motor Inverse Directions
 	public static final boolean LEFT_INVERSE		= false;
 	public static final boolean RIGHT_INVERSE		= true;
 	public static final boolean BELT_INVERSE		= false;
+	public static final boolean TILT_INVERSE		= false;
 	public static final boolean FRONT_H_INVERSE		= false;
 	public static final boolean BACK_H_INVERSE		= true;
 
+
 	public static final int PICKERUPPER_ACCEL		= HWP.ANALOG_3;
+	
+	//BinGrabber Constants
+	public static final boolean BINGRABBER_INVERSE	= false;
+	public static final int	BINGRABBER_A			= PCM.SOLENOID_2;
+	public static final int BINGRABBER_B			= PCM.SOLENOID_3;
 	
 	// Gyro MUST BE 0 OR 1
 	public static final int GYRO					= HWP.ANALOG_1;
@@ -65,8 +73,8 @@ public class HWR {
 	public static final int COMPRESSOR_RELAY		= HWP.RELAY_0;
 
 	//Pistons
-	public static final int LEFT_H_PISTON			= PCM.SOLENOID_0;
-	public static final int RIGHT_H_PISTON			= PCM.SOLENOID_1;
+	public static final int BACK_H_PISTON			= PCM.SOLENOID_0;
+	public static final int FRONT_H_PISTON			= PCM.SOLENOID_1;
 	public static final int FRONT_LIFT_PISTON		= PCM.SOLENOID_2;
 	public static final int BACK_LIFT_PISTON		= PCM.SOLENOID_3;
 
@@ -89,33 +97,43 @@ public class HWR {
 	public static final double HOOK_INCREMENTS		= 13.0;
 	
 	//heights for PickerUpper
-	public static final double SINGLE_TOTE_HEIGHT	= 60.0;
+	public static final double SINGLE_TOTE_HEIGHT	= 30.0;
 	public static final double DOUBLE_TOTE_HEIGHT	= SINGLE_TOTE_HEIGHT - HOOK_INCREMENTS;
 	public static final double TRIPLE_TOTE_HEIGHT	= DOUBLE_TOTE_HEIGHT - HOOK_INCREMENTS;
 	public static final double FOURTH_TOTE_HEIGHT   = TRIPLE_TOTE_HEIGHT - HOOK_INCREMENTS;
-	public static final double BARREL_HEIGHT		= 60.0;
+	public static final double BARREL_HEIGHT		= 65.0;
+	public static final double DROP_BARREL_HEIGHT	= -45.0;
+	public static final double BARREL_CLEAR_HEIGHT	= 37.0;
+	public static final double DROP_TOTE_HEIGHT		= 12.0;
+	public static final int PICKERUPPER_BELT_LENGTH	= 100; //in inches
+
 
 	//Buttons
 	public static final int DEPLOY_H_DRIVE			= 1;
-	public static final int TOGGLE_BELT_PISTON		= 1;
+	//public static final int TOGGLE_BELT_PISTON		= 1;
 	public static final int CALIBRATE_BELT			= 7;
 	public static final int GO_TO_HOME				= 9;
 	public static final int LIFT_FIRST_TOTE			= 10;
 	public static final int LIFT_SECOND_TOTE		= 11;
-	public static final int UPRIGHT_BELT			= 3;
-	public static final int ANGLE_BELT				= 4;
-	public static final int FREEZE_BELT				= 1;
+	public static final int FORWARD_TILT			= 6;
+	public static final int BACKWARD_TILT			= 4;
 	public static final int CALIBRATE_DRIVE			= 7;
+	public static final int EXPAND_BINGRABBER		= 5;
+	public static final int CONTRACT_BINGRABBER		= 3;
 
 	//Light Ring
 	public static final int LIGHT_RING				= HWP.PWM_5;
 	
 	//Motor Constants
 	public static final double LOW_SPEED			= 0.25;
-	public static final double MEDIUM_SPEED			= 0.40;
+	public static final double MEDIUM_SPEED			= 0.35;
 	public static final double HIGH_SPEED			= 1.0;
+	public static final double TILTSCREW_SPEED		= 0.603125;
+
 	
 	public static final double HDRIVE_SPEED			= 0.8;
+	
+	
 
 	
 }

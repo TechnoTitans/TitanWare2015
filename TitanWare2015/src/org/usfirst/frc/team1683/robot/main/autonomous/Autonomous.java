@@ -14,7 +14,7 @@ import org.usfirst.frc.team1683.robot.vision.Vision;
 import edu.wpi.first.wpilibj.Timer;
 
 public abstract class Autonomous {
-
+	
 	protected static TankDrive tankDrive;
 	protected static PickerUpper pickerUpper;
 	protected static HDrive hDrive;
@@ -38,10 +38,9 @@ public abstract class Autonomous {
 		LIFT_BARREL,           
 		LIFT_TOTE,	
 		ADJUST_TOTE,		
-		DROP_TOTE,		
+		DROP,		
 		LIFT_POSITION,		
 		IS_TOTE_LIFTED,	
-		CENTER_TOTE,
 		ADJUST_FORWARD,
 		ADJUST_BACKWARD,
 		TURN,
@@ -52,7 +51,8 @@ public abstract class Autonomous {
 		RUN_OTHER_AUTO,
 		START_DRIVE_SIDEWAYS,
 		START_DRIVE_FORWARD,
-		START_LIFT_BARREL
+		START_LIFT_BARREL,
+		TILT_BACK
 	}
 
 
@@ -63,26 +63,27 @@ public abstract class Autonomous {
 	public static int isToteLiftedCount = 0;
 	protected static double driveDistance;
 	protected static double sideDistance;
+	protected static double coopDistance;
+	protected static double stepDistance;
 	protected static double liftDistance; 
-	protected static double adjustDistance;
-	protected static double dropDistance;
 	protected static double backDistance;
-	protected static double robotDistance;
-	protected static double toteSpaceDistance;
+	protected static double backToAutoDistance;
 	protected static boolean isToteLifted;
 	protected static boolean enablePrinting;
 	protected static double driveTime = 5;
-	public static boolean errorWarning;
+	protected static boolean errorWarning;
 	protected static double liftTime;
 	protected static double driveSpeed;
 	protected static double sideSpeed;
 	protected static double sideTime = 5;
+	protected static double secondDelay = 0;
+	protected static double tilterTime;
+	protected static double fullTiltTime;
 
 	protected static double visionDistance = 0;
 	protected static final double VISION_TIMEOUT = 3;
 
 	protected static Autonomous autonomous;
-
 
 	@SuppressWarnings("static-access")
 	public Autonomous(HDrive drive, PickerUpper pickerUpper, Vision vision){
@@ -97,6 +98,13 @@ public abstract class Autonomous {
 		leftEncoder = hDrive.leftEncoder;
 		rightEncoder = hDrive.rightEncoder;
 		liftTimer = new Timer();
+	}
+	
+	/**
+	 * 
+	 */
+	public static void setErrorWarning(boolean desiredCondition){
+		errorWarning = desiredCondition;
 	}
 
 	/**
@@ -120,16 +128,23 @@ public abstract class Autonomous {
 	public static void updatePreferences(){
 		//Preferences from the SmartDashboard
 		driveDistance = DriverStation.getDouble("driveDistance");
+		coopDistance = DriverStation.getDouble("co-opDistance");
+		stepDistance = DriverStation.getDouble("stepDistance");
 		sideDistance = DriverStation.getDouble("sideDistance");
 		liftDistance = DriverStation.getDouble("liftDistance");
-		adjustDistance = DriverStation.getDouble("adjustDistance");
 		backDistance = DriverStation.getDouble("backDistance");
-		robotDistance = DriverStation.getDouble("robotDistance");
-		toteSpaceDistance = DriverStation.getDouble("toteSpaceDistance");
 		enablePrinting = DriverStation.getBoolean("enablePrinting");
 		driveTime = DriverStation.getDouble("driveTime");
 		liftTime = DriverStation.getDouble("liftTime");
 		sideTime = DriverStation.getDouble("sideTime");
+		secondDelay = DriverStation.getDouble("secondDelay");
+		tilterTime = DriverStation.getDouble("tilterTime");
+		sideSpeed = DriverStation.getDouble("sideSpeed");
+		fullTiltTime = DriverStation.getDouble("fullTiltTime");
+
+		backToAutoDistance = DriverStation.getDouble("backToAutoDistance");
+		coopDistance = DriverStation.getDouble("coopDistance");
+		stepDistance = DriverStation.getDouble("stepDistance");
 	}
 
 	/**
@@ -162,32 +177,50 @@ public abstract class Autonomous {
 	}
 
 	/**
-	 * @author David Luo
-	 * Attempts to center the robot in front of the closest tote.
-	 * @param next The state to be executed after CENTER_TOTE.
-	 * @return The next state to be executed (keep trying to center or skip).
+	 * DO NOT USE
+	 * Should be run in END_CASE of all auto modes to ensure leftover
+	 * threads are not running in Teleop mode
+	 * @author Sreyas Mirthipati
+	 * @param threads an array of all the threads to be destroyed
 	 */
-	public static State centerTote(State next) {
-		double centerDistance = vision.centerOffset()/240;
-		visionDistance += centerDistance;
-		if (visionTimer.get() <= VISION_TIMEOUT) {
-			if (vision.isCentered() == -1) {
-				hDrive.goSideways(centerDistance);
-				return State.CENTER_TOTE;
+	@Deprecated
+	public static void destroyThreads(Thread[] threads) {
+		for(int i = 0;i < threads.length; i++) {
+			try {
+				threads[i].destroy();
 			}
-			else if (vision.isCentered() == 1) {
-				hDrive.goSideways(centerDistance);
-				return State.CENTER_TOTE;
-			}
-			else {
-				hDrive.stop();
-				return next;
+			catch(ThreadDeath e) {
+				e.printStackTrace();
 			}
 		}
-		else {
-			//			driveTrain.goSideways(visionDistance);
-			return next;
+	}
+	
+	public static double setSpeed(double baseSpeed, double distance){
+		if (distance>0){
+			return baseSpeed;
 		}
+		else{
+			return -baseSpeed;
+		}
+	}
+	
+	public static void delay() {
+		if (secondDelay>15.0)
+		{
+			secondDelay = 15.0;
+		}
+		Timer.delay(secondDelay);
+	}
+	
+	public static void adjustTote() {
+		pickerUpper.dropTote();
+		waitForThread(pickerUpper.getCurrentThread());
+		hDrive.goForward(-backDistance);
+		waitForThread(hDrive.left.getCurrentThread(),hDrive.right.getCurrentThread());
+		pickerUpper.goToZero();
+		waitForThread(pickerUpper.getCurrentThread());
+		hDrive.goForward(backDistance);
+		waitForThread(hDrive.left.getCurrentThread(),hDrive.right.getCurrentThread());
 	}
 
 	public abstract void run();

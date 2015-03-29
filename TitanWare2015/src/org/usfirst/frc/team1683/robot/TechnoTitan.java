@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1683.robot;
 
+import org.usfirst.frc.team1683.robot.binGrabber.BinGrabber;
 import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
 import org.usfirst.frc.team1683.robot.drivetrain.Talon;
 import org.usfirst.frc.team1683.robot.drivetrain.TalonSRX;
@@ -14,6 +15,7 @@ import org.usfirst.frc.team1683.robot.sensors.PressureSensor;
 import org.usfirst.frc.team1683.robot.statistics.CurrentTierIdentifier;
 import org.usfirst.frc.team1683.robot.statistics.PowerDistributionManager;
 import org.usfirst.frc.team1683.robot.test.AntiDriftTest;
+import org.usfirst.frc.team1683.robot.test.DriveTester;
 import org.usfirst.frc.team1683.robot.vision.Vision;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -31,6 +33,7 @@ public class TechnoTitan extends IterativeRobot {
 	public static final boolean debugTierIdentifier = false;
 	public static final boolean debugPressure = true;
 	public static final boolean debugStates = true;
+	public static volatile boolean isOperator;
 
 	Gyro gyro;
 	PickerUpper pickerUpper;
@@ -42,6 +45,8 @@ public class TechnoTitan extends IterativeRobot {
 	Vision vision;
 	CurrentTierIdentifier toteNumberIdentifier;
 	OldCompressor compressor;
+	DriveTester driveTest;
+	BinGrabber binGrabber;
 	
 	AntiDriftTest antiDriftTest;
 	
@@ -51,7 +56,7 @@ public class TechnoTitan extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		PreferencesList.set();
+//		PreferencesList.set();
 		compressor = new OldCompressor(HWR.PRESSURE_SWITCH, HWR.COMPRESSOR_RELAY, this);
 		compressor.start();
 		vision = new Vision();
@@ -64,25 +69,31 @@ public class TechnoTitan extends IterativeRobot {
 				TalonSRX.class, HWR.GYRO, 
 				HWR.LEFT_CHANNEL_A, HWR.LEFT_CHANNEL_B, HWR.RIGHT_CHANNEL_A, HWR.RIGHT_CHANNEL_B,
 				HWR.BACK_CHANNEL_A, HWR.BACK_CHANNEL_B, HWR.FRONT_CHANNEL_A, HWR.FRONT_CHANNEL_B,
-				HWR.LEFT_H_PISTON, HWR.RIGHT_H_PISTON, pressure, 
+				HWR.BACK_H_PISTON, HWR.FRONT_H_PISTON, pressure, 
 				HWR.FRONT_H_MOTOR, HWR.BACK_H_MOTOR, Talon.class, HWR.DEPLOY_H_DRIVE, HWR.driveEncoderWDPP, HWR.hDriveEncoderWDPP,
 				HWR.leftDriveEncoderReverse, HWR.rightDriveEncoderReverse, HWR.backHEncoderReverse, HWR.frontHEncoderReverse,
 				HWR.BACK_H_INVERSE, HWR.FRONT_H_INVERSE);
-		pickerUpper = new PickerUpper(Talon.class, HWR.BELT_INVERSE, new int[]{HWR.FRONT_LIFT_PISTON, HWR.BACK_LIFT_PISTON}, new int[]{HWR.BELT_MOTOR}, 
-				HWR.BELT_CHANNEL_A, HWR.BELT_CHANNEL_B, HWR.beltEncoderReverse, HWR.liftEncoderWDPP, 
-				pressure, photogate, drive, null /*this is the gyro*/, this);
+		pickerUpper = new PickerUpper(Talon.class, HWR.BELT_INVERSE, new int[]{HWR.BELT_MOTOR}, 
+				HWR.BELT_CHANNEL_A, HWR.BELT_CHANNEL_B, HWR.beltEncoderReverse, HWR.liftEncoderWDPP, photogate,
+				TalonSRX.class, HWR.TILT_MOTOR,HWR.TILT_INVERSE, drive, null /*this is the gyro*/, this);
+//		binGrabber = new BinGrabber(new int[]{HWR.BINGRABBER_A,HWR.BINGRABBER_B},
+//				HWR.BINGRABBER_INVERSE, pressure);
 		toteNumberIdentifier = new CurrentTierIdentifier(powerDistributionManager.getPowerDistributionPanel(), 4, HWR.BELT_MOTOR);
 		new Thread(toteNumberIdentifier, "Tier Manager").start();
 		drive.resetGyro();
+		System.out.println("TiltSpeed: " + DriverStation.scaleTo0To1(DriverStation.auxStick));
+		
+		isOperator = false; //NEVER DELETE THIS
 	}
 
 	public void autonomousInit(){
+		isOperator = false; //NEVER DELETE THIS
 		drive.resetGyro();
 		autonomous = new AutonomousSwitcher(drive, pickerUpper, vision);
-		Autonomous.errorWarning = true;
+		Autonomous.setErrorWarning(true);
 		Autonomous.updatePreferences();
 		Autonomous.presentState = Autonomous.State.INIT_CASE;
-		pickerUpper.getPistons().upright();
+//		pickerUpper.getTilter().tiltUpright();
 	}
 
 	/**
@@ -93,8 +104,9 @@ public class TechnoTitan extends IterativeRobot {
 	}
 
 	public void teleopInit() {
+		isOperator = true; //NEVER DELETE THIS
 		drive.resetGyro();
-		pickerUpper.uprightPickerUpper();
+//		pickerUpper.getTilter().tiltUpright();
 	}
 
 	/**
@@ -104,20 +116,27 @@ public class TechnoTitan extends IterativeRobot {
 		drive.driveMode(DriverStation.leftStick, DriverStation.rightStick);
 		pickerUpper.liftMode(HWR.AUX_JOYSTICK);
 		DriverStation.sendData("Photogate", photogate.get());
+		
+		DriverStation.sendData("leftEncoderCount", drive.getLeftEncoder().get());
+		DriverStation.sendData("rightEncoderCount", drive.getRightEncoder().get());
 	}
 
 	public void testInit(){
+		//drive.resetGyro();
+		//drive.deployWheels();
+		//antiDriftTest = new AntiDriftTest(drive);
+		//air = new AirSystem(new int[]{3}, pressure);
+		isOperator = true; //NEVER DELETE THIS
 		drive.resetGyro();
 		drive.deployWheels();
 		antiDriftTest = new AntiDriftTest(drive);
-		//air = new AirSystem(new int[]{3}, pressure);
 	}
 	
 	/**
 	 * This function is called periodically during test mode
 	 */
 	public void testPeriodic() {
-		antiDriftTest.test();
+		//antiDriftTest.test();
 	}
 
 	/**
@@ -125,6 +144,6 @@ public class TechnoTitan extends IterativeRobot {
 	 * is disabled.
 	 */
 	public void disabledInit() {
-		
+		isOperator = false; //NEVER DELETE THIS
 	}
 }

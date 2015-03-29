@@ -8,16 +8,25 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriverStation {
 	
-	public static final int XAxis = 0;
-	public static final int YAxis = 1;
-	public static final int ZAxis = 2;
+	public static final int XAxis	 = 0;
+	public static final int YAxis	 = 1;
+	public static final int ZAxis	 = 2;
+	public static final int dialAxis = 3;
 	
 	public static Joystick leftStick = new Joystick(HWR.LEFT_JOYSTICK);
 	public static Joystick rightStick = new Joystick(HWR.RIGHT_JOYSTICK);
 	public static Joystick auxStick = new Joystick(HWR.AUX_JOYSTICK);
-	
+
 	public static boolean[][] lasts = new boolean[3][11];
 	
+	public static double scaleTo0To1(Joystick joy){
+		return 0.5*joy.getRawAxis(dialAxis)+0.5;
+	}
+	
+	public static double scaledRollerOutput(Joystick joy, double min, double max){
+		double slope = max-min;
+		return slope*scaleTo0To1(joy)+min;
+	}
 	
 	public static int getStickNum(Joystick joystick){
 		if (joystick.equals(leftStick))
@@ -29,6 +38,7 @@ public class DriverStation {
 		else
 			return 10;
 	}
+	
 	/**
      * Sends the value to SmartDashboard 
      * @param key Value name

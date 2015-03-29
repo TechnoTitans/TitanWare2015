@@ -1,46 +1,54 @@
 package org.usfirst.frc.team1683.robot.main.autonomous;
 
+import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
 import org.usfirst.frc.team1683.robot.vision.Vision;
 
-public class Auto_2 extends Autonomous{
-	public Auto_2(HDrive drive, PickerUpper pickerUpper, Vision vision) {
+public class Auto_7 extends Autonomous {
+	public Auto_7 (HDrive drive, PickerUpper pickerUpper, Vision vision){
 		super(drive, pickerUpper, vision);
 	}
 
 	/**
-	 * @author Seung-Seok Lee
-	 * Lifts recycling bin and drives forward
+	 * one tote coop
 	 */
 	public void run(){
-		switch(presentState){
+		switch(presentState)
+		{
 		case INIT_CASE:
 		{
 			delay();
 			timer.start();
-			visionTimer.start();
-			nextState = State.LIFT_BARREL;
+			nextState = State.LIFT_TOTE;
 			break;
 		}
-		case LIFT_BARREL:
+		case LIFT_TOTE:
 		{
-			pickerUpper.beltEncoder.reset();
-			pickerUpper.liftBarrel();
+			pickerUpper.liftFirstTote();
 			waitForThread(pickerUpper.getCurrentThread());
-			nextState = State.TILT_BACK;
-			break;
-		}
-		case TILT_BACK:
-		{
-			pickerUpper.getTilter().tiltBackward(tilterTime);
 			nextState = State.DRIVE_FORWARD;
 			break;
 		}
 		case DRIVE_FORWARD:
 		{
 			hDrive.resetTankEncoders();
-			hDrive.goForward(driveDistance);
+			hDrive.goForward(coopDistance);
+			waitForThread(hDrive.left.getCurrentThread(), hDrive.right.getCurrentThread());
+			nextState = State.DROP;
+			break;
+		}
+		case DROP:
+		{
+			pickerUpper.beltEncoder.reset();
+			pickerUpper.getMotorGroup().moveDistanceInches(HWR.DROP_BARREL_HEIGHT);
+			waitForThread(pickerUpper.getMotorGroup().getCurrentThread());
+			nextState = State.DRIVE_BACKWARD;
+			break;
+		}
+		case DRIVE_BACKWARD:
+		{
+			hDrive.goForward(-backToAutoDistance);
 			waitForThread(hDrive.left.getCurrentThread(), hDrive.right.getCurrentThread());
 			nextState = State.END_CASE;
 			break;
@@ -61,4 +69,8 @@ public class Auto_2 extends Autonomous{
 		printState();
 		presentState = nextState;
 	}
+
+
+
+
 }

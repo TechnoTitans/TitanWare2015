@@ -4,14 +4,14 @@ import edu.wpi.first.wpilibj.CANTalon;
 
 /**
  * 
- * @author Animesh Koratana & Seung-Seok
+ * @author Animesh Koratana & Seung-Seok Lee
  *
  */
 public class TalonSRX extends CANTalon implements Motor{
 
 	boolean hasEncoder;
-	boolean reverseDirection;
 	Encoder encoder;
+	boolean reverseDirection;
 
 	double lowSpeed;
 	double mediumSpeed;
@@ -24,7 +24,7 @@ public class TalonSRX extends CANTalon implements Motor{
 	public TalonSRX(int channel, boolean reverseDirection) {
 		super(channel);
 		this.reverseDirection = reverseDirection;
-		this.hasEncoder = false;
+//		super.reverseOutput(reverseDirection);
 	}
 	/**
 	 * Constructor
@@ -116,7 +116,10 @@ public class TalonSRX extends CANTalon implements Motor{
 	@Override
 	public void enableBrakeMode(boolean enable) {
 		super.enableBrakeMode(enable);
-		
+	}
+	@Override
+	public double getSetPoint() {
+		return super.getSetpoint();
 	}
 	
 

@@ -5,10 +5,11 @@ import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
 import org.usfirst.frc.team1683.robot.vision.Vision;
 
+import edu.wpi.first.wpilibj.Timer;
+
 public class Auto_3 extends Autonomous{
 	public Auto_3(HDrive drive, PickerUpper pickerUpper, Vision vision) {
 		super(drive, pickerUpper, vision);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -18,116 +19,64 @@ public class Auto_3 extends Autonomous{
 		switch(presentState){
 		case INIT_CASE:
 		{
+			delay();
 			timer.start();
 			visionTimer.start();
-			nextState = State.START_LIFT_BARREL;
-			break;
-		}
-		case START_LIFT_BARREL:
-		{
-			pickerUpper.liftBarrel();
-			liftTimer.start();
 			nextState = State.LIFT_BARREL;
 			break;
 		}
-//		case LIFT_BARREL:
-//		{
-//			pickerUpper.liftBarrel();
-//			try {
-//				this.wait();
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
-//			nextState = State.DRIVE_SIDEWAYS;
-//			break;
-//		}
 		case LIFT_BARREL:
 		{
-			if (liftTimer.get()<liftTime){
-//			if (liftTimer.get()<1.5){
-				nextState = State.LIFT_BARREL;
-			}
-			else{
-				nextState = State.START_DRIVE_SIDEWAYS;
-				liftTimer.stop();
-				liftTimer.reset();
-			}
+			pickerUpper.beltEncoder.reset();
+			pickerUpper.liftToClearBarrel();
+			waitForThread(pickerUpper.getCurrentThread());
+			pickerUpper.liftBarrel();
+			nextState = State.TILT_BACK;
 			break;
 		}
-		case START_DRIVE_SIDEWAYS:
+		case TILT_BACK:
 		{
-			hDrive.resetHEncoders();
+			pickerUpper.getTilter().tiltBackward(tilterTime);
 			nextState = State.DRIVE_SIDEWAYS;
 			break;
 		}
 		case DRIVE_SIDEWAYS:
 		{
-			double hSpeed;
-			if (sideDistance>0){
-				hSpeed = HWR.MEDIUM_SPEED;
-//				hSpeed = sideSpeed;
-			}
-			else{
-				hSpeed = -HWR.MEDIUM_SPEED;
-//				hSpeed = -sideSpeed;
-			}
-			if (Math.abs(leftEncoder.getDisplacement(leftEncoder.getDistancePerPulse()))<sideDistance&&
-					Math.abs(rightEncoder.getDisplacement(rightEncoder.getDistancePerPulse()))<sideDistance)
-			{
-				hDrive.set(hSpeed);
-				nextState = State.DRIVE_SIDEWAYS;
-			}
-			else
-			{
-				hDrive.stopSide();
-				hDrive.liftWheels();
-				visionTimer.reset();
-				nextState = State.CENTER_TOTE;
-			}
-//			hDrive.moveSideways(sideDistance);
-			break;
-		}
-		case CENTER_TOTE:
-		{
-//			nextState = centerTote(State.DRIVE_FORWARD);
-			nextState = State.START_DRIVE_FORWARD;
-			break;
-		}
-		case START_DRIVE_FORWARD:
-		{
-			hDrive.resetTankEncoders();
+			hDrive.resetHEncoders();
+			hDrive.moveSideways(sideDistance, sideSpeed);
+			waitForThread(hDrive.getBackHMotor().getCurrentThread(),
+					hDrive.getFrontHMotor().getCurrentThread());
+			hDrive.liftWheels();
 			nextState = State.DRIVE_FORWARD;
+			Timer.delay(0.5);
 			break;
 		}
 		case DRIVE_FORWARD:
 		{
-			double speed;
-			if (driveDistance>0){
-				speed = HWR.MEDIUM_SPEED;
-//				speed = driveSpeed;
-			}
-			else{
-				speed = -HWR.MEDIUM_SPEED;
-//				speed = -driveSpeed;
-			}
-			if (Math.abs(leftEncoder.getDisplacement(leftEncoder.getDistancePerPulse()))<Math.abs(driveDistance)&&
-					Math.abs(rightEncoder.getDisplacement(rightEncoder.getDistancePerPulse()))<Math.abs(driveDistance))
-			{
-				hDrive.setTankDrive(speed);
-				nextState = State.DRIVE_FORWARD;
-			}
-			else
-			{
-				hDrive.stop();
-				nextState = State.END_CASE;
-			}
-//			hDrive.goForward(driveDistance);
+			hDrive.resetTankEncoders();
+			hDrive.goForward(driveDistance);
+			waitForThread(hDrive.left.getCurrentThread(), hDrive.right.getCurrentThread());
+			nextState = State.END_CASE;
+			break;
+		}
+		case DROP:
+		{
+			pickerUpper.beltEncoder.reset();
+			pickerUpper.getMotorGroup().moveDistanceInches(HWR.DROP_BARREL_HEIGHT);
+			waitForThread(pickerUpper.getMotorGroup().getCurrentThread());
+			nextState = State.DRIVE_BACKWARD;
+			break;
+		}
+		case DRIVE_BACKWARD:
+		{
+			hDrive.goForward(-backDistance);
+			waitForThread(hDrive.left.getCurrentThread(), hDrive.right.getCurrentThread());
+			nextState = State.END_CASE;
 			break;
 		}
 		case END_CASE:
 		{
-
-//			hDrive.stop();
+			hDrive.stop();
 			nextState = State.END_CASE;
 			break;
 		}
