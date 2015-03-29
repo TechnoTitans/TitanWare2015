@@ -33,6 +33,7 @@ public class TechnoTitan extends IterativeRobot {
 	public static final boolean debugTierIdentifier = false;
 	public static final boolean debugPressure = true;
 	public static final boolean debugStates = true;
+	public static volatile boolean isOperator;
 
 	Gyro gyro;
 	PickerUpper pickerUpper;
@@ -75,15 +76,18 @@ public class TechnoTitan extends IterativeRobot {
 		pickerUpper = new PickerUpper(Talon.class, HWR.BELT_INVERSE, new int[]{HWR.BELT_MOTOR}, 
 				HWR.BELT_CHANNEL_A, HWR.BELT_CHANNEL_B, HWR.beltEncoderReverse, HWR.liftEncoderWDPP, photogate,
 				TalonSRX.class, HWR.TILT_MOTOR,HWR.TILT_INVERSE, drive, null /*this is the gyro*/, this);
-		binGrabber = new BinGrabber(new int[]{HWR.BINGRABBER_A,HWR.BINGRABBER_B},
-				HWR.BINGRABBER_INVERSE, pressure);
+//		binGrabber = new BinGrabber(new int[]{HWR.BINGRABBER_A,HWR.BINGRABBER_B},
+//				HWR.BINGRABBER_INVERSE, pressure);
 		toteNumberIdentifier = new CurrentTierIdentifier(powerDistributionManager.getPowerDistributionPanel(), 4, HWR.BELT_MOTOR);
 		new Thread(toteNumberIdentifier, "Tier Manager").start();
 		drive.resetGyro();
 		System.out.println("TiltSpeed: " + DriverStation.scaleTo0To1(DriverStation.auxStick));
+		
+		isOperator = false; //NEVER DELETE THIS
 	}
 
 	public void autonomousInit(){
+		isOperator = false; //NEVER DELETE THIS
 		drive.resetGyro();
 		autonomous = new AutonomousSwitcher(drive, pickerUpper, vision);
 		Autonomous.setErrorWarning(true);
@@ -100,6 +104,7 @@ public class TechnoTitan extends IterativeRobot {
 	}
 
 	public void teleopInit() {
+		isOperator = true; //NEVER DELETE THIS
 		drive.resetGyro();
 //		pickerUpper.getTilter().tiltUpright();
 	}
@@ -121,7 +126,7 @@ public class TechnoTitan extends IterativeRobot {
 		//drive.deployWheels();
 		//antiDriftTest = new AntiDriftTest(drive);
 		//air = new AirSystem(new int[]{3}, pressure);
-
+		isOperator = true; //NEVER DELETE THIS
 		drive.resetGyro();
 		drive.deployWheels();
 		antiDriftTest = new AntiDriftTest(drive);
@@ -139,6 +144,6 @@ public class TechnoTitan extends IterativeRobot {
 	 * is disabled.
 	 */
 	public void disabledInit() {
-		
+		isOperator = false; //NEVER DELETE THIS
 	}
 }

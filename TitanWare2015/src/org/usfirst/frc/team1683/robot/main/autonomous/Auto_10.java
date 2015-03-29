@@ -1,11 +1,8 @@
 package org.usfirst.frc.team1683.robot.main.autonomous;
 
-import org.usfirst.frc.team1683.robot.HWR;
 import org.usfirst.frc.team1683.robot.drivetrain.HDrive;
 import org.usfirst.frc.team1683.robot.pickerupper.PickerUpper;
 import org.usfirst.frc.team1683.robot.vision.Vision;
-
-import edu.wpi.first.wpilibj.Timer;
 
 public class Auto_10 extends Autonomous{
 	public Auto_10(HDrive drive, PickerUpper pickerUpper, Vision vision) {

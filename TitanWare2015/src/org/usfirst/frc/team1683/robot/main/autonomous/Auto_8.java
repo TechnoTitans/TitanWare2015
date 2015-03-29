@@ -67,7 +67,13 @@ public class Auto_8 extends Autonomous{
 			}
 			case END_CASE: 
 			{
-				
+				nextState = State.END_CASE;
+			}
+			default:
+			{
+				defaultState();
+				nextState = State.END_CASE;
+				break;
 			}
 		}
 			printState();

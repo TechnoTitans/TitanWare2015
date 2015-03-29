@@ -178,7 +178,7 @@ public class PickerUpper{
 	 * Fully uprights the PickerUpper
 	 */
 	public void uprightPickerUpper() {
-		tilter.tiltUpright();
+		tilter.tiltForward(2);
 	}
 
 	//	/**
@@ -195,7 +195,7 @@ public class PickerUpper{
 	 * fully angles the PickerUpper
 	 */
 	public void anglePickerUpper() {
-		tilter.tiltBackward();
+		tilter.tiltBackward(2);
 	}
 
 	//	/**

@@ -227,7 +227,7 @@ public class MotorGroup implements Runnable{
 					baseSpeed = -baseSpeed;
 				}
 				while (Math.abs(Math.abs(initialLocation) - Math.abs(encoder.getDisplacement(encoder.getDistancePerPulse())))
-						< Math.abs(distanceInMeters)){
+						< Math.abs(distanceInMeters) && !TechnoTitan.isOperator){
 					double speed = baseSpeed;
 					for (Motor motor: motors){
 						if (useAntidrift){

@@ -16,7 +16,6 @@ public class DoubleActionSolenoid {
 	public DoubleActionSolenoid(int[] pistons, PressureSensor pressure) { //front piston, back Piston
 		controlAirSystem = new AirSystem(new int[]{pistons[0]}, pressure);
 		followingAirSystem = new AirSystem(new int[]{pistons[1]}, pressure);
-		inverse = false;
 	}
 	
 	/**

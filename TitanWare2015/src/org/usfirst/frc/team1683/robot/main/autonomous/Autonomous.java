@@ -177,12 +177,13 @@ public abstract class Autonomous {
 	}
 
 	/**
+	 * DO NOT USE
 	 * Should be run in END_CASE of all auto modes to ensure leftover
 	 * threads are not running in Teleop mode
 	 * @author Sreyas Mirthipati
 	 * @param threads an array of all the threads to be destroyed
 	 */
-	@SuppressWarnings("deprecation")
+	@Deprecated
 	public static void destroyThreads(Thread[] threads) {
 		for(int i = 0;i < threads.length; i++) {
 			try {
